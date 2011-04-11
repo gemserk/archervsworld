@@ -70,7 +70,7 @@
 					<deleteConflictingFiles>true</deleteConflictingFiles>
 					<extractDuplicates>true</extractDuplicates>
 					<undeployBeforeDeploy>true</undeployBeforeDeploy>
-					<assetsDirectory>../arcanedefenders-desktop/src/main/resources</assetsDirectory>
+					<assetsDirectory>../archervsworld-desktop/src/main/resources</assetsDirectory>
 				</configuration>
 				<extensions>true</extensions>
 				<executions>
