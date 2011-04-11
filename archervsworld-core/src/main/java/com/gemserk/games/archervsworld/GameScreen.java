@@ -55,7 +55,7 @@ public class GameScreen extends ScreenAdapter {
 		public void beginContact(Contact contact) {
 			shouldProcess = false;
 		}
-		
+
 		@Override
 		public void endContact(Contact contact) {
 			// shouldProcess = true;
@@ -114,7 +114,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private Body body;
 
-	private Texture rockTexture;
+	private Texture arrowTexture;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
@@ -132,8 +132,8 @@ public class GameScreen extends ScreenAdapter {
 
 		// camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-		int viewportWidth = 80;
-		int viewportHeight = 48;
+		int viewportWidth = 20;
+		int viewportHeight = 12;
 
 		camera = new OrthographicCamera(viewportWidth, viewportHeight);
 		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
@@ -159,13 +159,13 @@ public class GameScreen extends ScreenAdapter {
 				new SimpleProperty<BitmapFont>(font), //
 				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
 
-		rockTexture = new Texture(Gdx.files.internal("data/rock-512x512.png"));
-		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		arrowTexture = new Texture(Gdx.files.internal("data/arrow-512x512.png"));
+		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		physicsWorld = physicsSystem.getPhysicsWorld();
 
 		PolygonShape groundPoly = new PolygonShape();
-		groundPoly.setAsBox(100, 1);
+		groundPoly.setAsBox(40, 1);
 
 		// next we create the body for the ground platform. It's
 		// simply a static body.
@@ -187,6 +187,28 @@ public class GameScreen extends ScreenAdapter {
 
 		// orthographicCamera.update();
 		// orthographicCamera.apply(Gdx.gl10);
+
+		createBackground();
+
+	}
+
+	public void createBackground() {
+
+		Entity entity = world.createEntity();
+
+		Texture texture = new Texture(Gdx.files.internal("data/background-512x512.jpg"));
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		entity.addComponent(new SpatialComponent( //
+				new SimpleProperty<Vector2>(new Vector2(0f, 0f)), //
+				new SimpleProperty<Vector2>(new Vector2(20f, 12f)), //
+				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent(
+				new SimpleProperty<Sprite>(new Sprite(texture)), // 
+				new SimpleProperty<IntValue>(new IntValue(-10)),  //
+				new SimpleProperty<Vector2>(new Vector2(0f, 0f))));
+
+		entity.refresh();
 
 	}
 
@@ -232,7 +254,7 @@ public class GameScreen extends ScreenAdapter {
 		// body.SetMassFromShapes();
 
 		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(0.72f, 0.05f);
+		polygonShape.setAsBox(0.72f / 2f, 0.05f / 2f);
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
@@ -245,7 +267,7 @@ public class GameScreen extends ScreenAdapter {
 
 		MassData massData = new MassData();
 
-		massData.center.set(0.35f, 0f);
+		massData.center.set(0.35f / 2f, 0f);
 		massData.I = 0f;
 		massData.mass = 0.8f;
 
@@ -273,7 +295,7 @@ public class GameScreen extends ScreenAdapter {
 				new Box2dPositionProperty(arrowBody), //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
 				new Box2dAngleProperty(arrowBody)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(rockTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(arrowTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
 
@@ -336,7 +358,7 @@ public class GameScreen extends ScreenAdapter {
 		camera.update();
 		camera.apply(Gdx.gl10);
 
-		renderer.render(physicsWorld);
+		// renderer.render(physicsWorld);
 
 	}
 

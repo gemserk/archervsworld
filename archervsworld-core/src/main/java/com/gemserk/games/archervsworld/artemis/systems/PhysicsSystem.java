@@ -62,7 +62,7 @@ public class PhysicsSystem extends EntitySystem {
 
 	@Override
 	protected void begin() {
-		physicsWorld.step(Gdx.app.getGraphics().getDeltaTime(), 7, 7);
+		physicsWorld.step(Gdx.app.getGraphics().getDeltaTime(), 3, 3);
 	}
 
 	@Override
