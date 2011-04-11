@@ -16,7 +16,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
@@ -181,7 +180,10 @@ public class GameScreen extends ScreenAdapter {
 		groundBody.createFixture(groundPoly, 10);
 		groundPoly.dispose();
 
-		// createRock(rockTexture, physicsWorld, new Vector2(0, 5), new Vector2(50f, 50f));
+		Texture rockTexture = new Texture(Gdx.files.internal("data/rock-512x512.png"));
+		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		createRock(rockTexture, physicsWorld, new Vector2(10, 1), new Vector2(0f, 0f));
 
 		createArrow(new Vector2(10, 20), new Vector2(1, 1), 10f);
 
@@ -199,13 +201,14 @@ public class GameScreen extends ScreenAdapter {
 		Texture texture = new Texture(Gdx.files.internal("data/background-512x512.jpg"));
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
+		int layer = -10;
+
 		entity.addComponent(new SpatialComponent( //
 				new SimpleProperty<Vector2>(new Vector2(0f, 0f)), //
-				new SimpleProperty<Vector2>(new Vector2(20f, 12f)), //
+				new SimpleProperty<Vector2>(new Vector2(camera.viewportWidth, camera.viewportHeight)), //
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(
-				new SimpleProperty<Sprite>(new Sprite(texture)), // 
-				new SimpleProperty<IntValue>(new IntValue(-10)),  //
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0f, 0f))));
 
 		entity.refresh();
@@ -214,19 +217,30 @@ public class GameScreen extends ScreenAdapter {
 
 	protected void createRock(Texture rockTexture, com.badlogic.gdx.physics.box2d.World physicsWorld, Vector2 startPosition, Vector2 startImpulse) {
 
+		Vector2 size = new Vector2(2f, 2f);
+
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(startPosition);
+		bodyDef.angularDamping = 1f;
+		bodyDef.linearDamping = 1f;
 
 		body = physicsWorld.createBody(bodyDef);
-		CircleShape shape = new CircleShape();
-		shape.setPosition(new Vector2(0, 0));
-		shape.setRadius(2);
-		body.createFixture(shape, 0.25f);
-		shape.dispose();
 
-		body.applyAngularImpulse(10f);
-		// body.applyForce(new Vector2(150f, 150f), body.getTransform().getPosition());
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(size.x / 4f, size.y / 4f);
+
+		// CircleShape shape = new CircleShape();
+		// shape.setPosition(new Vector2(0, 0));
+		// shape.setRadius(size.x * 0.3f);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.density = 1f;
+		fixtureDef.friction = 1f;
+		fixtureDef.shape = shape;
+
+		body.createFixture(fixtureDef);
+		shape.dispose();
 
 		body.applyLinearImpulse(startImpulse, body.getTransform().getPosition());
 
@@ -235,7 +249,7 @@ public class GameScreen extends ScreenAdapter {
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
-				new SimpleProperty<Vector2>(new Vector2(5f, 5f)), //
+				new SimpleProperty<Vector2>(size), //
 				new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(rockTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
