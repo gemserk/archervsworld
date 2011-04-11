@@ -21,7 +21,9 @@
 	</properties>
 
 	<build>
+
 		<sourceDirectory>src</sourceDirectory>
+		<finalName>archervsworld-android</finalName>
 
 		<plugins>
 			<plugin>
