@@ -15,7 +15,11 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -28,10 +32,36 @@ import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
+import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 
 public class GameScreen extends ScreenAdapter {
+
+	public static class ArrowPhysicsBehavior extends PhysicsBehavior {
+
+		boolean shouldProcess = true;
+
+		@Override
+		public void update(com.badlogic.gdx.physics.box2d.World world, Body body) {
+			if (!shouldProcess)
+				return;
+			Vector2 linearVelocity = body.getLinearVelocity();
+			float angle = linearVelocity.angle();
+			body.setTransform(body.getPosition(), (float) (angle / 180f * Math.PI));
+		}
+
+		@Override
+		public void beginContact(Contact contact) {
+			shouldProcess = false;
+		}
+		
+		@Override
+		public void endContact(Contact contact) {
+			// shouldProcess = true;
+		}
+
+	}
 
 	static class Box2dAngleProperty extends AbstractProperty<FloatValue> {
 
@@ -87,6 +117,8 @@ public class GameScreen extends ScreenAdapter {
 	private Texture rockTexture;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
+
+	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 
 	public GameScreen(Game game) {
 		this.game = game;
@@ -149,7 +181,9 @@ public class GameScreen extends ScreenAdapter {
 		groundBody.createFixture(groundPoly, 10);
 		groundPoly.dispose();
 
-		createRock(rockTexture, physicsWorld, new Vector2(0, 5), new Vector2(50f, 50f));
+		// createRock(rockTexture, physicsWorld, new Vector2(0, 5), new Vector2(50f, 50f));
+
+		createArrow(new Vector2(10, 20), new Vector2(1, 1), 10f);
 
 		// orthographicCamera.update();
 		// orthographicCamera.apply(Gdx.gl10);
@@ -157,7 +191,6 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	protected void createRock(Texture rockTexture, com.badlogic.gdx.physics.box2d.World physicsWorld, Vector2 startPosition, Vector2 startImpulse) {
-		Entity entity = world.createEntity();
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -175,7 +208,9 @@ public class GameScreen extends ScreenAdapter {
 
 		body.applyLinearImpulse(startImpulse, body.getTransform().getPosition());
 
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
+		Entity entity = world.createEntity();
+
+		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(new Vector2(5f, 5f)), //
@@ -183,6 +218,65 @@ public class GameScreen extends ScreenAdapter {
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(rockTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
+	}
+
+	protected void createArrow(Vector2 position, Vector2 direction, float power) {
+
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.DynamicBody;
+		bodyDef.bullet = true;
+		bodyDef.position.set(position);
+
+		final Body arrowBody = physicsWorld.createBody(bodyDef);
+
+		// body.SetMassFromShapes();
+
+		PolygonShape polygonShape = new PolygonShape();
+		polygonShape.setAsBox(0.72f, 0.05f);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = polygonShape;
+		fixtureDef.density = 1f;
+		fixtureDef.friction = 0.8f;
+
+		arrowBody.createFixture(fixtureDef);
+
+		// 0.7112 meters
+
+		MassData massData = new MassData();
+
+		massData.center.set(0.35f, 0f);
+		massData.I = 0f;
+		massData.mass = 0.8f;
+
+		arrowBody.setMassData(massData);
+		arrowBody.resetMassData();
+
+		arrowBody.setTransform(position, (float) (direction.angle() / 180f * Math.PI));
+
+		Vector2 impulse = new Vector2(direction);
+		impulse.mul(arrowBody.getMass());
+		impulse.mul(power);
+
+		Vector2 lp = arrowBody.getWorldPoint(new Vector2(0f, 0f));
+		arrowBody.applyLinearImpulse(impulse, lp);
+
+		PhysicsBehavior arrowBehavior = new ArrowPhysicsBehavior();
+
+		arrowBody.setUserData(arrowBehavior);
+
+		Entity entity = world.createEntity();
+
+		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(arrowBody), new SimpleProperty<PhysicsBehavior>(arrowBehavior)));
+
+		entity.addComponent(new SpatialComponent( //
+				new Box2dPositionProperty(arrowBody), //
+				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
+				new Box2dAngleProperty(arrowBody)));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(rockTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
+
+		entity.refresh();
+
 	}
 
 	boolean wasTouched = false;
@@ -202,14 +296,11 @@ public class GameScreen extends ScreenAdapter {
 		world.loopStart();
 		world.setDelta((int) (delta * 1000));
 
+		physicsSystem.process();
+
 		spriteRenderSystem.process();
 		spriteUpdateSystem.process();
 		textRendererSystem.process();
-
-		physicsSystem.process();
-
-		// body.applyLinearImpulse(new Vector2(15f, 15f), body.getTransform().getPosition());
-		// body.applyForce(new Vector2(1500f, 1500f), body.getTransform().getPosition());
 
 		if (Gdx.input.isTouched()) {
 
@@ -231,20 +322,27 @@ public class GameScreen extends ScreenAdapter {
 
 				System.out.println(mul);
 
-				createRock(rockTexture, physicsWorld, new Vector2(p0.x, p0.y), new Vector2(mul.x, mul.y));
+				// createRock(rockTexture, physicsWorld, new Vector2(p0.x, p0.y), new Vector2(mul.x, mul.y));
+
+				float len = mul.len();
+				mul.nor();
+
+				createArrow(new Vector2(p0.x, p0.y), new Vector2(mul.x, mul.y), len);
+
 				wasTouched = false;
 			}
 		}
+
+		camera.update();
+		camera.apply(Gdx.gl10);
+
+		renderer.render(physicsWorld);
 
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// float aspectRatio = (float) width / (float) height;
-		// camera = new OrthographicCamera(2f * aspectRatio, 2f);
-		// camera.viewportWidth = 2f * aspectRatio;
-		// camera.viewportHeight = 2f;
-		// camera.near = 0;
+
 	}
 
 	@Override
