@@ -20,7 +20,7 @@
 	<properties>
 
 		<webstartName>${project.name}</webstartName>
-		<webstartCodebase>http://www.gemserk.com/prototipos/${project.parent.artifactId}-webstart-latest/</webstartCodebase>
+		<webstartCodebase>http://www.gemserk.com/prototipos/${project.parent.artifactId}-latest/</webstartCodebase>
 
 		<!-- finalName>${project.artifactId}-${project.version}</finalName -->
 		<finalName>${project.artifactId}-${project.version}</finalName>
