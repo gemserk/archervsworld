@@ -35,7 +35,7 @@ import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
-import com.gemserk.games.archervsworld.artemis.systems.UpdateBowDirectionSystem;
+import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.properties.Box2dAngleProperty;
 import com.gemserk.games.archervsworld.properties.Box2dPositionProperty;
 
@@ -83,23 +83,23 @@ public class GameScreen extends ScreenAdapter {
 		camera = new OrthographicCamera(viewportWidth, viewportHeight);
 		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
 		
-		pointer = new LibgdxPointer(0, camera);
-
 		// camera.zoom = 0.05f;
 		// camera.translate(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0f);
+		
+		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
 
 		textRendererSystem = new TextRendererSystem();
 		spriteRenderSystem = new SpriteRendererSystem(camera);
 		spriteUpdateSystem = new SpriteUpdateSystem();
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0f, -10f), true));
-		updateBowDirectionSystem = new UpdateBowDirectionSystem(camera);
+		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, camera), archerVsWorldEntityFactory);
 
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
 		world.getSystemManager().setSystem(spriteRenderSystem);
 		world.getSystemManager().setSystem(spriteUpdateSystem);
 		world.getSystemManager().setSystem(physicsSystem);
-		world.getSystemManager().setSystem(updateBowDirectionSystem);
+		world.getSystemManager().setSystem(updateBowSystem);
 		world.getSystemManager().initializeAll();
 		
 		EntityFactory entityFactory = new EntityFactory(world);
@@ -113,7 +113,7 @@ public class GameScreen extends ScreenAdapter {
 		
 		physicsWorld = physicsSystem.getPhysicsWorld();
 		
-		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
+		
 		archerVsWorldEntityFactory.setWorld(world);
 		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
 		archerVsWorldEntityFactory.setArrowTexture(arrowTexture);
@@ -139,8 +139,6 @@ public class GameScreen extends ScreenAdapter {
 		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		createRock(rockTexture, physicsWorld, new Vector2(10, 1), new Vector2(0f, 0f));
-
-		// createArrow(new Vector2(10, 20), new Vector2(1, 1), 10f);
 
 		// orthographicCamera.update();
 		// orthographicCamera.apply(Gdx.gl10);
@@ -244,15 +242,11 @@ public class GameScreen extends ScreenAdapter {
 
 	boolean wasTouched = false;
 
-	private UpdateBowDirectionSystem updateBowDirectionSystem;
+	private UpdateBowSystem updateBowSystem;
 	
-	private LibgdxPointer pointer;
-
 	@Override
 	public void render(float delta) {
 		
-		pointer.update();
-
 		camera.update();
 		camera.apply(Gdx.gl10);
 
@@ -262,32 +256,16 @@ public class GameScreen extends ScreenAdapter {
 		world.setDelta((int) (delta * 1000));
 
 		physicsSystem.process();
-		updateBowDirectionSystem.process();
+		updateBowSystem.process();
 
 		spriteRenderSystem.process();
 		spriteUpdateSystem.process();
 		textRendererSystem.process();
 		
-		if (pointer.wasReleased) {
-
-			Vector2 p0 = pointer.getPressedPosition();
-			Vector2 p1 = pointer.getReleasedPosition();
-			
-			Vector2 mul = p1.cpy().sub(p0).mul(-5f);
-			
-			float len = mul.len();
-			mul.nor();
-			
-			archerVsWorldEntityFactory.createArrow(p0, mul, len);
-			
-//			createArrow(p0, mul, len);
-			
-		}
-
 		camera.update();
 		camera.apply(Gdx.gl10);
 
-		// renderer.render(physicsWorld);
+		renderer.render(physicsWorld);
 
 	}
 
