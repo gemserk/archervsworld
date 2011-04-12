@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -27,10 +26,13 @@ import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
 import com.gemserk.commons.gdx.ScreenAdapter;
+import com.gemserk.commons.gdx.input.LibgdxPointer;
+import com.gemserk.commons.values.BooleanValue;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
+import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
@@ -138,6 +140,8 @@ public class GameScreen extends ScreenAdapter {
 
 		camera = new OrthographicCamera(viewportWidth, viewportHeight);
 		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
+		
+		pointer = new LibgdxPointer(0, camera);
 
 		// camera.zoom = 0.05f;
 		// camera.translate(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0f);
@@ -221,6 +225,9 @@ public class GameScreen extends ScreenAdapter {
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f))));
+		entity.addComponent(new BowComponent(
+				new SimpleProperty<FloatValue>(new FloatValue(0f)), 
+				new SimpleProperty<BooleanValue>(new BooleanValue(false))));
 
 		entity.refresh();
 		
@@ -349,14 +356,14 @@ public class GameScreen extends ScreenAdapter {
 
 	boolean wasTouched = false;
 
-	private Vector3 p0;
-
-	private Vector3 p1;
-
 	private UpdateBowDirectionSystem updateBowDirectionSystem;
+	
+	private LibgdxPointer pointer;
 
 	@Override
 	public void render(float delta) {
+		
+		pointer.update();
 
 		camera.update();
 		camera.apply(Gdx.gl10);
@@ -372,36 +379,19 @@ public class GameScreen extends ScreenAdapter {
 		spriteRenderSystem.process();
 		spriteUpdateSystem.process();
 		textRendererSystem.process();
+		
+		if (pointer.wasReleased) {
 
-		if (Gdx.input.isTouched()) {
-
-			if (!wasTouched) {
-				p0 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0f);
-				camera.unproject(p0);
-				wasTouched = true;
-			} else {
-				p1 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0f);
-				camera.unproject(p1);
-			}
-
-		} else {
-			if (wasTouched) {
-				System.out.println(p0);
-				System.out.println(p1);
-
-				Vector3 mul = p1.sub(p0).mul(-5);
-
-				System.out.println(mul);
-
-				// createRock(rockTexture, physicsWorld, new Vector2(p0.x, p0.y), new Vector2(mul.x, mul.y));
-
-				float len = mul.len();
-				mul.nor();
-
-				createArrow(new Vector2(p0.x, p0.y), new Vector2(mul.x, mul.y), len);
-
-				wasTouched = false;
-			}
+			Vector2 p0 = pointer.getPressedPosition();
+			Vector2 p1 = pointer.getReleasedPosition();
+			
+			Vector2 mul = p1.cpy().sub(p0).mul(-5f);
+			
+			float len = mul.len();
+			mul.nor();
+			
+			createArrow(p0, mul, len);
+			
 		}
 
 		camera.update();

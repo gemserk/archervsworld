@@ -33,7 +33,7 @@ public class UpdateBowDirectionSystem extends EntitySystem {
 		if (!Gdx.input.isTouched(pointerIndex))
 			return;
 		
-		pointerPosition3d = new Vector3(Gdx.input.getX(pointerIndex), Gdx.input.getY(pointerIndex), 0f);
+		pointerPosition3d.set(Gdx.input.getX(pointerIndex), Gdx.input.getY(pointerIndex), 0f);
 
 		// transform the point to world coordinates
 		camera.unproject(pointerPosition3d);
