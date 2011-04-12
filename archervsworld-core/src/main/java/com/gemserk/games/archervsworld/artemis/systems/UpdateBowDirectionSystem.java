@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 
 public class UpdateBowDirectionSystem extends EntitySystem {
@@ -19,10 +20,13 @@ public class UpdateBowDirectionSystem extends EntitySystem {
 	int pointerIndex = 0;
 
 	private OrthographicCamera camera;
+
+	private LibgdxPointer libgdxPointer;
 	
 	public UpdateBowDirectionSystem(OrthographicCamera camera) {
 		super();
 		this.camera = camera;
+		libgdxPointer = new LibgdxPointer(pointerIndex, camera);
 	}
 
 	@Override

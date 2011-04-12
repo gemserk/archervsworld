@@ -15,9 +15,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -30,76 +28,18 @@ import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.values.BooleanValue;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
-import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
+import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowDirectionSystem;
+import com.gemserk.games.archervsworld.properties.Box2dAngleProperty;
+import com.gemserk.games.archervsworld.properties.Box2dPositionProperty;
 
 public class GameScreen extends ScreenAdapter {
-
-	public static class ArrowPhysicsBehavior extends PhysicsBehavior {
-
-		boolean shouldProcess = true;
-
-		@Override
-		public void update(com.badlogic.gdx.physics.box2d.World world, Body body) {
-			if (!shouldProcess)
-				return;
-			Vector2 linearVelocity = body.getLinearVelocity();
-			float angle = linearVelocity.angle();
-			body.setTransform(body.getPosition(), (float) (angle / 180f * Math.PI));
-		}
-
-		@Override
-		public void beginContact(Contact contact) {
-			shouldProcess = false;
-		}
-
-		@Override
-		public void endContact(Contact contact) {
-			// shouldProcess = true;
-		}
-
-	}
-
-	static class Box2dAngleProperty extends AbstractProperty<FloatValue> {
-
-		private FloatValue floatValue = new FloatValue(0f);
-
-		private final Body body;
-
-		public Box2dAngleProperty(Body body) {
-			this.body = body;
-		}
-
-		public FloatValue get() {
-			floatValue.value = (float) (body.getAngle() * 180f / Math.PI);
-			return floatValue;
-		}
-	}
-
-	static class Box2dPositionProperty extends AbstractProperty<Vector2> {
-
-		private final Body body;
-
-		public Box2dPositionProperty(Body body) {
-			this.body = body;
-		}
-
-		@Override
-		public Vector2 get() {
-			return body.getTransform().getPosition();
-		}
-
-		@Override
-		public void set(Vector2 value) {
-			body.getTransform().setPosition(value);
-		}
-	}
 
 	private final Game game;
 
@@ -122,6 +62,8 @@ public class GameScreen extends ScreenAdapter {
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
 	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
+	
+	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
 	public GameScreen(Game game) {
 		this.game = game;
@@ -159,17 +101,22 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(physicsSystem);
 		world.getSystemManager().setSystem(updateBowDirectionSystem);
 		world.getSystemManager().initializeAll();
-
+		
 		EntityFactory entityFactory = new EntityFactory(world);
 		entityFactory.fpsEntity( //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
 				new SimpleProperty<BitmapFont>(font), //
 				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
-
+		
 		arrowTexture = new Texture(Gdx.files.internal("data/arrow-512x512.png"));
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
+		
 		physicsWorld = physicsSystem.getPhysicsWorld();
+		
+		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
+		archerVsWorldEntityFactory.setWorld(world);
+		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
+		archerVsWorldEntityFactory.setArrowTexture(arrowTexture);
 
 		PolygonShape groundPoly = new PolygonShape();
 		groundPoly.setAsBox(40, 1);
@@ -295,65 +242,6 @@ public class GameScreen extends ScreenAdapter {
 		entity.refresh();
 	}
 
-	protected void createArrow(Vector2 position, Vector2 direction, float power) {
-
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.bullet = true;
-		bodyDef.position.set(position);
-
-		final Body arrowBody = physicsWorld.createBody(bodyDef);
-
-		// body.SetMassFromShapes();
-
-		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(0.72f / 2f, 0.05f / 2f);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = polygonShape;
-		fixtureDef.density = 1f;
-		fixtureDef.friction = 0.8f;
-
-		arrowBody.createFixture(fixtureDef);
-
-		// 0.7112 meters
-
-		MassData massData = new MassData();
-
-		massData.center.set(0.35f / 2f, 0f);
-		massData.I = 0f;
-		massData.mass = 0.8f;
-
-		arrowBody.setMassData(massData);
-		arrowBody.resetMassData();
-
-		arrowBody.setTransform(position, (float) (direction.angle() / 180f * Math.PI));
-
-		Vector2 impulse = new Vector2(direction);
-		impulse.mul(arrowBody.getMass());
-		impulse.mul(power);
-
-		Vector2 lp = arrowBody.getWorldPoint(new Vector2(0f, 0f));
-		arrowBody.applyLinearImpulse(impulse, lp);
-
-		PhysicsBehavior arrowBehavior = new ArrowPhysicsBehavior();
-
-		arrowBody.setUserData(arrowBehavior);
-
-		Entity entity = world.createEntity();
-
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(arrowBody), new SimpleProperty<PhysicsBehavior>(arrowBehavior)));
-
-		entity.addComponent(new SpatialComponent( //
-				new Box2dPositionProperty(arrowBody), //
-				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
-				new Box2dAngleProperty(arrowBody)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(arrowTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
-
-		entity.refresh();
-
-	}
-
 	boolean wasTouched = false;
 
 	private UpdateBowDirectionSystem updateBowDirectionSystem;
@@ -390,7 +278,9 @@ public class GameScreen extends ScreenAdapter {
 			float len = mul.len();
 			mul.nor();
 			
-			createArrow(p0, mul, len);
+			archerVsWorldEntityFactory.createArrow(p0, mul, len);
+			
+//			createArrow(p0, mul, len);
 			
 		}
 
