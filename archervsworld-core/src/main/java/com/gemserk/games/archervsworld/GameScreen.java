@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -265,7 +266,8 @@ public class GameScreen extends ScreenAdapter {
 		camera.update();
 		camera.apply(Gdx.gl10);
 
-		renderer.render(physicsWorld);
+		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D)) 
+			renderer.render(physicsWorld);
 
 	}
 
