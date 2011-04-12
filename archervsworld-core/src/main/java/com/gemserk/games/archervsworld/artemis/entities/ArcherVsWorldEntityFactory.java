@@ -169,7 +169,7 @@ public class ArcherVsWorldEntityFactory {
 		Body body = physicsWorld.createBody(bodyDef);
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(size.x / 4f, size.y / 4f);
+		shape.setAsBox(size.x / 3f, size.y / 3f);
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.density = 1f;
