@@ -33,7 +33,9 @@ import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
+import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
+import com.gemserk.games.archervsworld.artemis.systems.UpdateBowDirectionSystem;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -144,12 +146,14 @@ public class GameScreen extends ScreenAdapter {
 		spriteRenderSystem = new SpriteRendererSystem(camera);
 		spriteUpdateSystem = new SpriteUpdateSystem();
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0f, -10f), true));
+		updateBowDirectionSystem = new UpdateBowDirectionSystem(camera);
 
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
 		world.getSystemManager().setSystem(spriteRenderSystem);
 		world.getSystemManager().setSystem(spriteUpdateSystem);
 		world.getSystemManager().setSystem(physicsSystem);
+		world.getSystemManager().setSystem(updateBowDirectionSystem);
 		world.getSystemManager().initializeAll();
 
 		EntityFactory entityFactory = new EntityFactory(world);
@@ -185,19 +189,47 @@ public class GameScreen extends ScreenAdapter {
 
 		createRock(rockTexture, physicsWorld, new Vector2(10, 1), new Vector2(0f, 0f));
 
-		createArrow(new Vector2(10, 20), new Vector2(1, 1), 10f);
+		// createArrow(new Vector2(10, 20), new Vector2(1, 1), 10f);
 
 		// orthographicCamera.update();
 		// orthographicCamera.apply(Gdx.gl10);
 
 		createBackground();
+		
+		createBow();
 
+	}
+	
+	public void createBow() {
+		
+		Texture texture = new Texture(Gdx.files.internal("data/bow-512x512.png"));
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Entity entity = world.createEntity();
+		
+		entity.setGroup(Groups.Bow);
+
+		int layer = 2;
+		
+		float bowHeight = 1.6f;
+		float bowWidth = 1.6f;
+
+		entity.addComponent(new SpatialComponent( //
+				new SimpleProperty<Vector2>(new Vector2(1f, 1.7f)), //
+				new SimpleProperty<Vector2>(new Vector2(bowWidth, bowHeight)), //
+				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+				new SimpleProperty<IntValue>(new IntValue(layer)), //
+				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f))));
+
+		entity.refresh();
+		
 	}
 
 	public void createBackground() {
 
 		Entity entity = world.createEntity();
-
+		
 		Texture texture = new Texture(Gdx.files.internal("data/background-512x512.jpg"));
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
@@ -321,6 +353,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private Vector3 p1;
 
+	private UpdateBowDirectionSystem updateBowDirectionSystem;
+
 	@Override
 	public void render(float delta) {
 
@@ -333,6 +367,7 @@ public class GameScreen extends ScreenAdapter {
 		world.setDelta((int) (delta * 1000));
 
 		physicsSystem.process();
+		updateBowDirectionSystem.process();
 
 		spriteRenderSystem.process();
 		spriteUpdateSystem.process();
