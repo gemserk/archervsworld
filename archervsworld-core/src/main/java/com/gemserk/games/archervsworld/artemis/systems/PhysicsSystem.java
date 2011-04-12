@@ -40,14 +40,14 @@ public class PhysicsSystem extends EntitySystem {
 			Object userData = body.getUserData();
 
 			if (userData instanceof PhysicsBehavior)
-				((PhysicsBehavior) userData).beginContact(contact);
+				((PhysicsBehavior) userData).beginContact(body, contact);
 		}
 
 		protected void endContactBodyUserData(Contact contact, Body body) {
 			Object userData = body.getUserData();
 
 			if (userData instanceof PhysicsBehavior)
-				((PhysicsBehavior) userData).endContact(contact);
+				((PhysicsBehavior) userData).endContact(body, contact);
 		}
 	}
 

@@ -10,11 +10,11 @@ public class PhysicsBehavior {
 		
 	}
 	
-	public void beginContact(Contact contact) {
+	public void beginContact(Body body, Contact contact) {
 		
 	}
 	
-	public void endContact(Contact contact) {
+	public void endContact(Body body, Contact contact) {
 		
 	}
 	

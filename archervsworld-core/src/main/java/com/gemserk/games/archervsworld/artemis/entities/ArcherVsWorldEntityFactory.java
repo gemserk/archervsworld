@@ -19,6 +19,7 @@ import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.components.ArrowPhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
+import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.games.archervsworld.properties.Box2dAngleProperty;
 import com.gemserk.games.archervsworld.properties.Box2dPositionProperty;
 
@@ -72,6 +73,9 @@ public class ArcherVsWorldEntityFactory {
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
 		fixtureDef.friction = 0.8f;
+		
+		fixtureDef.filter.categoryBits = CollisionDefinitions.ArrowGroup;
+		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup;
 
 		body.createFixture(fixtureDef);
 		
@@ -159,6 +163,9 @@ public class ArcherVsWorldEntityFactory {
 		fixtureDef.density = 1f;
 		fixtureDef.friction = 1f;
 		fixtureDef.shape = shape;
+		
+		fixtureDef.filter.categoryBits = CollisionDefinitions.RockGroup;
+		fixtureDef.filter.maskBits = CollisionDefinitions.All;
 
 		body.createFixture(fixtureDef);
 		shape.dispose();

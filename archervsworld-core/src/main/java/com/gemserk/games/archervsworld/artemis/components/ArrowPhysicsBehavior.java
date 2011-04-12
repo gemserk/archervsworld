@@ -2,6 +2,7 @@ package com.gemserk.games.archervsworld.artemis.components;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
 
 public class ArrowPhysicsBehavior extends PhysicsBehavior {
@@ -18,12 +19,14 @@ public class ArrowPhysicsBehavior extends PhysicsBehavior {
 	}
 
 	@Override
-	public void beginContact(Contact contact) {
+	public void beginContact(Body body, Contact contact) {
 		shouldProcess = false;
+		// if the other object is a static object like a rock, then dont make it static body
+		body.setType(BodyType.StaticBody);
 	}
 
 	@Override
-	public void endContact(Contact contact) {
+	public void endContact(Body body, Contact contact) {
 
 	}
 

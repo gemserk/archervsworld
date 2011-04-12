@@ -48,8 +48,6 @@ public class GameScreen extends ScreenAdapter {
 
 	private OrthographicCamera camera;
 
-	private Body body;
-
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
 	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
