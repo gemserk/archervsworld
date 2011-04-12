@@ -13,10 +13,12 @@ import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
+import com.gemserk.commons.values.BooleanValue;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.components.ArrowPhysicsBehavior;
+import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
@@ -148,9 +150,9 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f))));
 
-		// entity.addComponent(new BowComponent(
-		// new SimpleProperty<FloatValue>(new FloatValue(0f)),
-		// new SimpleProperty<BooleanValue>(new BooleanValue(false))));
+		 entity.addComponent(new BowComponent(
+		 new SimpleProperty<FloatValue>(new FloatValue(0f)),
+		 new SimpleProperty<BooleanValue>(new BooleanValue(false))));
 
 		entity.refresh();
 

@@ -6,6 +6,8 @@ import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
+import com.gemserk.componentsengine.utils.AngleUtils;
+import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 
@@ -16,7 +18,7 @@ public class UpdateBowSystem extends EntitySystem {
 	private ArcherVsWorldEntityFactory entityFactory;
 	
 	public UpdateBowSystem(LibgdxPointer pointer, ArcherVsWorldEntityFactory entityFactory) {
-		super();
+		super(BowComponent.class);
 		this.entityFactory = entityFactory;
 		this.pointer = pointer;
 	}
@@ -25,7 +27,11 @@ public class UpdateBowSystem extends EntitySystem {
 	protected void begin() {
 		pointer.update();
 	}
-
+	
+	AngleUtils angleUtils = new AngleUtils();
+	
+	Vector2 direction = new Vector2();
+	
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		
@@ -39,7 +45,22 @@ public class UpdateBowSystem extends EntitySystem {
 				Entity entity = entities.get(i);
 				SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 				Vector2 direction = pointer.getPressedPosition().cpy().sub(pointer.getPosition());
-				spatialComponent.setAngle(direction.angle());
+				
+				BowComponent bowComponent = entity.getComponent(BowComponent.class);
+				
+				float angle = direction.angle();
+				
+				int minFireAngle = -70;
+				int maxFireAngle = 80;
+				
+				bowComponent.setShouldFire(true);
+
+				if ((angleUtils.minimumDifference(angle, minFireAngle) < 0) && (angleUtils.minimumDifference(angle, maxFireAngle) > 0)) {
+					spatialComponent.setAngle(angle);
+				}
+//				else {
+//					bowComponent.setShouldFire(false);
+//				}
 			}
 			
 		}
@@ -50,9 +71,11 @@ public class UpdateBowSystem extends EntitySystem {
 				
 				Entity entity = entities.get(i);
 				SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
-
-				System.out.println("new arrow");
+				BowComponent bowComponent = entity.getComponent(BowComponent.class);
 				
+				if (!bowComponent.getShouldFire())
+					continue;
+
 				Vector2 p0 = pointer.getPressedPosition();
 				Vector2 p1 = pointer.getReleasedPosition();
 				
@@ -61,7 +84,12 @@ public class UpdateBowSystem extends EntitySystem {
 				float len = mul.len();
 				mul.nor();
 				
-				entityFactory.createPhysicsArrow(spatialComponent.getPosition(), mul, len);
+				direction.set(1f,0f);
+				direction.rotate(spatialComponent.getAngle());
+				
+				entityFactory.createPhysicsArrow(spatialComponent.getPosition(), direction, len);
+				
+				bowComponent.setShouldFire(false);
 				
 			}
 			
