@@ -31,6 +31,11 @@ import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
+import com.gemserk.resources.ResourceManager;
+import com.gemserk.resources.ResourceManagerImpl;
+import com.gemserk.resources.dataloaders.StaticDataLoader;
+import com.gemserk.resources.resourceloaders.CachedResourceLoader;
+import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -59,6 +64,8 @@ public class GameScreen extends ScreenAdapter {
 	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
+	
+	ResourceManager<String> resourceManager = new ResourceManagerImpl<String>();
 
 	public GameScreen(Game game) {
 		this.game = game;
@@ -69,11 +76,35 @@ public class GameScreen extends ScreenAdapter {
 		Texture rockTexture = new Texture(Gdx.files.internal("data/rock-512x512.png"));
 		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
+		resourceManager.add("Rock", new CachedResourceLoader<Texture>(
+				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(rockTexture) {
+					@Override
+					public void dispose(Texture t) {
+						t.dispose();
+					}
+				}, false)));
+
+		Texture bowTexture = new Texture(Gdx.files.internal("data/bow-512x512.png"));
+		bowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		resourceManager.add("Bow", new CachedResourceLoader<Texture>(
+				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(bowTexture) {
+					@Override
+					public void dispose(Texture t) {
+						t.dispose();
+					}
+				}, false)));
+		
 		Texture arrowTexture = new Texture(Gdx.files.internal("data/arrow-512x512.png"));
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		Texture texture = new Texture(Gdx.files.internal("data/bow-512x512.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		resourceManager.add("Arrow", new CachedResourceLoader<Texture>(
+				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(arrowTexture) {
+					@Override
+					public void dispose(Texture t) {
+						t.dispose();
+					}
+				}, false)));
 
 		Sprite fontSprite = new Sprite(fontTexture);
 		BitmapFont font = new BitmapFont(Gdx.files.internal("data/font.fnt"), fontSprite, false);
@@ -113,9 +144,7 @@ public class GameScreen extends ScreenAdapter {
 
 		archerVsWorldEntityFactory.setWorld(world);
 		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
-		archerVsWorldEntityFactory.setArrowTexture(arrowTexture);
-		archerVsWorldEntityFactory.setRockTexture(rockTexture);
-		archerVsWorldEntityFactory.setBowTexture(texture);
+		archerVsWorldEntityFactory.setResourceManager(resourceManager);
 
 		PolygonShape groundPoly = new PolygonShape();
 		groundPoly.setAsBox(40, 1);
@@ -253,6 +282,8 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void dispose() {
+		
+		
 
 	}
 

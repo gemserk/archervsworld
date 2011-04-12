@@ -24,6 +24,8 @@ import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.games.archervsworld.properties.Box2dAngleProperty;
 import com.gemserk.games.archervsworld.properties.Box2dPositionProperty;
+import com.gemserk.resources.Resource;
+import com.gemserk.resources.ResourceManager;
 
 public class ArcherVsWorldEntityFactory {
 
@@ -39,22 +41,10 @@ public class ArcherVsWorldEntityFactory {
 		this.physicsWorld = physicsWorld;
 	}
 
-	Texture arrowTexture;
-
-	public void setArrowTexture(Texture arrowTexture) {
-		this.arrowTexture = arrowTexture;
-	}
-
-	Texture bowTexture;
-
-	public void setBowTexture(Texture bowTexture) {
-		this.bowTexture = bowTexture;
-	}
+	ResourceManager<String> resourceManager;
 	
-	Texture rockTexture;
-
-	public void setRockTexture(Texture rockTexture) {
-		this.rockTexture = rockTexture;
+	public void setResourceManager(ResourceManager<String> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	private MassData massData = new MassData();
@@ -112,7 +102,11 @@ public class ArcherVsWorldEntityFactory {
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
 				new Box2dAngleProperty(body)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(arrowTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
+		
+		Resource<Texture> resource = resourceManager.get("Arrow");
+		Texture texture = resource.get();
+		
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
 	}
@@ -120,12 +114,15 @@ public class ArcherVsWorldEntityFactory {
 	public void createArrow(Vector2 position, float angle) {
 		Entity entity = world.createEntity();
 		
+		Resource<Texture> resource = resourceManager.get("Arrow");
+		Texture texture = resource.get();
+		
 		entity.addComponent(new SpatialComponent( //
 				new SimpleProperty<Vector2>(position), //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
 				new SimpleProperty<FloatValue>(new FloatValue(angle))));
 		entity.addComponent(new SpriteComponent( //
-				new SimpleProperty<Sprite>(new Sprite(arrowTexture)), // 
+				new SimpleProperty<Sprite>(new Sprite(texture)), // 
 				new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
@@ -141,12 +138,15 @@ public class ArcherVsWorldEntityFactory {
 
 		float bowHeight = 1.6f;
 		float bowWidth = 1.6f;
+		
+		Resource<Texture> resource = resourceManager.get("Bow");
+		Texture texture = resource.get();
 
 		entity.addComponent(new SpatialComponent( //
 				new SimpleProperty<Vector2>(position), //
 				new SimpleProperty<Vector2>(new Vector2(bowWidth, bowHeight)), //
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(bowTexture)), //
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f))));
 
@@ -187,13 +187,16 @@ public class ArcherVsWorldEntityFactory {
 		body.applyLinearImpulse(startImpulse, body.getTransform().getPosition());
 
 		Entity entity = world.createEntity();
+		
+		Resource<Texture> resource = resourceManager.get("Rock");
+		Texture texture = resource.get();
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
 				new Box2dAngleProperty(body)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(rockTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
 		
