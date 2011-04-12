@@ -50,12 +50,14 @@ public class ArcherVsWorldEntityFactory {
 	}
 	
 	Texture rockTexture;
-	
+
 	public void setRockTexture(Texture rockTexture) {
 		this.rockTexture = rockTexture;
 	}
 
-	public void createArrow(Vector2 position, Vector2 direction, float power) {
+	private MassData massData = new MassData();
+	
+	public void createPhysicsArrow(Vector2 position, Vector2 direction, float power) {
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -63,8 +65,6 @@ public class ArcherVsWorldEntityFactory {
 		bodyDef.position.set(position);
 
 		Body body = physicsWorld.createBody(bodyDef);
-
-		// body.SetMassFromShapes();
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(0.72f / 2f, 0.05f / 2f);
@@ -81,9 +81,7 @@ public class ArcherVsWorldEntityFactory {
 		
 		shape.dispose();
 
-		// 0.7112 meters
-
-		MassData massData = new MassData();
+		// 0.7112 mts
 
 		massData.center.set(0.35f / 2f, 0f);
 		massData.I = 0f;
@@ -101,11 +99,10 @@ public class ArcherVsWorldEntityFactory {
 		Vector2 lp = body.getWorldPoint(new Vector2(0f, 0f));
 		body.applyLinearImpulse(impulse, lp);
 
-		PhysicsBehavior arrowBehavior = new ArrowPhysicsBehavior();
-
-		body.setUserData(arrowBehavior);
-
 		Entity entity = world.createEntity();
+		
+		PhysicsBehavior arrowBehavior = new ArrowPhysicsBehavior(world, entity, this);
+		body.setUserData(arrowBehavior);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(arrowBehavior)));
 
@@ -116,7 +113,20 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(arrowTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
+	}
+	
+	public void createArrow(Vector2 position, float angle) {
+		Entity entity = world.createEntity();
+		
+		entity.addComponent(new SpatialComponent( //
+				new SimpleProperty<Vector2>(position), //
+				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
+				new SimpleProperty<FloatValue>(new FloatValue(angle))));
+		entity.addComponent(new SpriteComponent( //
+				new SimpleProperty<Sprite>(new Sprite(arrowTexture)), // 
+				new SimpleProperty<IntValue>(new IntValue(1))));
 
+		entity.refresh();
 	}
 
 	public void createBow(Vector2 position) {

@@ -61,7 +61,7 @@ public class UpdateBowSystem extends EntitySystem {
 				float len = mul.len();
 				mul.nor();
 				
-				entityFactory.createArrow(spatialComponent.getPosition(), mul, len);
+				entityFactory.createPhysicsArrow(spatialComponent.getPosition(), mul, len);
 				
 			}
 			

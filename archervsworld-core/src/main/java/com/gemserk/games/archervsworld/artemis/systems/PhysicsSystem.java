@@ -82,6 +82,20 @@ public class PhysicsSystem extends EntitySystem {
 	protected boolean checkProcessing() {
 		return true;
 	}
+	
+	@Override
+	protected void removed(Entity e) {
+		
+		// on entity being removed, should remove body from physics world
+		
+		PhysicsComponent component = e.getComponent(PhysicsComponent.class);
+		
+		Body body = component.getBody();
+		body.setUserData(null);
+		
+		physicsWorld.destroyBody(body);
+		
+	}
 
 	@Override
 	public void initialize() {
