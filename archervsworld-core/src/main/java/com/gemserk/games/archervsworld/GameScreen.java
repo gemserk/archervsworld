@@ -16,7 +16,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -26,19 +25,12 @@ import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
-import com.gemserk.commons.values.BooleanValue;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.properties.SimpleProperty;
-import com.gemserk.games.archervsworld.artemis.components.BowComponent;
-import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
-import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
-import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
-import com.gemserk.games.archervsworld.properties.Box2dAngleProperty;
-import com.gemserk.games.archervsworld.properties.Box2dPositionProperty;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -58,8 +50,6 @@ public class GameScreen extends ScreenAdapter {
 
 	private Body body;
 
-	private Texture arrowTexture;
-
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
 	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
@@ -71,6 +61,15 @@ public class GameScreen extends ScreenAdapter {
 
 		Texture fontTexture = new Texture(Gdx.files.internal("data/font.png"));
 		fontTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Texture rockTexture = new Texture(Gdx.files.internal("data/rock-512x512.png"));
+		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Texture arrowTexture = new Texture(Gdx.files.internal("data/arrow-512x512.png"));
+		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Texture texture = new Texture(Gdx.files.internal("data/bow-512x512.png"));
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		Sprite fontSprite = new Sprite(fontTexture);
 		BitmapFont font = new BitmapFont(Gdx.files.internal("data/font.fnt"), fontSprite, false);
@@ -109,16 +108,14 @@ public class GameScreen extends ScreenAdapter {
 				new SimpleProperty<BitmapFont>(font), //
 				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
 		
-		arrowTexture = new Texture(Gdx.files.internal("data/arrow-512x512.png"));
-		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
 		physicsWorld = physicsSystem.getPhysicsWorld();
-		
 		
 		archerVsWorldEntityFactory.setWorld(world);
 		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
 		archerVsWorldEntityFactory.setArrowTexture(arrowTexture);
-
+		archerVsWorldEntityFactory.setRockTexture(rockTexture);
+		archerVsWorldEntityFactory.setBowTexture(texture);
+		
 		PolygonShape groundPoly = new PolygonShape();
 		groundPoly.setAsBox(40, 1);
 
@@ -136,49 +133,19 @@ public class GameScreen extends ScreenAdapter {
 		groundBody.createFixture(groundPoly, 10);
 		groundPoly.dispose();
 
-		Texture rockTexture = new Texture(Gdx.files.internal("data/rock-512x512.png"));
-		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		createRock(rockTexture, physicsWorld, new Vector2(10, 1), new Vector2(0f, 0f));
-
-		// orthographicCamera.update();
-		// orthographicCamera.apply(Gdx.gl10);
+//		archerVsWorldEntityFactory.createRock(new Vector2(5, 3), new Vector2(3f, 3f), new Vector2(0f, 0f), 120f);
+		
+		archerVsWorldEntityFactory.createRock(new Vector2(7, 1), new Vector2(2f, 2f), new Vector2(0f, 0f), 210f);
+		
+//		archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
+		
 
 		createBackground();
 		
-		createBow();
+		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
 
 	}
 	
-	public void createBow() {
-		
-		Texture texture = new Texture(Gdx.files.internal("data/bow-512x512.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		Entity entity = world.createEntity();
-		
-		entity.setGroup(Groups.Bow);
-
-		int layer = 2;
-		
-		float bowHeight = 1.6f;
-		float bowWidth = 1.6f;
-
-		entity.addComponent(new SpatialComponent( //
-				new SimpleProperty<Vector2>(new Vector2(1f, 1.7f)), //
-				new SimpleProperty<Vector2>(new Vector2(bowWidth, bowHeight)), //
-				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(layer)), //
-				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f))));
-		entity.addComponent(new BowComponent(
-				new SimpleProperty<FloatValue>(new FloatValue(0f)), 
-				new SimpleProperty<BooleanValue>(new BooleanValue(false))));
-
-		entity.refresh();
-		
-	}
-
 	public void createBackground() {
 
 		Entity entity = world.createEntity();
@@ -198,47 +165,6 @@ public class GameScreen extends ScreenAdapter {
 
 		entity.refresh();
 
-	}
-
-	protected void createRock(Texture rockTexture, com.badlogic.gdx.physics.box2d.World physicsWorld, Vector2 startPosition, Vector2 startImpulse) {
-
-		Vector2 size = new Vector2(2f, 2f);
-
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.position.set(startPosition);
-		bodyDef.angularDamping = 1f;
-		bodyDef.linearDamping = 1f;
-
-		body = physicsWorld.createBody(bodyDef);
-
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(size.x / 4f, size.y / 4f);
-
-		// CircleShape shape = new CircleShape();
-		// shape.setPosition(new Vector2(0, 0));
-		// shape.setRadius(size.x * 0.3f);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.density = 1f;
-		fixtureDef.friction = 1f;
-		fixtureDef.shape = shape;
-
-		body.createFixture(fixtureDef);
-		shape.dispose();
-
-		body.applyLinearImpulse(startImpulse, body.getTransform().getPosition());
-
-		Entity entity = world.createEntity();
-
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
-		entity.addComponent(new SpatialComponent( //
-				new Box2dPositionProperty(body), //
-				new SimpleProperty<Vector2>(size), //
-				new Box2dAngleProperty(body)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(rockTexture)), new SimpleProperty<IntValue>(new IntValue(1))));
-
-		entity.refresh();
 	}
 
 	boolean wasTouched = false;
