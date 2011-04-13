@@ -6,6 +6,7 @@ import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
+import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
@@ -43,25 +44,54 @@ public class UpdateBowSystem extends EntitySystem {
 			
 			for (int i = 0; i < entities.size(); i++) {
 				Entity entity = entities.get(i);
-				SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
+				final SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 				Vector2 direction = pointer.getPressedPosition().cpy().sub(pointer.getPosition());
 				
-				BowComponent bowComponent = entity.getComponent(BowComponent.class);
+				final BowComponent bowComponent = entity.getComponent(BowComponent.class);
 				
 				float angle = direction.angle();
 				
 				int minFireAngle = -70;
 				int maxFireAngle = 80;
 				
+				Vector2 p0 = pointer.getPressedPosition();
+				Vector2 p1 = pointer.getPosition();
+				
+				Vector2 mul = p1.cpy().sub(p0).mul(-5f);
+				
+				float len = mul.len();
+				mul.nor();
+				
+				bowComponent.setPower(len);
+				
 				if (bowComponent.getArrow() == null) {
 				
-					Entity arrow = entityFactory.createArrow(spatialComponent.getPositionProperty(), spatialComponent.getAngleProperty());
+					// TODO: add it as a child using scene graph component so transformations will be handled automatically
+					
+					Entity arrow = entityFactory.createArrow(new AbstractProperty<Vector2>(){
+						
+						Vector2 position= new Vector2();
+						
+						Vector2 diff = new Vector2();
+						
+						@Override
+						public Vector2 get() {
+							position.set(spatialComponent.getPositionProperty().get());
+							
+							diff.set(1f,0f);
+							diff.rotate(spatialComponent.getAngle());
+							diff.mul(bowComponent.getPower() * 0.005f);
+							
+							position.sub(diff);
+							
+							return position;
+						}
+						
+					}, spatialComponent.getAngleProperty());
 					bowComponent.setArrow(arrow);
 					
 				}
 				
-//				bowComponent.setShouldFire(true);
-
 				if ((angleUtils.minimumDifference(angle, minFireAngle) < 0) && (angleUtils.minimumDifference(angle, maxFireAngle) > 0)) {
 					spatialComponent.setAngle(angle);
 				}
@@ -75,26 +105,22 @@ public class UpdateBowSystem extends EntitySystem {
 			for (int i = 0; i < entities.size(); i++) {
 				
 				Entity entity = entities.get(i);
-				SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 				BowComponent bowComponent = entity.getComponent(BowComponent.class);
 				
 				if (bowComponent.getArrow() == null)
 					continue;
 
-				Vector2 p0 = pointer.getPressedPosition();
-				Vector2 p1 = pointer.getReleasedPosition();
-				
-				Vector2 mul = p1.cpy().sub(p0).mul(-5f);
-				
-				float len = mul.len();
-				mul.nor();
-				
+				float power = bowComponent.getPower();
+
+				Entity arrow = bowComponent.getArrow();
+				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
+
 				direction.set(1f,0f);
-				direction.rotate(spatialComponent.getAngle());
+				direction.rotate(arrowSpatialComponent.getAngle());
 				
-				entityFactory.createPhysicsArrow(spatialComponent.getPosition(), direction, len);
+				entityFactory.createPhysicsArrow(arrowSpatialComponent.getPosition(), direction, power);
 				
-				world.deleteEntity(bowComponent.getArrow());
+				world.deleteEntity(arrow);
 				bowComponent.setArrow(null);
 				
 			}
