@@ -202,4 +202,44 @@ public class ArcherVsWorldEntityFactory {
 		
 	}
 	
+	public void createTree(Vector2 position, Vector2 size) {
+
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.StaticBody;
+		bodyDef.position.set(position);
+		bodyDef.angularDamping = 1f;
+		bodyDef.linearDamping = 1f;
+
+		Body body = physicsWorld.createBody(bodyDef);
+
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(size.y * 0.1f * 0.125f, size.y / 2f - 0.1f);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.density = 1f;
+		fixtureDef.friction = 1f;
+		fixtureDef.shape = shape;
+		
+		fixtureDef.filter.categoryBits = CollisionDefinitions.RockGroup;
+		fixtureDef.filter.maskBits = CollisionDefinitions.All;
+
+		body.createFixture(fixtureDef);
+		shape.dispose();
+
+		Entity entity = world.createEntity();
+		
+		Resource<Texture> resource = resourceManager.get("Tree");
+		Texture texture = resource.get();
+
+		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
+		entity.addComponent(new SpatialComponent( //
+				new Box2dPositionProperty(body), //
+				new SimpleProperty<Vector2>(size), //
+				new Box2dAngleProperty(body)));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
+
+		entity.refresh();
+		
+	}
+	
 }

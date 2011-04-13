@@ -105,6 +105,17 @@ public class GameScreen extends ScreenAdapter {
 						t.dispose();
 					}
 				}, false)));
+		
+		Texture treeTexture = new Texture(Gdx.files.internal("data/tree-512x512.png"));
+		treeTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		resourceManager.add("Tree", new CachedResourceLoader<Texture>(
+				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(treeTexture) {
+					@Override
+					public void dispose(Texture t) {
+						t.dispose();
+					}
+				}, false)));
 
 		Sprite fontSprite = new Sprite(fontTexture);
 		BitmapFont font = new BitmapFont(Gdx.files.internal("data/font.fnt"), fontSprite, false);
@@ -166,6 +177,8 @@ public class GameScreen extends ScreenAdapter {
 		// archerVsWorldEntityFactory.createRock(new Vector2(5, 3), new Vector2(3f, 3f), new Vector2(0f, 0f), 120f);
 
 		archerVsWorldEntityFactory.createRock(new Vector2(7, 1), new Vector2(2f, 2f), new Vector2(0f, 0f), 210f);
+		
+		// archerVsWorldEntityFactory.createTree(new Vector2(15, 4.1f), new Vector2(8f, 8f));
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
 
