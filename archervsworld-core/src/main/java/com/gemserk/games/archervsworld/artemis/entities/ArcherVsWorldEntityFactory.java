@@ -13,9 +13,9 @@ import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
-import com.gemserk.commons.values.BooleanValue;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
+import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.components.ArrowPhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
@@ -112,21 +112,28 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 	}
 	
-	public void createArrow(Vector2 position, float angle) {
+	public Entity createArrow(Vector2 position, float angle) {
+		SimpleProperty<Vector2> positionProperty = new SimpleProperty<Vector2>(position);
+		SimpleProperty<FloatValue> angleProperty = new SimpleProperty<FloatValue>(new FloatValue(angle));
+		return createArrow(positionProperty, angleProperty);
+	}
+
+	public Entity createArrow(Property<Vector2> positionProperty, Property<FloatValue> angleProperty) {
 		Entity entity = world.createEntity();
-		
+
 		Resource<Texture> resource = resourceManager.get("Arrow");
 		Texture texture = resource.get();
-		
+
 		entity.addComponent(new SpatialComponent( //
-				new SimpleProperty<Vector2>(position), //
+				positionProperty, //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
-				new SimpleProperty<FloatValue>(new FloatValue(angle))));
+				angleProperty));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), // 
 				new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
+		return entity;
 	}
 
 	public void createBow(Vector2 position) {
@@ -153,7 +160,8 @@ public class ArcherVsWorldEntityFactory {
 
 		 entity.addComponent(new BowComponent(
 		 new SimpleProperty<FloatValue>(new FloatValue(0f)),
-		 new SimpleProperty<BooleanValue>(new BooleanValue(false))));
+		 new SimpleProperty<Entity>(null)
+		 ));
 
 		entity.refresh();
 

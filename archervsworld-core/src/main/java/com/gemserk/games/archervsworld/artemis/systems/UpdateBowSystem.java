@@ -53,14 +53,19 @@ public class UpdateBowSystem extends EntitySystem {
 				int minFireAngle = -70;
 				int maxFireAngle = 80;
 				
-				bowComponent.setShouldFire(true);
+				if (bowComponent.getArrow() == null) {
+				
+					Entity arrow = entityFactory.createArrow(spatialComponent.getPositionProperty(), spatialComponent.getAngleProperty());
+					bowComponent.setArrow(arrow);
+					
+				}
+				
+//				bowComponent.setShouldFire(true);
 
 				if ((angleUtils.minimumDifference(angle, minFireAngle) < 0) && (angleUtils.minimumDifference(angle, maxFireAngle) > 0)) {
 					spatialComponent.setAngle(angle);
 				}
-//				else {
-//					bowComponent.setShouldFire(false);
-//				}
+				
 			}
 			
 		}
@@ -73,7 +78,7 @@ public class UpdateBowSystem extends EntitySystem {
 				SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 				BowComponent bowComponent = entity.getComponent(BowComponent.class);
 				
-				if (!bowComponent.getShouldFire())
+				if (bowComponent.getArrow() == null)
 					continue;
 
 				Vector2 p0 = pointer.getPressedPosition();
@@ -89,7 +94,8 @@ public class UpdateBowSystem extends EntitySystem {
 				
 				entityFactory.createPhysicsArrow(spatialComponent.getPosition(), direction, len);
 				
-				bowComponent.setShouldFire(false);
+				world.deleteEntity(bowComponent.getArrow());
+				bowComponent.setArrow(null);
 				
 			}
 			
