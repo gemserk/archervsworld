@@ -57,12 +57,14 @@ public class UpdateBowSystem extends EntitySystem {
 				Vector2 p0 = pointer.getPressedPosition();
 				Vector2 p1 = pointer.getPosition();
 				
-				Vector2 mul = p1.cpy().sub(p0).mul(-5f);
+				// the power multiplier
+				float multiplier = 3f;
 				
-				float len = mul.len();
-				mul.nor();
+				Vector2 mul = p1.cpy().sub(p0).mul(-1f).mul(multiplier);
 				
-				bowComponent.setPower(len);
+				float power = truncate(mul.len(), bowComponent.getMinPower(), bowComponent.getMaxPower());
+				
+				bowComponent.setPower(power);
 				
 				if (bowComponent.getArrow() == null) {
 				
@@ -111,7 +113,7 @@ public class UpdateBowSystem extends EntitySystem {
 					continue;
 
 				float power = bowComponent.getPower();
-
+				
 				Entity arrow = bowComponent.getArrow();
 				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
 
@@ -127,6 +129,14 @@ public class UpdateBowSystem extends EntitySystem {
 			
 		}
 		
+	}
+
+	public float truncate(float a, float min, float max) {
+		if (a < min)
+			a = min;
+		if (a > max)
+			a = max;
+		return a;
 	}
 	
 	@Override

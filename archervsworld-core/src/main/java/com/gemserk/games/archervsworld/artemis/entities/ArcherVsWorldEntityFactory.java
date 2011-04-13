@@ -43,13 +43,13 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	ResourceManager<String> resourceManager;
-	
+
 	public void setResourceManager(ResourceManager<String> resourceManager) {
 		this.resourceManager = resourceManager;
 	}
 
 	private MassData massData = new MassData();
-	
+
 	public void createPhysicsArrow(Vector2 position, Vector2 direction, float power) {
 
 		BodyDef bodyDef = new BodyDef();
@@ -66,12 +66,12 @@ public class ArcherVsWorldEntityFactory {
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
 		fixtureDef.friction = 0.8f;
-		
+
 		fixtureDef.filter.categoryBits = CollisionDefinitions.ArrowGroup;
 		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup;
 
 		body.createFixture(fixtureDef);
-		
+
 		shape.dispose();
 
 		// 0.7112 mts
@@ -93,7 +93,7 @@ public class ArcherVsWorldEntityFactory {
 		body.applyLinearImpulse(impulse, lp);
 
 		Entity entity = world.createEntity();
-		
+
 		PhysicsBehavior arrowBehavior = new ArrowPhysicsBehavior(world, entity, this);
 		body.setUserData(arrowBehavior);
 
@@ -103,15 +103,15 @@ public class ArcherVsWorldEntityFactory {
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
 				new Box2dAngleProperty(body)));
-		
+
 		Resource<Texture> resource = resourceManager.get("Arrow");
 		Texture texture = resource.get();
-		
+
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
 	}
-	
+
 	public Entity createArrow(Vector2 position, float angle) {
 		SimpleProperty<Vector2> positionProperty = new SimpleProperty<Vector2>(position);
 		SimpleProperty<FloatValue> angleProperty = new SimpleProperty<FloatValue>(new FloatValue(angle));
@@ -129,7 +129,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
 				angleProperty));
 		entity.addComponent(new SpriteComponent( //
-				new SimpleProperty<Sprite>(new Sprite(texture)), // 
+				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
@@ -146,7 +146,7 @@ public class ArcherVsWorldEntityFactory {
 
 		float bowHeight = 1.6f;
 		float bowWidth = 1.6f;
-		
+
 		Resource<Texture> resource = resourceManager.get("Bow");
 		Texture texture = resource.get();
 
@@ -158,10 +158,11 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f))));
 
-		 entity.addComponent(new BowComponent(
-		 new SimpleProperty<FloatValue>(new FloatValue(0f)),
-		 new SimpleProperty<Entity>(null)
-		 ));
+		entity.addComponent(new BowComponent( //
+				new SimpleProperty<FloatValue>(new FloatValue(0f)), //
+				new SimpleProperty<Entity>(null),//
+				new SimpleProperty<FloatValue>(new FloatValue(5f)), //
+				new SimpleProperty<FloatValue>(new FloatValue(35f))));
 
 		entity.refresh();
 
@@ -184,7 +185,7 @@ public class ArcherVsWorldEntityFactory {
 		fixtureDef.density = 1f;
 		fixtureDef.friction = 1f;
 		fixtureDef.shape = shape;
-		
+
 		fixtureDef.filter.categoryBits = CollisionDefinitions.RockGroup;
 		fixtureDef.filter.maskBits = CollisionDefinitions.All;
 
@@ -192,11 +193,11 @@ public class ArcherVsWorldEntityFactory {
 		shape.dispose();
 
 		body.setTransform(position, (float) (angle / 180f * Math.PI));
-		
+
 		body.applyLinearImpulse(startImpulse, body.getTransform().getPosition());
 
 		Entity entity = world.createEntity();
-		
+
 		Resource<Texture> resource = resourceManager.get("Rock");
 		Texture texture = resource.get();
 
@@ -208,9 +209,9 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
-		
+
 	}
-	
+
 	public void createTree(Vector2 position, Vector2 size) {
 
 		BodyDef bodyDef = new BodyDef();
@@ -228,7 +229,7 @@ public class ArcherVsWorldEntityFactory {
 		fixtureDef.density = 1f;
 		fixtureDef.friction = 1f;
 		fixtureDef.shape = shape;
-		
+
 		fixtureDef.filter.categoryBits = CollisionDefinitions.RockGroup;
 		fixtureDef.filter.maskBits = CollisionDefinitions.All;
 
@@ -236,7 +237,7 @@ public class ArcherVsWorldEntityFactory {
 		shape.dispose();
 
 		Entity entity = world.createEntity();
-		
+
 		Resource<Texture> resource = resourceManager.get("Tree");
 		Texture texture = resource.get();
 
@@ -248,9 +249,9 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
-		
+
 	}
-	
+
 	public void createWalkingDead(Vector2 position, Vector2 size, Vector2 velocity) {
 
 		BodyDef bodyDef = new BodyDef();
@@ -259,7 +260,7 @@ public class ArcherVsWorldEntityFactory {
 		bodyDef.fixedRotation = true;
 		// bodyDef.angularDamping = 1f;
 		// bodyDef.linearDamping = 1f;
-		
+
 		Body body = physicsWorld.createBody(bodyDef);
 
 		PolygonShape shape = new PolygonShape();
@@ -269,16 +270,16 @@ public class ArcherVsWorldEntityFactory {
 		fixtureDef.density = 1f;
 		// fixtureDef.friction = 0.5f;
 		fixtureDef.shape = shape;
-		
+
 		fixtureDef.filter.categoryBits = CollisionDefinitions.EnemiesGroup;
 		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.EnemiesGroup;
 
 		body.createFixture(fixtureDef);
-		
+
 		shape.dispose();
 
 		Entity entity = world.createEntity();
-		
+
 		Resource<Texture> resource = resourceManager.get("Rock");
 		Texture texture = resource.get();
 
@@ -289,15 +290,13 @@ public class ArcherVsWorldEntityFactory {
 				new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 		entity.addComponent(new WalkingDeadComponent( //
-				new SimpleProperty<Vector2>(null), // 
-				new SimpleProperty<Vector2>(velocity), // 
+				new SimpleProperty<Vector2>(null), //
+				new SimpleProperty<Vector2>(velocity), //
 				new SimpleProperty<IntValue>(new IntValue(0)), //
-				new SimpleProperty<IntValue>(new IntValue(1000)),
-				new SimpleProperty<IntValue>(new IntValue(2000))
-				));
-		
+				new SimpleProperty<IntValue>(new IntValue(1000)), new SimpleProperty<IntValue>(new IntValue(2000))));
+
 		entity.refresh();
-		
+
 	}
-	
+
 }

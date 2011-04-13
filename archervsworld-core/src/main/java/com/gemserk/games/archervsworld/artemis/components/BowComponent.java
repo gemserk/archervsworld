@@ -11,12 +11,24 @@ public class BowComponent extends Component {
 
 	private Property<Entity> arrow;
 
+	private Property<FloatValue> minPower;
+
+	private Property<FloatValue> maxPower;
+
 	public float getPower() {
 		return power.get().value;
 	}
 
 	public void setPower(float power) {
 		this.power.get().value = power;
+	}
+	
+	public float getMinPower() {
+		return minPower.get().value;
+	}
+	
+	public float getMaxPower() {
+		return maxPower.get().value;
 	}
 
 	public Entity getArrow() {
@@ -27,9 +39,11 @@ public class BowComponent extends Component {
 		this.arrow.set(arrow);
 	}
 
-	public BowComponent(Property<FloatValue> power, Property<Entity> arrow) {
+	public BowComponent(Property<FloatValue> power, Property<Entity> arrow, Property<FloatValue> minPower, Property<FloatValue> maxPower) {
 		this.power = power;
 		this.arrow = arrow;
+		this.minPower = minPower;
+		this.maxPower = maxPower;
 	}
 
 }
