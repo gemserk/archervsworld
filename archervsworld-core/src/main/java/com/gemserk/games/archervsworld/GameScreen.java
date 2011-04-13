@@ -1,5 +1,7 @@
 package com.gemserk.games.archervsworld;
 
+import java.util.ArrayList;
+
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Game;
@@ -27,10 +29,14 @@ import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
+import com.gemserk.componentsengine.input.ButtonMonitor;
+import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
+import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
+import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
 import com.gemserk.resources.dataloaders.StaticDataLoader;
@@ -38,6 +44,24 @@ import com.gemserk.resources.resourceloaders.CachedResourceLoader;
 import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
 public class GameScreen extends ScreenAdapter {
+
+	static class MonitorUpdaterImpl implements MonitorUpdater {
+		
+		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
+
+		@Override
+		public void update() {
+			for (int i = 0; i < buttonMonitors.size(); i++) {
+				ButtonMonitor buttonMonitor = buttonMonitors.get(i);
+				buttonMonitor.update();
+			}
+		}
+
+		public void add(ButtonMonitor buttonMonitor) {
+			buttonMonitors.add(buttonMonitor);
+		}
+		
+	}
 
 	private final Game game;
 
@@ -70,9 +94,182 @@ public class GameScreen extends ScreenAdapter {
 	public GameScreen(Game game) {
 		this.game = game;
 
-		Texture fontTexture = new Texture(Gdx.files.internal("data/font.png"));
-		fontTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		loadResources();
+		
+		entityFactory = new EntityFactory();
+		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
+		
+		camera = new OrthographicCamera(viewportWidth, viewportHeight);
+		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
 
+		restart();
+
+	}
+
+	protected void restart() {
+		textRendererSystem = new TextRendererSystem();
+		spriteRenderSystem = new SpriteRendererSystem(camera);
+		spriteUpdateSystem = new SpriteUpdateSystem();
+		
+		Vector2 gravity = new Vector2(0f, -10f);
+		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
+
+		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, camera), archerVsWorldEntityFactory);
+
+		world = new World();
+		world.getSystemManager().setSystem(textRendererSystem);
+		world.getSystemManager().setSystem(spriteRenderSystem);
+		world.getSystemManager().setSystem(spriteUpdateSystem);
+		world.getSystemManager().setSystem(physicsSystem);
+		world.getSystemManager().setSystem(updateBowSystem);
+		world.getSystemManager().initializeAll();
+		
+		entityFactory.setWorld(world);
+		
+		Resource<BitmapFont> fontResource = resourceManager.get("Font");
+		
+		entityFactory.fpsEntity( //
+				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
+				new SimpleProperty<BitmapFont>(fontResource.get()), //
+				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
+
+		physicsWorld = physicsSystem.getPhysicsWorld();
+
+		archerVsWorldEntityFactory.setWorld(world);
+		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
+		archerVsWorldEntityFactory.setResourceManager(resourceManager);
+
+		createGround();
+
+		// archerVsWorldEntityFactory.createRock(new Vector2(5, 3), new Vector2(3f, 3f), new Vector2(0f, 0f), 120f);
+
+		archerVsWorldEntityFactory.createRock(new Vector2(7, 1), new Vector2(2f, 2f), new Vector2(0f, 0f), 210f);
+		
+		// archerVsWorldEntityFactory.createTree(new Vector2(15, 4.1f), new Vector2(8f, 8f));
+
+		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
+
+		createBackground();
+
+		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
+		
+		monitorUpdater = new MonitorUpdaterImpl();
+		monitorUpdater.add(restartButtonMonitor);
+		monitorUpdater.add(zoomInButtonMonitor);
+		monitorUpdater.add(zoomOutButtonMonitor);
+		
+	}
+
+	protected void createGround() {
+		PolygonShape groundPoly = new PolygonShape();
+		groundPoly.setAsBox(40, 1);
+
+		BodyDef groundBodyDef = new BodyDef();
+		groundBodyDef.type = BodyType.StaticBody;
+		groundBodyDef.position.set(0, -0.5f);
+		Body groundBody = physicsWorld.createBody(groundBodyDef);
+
+		groundBody.createFixture(groundPoly, 10);
+		groundPoly.dispose();
+	}
+
+	public void createBackground() {
+
+		Entity entity = world.createEntity();
+
+		Texture texture = new Texture(Gdx.files.internal("data/background-512x512.jpg"));
+		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		int layer = -10;
+
+		entity.addComponent(new SpatialComponent( //
+				new SimpleProperty<Vector2>(new Vector2(0f, 0f)), //
+				new SimpleProperty<Vector2>(new Vector2(camera.viewportWidth, camera.viewportHeight)), //
+				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+				new SimpleProperty<IntValue>(new IntValue(layer)), //
+				new SimpleProperty<Vector2>(new Vector2(0f, 0f))));
+
+		entity.refresh();
+
+	}
+
+	private UpdateBowSystem updateBowSystem;
+
+	private EntityFactory entityFactory;
+	
+	private ButtonMonitor restartButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_R);
+	
+	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
+	
+	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
+
+	private MonitorUpdaterImpl monitorUpdater;
+
+	@Override
+	public void render(float delta) {
+
+		camera.update();
+		camera.apply(Gdx.gl10);
+
+		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
+
+		world.loopStart();
+		world.setDelta((int) (delta * 1000));
+
+		physicsSystem.process();
+		updateBowSystem.process();
+
+		spriteRenderSystem.process();
+		spriteUpdateSystem.process();
+		textRendererSystem.process();
+
+		camera.update();
+		camera.apply(Gdx.gl10);
+
+		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D))
+			renderer.render(physicsWorld);
+		
+		monitorUpdater.update();
+
+		if (zoomInButtonMonitor.isPressed()) {
+			zoom *= 0.5f;
+
+			camera.viewportHeight = viewportHeight * zoom;
+			camera.viewportWidth = viewportWidth * zoom;
+
+			camera.position.set(viewportWidth * zoom / 2, viewportHeight * zoom / 2, 0);
+		}
+		
+		
+		if (zoomOutButtonMonitor.isPressed()) {
+			zoom *= 2f;
+
+			camera.viewportHeight = viewportHeight * zoom;
+			camera.viewportWidth = viewportWidth * zoom;
+
+			// camera = new OrthographicCamera(viewportWidth * zoom, viewportHeight * zoom);
+
+			camera.position.set(viewportWidth * zoom / 2, viewportHeight * zoom / 2, 0);
+		}
+		
+		if (restartButtonMonitor.isReleased()) 
+			restart();
+
+	}
+
+	@Override
+	public void resize(int width, int height) {
+
+	}
+
+	@Override
+	public void show() {
+
+	}
+	
+protected void loadResources() {
+		
 		Texture rockTexture = new Texture(Gdx.files.internal("data/rock-512x512.png"));
 		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
@@ -116,181 +313,26 @@ public class GameScreen extends ScreenAdapter {
 						t.dispose();
 					}
 				}, false)));
-
-		Sprite fontSprite = new Sprite(fontTexture);
-		BitmapFont font = new BitmapFont(Gdx.files.internal("data/font.fnt"), fontSprite, false);
-		// BitmapFont font = new BitmapFont();
-
-		// camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-		camera = new OrthographicCamera(viewportWidth, viewportHeight);
-		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
-
-		// camera.zoom = 0.05f;
-		// camera.translate(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0f);
-
-		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
-
-		textRendererSystem = new TextRendererSystem();
-		spriteRenderSystem = new SpriteRendererSystem(camera);
-		spriteUpdateSystem = new SpriteUpdateSystem();
-		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(new Vector2(0f, -10f), true));
-		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, camera), archerVsWorldEntityFactory);
-
-		world = new World();
-		world.getSystemManager().setSystem(textRendererSystem);
-		world.getSystemManager().setSystem(spriteRenderSystem);
-		world.getSystemManager().setSystem(spriteUpdateSystem);
-		world.getSystemManager().setSystem(physicsSystem);
-		world.getSystemManager().setSystem(updateBowSystem);
-		world.getSystemManager().initializeAll();
-
-		EntityFactory entityFactory = new EntityFactory(world);
-		entityFactory.fpsEntity( //
-				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-				new SimpleProperty<BitmapFont>(font), //
-				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
-
-		physicsWorld = physicsSystem.getPhysicsWorld();
-
-		archerVsWorldEntityFactory.setWorld(world);
-		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
-		archerVsWorldEntityFactory.setResourceManager(resourceManager);
-
-		PolygonShape groundPoly = new PolygonShape();
-		groundPoly.setAsBox(40, 1);
-
-		// next we create the body for the ground platform. It's
-		// simply a static body.
-		BodyDef groundBodyDef = new BodyDef();
-		groundBodyDef.type = BodyType.StaticBody;
-		groundBodyDef.position.set(0, -0.5f);
-		Body groundBody = physicsWorld.createBody(groundBodyDef);
-
-		// finally we add a fixture to the body using the polygon
-		// defined above. Note that we have to dispose PolygonShapes
-		// and CircleShapes once they are no longer used. This is the
-		// only time you have to care explicitely for memomry managment.
-		groundBody.createFixture(groundPoly, 10);
-		groundPoly.dispose();
-
-		// archerVsWorldEntityFactory.createRock(new Vector2(5, 3), new Vector2(3f, 3f), new Vector2(0f, 0f), 120f);
-
-		archerVsWorldEntityFactory.createRock(new Vector2(7, 1), new Vector2(2f, 2f), new Vector2(0f, 0f), 210f);
 		
-		// archerVsWorldEntityFactory.createTree(new Vector2(15, 4.1f), new Vector2(8f, 8f));
-
-		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
-
-		createBackground();
-
-		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
-
-	}
-
-	public void createBackground() {
-
-		Entity entity = world.createEntity();
-
-		Texture texture = new Texture(Gdx.files.internal("data/background-512x512.jpg"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		int layer = -10;
-
-		entity.addComponent(new SpatialComponent( //
-				new SimpleProperty<Vector2>(new Vector2(0f, 0f)), //
-				new SimpleProperty<Vector2>(new Vector2(camera.viewportWidth, camera.viewportHeight)), //
-				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(layer)), //
-				new SimpleProperty<Vector2>(new Vector2(0f, 0f))));
-
-		entity.refresh();
-
-	}
-
-	boolean zoomInTouched = false;
-	
-	boolean zoomOutTouched = false;
-
-	private UpdateBowSystem updateBowSystem;
-
-	@Override
-	public void render(float delta) {
-
-		camera.update();
-		camera.apply(Gdx.gl10);
-
-		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		world.loopStart();
-		world.setDelta((int) (delta * 1000));
-
-		physicsSystem.process();
-		updateBowSystem.process();
-
-		spriteRenderSystem.process();
-		spriteUpdateSystem.process();
-		textRendererSystem.process();
-
-		camera.update();
-		camera.apply(Gdx.gl10);
-
-		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D))
-			renderer.render(physicsWorld);
-
-		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_DPAD_UP)) {
-
-			if (!zoomInTouched) {
-
-				zoom *= 0.5f;
-
-				camera.viewportHeight = viewportHeight * zoom;
-				camera.viewportWidth = viewportWidth * zoom;
-
-				// camera = new OrthographicCamera(viewportWidth * zoom, viewportHeight * zoom);
-
-				camera.position.set(viewportWidth * zoom / 2, viewportHeight * zoom / 2, 0);
-
-				zoomInTouched = true;
-
-			} 
-
-		} else {
-			 zoomInTouched = false;
-		}
+		Texture fontTexture = new Texture(Gdx.files.internal("data/font.png"));
+		fontTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_DPAD_DOWN)) {
+		resourceManager.add("FontTexture", new CachedResourceLoader<Texture>(
+				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(fontTexture) {
+					@Override
+					public void dispose(Texture t) {
+						t.dispose();
+					}
+				}, false)));
 
-			if (!zoomOutTouched) {
-
-				zoom *= 2f;
-
-				camera.viewportHeight = viewportHeight * zoom;
-				camera.viewportWidth = viewportWidth * zoom;
-
-				// camera = new OrthographicCamera(viewportWidth * zoom, viewportHeight * zoom);
-
-				camera.position.set(viewportWidth * zoom / 2, viewportHeight * zoom / 2, 0);
-
-				zoomOutTouched = true;
-
-			} 
-
-		} else {
-			zoomOutTouched = false;
-		}
-
-	}
-
-	@Override
-	public void resize(int width, int height) {
-
-	}
-
-	@Override
-	public void show() {
-
+		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(
+				new ResourceLoaderImpl<BitmapFont>(new StaticDataLoader<BitmapFont>(new BitmapFont(Gdx.files.internal("data/font.fnt"), new Sprite(fontTexture), false)) {
+					@Override
+					public void dispose(BitmapFont t) {
+						t.dispose();
+					}
+				}, false)));
+		
 	}
 
 	@Override
