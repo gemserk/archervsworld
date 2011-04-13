@@ -35,6 +35,7 @@ import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
+import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
@@ -116,6 +117,9 @@ public class GameScreen extends ScreenAdapter {
 
 		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, camera), archerVsWorldEntityFactory);
 		walkingDeadSystem = new WalkingDeadSystem();
+		gameLogicSystem = new GameLogicSystem();
+		
+		gameLogicSystem.setArcherVsWorldEntityFactory(archerVsWorldEntityFactory);
 
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
@@ -124,6 +128,7 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(physicsSystem);
 		world.getSystemManager().setSystem(updateBowSystem);
 		world.getSystemManager().setSystem(walkingDeadSystem);
+		world.getSystemManager().setSystem(gameLogicSystem);
 		world.getSystemManager().initializeAll();
 
 		entityFactory.setWorld(world);
@@ -220,6 +225,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private FloatValue nextZoom = new FloatValue(0);
 
+	private GameLogicSystem gameLogicSystem;
+
 	@Override
 	public void render(float delta) {
 
@@ -233,10 +240,12 @@ public class GameScreen extends ScreenAdapter {
 
 		updateBowSystem.process();
 		walkingDeadSystem.process();
+		
 		physicsSystem.process();
+		gameLogicSystem.process();
 
-		spriteRenderSystem.process();
 		spriteUpdateSystem.process();
+		spriteRenderSystem.process();
 		textRendererSystem.process();
 
 		camera.update();

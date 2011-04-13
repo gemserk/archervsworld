@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 
@@ -28,20 +27,21 @@ public class ArrowPhysicsBehavior extends PhysicsBehavior {
 
 	@Override
 	public void update(com.badlogic.gdx.physics.box2d.World world, Body body) {
+		
 
-		if (!body.isAwake() || body.getType() == BodyType.StaticBody) {
-			this.world.deleteEntity(entity);
-			SpatialComponent component = entity.getComponent(SpatialComponent.class);
-			archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
-			return;
-		}
-
-		if (!shouldProcess)
-			return;
-
-		Vector2 linearVelocity = body.getLinearVelocity();
-		float angle = linearVelocity.angle();
-		body.setTransform(body.getPosition(), (float) (angle / 180f * Math.PI));
+//		if (!body.isAwake() || body.getType() == BodyType.StaticBody) {
+//			this.world.deleteEntity(entity);
+//			SpatialComponent component = entity.getComponent(SpatialComponent.class);
+//			archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
+//			return;
+//		}
+//
+//		if (!shouldProcess)
+//			return;
+//
+//		Vector2 linearVelocity = body.getLinearVelocity();
+//		float angle = linearVelocity.angle();
+//		body.setTransform(body.getPosition(), (float) (angle / 180f * Math.PI));
 	}
 
 	AngleUtils angleUtils = new AngleUtils();

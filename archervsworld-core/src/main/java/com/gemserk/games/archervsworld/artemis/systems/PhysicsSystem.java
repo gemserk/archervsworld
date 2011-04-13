@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
-import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
+import com.gemserk.games.archervsworld.artemis.components.Box2dCollisionComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 
 public class PhysicsSystem extends EntitySystem {
@@ -19,10 +19,22 @@ public class PhysicsSystem extends EntitySystem {
 
 			Body bodyA = contact.getFixtureA().getBody();
 			Body bodyB = contact.getFixtureB().getBody();
+			
+			Entity entityA = (Entity) bodyA.getUserData();
+			Entity entityB = (Entity) bodyB.getUserData();
+			
+			if (entityA != null) {
+				Box2dCollisionComponent collisionComponent = entityA.getComponent(Box2dCollisionComponent.class);
+				collisionComponent.getContact().removeBox2dContact();
+				collisionComponent.setEntity(null);
+			}
 
-			endContactBodyUserData(contact, bodyA);
-			endContactBodyUserData(contact, bodyB);
-
+			if (entityB != null) {
+				Box2dCollisionComponent collisionComponent = entityB.getComponent(Box2dCollisionComponent.class);
+				collisionComponent.getContact().removeBox2dContact();
+				collisionComponent.setEntity(null);
+			}
+			
 		}
 
 		@Override
@@ -30,25 +42,24 @@ public class PhysicsSystem extends EntitySystem {
 
 			Body bodyA = contact.getFixtureA().getBody();
 			Body bodyB = contact.getFixtureB().getBody();
+			
+			Entity entityA = (Entity) bodyA.getUserData();
+			Entity entityB = (Entity) bodyB.getUserData();
+			
+			if (entityA != null) {
+				Box2dCollisionComponent collisionComponent = entityA.getComponent(Box2dCollisionComponent.class);
+				collisionComponent.getContact().setBox2dContact(contact);
+				collisionComponent.setEntity(entityB);
+			}
 
-			beginContactBodyUserData(contact, bodyA);
-			beginContactBodyUserData(contact, bodyB);
+			if (entityB != null) {
+				Box2dCollisionComponent collisionComponent = entityB.getComponent(Box2dCollisionComponent.class);
+				collisionComponent.getContact().setBox2dContact(contact);
+				collisionComponent.setEntity(entityA);
+			}
 
 		}
 
-		protected void beginContactBodyUserData(Contact contact, Body body) {
-			Object userData = body.getUserData();
-
-			if (userData instanceof PhysicsBehavior)
-				((PhysicsBehavior) userData).beginContact(body, contact);
-		}
-
-		protected void endContactBodyUserData(Contact contact, Body body) {
-			Object userData = body.getUserData();
-
-			if (userData instanceof PhysicsBehavior)
-				((PhysicsBehavior) userData).endContact(body, contact);
-		}
 	}
 
 	World physicsWorld;
@@ -67,15 +78,14 @@ public class PhysicsSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		for (int i = 0; i < entities.size(); i++) {
-
-			Entity entity = entities.get(i);
-			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
-
-			Body body = physicsComponent.getBody();
-			physicsComponent.getPhysicsBehavior().update(physicsWorld, body);
-
-		}
+//		for (int i = 0; i < entities.size(); i++) {
+//
+//			Entity entity = entities.get(i);
+//			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
+//
+//			Body body = physicsComponent.getBody();
+//
+//		}
 	}
 
 	@Override

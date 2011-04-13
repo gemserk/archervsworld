@@ -19,6 +19,7 @@ import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.components.ArrowPhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
+import com.gemserk.games.archervsworld.artemis.components.Box2dCollisionComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
@@ -93,12 +94,16 @@ public class ArcherVsWorldEntityFactory {
 		body.applyLinearImpulse(impulse, lp);
 
 		Entity entity = world.createEntity();
+		
+		entity.setGroup(Groups.Arrow);
 
 		PhysicsBehavior arrowBehavior = new ArrowPhysicsBehavior(world, entity, this);
-		body.setUserData(arrowBehavior);
+		
+		body.setUserData(entity);
 
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(arrowBehavior)));
-
+		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
+		entity.addComponent(new Box2dCollisionComponent());
+		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
@@ -197,11 +202,15 @@ public class ArcherVsWorldEntityFactory {
 		body.applyLinearImpulse(startImpulse, body.getTransform().getPosition());
 
 		Entity entity = world.createEntity();
+		
+		body.setUserData(entity);
 
 		Resource<Texture> resource = resourceManager.get("Rock");
 		Texture texture = resource.get();
 
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
+		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
+		entity.addComponent(new Box2dCollisionComponent());
+		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
@@ -237,11 +246,15 @@ public class ArcherVsWorldEntityFactory {
 		shape.dispose();
 
 		Entity entity = world.createEntity();
+		
+		body.setUserData(entity);
 
 		Resource<Texture> resource = resourceManager.get("Tree");
 		Texture texture = resource.get();
 
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
+		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
+		entity.addComponent(new Box2dCollisionComponent());
+		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
@@ -279,11 +292,15 @@ public class ArcherVsWorldEntityFactory {
 		shape.dispose();
 
 		Entity entity = world.createEntity();
+		
+		body.setUserData(entity);
 
 		Resource<Texture> resource = resourceManager.get("Rock");
 		Texture texture = resource.get();
 
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
+		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
+		entity.addComponent(new Box2dCollisionComponent());
+		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
