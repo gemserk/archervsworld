@@ -12,6 +12,10 @@ public class WalkingDeadComponent extends Component {
 	private Property<Vector2> force;
 
 	private Property<IntValue> walkSleep;
+
+	private Property<IntValue> minSleepTime;
+
+	private Property<IntValue> maxSleepTime;
 	
 	public Vector2 getTarget() {
 		return target.get();
@@ -28,11 +32,21 @@ public class WalkingDeadComponent extends Component {
 	public void setWalkSleep(int walkSleep) {
 		this.walkSleep.get().value = walkSleep;
 	}
+	
+	public int getMinSleepTime() {
+		return minSleepTime.get().value;
+	}
+	
+	public int getMaxSleepTime() {
+		return maxSleepTime.get().value;
+	}
 
-	public WalkingDeadComponent(Property<Vector2> target, Property<Vector2> force, Property<IntValue> walkSleep) {
+	public WalkingDeadComponent(Property<Vector2> target, Property<Vector2> force, Property<IntValue> walkSleep, Property<IntValue> minSleepTime, Property<IntValue> maxSleepTime) {
 		this.target = target;
 		this.force = force;
 		this.walkSleep = walkSleep;
+		this.minSleepTime = minSleepTime;
+		this.maxSleepTime = maxSleepTime;
 	}
 	
 }

@@ -283,7 +283,10 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new WalkingDeadComponent( //
 				new SimpleProperty<Vector2>(null), // 
 				new SimpleProperty<Vector2>(velocity), // 
-				new SimpleProperty<IntValue>(new IntValue(1500))));
+				new SimpleProperty<IntValue>(new IntValue(0)), //
+				new SimpleProperty<IntValue>(new IntValue(1000)),
+				new SimpleProperty<IntValue>(new IntValue(2000))
+				));
 		
 		entity.refresh();
 		

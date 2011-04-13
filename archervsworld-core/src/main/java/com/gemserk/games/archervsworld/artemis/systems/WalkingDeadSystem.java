@@ -1,5 +1,7 @@
 package com.gemserk.games.archervsworld.artemis.systems;
 
+import java.util.Random;
+
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
@@ -9,6 +11,8 @@ import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 
 public class WalkingDeadSystem extends EntitySystem {
+	
+	private static final Random random = new Random();
 
 	public WalkingDeadSystem() {
 		super(WalkingDeadComponent.class);
@@ -31,7 +35,6 @@ public class WalkingDeadSystem extends EntitySystem {
 			if (walkSleep > 0) 
 				continue;
 			
-			
 			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
 
 			Body body = physicsComponent.getBody();
@@ -42,7 +45,12 @@ public class WalkingDeadSystem extends EntitySystem {
 			body.applyLinearImpulse(force, position);
 			// body.applyForce(force, position);
 
-			walkingDeadComponent.setWalkSleep(1500);
+			int minSleepTime = walkingDeadComponent.getMinSleepTime();
+			int maxSleepTime = walkingDeadComponent.getMaxSleepTime();
+			
+			int sleepTime = random.nextInt(maxSleepTime - minSleepTime) + minSleepTime;
+			
+			walkingDeadComponent.setWalkSleep(sleepTime);
 			
 		}
 
