@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
@@ -47,7 +48,7 @@ import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 public class GameScreen extends ScreenAdapter {
 
 	static class MonitorUpdaterImpl implements MonitorUpdater {
-		
+
 		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
 
 		@Override
@@ -61,7 +62,7 @@ public class GameScreen extends ScreenAdapter {
 		public void add(ButtonMonitor buttonMonitor) {
 			buttonMonitors.add(buttonMonitor);
 		}
-		
+
 	}
 
 	private final Game game;
@@ -84,22 +85,20 @@ public class GameScreen extends ScreenAdapter {
 
 	int viewportHeight = 12;
 
-	float zoom = 1f;
-
 	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
-	
+
 	ResourceManager<String> resourceManager = new ResourceManagerImpl<String>();
 
 	public GameScreen(Game game) {
 		this.game = game;
 
 		loadResources();
-		
+
 		entityFactory = new EntityFactory();
 		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
-		
+
 		camera = new OrthographicCamera(viewportWidth, viewportHeight);
 		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
 
@@ -111,7 +110,7 @@ public class GameScreen extends ScreenAdapter {
 		textRendererSystem = new TextRendererSystem();
 		spriteRenderSystem = new SpriteRendererSystem(camera);
 		spriteUpdateSystem = new SpriteUpdateSystem();
-		
+
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
 
@@ -126,11 +125,11 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(updateBowSystem);
 		world.getSystemManager().setSystem(walkingDeadSystem);
 		world.getSystemManager().initializeAll();
-		
+
 		entityFactory.setWorld(world);
-		
+
 		Resource<BitmapFont> fontResource = resourceManager.get("Font");
-		
+
 		entityFactory.fpsEntity( //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
 				new SimpleProperty<BitmapFont>(fontResource.get()), //
@@ -156,12 +155,12 @@ public class GameScreen extends ScreenAdapter {
 		createBackground();
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
-		
+
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);
 		monitorUpdater.add(zoomInButtonMonitor);
 		monitorUpdater.add(zoomOutButtonMonitor);
-		
+
 	}
 
 	protected void createGround() {
@@ -201,16 +200,20 @@ public class GameScreen extends ScreenAdapter {
 	private UpdateBowSystem updateBowSystem;
 
 	private EntityFactory entityFactory;
-	
+
 	private ButtonMonitor restartButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_R);
-	
+
 	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
-	
+
 	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
 
 	private MonitorUpdaterImpl monitorUpdater;
 
 	private WalkingDeadSystem walkingDeadSystem;
+
+	private FloatValue zoom = new FloatValue(1f);
+
+	private FloatValue nextZoom = new FloatValue(0);
 
 	@Override
 	public void render(float delta) {
@@ -236,33 +239,26 @@ public class GameScreen extends ScreenAdapter {
 
 		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D))
 			renderer.render(physicsWorld);
-		
+
 		monitorUpdater.update();
+		Synchronizers.synchronize();
 
-		if (zoomInButtonMonitor.isPressed()) {
-			zoom *= 0.5f;
-
-			camera.viewportHeight = viewportHeight * zoom;
-			camera.viewportWidth = viewportWidth * zoom;
-
-			camera.position.set(viewportWidth * zoom / 2, viewportHeight * zoom / 2, 0);
+		if (zoomInButtonMonitor.isHolded()) {
+			zoom.value = zoom.value - 1f * delta;
+			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
 		}
-		
-		
-		if (zoomOutButtonMonitor.isPressed()) {
-			zoom *= 2f;
 
-			camera.viewportHeight = viewportHeight * zoom;
-			camera.viewportWidth = viewportWidth * zoom;
-
-			// camera = new OrthographicCamera(viewportWidth * zoom, viewportHeight * zoom);
-
-			camera.position.set(viewportWidth * zoom / 2, viewportHeight * zoom / 2, 0);
+		if (zoomOutButtonMonitor.isHolded()) {
+			zoom.value = zoom.value + 1f * delta;
+			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
 		}
-		
-		if (restartButtonMonitor.isReleased()) 
+
+		if (restartButtonMonitor.isReleased())
 			restart();
 
+		camera.viewportHeight = viewportHeight * zoom.value;
+		camera.viewportWidth = viewportWidth * zoom.value;
+		camera.position.set(viewportWidth * zoom.value / 2, viewportHeight * zoom.value / 2, 0);
 	}
 
 	@Override
@@ -274,78 +270,70 @@ public class GameScreen extends ScreenAdapter {
 	public void show() {
 
 	}
-	
-protected void loadResources() {
-		
+
+	protected void loadResources() {
+
 		Texture rockTexture = new Texture(Gdx.files.internal("data/rock-512x512.png"));
 		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-		resourceManager.add("Rock", new CachedResourceLoader<Texture>(
-				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(rockTexture) {
-					@Override
-					public void dispose(Texture t) {
-						t.dispose();
-					}
-				}, false)));
+		resourceManager.add("Rock", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(rockTexture) {
+			@Override
+			public void dispose(Texture t) {
+				t.dispose();
+			}
+		}, false)));
 
 		Texture bowTexture = new Texture(Gdx.files.internal("data/bow-512x512.png"));
 		bowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		resourceManager.add("Bow", new CachedResourceLoader<Texture>(
-				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(bowTexture) {
-					@Override
-					public void dispose(Texture t) {
-						t.dispose();
-					}
-				}, false)));
-		
+
+		resourceManager.add("Bow", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(bowTexture) {
+			@Override
+			public void dispose(Texture t) {
+				t.dispose();
+			}
+		}, false)));
+
 		Texture arrowTexture = new Texture(Gdx.files.internal("data/arrow-512x512.png"));
 		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		resourceManager.add("Arrow", new CachedResourceLoader<Texture>(
-				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(arrowTexture) {
-					@Override
-					public void dispose(Texture t) {
-						t.dispose();
-					}
-				}, false)));
-		
+
+		resourceManager.add("Arrow", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(arrowTexture) {
+			@Override
+			public void dispose(Texture t) {
+				t.dispose();
+			}
+		}, false)));
+
 		Texture treeTexture = new Texture(Gdx.files.internal("data/tree-512x512.png"));
 		treeTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		resourceManager.add("Tree", new CachedResourceLoader<Texture>(
-				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(treeTexture) {
-					@Override
-					public void dispose(Texture t) {
-						t.dispose();
-					}
-				}, false)));
-		
+
+		resourceManager.add("Tree", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(treeTexture) {
+			@Override
+			public void dispose(Texture t) {
+				t.dispose();
+			}
+		}, false)));
+
 		Texture fontTexture = new Texture(Gdx.files.internal("data/font.png"));
 		fontTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		resourceManager.add("FontTexture", new CachedResourceLoader<Texture>(
-				new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(fontTexture) {
-					@Override
-					public void dispose(Texture t) {
-						t.dispose();
-					}
-				}, false)));
 
-		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(
-				new ResourceLoaderImpl<BitmapFont>(new StaticDataLoader<BitmapFont>(new BitmapFont(Gdx.files.internal("data/font.fnt"), new Sprite(fontTexture), false)) {
-					@Override
-					public void dispose(BitmapFont t) {
-						t.dispose();
-					}
-				}, false)));
-		
+		resourceManager.add("FontTexture", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(fontTexture) {
+			@Override
+			public void dispose(Texture t) {
+				t.dispose();
+			}
+		}, false)));
+
+		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new StaticDataLoader<BitmapFont>(new BitmapFont(Gdx.files.internal("data/font.fnt"), new Sprite(fontTexture), false)) {
+			@Override
+			public void dispose(BitmapFont t) {
+				t.dispose();
+			}
+		}, false)));
+
 	}
 
 	@Override
 	public void dispose() {
-		
-		
 
 	}
 
