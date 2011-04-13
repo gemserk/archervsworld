@@ -11,7 +11,6 @@ import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFacto
 
 public class ArrowPhysicsBehavior extends PhysicsBehavior {
 
-
 	private final World world;
 
 	private final Entity entity;
@@ -31,7 +30,7 @@ public class ArrowPhysicsBehavior extends PhysicsBehavior {
 	@Override
 	public void update(com.badlogic.gdx.physics.box2d.World world, Body body) {
 
-		if (shouldRemove) {
+		if (!body.isAwake()) {
 			this.world.deleteEntity(entity);
 			SpatialComponent component = entity.getComponent(SpatialComponent.class);
 			archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
@@ -52,6 +51,15 @@ public class ArrowPhysicsBehavior extends PhysicsBehavior {
 	public void beginContact(Body body, Contact contact) {
 		shouldRemove = true;
 		shouldProcess = false;
+
+		// Fixture fixture = body.getFixtureList().get(0);
+		//
+		// Filter filterData = fixture.getFilterData();
+		//
+		// filterData.categoryBits = CollisionDefinitions.EnemiesGroup;
+		// filterData.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.EnemiesGroup;
+		//
+		// fixture.setFilterData(filterData);
 
 		// if (!shouldProcess)
 		// return;

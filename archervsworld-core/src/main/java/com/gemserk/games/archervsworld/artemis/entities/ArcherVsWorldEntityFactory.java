@@ -263,7 +263,7 @@ public class ArcherVsWorldEntityFactory {
 		fixtureDef.shape = shape;
 		
 		fixtureDef.filter.categoryBits = CollisionDefinitions.EnemiesGroup;
-		fixtureDef.filter.maskBits = CollisionDefinitions.All;
+		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.EnemiesGroup;
 
 		body.createFixture(fixtureDef);
 		
