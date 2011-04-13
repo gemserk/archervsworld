@@ -17,10 +17,8 @@ import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.SimpleProperty;
-import com.gemserk.games.archervsworld.artemis.components.ArrowPhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.Box2dCollisionComponent;
-import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
@@ -97,8 +95,6 @@ public class ArcherVsWorldEntityFactory {
 		
 		entity.setGroup(Groups.Arrow);
 
-		PhysicsBehavior arrowBehavior = new ArrowPhysicsBehavior(world, entity, this);
-		
 		body.setUserData(entity);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
