@@ -21,6 +21,7 @@ import com.gemserk.games.archervsworld.artemis.components.ArrowPhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsBehavior;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
+import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.games.archervsworld.properties.Box2dAngleProperty;
 import com.gemserk.games.archervsworld.properties.Box2dPositionProperty;
@@ -213,7 +214,7 @@ public class ArcherVsWorldEntityFactory {
 		Body body = physicsWorld.createBody(bodyDef);
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(size.y * 0.1f * 0.125f, size.y / 2f - 0.1f);
+		shape.setAsBox(size.x * 0.1f * 0.125f, size.y / 2f - 0.1f);
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.density = 1f;
@@ -238,6 +239,52 @@ public class ArcherVsWorldEntityFactory {
 				new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
+		entity.refresh();
+		
+	}
+	
+	public void createWalkingDead(Vector2 position, Vector2 size, Vector2 velocity) {
+
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyType.DynamicBody;
+		bodyDef.position.set(position);
+		bodyDef.fixedRotation = true;
+		// bodyDef.angularDamping = 1f;
+		// bodyDef.linearDamping = 1f;
+		
+		Body body = physicsWorld.createBody(bodyDef);
+
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(size.x * 0.5f, size.y * 0.5f - 0.1f);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.density = 1f;
+		// fixtureDef.friction = 0.5f;
+		fixtureDef.shape = shape;
+		
+		fixtureDef.filter.categoryBits = CollisionDefinitions.EnemiesGroup;
+		fixtureDef.filter.maskBits = CollisionDefinitions.All;
+
+		body.createFixture(fixtureDef);
+		
+		shape.dispose();
+
+		Entity entity = world.createEntity();
+		
+		Resource<Texture> resource = resourceManager.get("Rock");
+		Texture texture = resource.get();
+
+		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body), new SimpleProperty<PhysicsBehavior>(new PhysicsBehavior())));
+		entity.addComponent(new SpatialComponent( //
+				new Box2dPositionProperty(body), //
+				new SimpleProperty<Vector2>(size), //
+				new Box2dAngleProperty(body)));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
+		entity.addComponent(new WalkingDeadComponent( //
+				new SimpleProperty<Vector2>(null), // 
+				new SimpleProperty<Vector2>(velocity), // 
+				new SimpleProperty<IntValue>(new IntValue(1500))));
+		
 		entity.refresh();
 		
 	}

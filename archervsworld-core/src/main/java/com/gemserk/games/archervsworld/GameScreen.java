@@ -36,6 +36,7 @@ import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
+import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
@@ -115,6 +116,7 @@ public class GameScreen extends ScreenAdapter {
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
 
 		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, camera), archerVsWorldEntityFactory);
+		walkingDeadSystem = new WalkingDeadSystem();
 
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
@@ -122,6 +124,7 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(spriteUpdateSystem);
 		world.getSystemManager().setSystem(physicsSystem);
 		world.getSystemManager().setSystem(updateBowSystem);
+		world.getSystemManager().setSystem(walkingDeadSystem);
 		world.getSystemManager().initializeAll();
 		
 		entityFactory.setWorld(world);
@@ -143,11 +146,12 @@ public class GameScreen extends ScreenAdapter {
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(5, 3), new Vector2(3f, 3f), new Vector2(0f, 0f), 120f);
 
-		archerVsWorldEntityFactory.createRock(new Vector2(7, 1), new Vector2(2f, 2f), new Vector2(0f, 0f), 210f);
+		// archerVsWorldEntityFactory.createRock(new Vector2(7, 1), new Vector2(2f, 2f), new Vector2(0f, 0f), 210f);
 		
 		// archerVsWorldEntityFactory.createTree(new Vector2(15, 4.1f), new Vector2(8f, 8f));
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
+		archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1), new Vector2(0.5f, 2f), new Vector2(-1f, 0f));
 
 		createBackground();
 
@@ -206,6 +210,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private MonitorUpdaterImpl monitorUpdater;
 
+	private WalkingDeadSystem walkingDeadSystem;
+
 	@Override
 	public void render(float delta) {
 
@@ -217,8 +223,9 @@ public class GameScreen extends ScreenAdapter {
 		world.loopStart();
 		world.setDelta((int) (delta * 1000));
 
-		physicsSystem.process();
 		updateBowSystem.process();
+		walkingDeadSystem.process();
+		physicsSystem.process();
 
 		spriteRenderSystem.process();
 		spriteUpdateSystem.process();
