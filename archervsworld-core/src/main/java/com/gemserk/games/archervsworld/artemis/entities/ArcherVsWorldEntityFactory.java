@@ -17,7 +17,10 @@ import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.SimpleProperty;
+import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
+import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
+import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
@@ -90,6 +93,9 @@ public class ArcherVsWorldEntityFactory {
 		Vector2 lp = body.getWorldPoint(new Vector2(0f, 0f));
 		body.applyLinearImpulse(impulse, lp);
 
+		Resource<Texture> resource = resourceManager.get("Arrow");
+		Texture texture = resource.get();
+
 		Entity entity = world.createEntity();
 
 		entity.setGroup(Groups.Arrow);
@@ -97,16 +103,12 @@ public class ArcherVsWorldEntityFactory {
 		body.setUserData(entity);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
 				new Box2dAngleProperty(body)));
-
-		Resource<Texture> resource = resourceManager.get("Arrow");
-		Texture texture = resource.get();
-
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
+		entity.addComponent(new DamageComponent(1f));
 
 		entity.refresh();
 	}
@@ -303,6 +305,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(velocity), //
 				new SimpleProperty<IntValue>(new IntValue(0)), //
 				new SimpleProperty<IntValue>(new IntValue(1000)), new SimpleProperty<IntValue>(new IntValue(2000))));
+		entity.addComponent(new HealthComponent(new Container(100f, 100f)));
 
 		entity.refresh();
 

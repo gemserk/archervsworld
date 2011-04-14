@@ -1,4 +1,4 @@
-package com.gemserk.games.facehunt;
+package com.gemserk.games.archervsworld;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.gemserk.games.archervsworld.LibgdxGame;

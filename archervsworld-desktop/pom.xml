@@ -25,11 +25,11 @@
 		<!-- finalName>${project.artifactId}-${project.version}</finalName -->
 		<finalName>${project.artifactId}-${project.version}</finalName>
 
-		<webstartMain>com.gemserk.games.facehunt.DesktopApplication</webstartMain>
+		<webstartMain>com.gemserk.games.archervsworld.DesktopApplication</webstartMain>
 
-		<appletGameParameter>com.gemserk.games.facehunt.DesktopApplication</appletGameParameter>
+		<appletGameParameter>com.gemserk.games.archervsworld.DesktopApplication</appletGameParameter>
 		<mainClass>${appletGameParameter}</mainClass>
-		<jnlp.applet.mainClass>com.gemserk.games.facehunt.DesktopApplication</jnlp.applet.mainClass>
+		<jnlp.applet.mainClass>com.gemserk.games.archervsworld.DesktopApplication</jnlp.applet.mainClass>
 
 		<natives>${basedir}/target/natives/</natives>
 
