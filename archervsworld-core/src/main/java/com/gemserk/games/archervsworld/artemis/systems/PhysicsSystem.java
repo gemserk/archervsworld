@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
-import com.gemserk.games.archervsworld.artemis.components.Box2dCollisionComponent;
+import com.gemserk.games.archervsworld.artemis.components.CollisionComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 
 public class PhysicsSystem extends EntitySystem {
@@ -24,13 +24,13 @@ public class PhysicsSystem extends EntitySystem {
 			Entity entityB = (Entity) bodyB.getUserData();
 			
 			if (entityA != null) {
-				Box2dCollisionComponent collisionComponent = entityA.getComponent(Box2dCollisionComponent.class);
+				CollisionComponent collisionComponent = entityA.getComponent(CollisionComponent.class);
 				collisionComponent.getContact().removeBox2dContact();
 				collisionComponent.setEntity(null);
 			}
 
 			if (entityB != null) {
-				Box2dCollisionComponent collisionComponent = entityB.getComponent(Box2dCollisionComponent.class);
+				CollisionComponent collisionComponent = entityB.getComponent(CollisionComponent.class);
 				collisionComponent.getContact().removeBox2dContact();
 				collisionComponent.setEntity(null);
 			}
@@ -47,13 +47,13 @@ public class PhysicsSystem extends EntitySystem {
 			Entity entityB = (Entity) bodyB.getUserData();
 			
 			if (entityA != null) {
-				Box2dCollisionComponent collisionComponent = entityA.getComponent(Box2dCollisionComponent.class);
+				CollisionComponent collisionComponent = entityA.getComponent(CollisionComponent.class);
 				collisionComponent.getContact().setBox2dContact(contact);
 				collisionComponent.setEntity(entityB);
 			}
 
 			if (entityB != null) {
-				Box2dCollisionComponent collisionComponent = entityB.getComponent(Box2dCollisionComponent.class);
+				CollisionComponent collisionComponent = entityB.getComponent(CollisionComponent.class);
 				collisionComponent.getContact().setBox2dContact(contact);
 				collisionComponent.setEntity(entityA);
 			}

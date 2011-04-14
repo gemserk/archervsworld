@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.componentsengine.utils.AngleUtils;
-import com.gemserk.games.archervsworld.artemis.components.Box2dCollisionComponent;
+import com.gemserk.games.archervsworld.artemis.components.CollisionComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
@@ -42,7 +42,7 @@ public class GameLogicSystem extends EntitySystem {
 			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
 			Body body = physicsComponent.getBody();
 			
-			Box2dCollisionComponent collisionComponent = entity.getComponent(Box2dCollisionComponent.class);
+			CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
 
 			Contact contact = collisionComponent.getContact();
 			

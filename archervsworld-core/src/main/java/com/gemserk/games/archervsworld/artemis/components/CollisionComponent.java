@@ -6,7 +6,7 @@ import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.box2d.Contact;
 
-public class Box2dCollisionComponent extends Component {
+public class CollisionComponent extends Component {
 
 	private Property<Entity> entity;
 	
@@ -34,11 +34,11 @@ public class Box2dCollisionComponent extends Component {
 		this.entity.set(entity);
 	}
 
-	public Box2dCollisionComponent() {
+	public CollisionComponent() {
 		this(new SimpleProperty<Entity>(null), new SimpleProperty<Contact>(new Contact()));
 	}
 
-	public Box2dCollisionComponent(Property<Entity> entity, Property<Contact> contact) {
+	public CollisionComponent(Property<Entity> entity, Property<Contact> contact) {
 		this.entity = entity;
 		this.contact = contact;
 	}
