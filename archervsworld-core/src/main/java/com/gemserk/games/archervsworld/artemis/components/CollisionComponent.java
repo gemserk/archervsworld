@@ -1,15 +1,12 @@
 package com.gemserk.games.archervsworld.artemis.components;
 
 import com.artemis.Component;
-import com.artemis.Entity;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.box2d.Contact;
 
 public class CollisionComponent extends Component {
 
-	private Property<Entity> entity;
-	
 	private Property<Contact> contact;
 	
 	/**
@@ -23,23 +20,11 @@ public class CollisionComponent extends Component {
 		this.contact.set(contact);
 	}
 	
-	/**
-	 * The entity we are in contact to. 
-	 */
-	public Entity getEntity() {
-		return entity.get();
-	}
-	
-	public void setEntity(Entity entity) {
-		this.entity.set(entity);
-	}
-
 	public CollisionComponent() {
-		this(new SimpleProperty<Entity>(null), new SimpleProperty<Contact>(new Contact()));
+		this(new SimpleProperty<Contact>(new Contact()));
 	}
 
-	public CollisionComponent(Property<Entity> entity, Property<Contact> contact) {
-		this.entity = entity;
+	public CollisionComponent(Property<Contact> contact) {
 		this.contact = contact;
 	}
 

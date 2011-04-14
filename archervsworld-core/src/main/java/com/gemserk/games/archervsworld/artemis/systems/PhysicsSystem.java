@@ -26,13 +26,11 @@ public class PhysicsSystem extends EntitySystem {
 			if (entityA != null) {
 				CollisionComponent collisionComponent = entityA.getComponent(CollisionComponent.class);
 				collisionComponent.getContact().removeBox2dContact();
-				collisionComponent.setEntity(null);
 			}
 
 			if (entityB != null) {
 				CollisionComponent collisionComponent = entityB.getComponent(CollisionComponent.class);
 				collisionComponent.getContact().removeBox2dContact();
-				collisionComponent.setEntity(null);
 			}
 			
 		}
@@ -48,14 +46,12 @@ public class PhysicsSystem extends EntitySystem {
 			
 			if (entityA != null) {
 				CollisionComponent collisionComponent = entityA.getComponent(CollisionComponent.class);
-				collisionComponent.getContact().setBox2dContact(contact);
-				collisionComponent.setEntity(entityB);
+				collisionComponent.getContact().setBox2dContact(contact, entityB);
 			}
 
 			if (entityB != null) {
 				CollisionComponent collisionComponent = entityB.getComponent(CollisionComponent.class);
-				collisionComponent.getContact().setBox2dContact(contact);
-				collisionComponent.setEntity(entityA);
+				collisionComponent.getContact().setBox2dContact(contact, entityA);
 			}
 
 		}
