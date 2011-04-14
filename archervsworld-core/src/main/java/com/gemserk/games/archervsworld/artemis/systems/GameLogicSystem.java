@@ -68,7 +68,13 @@ public class GameLogicSystem extends EntitySystem {
 
 			int stickAngle = 45;
 
-			if (diff < stickAngle || !body.isAwake()) {
+			if (!body.isAwake()) {
+
+				SpatialComponent component = entity.getComponent(SpatialComponent.class);
+				archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
+				this.world.deleteEntity(entity);
+
+			} else if (diff < stickAngle) {
 				// remove the physics arrow and convert it to a
 
 				Entity target = contact.entity;
@@ -79,25 +85,24 @@ public class GameLogicSystem extends EntitySystem {
 
 					if (Groups.Pierceable.equals(collisionEntityGroup)) {
 
-						System.out.println("arrow hit an enemy");
-
 						final SpatialComponent targetSpatialComponent = target.getComponent(SpatialComponent.class);
 						SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 
 						Vector2 arrowPosition = spatialComponent.getPosition();
 						float arrowAngle = spatialComponent.getAngle();
-						
-						Vector2 displacement = new Vector2(1f,0f).mul(0.5f);
+
+						Vector2 displacement = new Vector2(1f, 0f).mul(0.2f);
 						displacement.rotate(arrowAngle);
-						
-						final Vector2 targetPosition = targetSpatialComponent.getPosition();						
+
+						final Vector2 targetPosition = targetSpatialComponent.getPosition();
 						final Vector2 difference = targetPosition.cpy().sub(arrowPosition).sub(displacement);
 						
+						// Use layer - 1 for the sprite component
 
 						archerVsWorldEntityFactory.createArrow(new AbstractProperty<Vector2>() {
-							
+
 							Vector2 position = new Vector2();
-							
+
 							@Override
 							public Vector2 get() {
 								Vector2 targetPosition = targetSpatialComponent.getPosition();
@@ -110,13 +115,7 @@ public class GameLogicSystem extends EntitySystem {
 						this.world.deleteEntity(entity);
 
 					}
-				} else {
-
-					SpatialComponent component = entity.getComponent(SpatialComponent.class);
-					archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
-					this.world.deleteEntity(entity);
-
-				}
+				} 
 
 			}
 

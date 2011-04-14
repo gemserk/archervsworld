@@ -307,5 +307,40 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 
 	}
+	
+	public Entity createGround(Vector2 position, Vector2 size) {
+
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(size.x / 2f, size.y / 2f);
+
+		BodyDef groundBodyDef = new BodyDef();
+		groundBodyDef.type = BodyType.StaticBody;
+		groundBodyDef.position.set(position);
+		Body body = physicsWorld.createBody(groundBodyDef);
+
+		body.createFixture(shape, 1f);
+		shape.dispose();
+
+		Entity entity = world.createEntity();
+
+		body.setUserData(entity);
+
+		entity.setGroup(Groups.Pierceable);
+
+		entity.addComponent(new PhysicsComponent(body));
+
+		entity.addComponent(new SpatialComponent( //
+				new Box2dPositionProperty(body), //
+				new SimpleProperty<Vector2>(size), //
+				new Box2dAngleProperty(body)));
+
+		// Resource<Texture> resource = resourceManager.get("Tree");
+		// Texture texture = resource.get();
+		// entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
+
+		entity.refresh();
+
+		return entity;
+	}
 
 }

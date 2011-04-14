@@ -24,6 +24,10 @@ public class PhysicsComponent extends Component {
 		this.contact.set(contact);
 	}
 	
+	public PhysicsComponent(Body body) {
+		this(new SimpleProperty<Body>(body));
+	}
+	
 	public PhysicsComponent(Property<Body> body) {
 		this(body, new SimpleProperty<Contact>(new Contact()));
 	}

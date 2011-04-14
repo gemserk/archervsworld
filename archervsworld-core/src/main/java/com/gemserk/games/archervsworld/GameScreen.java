@@ -14,11 +14,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -118,7 +114,7 @@ public class GameScreen extends ScreenAdapter {
 		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, camera), archerVsWorldEntityFactory);
 		walkingDeadSystem = new WalkingDeadSystem();
 		gameLogicSystem = new GameLogicSystem();
-		
+
 		gameLogicSystem.setArcherVsWorldEntityFactory(archerVsWorldEntityFactory);
 
 		world = new World();
@@ -146,20 +142,20 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
 		archerVsWorldEntityFactory.setResourceManager(resourceManager);
 
-		createGround();
+		archerVsWorldEntityFactory.createGround(new Vector2(0f, -0.5f), new Vector2(80f, 2f));
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(5, 3), new Vector2(3f, 3f), new Vector2(0f, 0f), 120f);
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(7, 1), new Vector2(2f, 2f), new Vector2(0f, 0f), 210f);
-		
+
 		// archerVsWorldEntityFactory.createTree(new Vector2(15, 4.1f), new Vector2(8f, 8f));
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
-		
+
 		archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1), new Vector2(0.5f, 2f), new Vector2(-1.2f, 0f));
-		
+
 		archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1), new Vector2(0.5f, 1.9f), new Vector2(-1.2f, 0f));
-		
+
 		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1), new Vector2(0.5f, 2.1f), new Vector2(-1.2f, 0f));
 
 		createBackground();
@@ -171,19 +167,6 @@ public class GameScreen extends ScreenAdapter {
 		monitorUpdater.add(zoomInButtonMonitor);
 		monitorUpdater.add(zoomOutButtonMonitor);
 
-	}
-
-	protected void createGround() {
-		PolygonShape groundPoly = new PolygonShape();
-		groundPoly.setAsBox(40, 1);
-
-		BodyDef groundBodyDef = new BodyDef();
-		groundBodyDef.type = BodyType.StaticBody;
-		groundBodyDef.position.set(0, -0.5f);
-		Body groundBody = physicsWorld.createBody(groundBodyDef);
-
-		groundBody.createFixture(groundPoly, 10);
-		groundPoly.dispose();
 	}
 
 	public void createBackground() {
@@ -240,7 +223,7 @@ public class GameScreen extends ScreenAdapter {
 
 		updateBowSystem.process();
 		walkingDeadSystem.process();
-		
+
 		physicsSystem.process();
 		gameLogicSystem.process();
 

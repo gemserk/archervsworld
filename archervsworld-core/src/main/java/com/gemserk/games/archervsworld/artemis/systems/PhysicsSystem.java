@@ -76,14 +76,7 @@ public class PhysicsSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-//		for (int i = 0; i < entities.size(); i++) {
-//
-//			Entity entity = entities.get(i);
-//			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
-//
-//			Body body = physicsComponent.getBody();
-//
-//		}
+
 	}
 
 	@Override
@@ -94,7 +87,7 @@ public class PhysicsSystem extends EntitySystem {
 	@Override
 	protected void removed(Entity e) {
 		
-		// on entity being removed, should remove body from physics world
+		// on entity removed, we should remove body from physics world
 		
 		PhysicsComponent component = e.getComponent(PhysicsComponent.class);
 		
