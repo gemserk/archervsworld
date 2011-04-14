@@ -13,6 +13,7 @@ import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
+import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
@@ -90,10 +91,13 @@ public class GameLogicSystem extends EntitySystem {
 				Entity target = contact.entity;
 
 				if (target != null) {
+					
+					HealthComponent healthComponent = target.getComponent(HealthComponent.class);
 
-					String collisionEntityGroup = groupManager.getGroupOf(target);
+					String targetGroup = groupManager.getGroupOf(target);
 
-					if (Groups.Pierceable.equals(collisionEntityGroup)) {
+					if (healthComponent != null) {
+					// if (Groups.Pierceable.equals(collisionEntityGroup)) {
 
 						final SpatialComponent targetSpatialComponent = target.getComponent(SpatialComponent.class);
 						PhysicsComponent targetPhysicsComponent = target.getComponent(PhysicsComponent.class);
@@ -131,7 +135,8 @@ public class GameLogicSystem extends EntitySystem {
 
 						this.world.deleteEntity(entity);
 
-						if (targetBody.getType().equals(BodyType.DynamicBody)) {
+						if (Groups.Enemy.equals(targetGroup)) {
+						// if (targetBody.getType().equals(BodyType.DynamicBody)) {
 							Resource<Sound> hitSound = resourceManager.get("HitFleshSound");
 							hitSound.get().play(1f);
 						} else {

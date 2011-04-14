@@ -66,7 +66,7 @@ public class ArcherVsWorldEntityFactory {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
-		fixtureDef.friction = 0.8f;
+		fixtureDef.friction = 1f;
 
 		fixtureDef.filter.categoryBits = CollisionDefinitions.ArrowGroup;
 		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup;
@@ -292,7 +292,7 @@ public class ArcherVsWorldEntityFactory {
 		Resource<Texture> resource = resourceManager.get("Rock");
 		Texture texture = resource.get();
 
-		entity.setGroup(Groups.Pierceable);
+		entity.setGroup(Groups.Enemy);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
 		entity.addComponent(new SpatialComponent( //
@@ -305,7 +305,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(velocity), //
 				new SimpleProperty<IntValue>(new IntValue(0)), //
 				new SimpleProperty<IntValue>(new IntValue(1000)), new SimpleProperty<IntValue>(new IntValue(2000))));
-		entity.addComponent(new HealthComponent(new Container(100f, 100f)));
+		entity.addComponent(new HealthComponent(new Container(100f, 100f), 0f));
 
 		entity.refresh();
 
@@ -334,12 +334,13 @@ public class ArcherVsWorldEntityFactory {
 
 		body.setUserData(entity);
 
-		entity.setGroup(Groups.Pierceable);
+//		entity.setGroup(Groups.Enemy);
 		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
 				new Box2dAngleProperty(body)));
+		entity.addComponent(new HealthComponent(new Container(0,0), 1f));
 
 //		Resource<Texture> resource = resourceManager.get("Grass");
 //		Texture texture = resource.get();
