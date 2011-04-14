@@ -289,14 +289,15 @@ public class ArcherVsWorldEntityFactory {
 
 		Resource<Texture> resource = resourceManager.get("Rock");
 		Texture texture = resource.get();
+		
+		entity.setGroup(Groups.Pierceable);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
 				new Box2dAngleProperty(body)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(2))));
 		entity.addComponent(new WalkingDeadComponent( //
 				new SimpleProperty<Vector2>(null), //
 				new SimpleProperty<Vector2>(velocity), //

@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
+import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 
 public class PhysicsSystem extends EntitySystem {
@@ -23,13 +24,13 @@ public class PhysicsSystem extends EntitySystem {
 			Entity entityB = (Entity) bodyB.getUserData();
 			
 			if (entityA != null) {
-				PhysicsComponent collisionComponent = entityA.getComponent(PhysicsComponent.class);
-				collisionComponent.getContact().removeBox2dContact();
+				PhysicsComponent physicsComponent = entityA.getComponent(PhysicsComponent.class);
+				physicsComponent.getContact().removeBox2dContact();
 			}
 
 			if (entityB != null) {
-				PhysicsComponent collisionComponent = entityB.getComponent(PhysicsComponent.class);
-				collisionComponent.getContact().removeBox2dContact();
+				PhysicsComponent physicsComponent = entityB.getComponent(PhysicsComponent.class);
+				physicsComponent.getContact().removeBox2dContact();
 			}
 			
 		}
@@ -44,13 +45,13 @@ public class PhysicsSystem extends EntitySystem {
 			Entity entityB = (Entity) bodyB.getUserData();
 			
 			if (entityA != null) {
-				PhysicsComponent collisionComponent = entityA.getComponent(PhysicsComponent.class);
-				collisionComponent.getContact().setBox2dContact(contact, entityB);
+				PhysicsComponent physicsComponent = entityA.getComponent(PhysicsComponent.class);
+				physicsComponent.getContact().setBox2dContact(contact, entityB);
 			}
 
 			if (entityB != null) {
-				PhysicsComponent collisionComponent = entityB.getComponent(PhysicsComponent.class);
-				collisionComponent.getContact().setBox2dContact(contact, entityA);
+				PhysicsComponent physicsComponent = entityB.getComponent(PhysicsComponent.class);
+				physicsComponent.getContact().setBox2dContact(contact, entityA);
 			}
 
 		}
@@ -58,12 +59,14 @@ public class PhysicsSystem extends EntitySystem {
 	}
 
 	World physicsWorld;
+	
+	private PhysicsContactListener physicsContactListener;
 
 	@SuppressWarnings("unchecked")
 	public PhysicsSystem(World physicsWorld) {
-		super(PhysicsComponent.class);
+		super(PhysicsComponent.class, SpatialComponent.class);
 		this.physicsWorld = physicsWorld;
-		physicsWorld.setContactListener(new PhysicsContactListener());
+		physicsContactListener = new PhysicsContactListener();
 	}
 
 	@Override
@@ -95,6 +98,9 @@ public class PhysicsSystem extends EntitySystem {
 		
 		PhysicsComponent component = e.getComponent(PhysicsComponent.class);
 		
+		if (component == null) 
+			throw new RuntimeException("Entity without physics component found");
+		
 		Body body = component.getBody();
 		body.setUserData(null);
 		
@@ -104,7 +110,7 @@ public class PhysicsSystem extends EntitySystem {
 
 	@Override
 	public void initialize() {
-
+		physicsWorld.setContactListener(physicsContactListener);
 	}
 
 	public World getPhysicsWorld() {

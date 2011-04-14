@@ -2,10 +2,14 @@ package com.gemserk.games.archervsworld.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
+import com.artemis.GroupManager;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.values.FloatValue;
+import com.gemserk.componentsengine.properties.AbstractProperty;
+import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
@@ -13,11 +17,11 @@ import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.box2d.Contact;
 
 public class GameLogicSystem extends EntitySystem {
-	
+
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
-	
+
 	AngleUtils angleUtils = new AngleUtils();
-	
+
 	public void setArcherVsWorldEntityFactory(ArcherVsWorldEntityFactory archerVsWorldEntityFactory) {
 		this.archerVsWorldEntityFactory = archerVsWorldEntityFactory;
 	}
@@ -29,8 +33,10 @@ public class GameLogicSystem extends EntitySystem {
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 
-		entities = world.getGroupManager().getEntities(Groups.Arrow);
-		
+		GroupManager groupManager = world.getGroupManager();
+
+		entities = groupManager.getEntities(Groups.Arrow);
+
 		if (entities == null)
 			return;
 
@@ -40,9 +46,9 @@ public class GameLogicSystem extends EntitySystem {
 
 			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
 			Body body = physicsComponent.getBody();
-			
+
 			Contact contact = physicsComponent.getContact();
-			
+
 			if (!contact.inContact) {
 
 				Vector2 linearVelocity = body.getLinearVelocity();
@@ -51,24 +57,68 @@ public class GameLogicSystem extends EntitySystem {
 
 				continue;
 			}
-			
+
 			Vector2 normal = contact.normal;
-			
+
 			float normalAngle = normal.cpy().mul(-1f).angle();
-			
+
 			float bodyAngle = (float) (body.getAngle() * 180.0 / Math.PI);
-			
+
 			double diff = Math.abs(angleUtils.minimumDifference(normalAngle, bodyAngle));
-			
+
 			int stickAngle = 45;
-			
-			if (diff < stickAngle || !body.isAwake() )  {
-				// remove the physics arrow and convert it to a 
-				SpatialComponent component = entity.getComponent(SpatialComponent.class);
-				archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
-				this.world.deleteEntity(entity);
+
+			if (diff < stickAngle || !body.isAwake()) {
+				// remove the physics arrow and convert it to a
+
+				Entity target = contact.entity;
+
+				if (target != null) {
+
+					String collisionEntityGroup = groupManager.getGroupOf(target);
+
+					if (Groups.Pierceable.equals(collisionEntityGroup)) {
+
+						System.out.println("arrow hit an enemy");
+
+						final SpatialComponent targetSpatialComponent = target.getComponent(SpatialComponent.class);
+						SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
+
+						Vector2 arrowPosition = spatialComponent.getPosition();
+						float arrowAngle = spatialComponent.getAngle();
+						
+						Vector2 displacement = new Vector2(1f,0f).mul(0.5f);
+						displacement.rotate(arrowAngle);
+						
+						final Vector2 targetPosition = targetSpatialComponent.getPosition();						
+						final Vector2 difference = targetPosition.cpy().sub(arrowPosition).sub(displacement);
+						
+
+						archerVsWorldEntityFactory.createArrow(new AbstractProperty<Vector2>() {
+							
+							Vector2 position = new Vector2();
+							
+							@Override
+							public Vector2 get() {
+								Vector2 targetPosition = targetSpatialComponent.getPosition();
+								position.set(targetPosition).sub(difference);
+								return position;
+							}
+
+						}, new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)));
+
+						this.world.deleteEntity(entity);
+
+					}
+				} else {
+
+					SpatialComponent component = entity.getComponent(SpatialComponent.class);
+					archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
+					this.world.deleteEntity(entity);
+
+				}
+
 			}
-			
 
 		}
 

@@ -6,4 +6,6 @@ public class Groups {
 	
 	public static final String Arrow = "Arrow".intern();
 	
+	public static final String Pierceable = "Pierceable".intern();
+	
 }
