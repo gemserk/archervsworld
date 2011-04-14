@@ -91,13 +91,13 @@ public class ArcherVsWorldEntityFactory {
 		body.applyLinearImpulse(impulse, lp);
 
 		Entity entity = world.createEntity();
-		
+
 		entity.setGroup(Groups.Arrow);
 
 		body.setUserData(entity);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		
+
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
@@ -196,14 +196,14 @@ public class ArcherVsWorldEntityFactory {
 		body.applyLinearImpulse(startImpulse, body.getTransform().getPosition());
 
 		Entity entity = world.createEntity();
-		
+
 		body.setUserData(entity);
 
 		Resource<Texture> resource = resourceManager.get("Rock");
 		Texture texture = resource.get();
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		
+
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
@@ -239,14 +239,14 @@ public class ArcherVsWorldEntityFactory {
 		shape.dispose();
 
 		Entity entity = world.createEntity();
-		
+
 		body.setUserData(entity);
 
 		Resource<Texture> resource = resourceManager.get("Tree");
 		Texture texture = resource.get();
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		
+
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
@@ -284,12 +284,12 @@ public class ArcherVsWorldEntityFactory {
 		shape.dispose();
 
 		Entity entity = world.createEntity();
-		
+
 		body.setUserData(entity);
 
 		Resource<Texture> resource = resourceManager.get("Rock");
 		Texture texture = resource.get();
-		
+
 		entity.setGroup(Groups.Pierceable);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
@@ -307,7 +307,7 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 
 	}
-	
+
 	public Entity createGround(Vector2 position, Vector2 size) {
 
 		PolygonShape shape = new PolygonShape();
@@ -318,7 +318,13 @@ public class ArcherVsWorldEntityFactory {
 		groundBodyDef.position.set(position);
 		Body body = physicsWorld.createBody(groundBodyDef);
 
-		body.createFixture(shape, 1f);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		// fixtureDef.friction = 0f;
+		fixtureDef.density = 1f;
+		
+		body.createFixture(fixtureDef);
 		shape.dispose();
 
 		Entity entity = world.createEntity();
@@ -326,18 +332,34 @@ public class ArcherVsWorldEntityFactory {
 		body.setUserData(entity);
 
 		entity.setGroup(Groups.Pierceable);
-
 		entity.addComponent(new PhysicsComponent(body));
-
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
 				new Box2dAngleProperty(body)));
 
-		// Resource<Texture> resource = resourceManager.get("Tree");
-		// Texture texture = resource.get();
-		// entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
+//		Resource<Texture> resource = resourceManager.get("Grass");
+//		Texture texture = resource.get();
+//		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(2))));
 
+		entity.refresh();
+
+		return entity;
+	}
+	
+	public Entity createGrass(Vector2 position, Vector2 size) {
+
+		Resource<Texture> resource = resourceManager.get("Grass");
+		Texture texture = resource.get();
+
+		Entity entity = world.createEntity();
+		entity.addComponent(new SpatialComponent( //
+				new SimpleProperty<Vector2>(position), //
+				new SimpleProperty<Vector2>(size), //
+				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent( //
+				new SimpleProperty<Sprite>(new Sprite(texture)), // 
+				new SimpleProperty<IntValue>(new IntValue(2))));
 		entity.refresh();
 
 		return entity;

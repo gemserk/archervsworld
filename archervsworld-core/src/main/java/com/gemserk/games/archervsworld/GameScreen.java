@@ -141,8 +141,20 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.setWorld(world);
 		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
 		archerVsWorldEntityFactory.setResourceManager(resourceManager);
+		
+		// I NEED AN EDITOR FOR ALL THIS STUFF!!
 
-		archerVsWorldEntityFactory.createGround(new Vector2(0f, -0.5f), new Vector2(80f, 2f));
+		Vector2 grassSize = new Vector2(0.5f, 0.5f);
+
+		float x = 0f;
+		float y = 0f;
+		
+		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.25f), new Vector2(80f, 0.5f));
+
+		for (int i = 0; i < 40; i++) {
+			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
+			x += grassSize.x;
+		}
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(5, 3), new Vector2(3f, 3f), new Vector2(0f, 0f), 120f);
 
@@ -152,11 +164,11 @@ public class GameScreen extends ScreenAdapter {
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
 
-		archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1), new Vector2(0.5f, 2f), new Vector2(-1.2f, 0f));
+		archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1.25f + y), new Vector2(0.5f, 2f), new Vector2(-1.2f, 0f));
 
-		archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1), new Vector2(0.5f, 1.9f), new Vector2(-1.2f, 0f));
+		archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1.25f + y), new Vector2(0.5f, 1.9f), new Vector2(-1.2f, 0f));
 
-		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1), new Vector2(0.5f, 2.1f), new Vector2(-1.2f, 0f));
+		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-1.2f, 0f));
 
 		createBackground();
 
@@ -304,6 +316,16 @@ public class GameScreen extends ScreenAdapter {
 		treeTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		resourceManager.add("Tree", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(treeTexture) {
+			@Override
+			public void dispose(Texture t) {
+				t.dispose();
+			}
+		}, false)));
+
+		Texture grassTexture = new Texture(Gdx.files.internal("data/grass-128x128.png"));
+		grassTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		resourceManager.add("Grass", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(grassTexture) {
 			@Override
 			public void dispose(Texture t) {
 				t.dispose();
