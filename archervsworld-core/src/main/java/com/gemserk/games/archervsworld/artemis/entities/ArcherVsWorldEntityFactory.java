@@ -18,7 +18,6 @@ import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
-import com.gemserk.games.archervsworld.artemis.components.CollisionComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
@@ -98,7 +97,6 @@ public class ArcherVsWorldEntityFactory {
 		body.setUserData(entity);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		entity.addComponent(new CollisionComponent());
 		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
@@ -205,7 +203,6 @@ public class ArcherVsWorldEntityFactory {
 		Texture texture = resource.get();
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		entity.addComponent(new CollisionComponent());
 		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
@@ -249,7 +246,6 @@ public class ArcherVsWorldEntityFactory {
 		Texture texture = resource.get();
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		entity.addComponent(new CollisionComponent());
 		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
@@ -295,7 +291,6 @@ public class ArcherVsWorldEntityFactory {
 		Texture texture = resource.get();
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		entity.addComponent(new CollisionComponent());
 		
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //

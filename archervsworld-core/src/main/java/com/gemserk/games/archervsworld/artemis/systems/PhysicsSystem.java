@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
-import com.gemserk.games.archervsworld.artemis.components.CollisionComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 
 public class PhysicsSystem extends EntitySystem {
@@ -24,12 +23,12 @@ public class PhysicsSystem extends EntitySystem {
 			Entity entityB = (Entity) bodyB.getUserData();
 			
 			if (entityA != null) {
-				CollisionComponent collisionComponent = entityA.getComponent(CollisionComponent.class);
+				PhysicsComponent collisionComponent = entityA.getComponent(PhysicsComponent.class);
 				collisionComponent.getContact().removeBox2dContact();
 			}
 
 			if (entityB != null) {
-				CollisionComponent collisionComponent = entityB.getComponent(CollisionComponent.class);
+				PhysicsComponent collisionComponent = entityB.getComponent(PhysicsComponent.class);
 				collisionComponent.getContact().removeBox2dContact();
 			}
 			
@@ -45,12 +44,12 @@ public class PhysicsSystem extends EntitySystem {
 			Entity entityB = (Entity) bodyB.getUserData();
 			
 			if (entityA != null) {
-				CollisionComponent collisionComponent = entityA.getComponent(CollisionComponent.class);
+				PhysicsComponent collisionComponent = entityA.getComponent(PhysicsComponent.class);
 				collisionComponent.getContact().setBox2dContact(contact, entityB);
 			}
 
 			if (entityB != null) {
-				CollisionComponent collisionComponent = entityB.getComponent(CollisionComponent.class);
+				PhysicsComponent collisionComponent = entityB.getComponent(PhysicsComponent.class);
 				collisionComponent.getContact().setBox2dContact(contact, entityA);
 			}
 

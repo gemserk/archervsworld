@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.componentsengine.utils.AngleUtils;
-import com.gemserk.games.archervsworld.artemis.components.CollisionComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
@@ -42,9 +41,7 @@ public class GameLogicSystem extends EntitySystem {
 			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
 			Body body = physicsComponent.getBody();
 			
-			CollisionComponent collisionComponent = entity.getComponent(CollisionComponent.class);
-
-			Contact contact = collisionComponent.getContact();
+			Contact contact = physicsComponent.getContact();
 			
 			if (!contact.inContact) {
 
@@ -66,6 +63,7 @@ public class GameLogicSystem extends EntitySystem {
 			int stickAngle = 45;
 			
 			if (diff < stickAngle || !body.isAwake() )  {
+				// remove the physics arrow and convert it to a 
 				SpatialComponent component = entity.getComponent(SpatialComponent.class);
 				archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
 				this.world.deleteEntity(entity);
