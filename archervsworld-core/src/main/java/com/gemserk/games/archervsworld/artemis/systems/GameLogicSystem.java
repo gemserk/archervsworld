@@ -13,6 +13,8 @@ import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
+import com.gemserk.componentsengine.utils.Container;
+import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
@@ -137,8 +139,21 @@ public class GameLogicSystem extends EntitySystem {
 
 						if (Groups.Enemy.equals(targetGroup)) {
 						// if (targetBody.getType().equals(BodyType.DynamicBody)) {
+							
+							Container healthContainer = healthComponent.getContainer();
+							float currentHealth = healthContainer.getCurrent();
+							
+							DamageComponent damageComponent = entity.getComponent(DamageComponent.class);
+							
+							currentHealth -= damageComponent.getDamage() - damageComponent.getDamage() * healthComponent.getResistance();
+							
+							healthContainer.setCurrent(currentHealth);
+							
 							Resource<Sound> hitSound = resourceManager.get("HitFleshSound");
 							hitSound.get().play(1f);
+							
+							System.out.println("currentHealth: " + currentHealth);
+							
 						} else {
 							Resource<Sound> hitSound = resourceManager.get("HitGroundSound");
 							hitSound.get().play(1f);

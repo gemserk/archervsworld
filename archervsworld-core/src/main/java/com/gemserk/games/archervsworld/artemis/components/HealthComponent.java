@@ -10,13 +10,19 @@ import com.gemserk.componentsengine.utils.Container;
 public class HealthComponent extends Component {
 
 	private final Property<Container> container;
+	private final Property<FloatValue> resistance;
 	
 	public Container getContainer() {
 		return container.get();
 	}
+	
+	public float getResistance() {
+		return resistance.get().value;
+	}
 
 	public HealthComponent(Property<Container> container, Property<FloatValue> resistance) {
 		this.container = container;
+		this.resistance = resistance;
 	}
 	
 	public HealthComponent(Container container, float resistance) {
