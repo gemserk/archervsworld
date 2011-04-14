@@ -3,6 +3,7 @@ package com.gemserk.games.archervsworld.artemis.systems;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
@@ -11,12 +12,20 @@ import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
+import com.gemserk.resources.Resource;
+import com.gemserk.resources.ResourceManager;
 
 public class UpdateBowSystem extends EntitySystem {
 	
 	private LibgdxPointer pointer;
 
 	private ArcherVsWorldEntityFactory entityFactory;
+	
+	ResourceManager<String> resourceManager;
+	
+	public void setResourceManager(ResourceManager<String> resourceManager) {
+		this.resourceManager = resourceManager;
+	}
 	
 	public UpdateBowSystem(LibgdxPointer pointer, ArcherVsWorldEntityFactory entityFactory) {
 		super(BowComponent.class);
@@ -124,6 +133,9 @@ public class UpdateBowSystem extends EntitySystem {
 				
 				world.deleteEntity(arrow);
 				bowComponent.setArrow(null);
+				
+				Resource<Sound> sound = resourceManager.get("BowSound");
+				sound.get().play(1f);
 				
 			}
 			

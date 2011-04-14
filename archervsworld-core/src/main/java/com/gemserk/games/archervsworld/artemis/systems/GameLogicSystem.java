@@ -4,8 +4,10 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.GroupManager;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.properties.AbstractProperty;
@@ -15,15 +17,23 @@ import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.box2d.Contact;
+import com.gemserk.resources.Resource;
+import com.gemserk.resources.ResourceManager;
 
 public class GameLogicSystem extends EntitySystem {
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
+	ResourceManager<String> resourceManager;
+
 	AngleUtils angleUtils = new AngleUtils();
 
 	public void setArcherVsWorldEntityFactory(ArcherVsWorldEntityFactory archerVsWorldEntityFactory) {
 		this.archerVsWorldEntityFactory = archerVsWorldEntityFactory;
+	}
+
+	public void setResourceManager(ResourceManager<String> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	public GameLogicSystem() {
@@ -86,6 +96,13 @@ public class GameLogicSystem extends EntitySystem {
 					if (Groups.Pierceable.equals(collisionEntityGroup)) {
 
 						final SpatialComponent targetSpatialComponent = target.getComponent(SpatialComponent.class);
+						PhysicsComponent targetPhysicsComponent = target.getComponent(PhysicsComponent.class);
+
+						Body targetBody = targetPhysicsComponent.getBody();
+
+						if (targetBody.getType().equals(BodyType.DynamicBody))
+							targetBody.applyLinearImpulse(new Vector2(0.5f, 0f), targetSpatialComponent.getPosition());
+
 						SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 
 						Vector2 arrowPosition = spatialComponent.getPosition();
@@ -96,7 +113,7 @@ public class GameLogicSystem extends EntitySystem {
 
 						final Vector2 targetPosition = targetSpatialComponent.getPosition();
 						final Vector2 difference = targetPosition.cpy().sub(arrowPosition).sub(displacement);
-						
+
 						// Use layer - 1 for the sprite component
 
 						archerVsWorldEntityFactory.createArrow(new AbstractProperty<Vector2>() {
@@ -114,8 +131,16 @@ public class GameLogicSystem extends EntitySystem {
 
 						this.world.deleteEntity(entity);
 
+						if (targetBody.getType().equals(BodyType.DynamicBody)) {
+							Resource<Sound> hitSound = resourceManager.get("HitFleshSound");
+							hitSound.get().play(1f);
+						} else {
+							Resource<Sound> hitSound = resourceManager.get("HitGroundSound");
+							hitSound.get().play(1f);
+						}
+
 					}
-				} 
+				}
 
 			}
 

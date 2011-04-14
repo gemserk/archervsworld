@@ -7,6 +7,7 @@ import com.artemis.World;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -112,10 +113,13 @@ public class GameScreen extends ScreenAdapter {
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
 
 		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, camera), archerVsWorldEntityFactory);
+		updateBowSystem.setResourceManager(resourceManager);
+		
 		walkingDeadSystem = new WalkingDeadSystem();
 		gameLogicSystem = new GameLogicSystem();
 
 		gameLogicSystem.setArcherVsWorldEntityFactory(archerVsWorldEntityFactory);
+		gameLogicSystem.setResourceManager(resourceManager);
 
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
@@ -149,7 +153,7 @@ public class GameScreen extends ScreenAdapter {
 		float x = 0f;
 		float y = 0f;
 		
-		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.25f), new Vector2(80f, 0.5f));
+		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
 
 		for (int i = 0; i < 40; i++) {
 			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
@@ -345,6 +349,30 @@ public class GameScreen extends ScreenAdapter {
 		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new StaticDataLoader<BitmapFont>(new BitmapFont(Gdx.files.internal("data/font.fnt"), new Sprite(fontTexture), false)) {
 			@Override
 			public void dispose(BitmapFont t) {
+				t.dispose();
+			}
+		}, false)));
+		
+		resourceManager.add("HitFleshSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
+				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/hit-flesh.ogg"))) {
+			@Override
+			public void dispose(Sound t) {
+				t.dispose();
+			}
+		}, false)));
+		
+		resourceManager.add("HitGroundSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
+				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/hit-ground.ogg"))) {
+			@Override
+			public void dispose(Sound t) {
+				t.dispose();
+			}
+		}, false)));
+		
+		resourceManager.add("BowSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
+				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/bow.ogg"))) {
+			@Override
+			public void dispose(Sound t) {
 				t.dispose();
 			}
 		}, false)));
