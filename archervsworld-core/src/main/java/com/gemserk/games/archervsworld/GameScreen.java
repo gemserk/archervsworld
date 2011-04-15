@@ -20,6 +20,7 @@ import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
+import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
@@ -128,6 +129,7 @@ public class GameScreen extends ScreenAdapter {
 		gameLogicSystem.setResourceManager(resourceManager);
 
 		hierarchySystem = new HierarchySystem();
+		aliveSystem = new AliveSystem();
 
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
@@ -138,6 +140,7 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(walkingDeadSystem);
 		world.getSystemManager().setSystem(gameLogicSystem);
 		world.getSystemManager().setSystem(hierarchySystem);
+		world.getSystemManager().setSystem(aliveSystem);
 		world.getSystemManager().initializeAll();
 
 		entityFactory.setWorld(world);
@@ -182,7 +185,7 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1.25f + y), new Vector2(0.5f, 1.9f), new Vector2(-1.2f, 0f));
 
 		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-1.2f, 0f));
-
+		
 		createBackground();
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
@@ -251,6 +254,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private HierarchySystem hierarchySystem;
 
+	private AliveSystem aliveSystem;
+
 	@Override
 	public void render(float delta) {
 
@@ -268,6 +273,7 @@ public class GameScreen extends ScreenAdapter {
 		physicsSystem.process();
 		gameLogicSystem.process();
 		hierarchySystem.process();
+		aliveSystem.process();
 
 		spriteUpdateSystem.process();
 		spriteRenderSystem.process();

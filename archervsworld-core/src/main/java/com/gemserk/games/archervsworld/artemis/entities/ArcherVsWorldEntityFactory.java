@@ -2,6 +2,7 @@ package com.gemserk.games.archervsworld.artemis.entities;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -11,11 +12,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.gemserk.animation4j.transitions.Transitions;
+import com.gemserk.animation4j.transitions.sync.Synchronizers;
+import com.gemserk.commons.artemis.components.AliveComponent;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
+import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
@@ -134,7 +139,7 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
-		
+
 		entity.refresh();
 		return entity;
 	}
@@ -314,6 +319,75 @@ public class ArcherVsWorldEntityFactory {
 
 	}
 
+	public Entity createDyingZombie(Vector2 position, Vector2 size) {
+
+		Entity entity = world.createEntity();
+
+		Resource<Texture> resource = resourceManager.get("Rock");
+		Texture texture = resource.get();
+
+		int aliveTime = 600;
+
+		Color color = new Color(1f, 1f, 1f, 1f);
+
+		Synchronizers.transition(color, Transitions.transitionBuilder(color) //
+				.end(new Color(1f, 1f, 1f, 0f)) //
+				.time(aliveTime) //
+				.build());
+
+		entity.addComponent(new SpatialComponent( //
+				PropertyBuilder.property(position), //
+				new SimpleProperty<Vector2>(size), //
+				PropertyBuilder.property(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent( //
+				new SimpleProperty<Sprite>(new Sprite(texture)), //
+				new SimpleProperty<IntValue>(new IntValue(2)), // 
+				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
+				PropertyBuilder.property(color))); //
+		entity.addComponent(new AliveComponent(aliveTime));
+
+		entity.refresh();
+
+		return entity;
+	}
+
+	public Entity createDyingArrow(Vector2 position, float angle, int aliveTime) {
+		return createDyingArrow(PropertyBuilder.property(position), // 
+				PropertyBuilder.property(ValueBuilder.floatValue(angle)), // 
+				aliveTime);
+	}
+	
+	public Entity createDyingArrow(Property<Vector2> position, Property<FloatValue> angle, int aliveTime) {
+		Entity entity = world.createEntity();
+
+		Resource<Texture> resource = resourceManager.get("Arrow");
+		Texture texture = resource.get();
+
+		Color color = new Color(1f, 1f, 1f, 1f);
+
+		Synchronizers.transition(color, Transitions.transitionBuilder(color) //
+				.end(new Color(1f, 1f, 1f, 0f)) //
+				.time(aliveTime) //
+				.build());
+		
+		Vector2 arrowSize = new Vector2(1f, 1f);
+
+		entity.addComponent(new SpatialComponent( //
+				position, //
+				PropertyBuilder.property(arrowSize), //
+				angle));
+		entity.addComponent(new SpriteComponent( //
+				new SimpleProperty<Sprite>(new Sprite(texture)), //
+				new SimpleProperty<IntValue>(new IntValue(1)), // 
+				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
+				PropertyBuilder.property(color))); //
+		entity.addComponent(new AliveComponent(aliveTime));
+
+		entity.refresh();
+		
+		return entity;
+	}
+
 	public Entity createGround(Vector2 position, Vector2 size) {
 
 		PolygonShape shape = new PolygonShape();
@@ -324,12 +398,11 @@ public class ArcherVsWorldEntityFactory {
 		groundBodyDef.position.set(position);
 		Body body = physicsWorld.createBody(groundBodyDef);
 
-
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		// fixtureDef.friction = 0f;
 		fixtureDef.density = 1f;
-		
+
 		body.createFixture(fixtureDef);
 		shape.dispose();
 
@@ -337,24 +410,24 @@ public class ArcherVsWorldEntityFactory {
 
 		body.setUserData(entity);
 
-//		entity.setGroup(Groups.Enemy);
+		// entity.setGroup(Groups.Enemy);
 		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(size), //
 				new Box2dAngleProperty(body)));
-		entity.addComponent(new HealthComponent(new Container(0,0), 1f));
+		entity.addComponent(new HealthComponent(new Container(0, 0), 1f));
 		entity.addComponent(new ParentComponent());
 
-//		Resource<Texture> resource = resourceManager.get("Grass");
-//		Texture texture = resource.get();
-//		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(2))));
+		// Resource<Texture> resource = resourceManager.get("Grass");
+		// Texture texture = resource.get();
+		// entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(2))));
 
 		entity.refresh();
 
 		return entity;
 	}
-	
+
 	public Entity createGrass(Vector2 position, Vector2 size) {
 
 		Resource<Texture> resource = resourceManager.get("Grass");
@@ -366,7 +439,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(size), //
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent( //
-				new SimpleProperty<Sprite>(new Sprite(texture)), // 
+				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(2))));
 		entity.refresh();
 
