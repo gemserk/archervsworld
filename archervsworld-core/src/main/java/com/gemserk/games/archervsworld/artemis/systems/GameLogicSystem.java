@@ -8,10 +8,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.properties.AbstractProperty;
-import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.componentsengine.utils.Container;
@@ -25,6 +25,28 @@ import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
 public class GameLogicSystem extends EntitySystem {
+
+	static class StickArrowProperty extends AbstractProperty<Vector2> {
+		
+		private final SpatialComponent spatial;
+		
+		private final Vector2 difference;
+		
+		Vector2 position = new Vector2();
+
+		public StickArrowProperty(SpatialComponent spatial, Vector2 difference) {
+			this.spatial = spatial;
+			this.difference = difference;
+		}
+
+		@Override
+		public Vector2 get() {
+			Vector2 targetPosition = spatial.getPosition();
+			position.set(targetPosition).sub(difference);
+			return position;
+		}
+		
+	}
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
@@ -152,18 +174,11 @@ public class GameLogicSystem extends EntitySystem {
 
 						// Use layer - 1 for the sprite component
 
-						archerVsWorldEntityFactory.createArrow(new AbstractProperty<Vector2>() {
-
-							Vector2 position = new Vector2();
-
-							@Override
-							public Vector2 get() {
-								Vector2 targetPosition = targetSpatialComponent.getPosition();
-								position.set(targetPosition).sub(difference);
-								return position;
-							}
-
-						}, new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), PropertyBuilder.property(target));
+						Entity newArrow = archerVsWorldEntityFactory.createArrow(new StickArrowProperty(targetSpatialComponent, difference), 
+								new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)));
+						
+						ParentComponent parentComponent = target.getComponent(ParentComponent.class);
+						parentComponent.addChild(newArrow);
 
 						// add owner to the arrow, so it is deleted when the owner is deleted...
 

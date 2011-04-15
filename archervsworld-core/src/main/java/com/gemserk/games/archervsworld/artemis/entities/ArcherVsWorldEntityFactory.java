@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.gemserk.commons.artemis.components.ChildComponent;
+import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.values.FloatValue;
@@ -118,10 +118,10 @@ public class ArcherVsWorldEntityFactory {
 	public Entity createArrow(Vector2 position, float angle) {
 		Property<Vector2> positionProperty = PropertyBuilder.property(position);
 		Property<FloatValue> angleProperty = PropertyBuilder.property((new FloatValue(angle)));
-		return createArrow(positionProperty, angleProperty, null);
+		return createArrow(positionProperty, angleProperty);
 	}
 
-	public Entity createArrow(Property<Vector2> positionProperty, Property<FloatValue> angleProperty, Property<Entity> owner) {
+	public Entity createArrow(Property<Vector2> positionProperty, Property<FloatValue> angleProperty) {
 		Entity entity = world.createEntity();
 
 		Resource<Texture> resource = resourceManager.get("Arrow");
@@ -135,9 +135,6 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
 		
-		if (owner != null)
-			entity.addComponent(new ChildComponent(owner));
-
 		entity.refresh();
 		return entity;
 	}
@@ -311,6 +308,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(0)), //
 				new SimpleProperty<IntValue>(new IntValue(1000)), new SimpleProperty<IntValue>(new IntValue(2000))));
 		entity.addComponent(new HealthComponent(new Container(5f, 5f), 0f));
+		entity.addComponent(new ParentComponent());
 
 		entity.refresh();
 
@@ -346,6 +344,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(size), //
 				new Box2dAngleProperty(body)));
 		entity.addComponent(new HealthComponent(new Container(0,0), 1f));
+		entity.addComponent(new ParentComponent());
 
 //		Resource<Texture> resource = resourceManager.get("Grass");
 //		Texture texture = resource.get();

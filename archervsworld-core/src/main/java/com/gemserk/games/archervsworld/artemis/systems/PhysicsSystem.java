@@ -91,8 +91,11 @@ public class PhysicsSystem extends EntitySystem {
 		
 		PhysicsComponent component = e.getComponent(PhysicsComponent.class);
 		
-		if (component == null) 
-			throw new RuntimeException("Entity without physics component found");
+		if (component == null) {
+			// throw new RuntimeException("Entity without physics component found");
+			Gdx.app.log("Archer Vs Zombies", "Entity without physics component");
+			return;
+		}
 		
 		Body body = component.getBody();
 		body.setUserData(null);
