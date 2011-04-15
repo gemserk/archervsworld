@@ -23,6 +23,7 @@ import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
+import com.gemserk.commons.gdx.Camera;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.values.FloatValue;
@@ -105,8 +106,11 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	protected void restart() {
+		
+		myCamera = new Camera(camera);
+		
 		textRendererSystem = new TextRendererSystem();
-		spriteRenderSystem = new SpriteRendererSystem(camera);
+		spriteRenderSystem = new SpriteRendererSystem(myCamera);
 		spriteUpdateSystem = new SpriteUpdateSystem();
 
 		Vector2 gravity = new Vector2(0f, -10f);
@@ -182,6 +186,9 @@ public class GameScreen extends ScreenAdapter {
 		monitorUpdater.add(restartButtonMonitor);
 		monitorUpdater.add(zoomInButtonMonitor);
 		monitorUpdater.add(zoomOutButtonMonitor);
+		
+		monitorUpdater.add(moveLeftMonitor);
+		monitorUpdater.add(moveRightMonitor);
 
 	}
 
@@ -215,16 +222,20 @@ public class GameScreen extends ScreenAdapter {
 	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
 
 	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
+	
+	private ButtonMonitor moveRightMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_RIGHT);
+	
+	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_LEFT);
 
 	private MonitorUpdaterImpl monitorUpdater;
 
 	private WalkingDeadSystem walkingDeadSystem;
 
 	private FloatValue zoom = new FloatValue(1f);
-
-	private FloatValue nextZoom = new FloatValue(0);
-
+	
 	private GameLogicSystem gameLogicSystem;
+
+	private Camera myCamera;
 
 	@Override
 	public void render(float delta) {
@@ -258,20 +269,32 @@ public class GameScreen extends ScreenAdapter {
 
 		if (zoomInButtonMonitor.isHolded()) {
 			zoom.value = zoom.value - 1f * delta;
+			myCamera.zoom(zoom.value);
 			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
 		}
 
 		if (zoomOutButtonMonitor.isHolded()) {
 			zoom.value = zoom.value + 1f * delta;
+			myCamera.zoom(zoom.value);
 			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
+		}
+		
+		if (moveRightMonitor.isHolded()) {
+			// myCamera.move(-1f * delta, 0f);
+			myCamera.rotate(36f * delta);
+		}
+		
+		if (moveLeftMonitor.isHolded()) {
+			// myCamera.move(1f * delta, 0f);
+			myCamera.rotate(-36f * delta);
 		}
 
 		if (restartButtonMonitor.isReleased())
 			restart();
 
-		camera.viewportHeight = viewportHeight * zoom.value;
-		camera.viewportWidth = viewportWidth * zoom.value;
-		camera.position.set(viewportWidth * zoom.value / 2, viewportHeight * zoom.value / 2, 0);
+//		camera.viewportHeight = viewportHeight * zoom.value;
+//		camera.viewportWidth = viewportWidth * zoom.value;
+//		camera.position.set(viewportWidth * zoom.value / 2, viewportHeight * zoom.value / 2, 0);
 	}
 
 	@Override
