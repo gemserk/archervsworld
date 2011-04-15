@@ -17,6 +17,35 @@ import com.gemserk.resources.ResourceManager;
 
 public class UpdateBowSystem extends EntitySystem {
 	
+	static class ChargingArrowProperty extends AbstractProperty<Vector2> {
+		
+		private final BowComponent bowComponent;
+		
+		private final SpatialComponent spatialComponent;
+		
+		Vector2 position= new Vector2();
+		
+		Vector2 diff = new Vector2();
+
+		ChargingArrowProperty(BowComponent bowComponent, SpatialComponent spatialComponent) {
+			this.bowComponent = bowComponent;
+			this.spatialComponent = spatialComponent;
+		}
+
+		@Override
+		public Vector2 get() {
+			position.set(spatialComponent.getPositionProperty().get());
+			
+			diff.set(1f,0f);
+			diff.rotate(spatialComponent.getAngle());
+			diff.mul(bowComponent.getPower() * 0.005f);
+			
+			position.sub(diff);
+			
+			return position;
+		}
+	}
+
 	private LibgdxPointer pointer;
 
 	private ArcherVsWorldEntityFactory entityFactory;
@@ -79,26 +108,9 @@ public class UpdateBowSystem extends EntitySystem {
 				
 					// TODO: add it as a child using scene graph component so transformations will be handled automatically
 					
-					Entity arrow = entityFactory.createArrow(new AbstractProperty<Vector2>(){
-						
-						Vector2 position= new Vector2();
-						
-						Vector2 diff = new Vector2();
-						
-						@Override
-						public Vector2 get() {
-							position.set(spatialComponent.getPositionProperty().get());
-							
-							diff.set(1f,0f);
-							diff.rotate(spatialComponent.getAngle());
-							diff.mul(bowComponent.getPower() * 0.005f);
-							
-							position.sub(diff);
-							
-							return position;
-						}
-						
-					}, spatialComponent.getAngleProperty());
+					Entity arrow = entityFactory.createArrow(new ChargingArrowProperty(bowComponent, spatialComponent), //
+							spatialComponent.getAngleProperty());
+					
 					bowComponent.setArrow(arrow);
 					
 				}
