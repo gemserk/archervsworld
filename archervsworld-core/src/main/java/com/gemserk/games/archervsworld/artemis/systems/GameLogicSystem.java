@@ -152,7 +152,7 @@ public class GameLogicSystem extends EntitySystem {
 							Resource<Sound> hitSound = resourceManager.get("HitFleshSound");
 							hitSound.get().play(1f);
 							
-							System.out.println("currentHealth: " + currentHealth);
+							// System.out.println("currentHealth: " + currentHealth);
 							
 						} else {
 							Resource<Sound> hitSound = resourceManager.get("HitGroundSound");

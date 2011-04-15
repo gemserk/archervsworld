@@ -116,7 +116,7 @@ public class GameScreen extends ScreenAdapter {
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
 
-		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, camera), archerVsWorldEntityFactory);
+		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, myCamera), archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
 		
 		walkingDeadSystem = new WalkingDeadSystem();
@@ -189,6 +189,9 @@ public class GameScreen extends ScreenAdapter {
 		
 		monitorUpdater.add(moveLeftMonitor);
 		monitorUpdater.add(moveRightMonitor);
+		
+		monitorUpdater.add(moveUpMonitor);
+		monitorUpdater.add(moveDownMonitor);
 
 	}
 
@@ -219,13 +222,17 @@ public class GameScreen extends ScreenAdapter {
 
 	private ButtonMonitor restartButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_R);
 
-	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
+	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_PLUS);
 
-	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
+	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_MINUS);
 	
 	private ButtonMonitor moveRightMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_RIGHT);
 	
 	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_LEFT);
+	
+	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
+	
+	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
 
 	private MonitorUpdaterImpl monitorUpdater;
 
@@ -268,29 +275,42 @@ public class GameScreen extends ScreenAdapter {
 		Synchronizers.synchronize();
 
 		if (zoomInButtonMonitor.isHolded()) {
-			zoom.value = zoom.value - 1f * delta;
+			zoom.value = zoom.value + 1f * delta;
 			myCamera.zoom(zoom.value);
 			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
 		}
 
 		if (zoomOutButtonMonitor.isHolded()) {
-			zoom.value = zoom.value + 1f * delta;
+			zoom.value = zoom.value - 1f * delta;
 			myCamera.zoom(zoom.value);
 			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
 		}
 		
-		if (moveRightMonitor.isHolded()) {
-			// myCamera.move(-1f * delta, 0f);
+		if (moveDownMonitor.isHolded()) {
 			myCamera.rotate(36f * delta);
 		}
 		
-		if (moveLeftMonitor.isHolded()) {
-			// myCamera.move(1f * delta, 0f);
+		if (moveUpMonitor.isHolded()) {
 			myCamera.rotate(-36f * delta);
+		}
+		
+		if (moveRightMonitor.isHolded()) {
+			myCamera.move(-2f * delta, 0f);
+		}
+		
+		if (moveLeftMonitor.isHolded()) {
+			myCamera.move(2f * delta, 0f);
 		}
 
 		if (restartButtonMonitor.isReleased())
 			restart();
+		
+		if (Gdx.input.justTouched()) {
+			Vector2 position = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+			System.out.println("local position: " + position);
+			myCamera.unproject(position);
+			System.out.println("world position: " + position);
+		}
 
 //		camera.viewportHeight = viewportHeight * zoom.value;
 //		camera.viewportWidth = viewportWidth * zoom.value;
