@@ -12,74 +12,12 @@ import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
+import com.gemserk.games.archervsworld.controllers.BowController;
+import com.gemserk.games.archervsworld.controllers.BowControllerImpl;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
 public class UpdateBowSystem extends EntitySystem {
-	
-	static class BowController {
-		
-		private float angle;
-		
-		private float power;
-		
-		private boolean charging;
-		
-		private boolean firing;
-		
-		public float getAngle() {
-			return angle;
-		}
-		
-		public float getPower() {
-			return power;
-		}
-		
-		public boolean isCharging() {
-			return charging;
-		}
-		
-		public boolean isFiring() {
-			return firing;
-		}
-		
-		///
-		
-		private LibgdxPointer pointer;
-		
-		public BowController(LibgdxPointer pointer) {
-			this.pointer = pointer;
-		}
-		
-		public void update() {
-			
-			pointer.update();
-			
-			firing = false;
-			
-			if (pointer.touched) {
-				Vector2 p0 = pointer.getPressedPosition();
-				Vector2 p1 = pointer.getPosition();
-				
-				Vector2 direction = p0.cpy().sub(p1);
-				
-				// the power multiplier
-				float multiplier = 3f;
-				
-				angle = direction.angle();
-				power = direction.len() * multiplier; 
-				
-				charging = true;
-			} 
-			
-			if (pointer.wasReleased) {
-				charging = false;
-				firing = true;
-			}
-			
-		}
-		
-	}
 	
 	static class ChargingArrowProperty extends AbstractProperty<Vector2> {
 		
@@ -122,7 +60,7 @@ public class UpdateBowSystem extends EntitySystem {
 	public UpdateBowSystem(LibgdxPointer pointer, ArcherVsWorldEntityFactory entityFactory) {
 		super(BowComponent.class);
 		this.entityFactory = entityFactory;
-		bowController = new BowController(pointer);
+		bowController = new BowControllerImpl(pointer);
 	}
 	
 	@Override
@@ -185,7 +123,7 @@ public class UpdateBowSystem extends EntitySystem {
 			
 		}
 		
-		if (bowController.isFiring()) {
+		if (bowController.shouldFire()) {
 
 			for (int i = 0; i < entities.size(); i++) {
 				
