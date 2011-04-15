@@ -31,20 +31,8 @@ public class UpdateBowSystem extends EntitySystem {
 			return angle;
 		}
 		
-		public void setAngle(float angle) {
-			this.angle = angle;
-		}
-		
-		public void setPower(float power) {
-			this.power = power;
-		}
-		
 		public float getPower() {
 			return power;
-		}
-		
-		public void setCharging(boolean charging) {
-			this.charging = charging;
 		}
 		
 		public boolean isCharging() {
@@ -55,8 +43,40 @@ public class UpdateBowSystem extends EntitySystem {
 			return firing;
 		}
 		
-		public void setFiring(boolean firing) {
-			this.firing = firing;
+		///
+		
+		private LibgdxPointer pointer;
+		
+		public BowController(LibgdxPointer pointer) {
+			this.pointer = pointer;
+		}
+		
+		public void update() {
+			
+			pointer.update();
+			
+			firing = false;
+			
+			if (pointer.touched) {
+				Vector2 p0 = pointer.getPressedPosition();
+				Vector2 p1 = pointer.getPosition();
+				
+				Vector2 direction = p0.cpy().sub(p1);
+				
+				// the power multiplier
+				float multiplier = 3f;
+				
+				angle = direction.angle();
+				power = direction.len() * multiplier; 
+				
+				charging = true;
+			} 
+			
+			if (pointer.wasReleased) {
+				charging = false;
+				firing = true;
+			}
+			
 		}
 		
 	}
@@ -90,8 +110,6 @@ public class UpdateBowSystem extends EntitySystem {
 		}
 	}
 
-	private LibgdxPointer pointer;
-
 	private ArcherVsWorldEntityFactory entityFactory;
 	
 	ResourceManager<String> resourceManager;
@@ -104,49 +122,27 @@ public class UpdateBowSystem extends EntitySystem {
 	public UpdateBowSystem(LibgdxPointer pointer, ArcherVsWorldEntityFactory entityFactory) {
 		super(BowComponent.class);
 		this.entityFactory = entityFactory;
-		this.pointer = pointer;
+		bowController = new BowController(pointer);
 	}
 	
 	@Override
 	protected void begin() {
-		pointer.update();
+		bowController.update();
 	}
 	
 	AngleUtils angleUtils = new AngleUtils();
 	
 	Vector2 direction = new Vector2();
 	
-	BowController bowController = new BowController();
+	BowController bowController;
 	
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		
 		entities = world.getGroupManager().getEntities(Groups.Bow);
 		
-		// update controller in some way...
-		
-		bowController.setFiring(false);
-		
-		if (pointer.touched) {
-			
-			Vector2 p0 = pointer.getPressedPosition();
-			Vector2 p1 = pointer.getPosition();
-			
-			Vector2 direction = p0.cpy().sub(p1);
-			
-			bowController.angle = direction.angle();
-			bowController.power = direction.len(); 
-			
-			bowController.setCharging(true);
-			
-		} 
-		
-		if (pointer.wasReleased) {
-			
-			bowController.setCharging(false);
-			bowController.setFiring(true);
-			
-		}
+		if (entities == null)
+			return;
 		
 		if (bowController.isCharging()) {
 			
@@ -164,10 +160,9 @@ public class UpdateBowSystem extends EntitySystem {
 				int minFireAngle = -70;
 				int maxFireAngle = 80;
 				
-				// the power multiplier
-				float multiplier = 3f;
+				// angle = truncate(bowController.getAngle(), minFireAngle, maxFireAngle);
 				
-				float power = truncate(bowController.getPower() * multiplier, bowComponent.getMinPower(), bowComponent.getMaxPower());
+				float power = truncate(bowController.getPower(), bowComponent.getMinPower(), bowComponent.getMaxPower());
 				
 				bowComponent.setPower(power);
 				
