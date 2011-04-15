@@ -20,6 +20,7 @@ import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
+import com.gemserk.commons.artemis.systems.HierarchySystem;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
@@ -126,6 +127,8 @@ public class GameScreen extends ScreenAdapter {
 		gameLogicSystem.setArcherVsWorldEntityFactory(archerVsWorldEntityFactory);
 		gameLogicSystem.setResourceManager(resourceManager);
 
+		hierarchySystem = new HierarchySystem();
+
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
 		world.getSystemManager().setSystem(spriteRenderSystem);
@@ -134,6 +137,7 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(updateBowSystem);
 		world.getSystemManager().setSystem(walkingDeadSystem);
 		world.getSystemManager().setSystem(gameLogicSystem);
+		world.getSystemManager().setSystem(hierarchySystem);
 		world.getSystemManager().initializeAll();
 
 		entityFactory.setWorld(world);
@@ -245,6 +249,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private Libgdx2dCamera myCamera;
 
+	private HierarchySystem hierarchySystem;
+
 	@Override
 	public void render(float delta) {
 
@@ -261,6 +267,7 @@ public class GameScreen extends ScreenAdapter {
 
 		physicsSystem.process();
 		gameLogicSystem.process();
+		hierarchySystem.process();
 
 		spriteUpdateSystem.process();
 		spriteRenderSystem.process();
@@ -305,13 +312,6 @@ public class GameScreen extends ScreenAdapter {
 
 		if (restartButtonMonitor.isReleased())
 			restart();
-
-		// if (Gdx.input.justTouched()) {
-		// Vector2 position = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-		// System.out.println("local position: " + position);
-		// myCamera.unproject(position);
-		// System.out.println("world position: " + position);
-		// }
 
 	}
 

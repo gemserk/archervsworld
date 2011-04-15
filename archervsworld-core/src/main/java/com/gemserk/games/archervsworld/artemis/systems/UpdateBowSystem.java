@@ -98,7 +98,7 @@ public class UpdateBowSystem extends EntitySystem {
 							return position;
 						}
 						
-					}, spatialComponent.getAngleProperty());
+					}, spatialComponent.getAngleProperty(), null);
 					bowComponent.setArrow(arrow);
 					
 				}

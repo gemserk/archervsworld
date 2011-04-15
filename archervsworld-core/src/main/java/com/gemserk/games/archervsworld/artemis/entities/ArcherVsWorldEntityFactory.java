@@ -11,11 +11,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.gemserk.commons.artemis.components.ChildComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.properties.Property;
+import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
@@ -114,12 +116,12 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	public Entity createArrow(Vector2 position, float angle) {
-		SimpleProperty<Vector2> positionProperty = new SimpleProperty<Vector2>(position);
-		SimpleProperty<FloatValue> angleProperty = new SimpleProperty<FloatValue>(new FloatValue(angle));
-		return createArrow(positionProperty, angleProperty);
+		Property<Vector2> positionProperty = PropertyBuilder.property(position);
+		Property<FloatValue> angleProperty = PropertyBuilder.property((new FloatValue(angle)));
+		return createArrow(positionProperty, angleProperty, null);
 	}
 
-	public Entity createArrow(Property<Vector2> positionProperty, Property<FloatValue> angleProperty) {
+	public Entity createArrow(Property<Vector2> positionProperty, Property<FloatValue> angleProperty, Property<Entity> owner) {
 		Entity entity = world.createEntity();
 
 		Resource<Texture> resource = resourceManager.get("Arrow");
@@ -132,6 +134,9 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
+		
+		if (owner != null)
+			entity.addComponent(new ChildComponent(owner));
 
 		entity.refresh();
 		return entity;
@@ -305,7 +310,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(velocity), //
 				new SimpleProperty<IntValue>(new IntValue(0)), //
 				new SimpleProperty<IntValue>(new IntValue(1000)), new SimpleProperty<IntValue>(new IntValue(2000))));
-		entity.addComponent(new HealthComponent(new Container(100f, 100f), 0f));
+		entity.addComponent(new HealthComponent(new Container(5f, 5f), 0f));
 
 		entity.refresh();
 

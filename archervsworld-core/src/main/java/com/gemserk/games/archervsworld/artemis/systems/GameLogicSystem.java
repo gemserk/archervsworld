@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.properties.AbstractProperty;
+import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.componentsengine.utils.Container;
@@ -46,9 +47,38 @@ public class GameLogicSystem extends EntitySystem {
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 
+		processArrows();
+
+		processEnemies();
+
+	}
+
+	private void processEnemies() {
 		GroupManager groupManager = world.getGroupManager();
 
-		entities = groupManager.getEntities(Groups.Arrow);
+		ImmutableBag<Entity> entities = groupManager.getEntities(Groups.Enemy);
+
+		if (entities == null)
+			return;
+
+		for (int i = 0; i < entities.size(); i++) {
+			Entity entity = entities.get(i);
+			HealthComponent healthComponent = entity.getComponent(HealthComponent.class);
+			
+			if (healthComponent.getContainer().isEmpty()) 
+				world.deleteEntity(entity);
+			
+			// add animation of the zombie dying?
+
+		}
+
+	}
+
+	private void processArrows() {
+
+		GroupManager groupManager = world.getGroupManager();
+
+		ImmutableBag<Entity> entities = groupManager.getEntities(Groups.Arrow);
 
 		if (entities == null)
 			return;
@@ -93,13 +123,13 @@ public class GameLogicSystem extends EntitySystem {
 				Entity target = contact.entity;
 
 				if (target != null) {
-					
+
 					HealthComponent healthComponent = target.getComponent(HealthComponent.class);
 
 					String targetGroup = groupManager.getGroupOf(target);
 
 					if (healthComponent != null) {
-					// if (Groups.Pierceable.equals(collisionEntityGroup)) {
+						// if (Groups.Pierceable.equals(collisionEntityGroup)) {
 
 						final SpatialComponent targetSpatialComponent = target.getComponent(SpatialComponent.class);
 						PhysicsComponent targetPhysicsComponent = target.getComponent(PhysicsComponent.class);
@@ -133,27 +163,29 @@ public class GameLogicSystem extends EntitySystem {
 								return position;
 							}
 
-						}, new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)));
+						}, new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), PropertyBuilder.property(target));
+
+						// add owner to the arrow, so it is deleted when the owner is deleted...
 
 						this.world.deleteEntity(entity);
 
 						if (Groups.Enemy.equals(targetGroup)) {
-						// if (targetBody.getType().equals(BodyType.DynamicBody)) {
-							
+							// if (targetBody.getType().equals(BodyType.DynamicBody)) {
+
 							Container healthContainer = healthComponent.getContainer();
 							float currentHealth = healthContainer.getCurrent();
-							
+
 							DamageComponent damageComponent = entity.getComponent(DamageComponent.class);
-							
+
 							currentHealth -= damageComponent.getDamage() - damageComponent.getDamage() * healthComponent.getResistance();
-							
+
 							healthContainer.setCurrent(currentHealth);
-							
+
 							Resource<Sound> hitSound = resourceManager.get("HitFleshSound");
 							hitSound.get().play(1f);
-							
+
 							// System.out.println("currentHealth: " + currentHealth);
-							
+
 						} else {
 							Resource<Sound> hitSound = resourceManager.get("HitGroundSound");
 							hitSound.get().play(1f);
@@ -165,7 +197,6 @@ public class GameLogicSystem extends EntitySystem {
 			}
 
 		}
-
 	}
 
 	@Override
