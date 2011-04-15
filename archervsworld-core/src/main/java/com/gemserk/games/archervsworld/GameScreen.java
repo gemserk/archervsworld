@@ -23,7 +23,8 @@ import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
-import com.gemserk.commons.gdx.Camera;
+import com.gemserk.commons.gdx.Libgdx2dCamera;
+import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.values.FloatValue;
@@ -106,9 +107,9 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	protected void restart() {
-		
-		myCamera = new Camera(camera);
-		
+
+		myCamera = new Libgdx2dCameraTransformImpl(camera);
+
 		textRendererSystem = new TextRendererSystem();
 		spriteRenderSystem = new SpriteRendererSystem(myCamera);
 		spriteUpdateSystem = new SpriteUpdateSystem();
@@ -118,7 +119,7 @@ public class GameScreen extends ScreenAdapter {
 
 		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, myCamera), archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
-		
+
 		walkingDeadSystem = new WalkingDeadSystem();
 		gameLogicSystem = new GameLogicSystem();
 
@@ -149,17 +150,17 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.setWorld(world);
 		archerVsWorldEntityFactory.setPhysicsWorld(physicsWorld);
 		archerVsWorldEntityFactory.setResourceManager(resourceManager);
-		
+
 		// I NEED AN EDITOR FOR ALL THIS STUFF!!
 
 		Vector2 grassSize = new Vector2(0.5f, 0.5f);
 
 		float x = 0f;
 		float y = 0f;
-		
+
 		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
 
-		for (int i = 0; i < 40; i++) {
+		for (int i = 0; i < 60; i++) {
 			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
 			x += grassSize.x;
 		}
@@ -186,10 +187,10 @@ public class GameScreen extends ScreenAdapter {
 		monitorUpdater.add(restartButtonMonitor);
 		monitorUpdater.add(zoomInButtonMonitor);
 		monitorUpdater.add(zoomOutButtonMonitor);
-		
+
 		monitorUpdater.add(moveLeftMonitor);
 		monitorUpdater.add(moveRightMonitor);
-		
+
 		monitorUpdater.add(moveUpMonitor);
 		monitorUpdater.add(moveDownMonitor);
 
@@ -225,13 +226,13 @@ public class GameScreen extends ScreenAdapter {
 	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_PLUS);
 
 	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_MINUS);
-	
+
 	private ButtonMonitor moveRightMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_RIGHT);
-	
+
 	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_LEFT);
-	
+
 	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
-	
+
 	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
 
 	private MonitorUpdaterImpl monitorUpdater;
@@ -239,10 +240,10 @@ public class GameScreen extends ScreenAdapter {
 	private WalkingDeadSystem walkingDeadSystem;
 
 	private FloatValue zoom = new FloatValue(1f);
-	
+
 	private GameLogicSystem gameLogicSystem;
 
-	private Camera myCamera;
+	private Libgdx2dCamera myCamera;
 
 	@Override
 	public void render(float delta) {
@@ -285,36 +286,33 @@ public class GameScreen extends ScreenAdapter {
 			myCamera.zoom(zoom.value);
 			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
 		}
-		
+
 		if (moveDownMonitor.isHolded()) {
 			myCamera.rotate(36f * delta);
 		}
-		
+
 		if (moveUpMonitor.isHolded()) {
 			myCamera.rotate(-36f * delta);
 		}
-		
+
 		if (moveRightMonitor.isHolded()) {
 			myCamera.move(-2f * delta, 0f);
 		}
-		
+
 		if (moveLeftMonitor.isHolded()) {
 			myCamera.move(2f * delta, 0f);
 		}
 
 		if (restartButtonMonitor.isReleased())
 			restart();
-		
-		if (Gdx.input.justTouched()) {
-			Vector2 position = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-			System.out.println("local position: " + position);
-			myCamera.unproject(position);
-			System.out.println("world position: " + position);
-		}
 
-//		camera.viewportHeight = viewportHeight * zoom.value;
-//		camera.viewportWidth = viewportWidth * zoom.value;
-//		camera.position.set(viewportWidth * zoom.value / 2, viewportHeight * zoom.value / 2, 0);
+		// if (Gdx.input.justTouched()) {
+		// Vector2 position = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+		// System.out.println("local position: " + position);
+		// myCamera.unproject(position);
+		// System.out.println("world position: " + position);
+		// }
+
 	}
 
 	@Override
@@ -395,30 +393,30 @@ public class GameScreen extends ScreenAdapter {
 				t.dispose();
 			}
 		}, false)));
-		
+
 		resourceManager.add("HitFleshSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
 				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/hit-flesh.ogg"))) {
-			@Override
-			public void dispose(Sound t) {
-				t.dispose();
-			}
-		}, false)));
-		
+					@Override
+					public void dispose(Sound t) {
+						t.dispose();
+					}
+				}, false)));
+
 		resourceManager.add("HitGroundSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
 				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/hit-ground.ogg"))) {
-			@Override
-			public void dispose(Sound t) {
-				t.dispose();
-			}
-		}, false)));
-		
+					@Override
+					public void dispose(Sound t) {
+						t.dispose();
+					}
+				}, false)));
+
 		resourceManager.add("BowSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
 				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/bow.ogg"))) {
-			@Override
-			public void dispose(Sound t) {
-				t.dispose();
-			}
-		}, false)));
+					@Override
+					public void dispose(Sound t) {
+						t.dispose();
+					}
+				}, false)));
 
 	}
 
