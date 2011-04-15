@@ -17,6 +17,50 @@ import com.gemserk.resources.ResourceManager;
 
 public class UpdateBowSystem extends EntitySystem {
 	
+	static class BowController {
+		
+		private float angle;
+		
+		private float power;
+		
+		private boolean charging;
+		
+		private boolean firing;
+		
+		public float getAngle() {
+			return angle;
+		}
+		
+		public void setAngle(float angle) {
+			this.angle = angle;
+		}
+		
+		public void setPower(float power) {
+			this.power = power;
+		}
+		
+		public float getPower() {
+			return power;
+		}
+		
+		public void setCharging(boolean charging) {
+			this.charging = charging;
+		}
+		
+		public boolean isCharging() {
+			return charging;
+		}
+		
+		public boolean isFiring() {
+			return firing;
+		}
+		
+		public void setFiring(boolean firing) {
+			this.firing = firing;
+		}
+		
+	}
+	
 	static class ChargingArrowProperty extends AbstractProperty<Vector2> {
 		
 		private final BowComponent bowComponent;
@@ -56,6 +100,7 @@ public class UpdateBowSystem extends EntitySystem {
 		this.resourceManager = resourceManager;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public UpdateBowSystem(LibgdxPointer pointer, ArcherVsWorldEntityFactory entityFactory) {
 		super(BowComponent.class);
 		this.entityFactory = entityFactory;
@@ -71,36 +116,58 @@ public class UpdateBowSystem extends EntitySystem {
 	
 	Vector2 direction = new Vector2();
 	
+	BowController bowController = new BowController();
+	
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 		
 		entities = world.getGroupManager().getEntities(Groups.Bow);
 		
+		// update controller in some way...
+		
+		bowController.setFiring(false);
+		
 		if (pointer.touched) {
+			
+			Vector2 p0 = pointer.getPressedPosition();
+			Vector2 p1 = pointer.getPosition();
+			
+			Vector2 direction = p0.cpy().sub(p1);
+			
+			bowController.angle = direction.angle();
+			bowController.power = direction.len(); 
+			
+			bowController.setCharging(true);
+			
+		} 
+		
+		if (pointer.wasReleased) {
+			
+			bowController.setCharging(false);
+			bowController.setFiring(true);
+			
+		}
+		
+		if (bowController.isCharging()) {
 			
 			// update bow direction
 			
 			for (int i = 0; i < entities.size(); i++) {
 				Entity entity = entities.get(i);
 				final SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
-				Vector2 direction = pointer.getPressedPosition().cpy().sub(pointer.getPosition());
+				// Vector2 direction = pointer.getPressedPosition().cpy().sub(pointer.getPosition());
 				
 				final BowComponent bowComponent = entity.getComponent(BowComponent.class);
 				
-				float angle = direction.angle();
+				float angle = bowController.getAngle();
 				
 				int minFireAngle = -70;
 				int maxFireAngle = 80;
 				
-				Vector2 p0 = pointer.getPressedPosition();
-				Vector2 p1 = pointer.getPosition();
-				
 				// the power multiplier
 				float multiplier = 3f;
 				
-				Vector2 mul = p1.cpy().sub(p0).mul(-1f).mul(multiplier);
-				
-				float power = truncate(mul.len(), bowComponent.getMinPower(), bowComponent.getMaxPower());
+				float power = truncate(bowController.getPower() * multiplier, bowComponent.getMinPower(), bowComponent.getMaxPower());
 				
 				bowComponent.setPower(power);
 				
@@ -123,8 +190,8 @@ public class UpdateBowSystem extends EntitySystem {
 			
 		}
 		
-		if (pointer.wasReleased) {
-			
+		if (bowController.isFiring()) {
+
 			for (int i = 0; i < entities.size(); i++) {
 				
 				Entity entity = entities.get(i);
