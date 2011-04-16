@@ -29,11 +29,11 @@ import com.gemserk.resources.ResourceManager;
 public class GameLogicSystem extends EntitySystem {
 
 	static class StickArrowProperty extends AbstractProperty<Vector2> {
-		
+
 		private final SpatialComponent spatial;
-		
+
 		private final Vector2 difference;
-		
+
 		Vector2 position = new Vector2();
 
 		public StickArrowProperty(SpatialComponent spatial, Vector2 difference) {
@@ -47,7 +47,7 @@ public class GameLogicSystem extends EntitySystem {
 			position.set(targetPosition).sub(difference);
 			return position;
 		}
-		
+
 	}
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
@@ -88,25 +88,27 @@ public class GameLogicSystem extends EntitySystem {
 		for (int i = 0; i < entities.size(); i++) {
 			Entity entity = entities.get(i);
 			HealthComponent healthComponent = entity.getComponent(HealthComponent.class);
-			
+
 			if (healthComponent.getContainer().isEmpty()) {
-				
+
 				SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 				ParentComponent parentComponent = entity.getComponent(ParentComponent.class);
-				
+
 				archerVsWorldEntityFactory.createDyingZombie(spatialComponent.getPosition(), spatialComponent.getSize());
-				
+
 				ArrayList<Entity> arrows = parentComponent.getChildren();
 				for (int j = 0; j < arrows.size(); j++) {
 					Entity arrow = arrows.get(j);
 					SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
-					archerVsWorldEntityFactory.createDyingArrow(arrowSpatialComponent.getPosition(), //
-							arrowSpatialComponent.getAngle(), 600);
+					// should not be null
+					if (arrowSpatialComponent != null)
+						archerVsWorldEntityFactory.createDyingArrow(arrowSpatialComponent.getPosition(), //
+								arrowSpatialComponent.getAngle(), 600);
 				}
-				
+
 				world.deleteEntity(entity);
 			}
-			
+
 		}
 
 	}
@@ -147,18 +149,17 @@ public class GameLogicSystem extends EntitySystem {
 			double diff = Math.abs(angleUtils.minimumDifference(normalAngle, bodyAngle));
 
 			int stickAngle = 60;
-			
+
 			int arrowAliveTime = 10000;
 
 			if (!body.isAwake()) {
 
 				SpatialComponent component = entity.getComponent(SpatialComponent.class);
-				
+
 				// archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
-				
-				archerVsWorldEntityFactory.createDyingArrow(component.getPosition(), 
-						component.getAngle(), arrowAliveTime);
-				
+
+				archerVsWorldEntityFactory.createDyingArrow(component.getPosition(), component.getAngle(), arrowAliveTime);
+
 				this.world.deleteEntity(entity);
 
 			} else if (diff < stickAngle) {
@@ -195,12 +196,9 @@ public class GameLogicSystem extends EntitySystem {
 						final Vector2 difference = targetPosition.cpy().sub(arrowPosition).sub(displacement);
 
 						// Use layer - 1 for the sprite component
-						
-						
 
-						Entity newArrow = archerVsWorldEntityFactory.createDyingArrow(new StickArrowProperty(targetSpatialComponent, difference), 
-								new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), arrowAliveTime);
-						
+						Entity newArrow = archerVsWorldEntityFactory.createDyingArrow(new StickArrowProperty(targetSpatialComponent, difference), new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), arrowAliveTime);
+
 						ParentComponent parentComponent = target.getComponent(ParentComponent.class);
 						parentComponent.addChild(newArrow);
 

@@ -170,7 +170,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<FloatValue>(new FloatValue(0f)), //
 				new SimpleProperty<Entity>(null),//
 				new SimpleProperty<FloatValue>(new FloatValue(5f)), //
-				new SimpleProperty<FloatValue>(new FloatValue(35f))));
+				new SimpleProperty<FloatValue>(new FloatValue(15f))));
 
 		entity.refresh();
 

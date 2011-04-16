@@ -13,7 +13,7 @@ import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.controllers.BowController;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl;
+import com.gemserk.games.archervsworld.controllers.BowControllerImpl3;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
@@ -60,7 +60,9 @@ public class UpdateBowSystem extends EntitySystem {
 	public UpdateBowSystem(LibgdxPointer pointer, ArcherVsWorldEntityFactory entityFactory) {
 		super(BowComponent.class);
 		this.entityFactory = entityFactory;
-		bowController = new BowControllerImpl(pointer);
+		// bowController = new BowControllerImpl(pointer);
+		// bowController = new BowControllerImpl2(pointer, new Vector2(1f, 1f));
+		bowController = new BowControllerImpl3(pointer);
 	}
 	
 	@Override
@@ -134,6 +136,8 @@ public class UpdateBowSystem extends EntitySystem {
 					continue;
 
 				float power = bowComponent.getPower();
+				
+				System.out.println("bow power: " + power);
 				
 				Entity arrow = bowComponent.getArrow();
 				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
