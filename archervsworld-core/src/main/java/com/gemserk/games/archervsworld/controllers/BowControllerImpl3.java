@@ -48,7 +48,7 @@ public class BowControllerImpl3 implements BowController {
 		
 		if (pointer.touched) {
 			
-			angle = pointer.getPosition().y * 8;
+			angle = pointer.getPosition().y * 5;
 			power = pointer.getPosition().x; 
 			
 			charging = true;

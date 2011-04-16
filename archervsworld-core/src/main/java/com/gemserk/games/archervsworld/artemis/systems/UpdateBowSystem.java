@@ -3,6 +3,7 @@ package com.gemserk.games.archervsworld.artemis.systems;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.SpatialComponent;
@@ -40,7 +41,7 @@ public class UpdateBowSystem extends EntitySystem {
 			
 			diff.set(1f,0f);
 			diff.rotate(spatialComponent.getAngle());
-			diff.mul(bowComponent.getPower() * 0.005f);
+			diff.mul(bowComponent.getPower() * 0.012f);
 			
 			position.sub(diff);
 			
@@ -63,6 +64,7 @@ public class UpdateBowSystem extends EntitySystem {
 		// bowController = new BowControllerImpl(pointer);
 		// bowController = new BowControllerImpl2(pointer, new Vector2(1f, 1f));
 		bowController = new BowControllerImpl3(pointer);
+//		bowController = new BowControllerMutitouchImpl(pointer, new LibgdxPointer(1, pointer.getCamera()));
 	}
 	
 	@Override
@@ -137,7 +139,7 @@ public class UpdateBowSystem extends EntitySystem {
 
 				float power = bowComponent.getPower();
 				
-				System.out.println("bow power: " + power);
+				Gdx.app.log("Archer vs Zombies", "Bow power: " + power);
 				
 				Entity arrow = bowComponent.getArrow();
 				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
