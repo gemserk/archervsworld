@@ -124,7 +124,6 @@ public class GameLogicSystem extends EntitySystem {
 			
 			if (buttonComponent.getPressed()) {
 				switchControllersButtonDown = true;
-				System.out.println("Button Pressed!!");
 			}
 			
 		}
