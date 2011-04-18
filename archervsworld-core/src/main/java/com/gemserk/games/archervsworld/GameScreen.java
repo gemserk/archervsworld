@@ -37,6 +37,7 @@ import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
+import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
@@ -119,7 +120,9 @@ public class GameScreen extends ScreenAdapter {
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
 
-		updateBowSystem = new UpdateBowSystem(new LibgdxPointer(0, myCamera), archerVsWorldEntityFactory);
+		LibgdxPointer pointer = new LibgdxPointer(0, myCamera);
+		
+		updateBowSystem = new UpdateBowSystem(pointer, archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
 
 		walkingDeadSystem = new WalkingDeadSystem();
@@ -131,6 +134,8 @@ public class GameScreen extends ScreenAdapter {
 		hierarchySystem = new HierarchySystem();
 		aliveSystem = new AliveSystem();
 
+		hudButtonSystem = new HudButtonSystem(pointer);
+
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
 		world.getSystemManager().setSystem(spriteRenderSystem);
@@ -141,6 +146,9 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(gameLogicSystem);
 		world.getSystemManager().setSystem(hierarchySystem);
 		world.getSystemManager().setSystem(aliveSystem);
+		
+		world.getSystemManager().setSystem(hudButtonSystem);
+		
 		world.getSystemManager().initializeAll();
 
 		entityFactory.setWorld(world);
@@ -186,6 +194,8 @@ public class GameScreen extends ScreenAdapter {
 
 		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-1.2f, 0f));
 		
+		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
+		
 		createBackground();
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
@@ -210,7 +220,7 @@ public class GameScreen extends ScreenAdapter {
 		Texture texture = new Texture(Gdx.files.internal("data/background-512x512.jpg"));
 		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-		int layer = -10;
+		int layer = -100;
 
 		entity.addComponent(new SpatialComponent( //
 				new SimpleProperty<Vector2>(new Vector2(0f, 0f)), //
@@ -256,6 +266,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private AliveSystem aliveSystem;
 
+	private HudButtonSystem hudButtonSystem;
+
 	@Override
 	public void render(float delta) {
 
@@ -271,7 +283,10 @@ public class GameScreen extends ScreenAdapter {
 		walkingDeadSystem.process();
 
 		physicsSystem.process();
+		
+		hudButtonSystem.process();
 		gameLogicSystem.process();
+		
 		hierarchySystem.process();
 		aliveSystem.process();
 
@@ -377,6 +392,16 @@ public class GameScreen extends ScreenAdapter {
 		grassTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
 		resourceManager.add("Grass", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(grassTexture) {
+			@Override
+			public void dispose(Texture t) {
+				t.dispose();
+			}
+		}, false)));
+		
+		Texture buttonTexture = new Texture(Gdx.files.internal("data/button-template-64x64.png"));
+		buttonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
+		resourceManager.add("Button", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(buttonTexture) {
 			@Override
 			public void dispose(Texture t) {
 				t.dispose();

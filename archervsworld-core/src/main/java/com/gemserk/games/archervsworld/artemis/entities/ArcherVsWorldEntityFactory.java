@@ -26,6 +26,7 @@ import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
+import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
@@ -444,6 +445,29 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 
 		return entity;
+	}
+	
+	public void createButton(Vector2 position) {
+
+		Entity entity = world.createEntity();
+
+		int layer = 100;
+
+		Resource<Texture> resource = resourceManager.get("Button");
+		Texture texture = resource.get();
+
+		entity.addComponent(new SpatialComponent( //
+				new SimpleProperty<Vector2>(position), //
+				new SimpleProperty<Vector2>(new Vector2(2, 2)), //
+				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+				new SimpleProperty<IntValue>(new IntValue(layer)), //
+				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), // 
+				PropertyBuilder.property(new Color(0.7f, 1f, 0.7f, 0.7f))));
+		entity.addComponent(new HudButtonComponent());
+
+		entity.refresh();
+
 	}
 
 }

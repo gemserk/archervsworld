@@ -19,6 +19,7 @@ import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
+import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
@@ -70,11 +71,41 @@ public class GameLogicSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
+		
+		processButtons();
 
 		processArrows();
 
 		processEnemies();
 
+	}
+
+	private void processButtons() {
+		
+		int entityCount = world.getEntityManager().getEntityCount();
+		
+		for (int i = 0; i < entityCount; i++) {
+			
+			Entity entity = world.getEntity(i);
+			
+			if (entity == null)
+				continue;
+			
+			HudButtonComponent buttonComponent = entity.getComponent(HudButtonComponent.class);
+			
+			if (buttonComponent == null)
+				continue;
+			
+			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
+			
+			if (spatialComponent== null)
+				continue;
+			
+			if (buttonComponent.getPressed())
+				System.out.println("Button Pressed!!");
+			
+		}
+		
 	}
 
 	private void processEnemies() {
