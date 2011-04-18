@@ -7,11 +7,13 @@ import com.artemis.EntitySystem;
 import com.artemis.GroupManager;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.properties.AbstractProperty;
@@ -84,7 +86,7 @@ public class GameLogicSystem extends EntitySystem {
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
-		
+
 		processButtons();
 
 		processArrows();
@@ -92,42 +94,42 @@ public class GameLogicSystem extends EntitySystem {
 		processEnemies();
 
 	}
-	
+
 	boolean switchControllersButtonDown = false;
 
 	private void processButtons() {
-		
+
 		controllerSwitcher.update();
 		BowController bowController = controllerSwitcher.getController();
 		bowController.update();
-		
+
 		int entityCount = world.getEntityManager().getEntityCount();
-		
+
 		switchControllersButtonDown = false;
-		
+
 		for (int i = 0; i < entityCount; i++) {
-			
+
 			Entity entity = world.getEntity(i);
-			
+
 			if (entity == null)
 				continue;
-			
+
 			HudButtonComponent buttonComponent = entity.getComponent(HudButtonComponent.class);
-			
+
 			if (buttonComponent == null)
 				continue;
-			
+
 			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
-			
-			if (spatialComponent== null)
+
+			if (spatialComponent == null)
 				continue;
-			
+
 			if (buttonComponent.getPressed()) {
 				switchControllersButtonDown = true;
 			}
-			
+
 		}
-		
+
 	}
 
 	private void processEnemies() {
@@ -142,25 +144,27 @@ public class GameLogicSystem extends EntitySystem {
 			Entity entity = entities.get(i);
 			HealthComponent healthComponent = entity.getComponent(HealthComponent.class);
 
-			if (healthComponent.getContainer().isEmpty()) {
+			if (!healthComponent.getContainer().isEmpty())
+				continue;
 
-				SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
-				ParentComponent parentComponent = entity.getComponent(ParentComponent.class);
+			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
+			ParentComponent parentComponent = entity.getComponent(ParentComponent.class);
 
-				archerVsWorldEntityFactory.createDyingZombie(spatialComponent.getPosition(), spatialComponent.getSize());
+			archerVsWorldEntityFactory.createDyingZombie(spatialComponent.getPosition(), spatialComponent.getSize());
 
-				ArrayList<Entity> arrows = parentComponent.getChildren();
-				for (int j = 0; j < arrows.size(); j++) {
-					Entity arrow = arrows.get(j);
-					SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
-					// should not be null
-					if (arrowSpatialComponent != null)
-						archerVsWorldEntityFactory.createDyingArrow(arrowSpatialComponent.getPosition(), //
-								arrowSpatialComponent.getAngle(), 600);
-				}
-
-				world.deleteEntity(entity);
+			ArrayList<Entity> arrows = parentComponent.getChildren();
+			for (int j = 0; j < arrows.size(); j++) {
+				Entity arrow = arrows.get(j);
+				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
+				SpriteComponent spriteComponent = arrow.getComponent(SpriteComponent.class);
+				
+				// should not be null
+				if (arrowSpatialComponent != null)
+					archerVsWorldEntityFactory.createDyingArrow(arrowSpatialComponent.getPosition(), //
+							arrowSpatialComponent.getAngle(), 300, spriteComponent.getColor());
 			}
+
+			world.deleteEntity(entity);
 
 		}
 
@@ -211,7 +215,7 @@ public class GameLogicSystem extends EntitySystem {
 
 				// archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
 
-				archerVsWorldEntityFactory.createDyingArrow(component.getPosition(), component.getAngle(), arrowAliveTime);
+				archerVsWorldEntityFactory.createDyingArrow(component.getPosition(), component.getAngle(), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
 
 				this.world.deleteEntity(entity);
 
@@ -250,7 +254,7 @@ public class GameLogicSystem extends EntitySystem {
 
 						// Use layer - 1 for the sprite component
 
-						Entity newArrow = archerVsWorldEntityFactory.createDyingArrow(new StickArrowProperty(targetSpatialComponent, difference), new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), arrowAliveTime);
+						Entity newArrow = archerVsWorldEntityFactory.createDyingArrow(new StickArrowProperty(targetSpatialComponent, difference), new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
 
 						ParentComponent parentComponent = target.getComponent(ParentComponent.class);
 						parentComponent.addChild(newArrow);

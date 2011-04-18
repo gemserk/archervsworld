@@ -26,9 +26,9 @@ import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
-import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
+import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
@@ -319,6 +319,8 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 
 	}
+	
+	Color endColor = new Color(1f, 1f, 1f, 0f);
 
 	public Entity createDyingZombie(Vector2 position, Vector2 size) {
 
@@ -332,7 +334,7 @@ public class ArcherVsWorldEntityFactory {
 		Color color = new Color(1f, 1f, 1f, 1f);
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(color) //
-				.end(new Color(1f, 1f, 1f, 0f)) //
+				.end(endColor) //
 				.time(aliveTime) //
 				.build());
 
@@ -352,22 +354,22 @@ public class ArcherVsWorldEntityFactory {
 		return entity;
 	}
 
-	public Entity createDyingArrow(Vector2 position, float angle, int aliveTime) {
+	public Entity createDyingArrow(Vector2 position, float angle, int aliveTime, Color startColor) {
 		return createDyingArrow(PropertyBuilder.property(position), // 
 				PropertyBuilder.property(ValueBuilder.floatValue(angle)), // 
-				aliveTime);
+				aliveTime, startColor);
 	}
 	
-	public Entity createDyingArrow(Property<Vector2> position, Property<FloatValue> angle, int aliveTime) {
+	public Entity createDyingArrow(Property<Vector2> position, Property<FloatValue> angle, int aliveTime, Color startColor) {
 		Entity entity = world.createEntity();
 
 		Resource<Texture> resource = resourceManager.get("Arrow");
 		Texture texture = resource.get();
 
-		Color color = new Color(1f, 1f, 1f, 1f);
+		Color color = startColor;
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(color) //
-				.end(new Color(1f, 1f, 1f, 0f)) //
+				.end(endColor) //
 				.time(aliveTime) //
 				.build());
 		
