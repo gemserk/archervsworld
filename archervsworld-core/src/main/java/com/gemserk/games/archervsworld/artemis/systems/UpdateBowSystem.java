@@ -14,7 +14,7 @@ import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.controllers.BowController;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl5;
+import com.gemserk.games.archervsworld.controllers.BowControllerKeyboardImpl;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
@@ -66,7 +66,8 @@ public class UpdateBowSystem extends EntitySystem {
 //		bowController = new BowControllerImpl3(pointer);
 //		bowController = new BowControllerMutitouchImpl(pointer, new LibgdxPointer(1, pointer.getCamera()));
 		 // bowController = new BowControllerImpl4(pointer, new Vector2(1f, 1f));
-		 bowController = new BowControllerImpl5(pointer, new Vector2(1f, 1f));
+		 // bowController = new BowControllerImpl5(pointer, new Vector2(1f, 1f));
+		 bowController = new BowControllerKeyboardImpl();
 	}
 	
 	@Override

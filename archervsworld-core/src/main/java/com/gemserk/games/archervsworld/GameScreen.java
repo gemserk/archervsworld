@@ -238,9 +238,9 @@ public class GameScreen extends ScreenAdapter {
 
 	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_LEFT);
 
-	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
+	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_U);
 
-	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
+	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_J);
 
 	private MonitorUpdaterImpl monitorUpdater;
 
