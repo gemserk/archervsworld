@@ -1,6 +1,5 @@
 package com.gemserk.games.archervsworld.controllers;
 
-import com.badlogic.gdx.Input;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 
@@ -34,14 +33,16 @@ public class BowControllerKeyboardImpl implements BowController {
 		return firing;
 	}
 	
-	private ButtonMonitor increaseAngleMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
+	private ButtonMonitor increaseAngleMonitor;
 
-	private ButtonMonitor decreaseAngleMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
+	private ButtonMonitor decreaseAngleMonitor;
 	
-	private ButtonMonitor powerMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_SPACE);
+	private ButtonMonitor powerMonitor;
 	
-	public BowControllerKeyboardImpl() {
-		
+	public BowControllerKeyboardImpl(int increaseAngleKey, int decreaseAngleKey, int fireKey) {
+		increaseAngleMonitor = new LibgdxButtonMonitor(increaseAngleKey);
+		decreaseAngleMonitor = new LibgdxButtonMonitor(decreaseAngleKey);
+		powerMonitor = new LibgdxButtonMonitor(fireKey);
 	}
 	
 	@Override

@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.SpatialComponent;
@@ -61,13 +62,14 @@ public class UpdateBowSystem extends EntitySystem {
 	public UpdateBowSystem(LibgdxPointer pointer, ArcherVsWorldEntityFactory entityFactory) {
 		super(BowComponent.class);
 		this.entityFactory = entityFactory;
+		
 		// bowController = new BowControllerImpl(pointer);
 //		 bowController = new BowControllerImpl2(pointer, new Vector2(1f, 1f));
 //		bowController = new BowControllerImpl3(pointer);
 //		bowController = new BowControllerMutitouchImpl(pointer, new LibgdxPointer(1, pointer.getCamera()));
 		 // bowController = new BowControllerImpl4(pointer, new Vector2(1f, 1f));
 		 // bowController = new BowControllerImpl5(pointer, new Vector2(1f, 1f));
-		 bowController = new BowControllerKeyboardImpl();
+		 bowController = new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE);
 	}
 	
 	@Override
