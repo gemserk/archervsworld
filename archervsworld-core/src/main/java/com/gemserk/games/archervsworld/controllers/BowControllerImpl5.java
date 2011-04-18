@@ -3,11 +3,11 @@ package com.gemserk.games.archervsworld.controllers;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 
-public class BowControllerImpl2 implements BowController {
+public class BowControllerImpl5 implements BowController {
 	
 	private float angle;
 	
-	private float power;
+	private float power = 0f;
 	
 	private boolean charging;
 	
@@ -35,9 +35,9 @@ public class BowControllerImpl2 implements BowController {
 	
 	private LibgdxPointer pointer;
 
-	private final Vector2 source;
+	private Vector2 source;
 	
-	public BowControllerImpl2(LibgdxPointer pointer, Vector2 source) {
+	public BowControllerImpl5(LibgdxPointer pointer, Vector2 source) {
 		this.pointer = pointer;
 		this.source = source;
 	}
@@ -49,18 +49,27 @@ public class BowControllerImpl2 implements BowController {
 		
 		firing = false;
 		
-		if (pointer.wasPressed) {
-			Vector2 p0 = pointer.getPressedPosition();
-			Vector2 p1 = source;
+		if (pointer.touched) {
+			Vector2 p0 = source;
+			Vector2 p1 = pointer.getPosition();
 			
-			Vector2 direction = p0.cpy().sub(p1);
+			Vector2 direction = p1.cpy().sub(p0);
+			
+			// the power multiplier
+			float multiplier = 0.3f;
 			
 			angle = direction.angle();
-			power = direction.len(); 
+			power += 1f * multiplier; 
 			
 			charging = true;
-			firing = true;
 		} 
+		
+		if (pointer.wasReleased) {
+			charging = false;
+			firing = true;
+			
+			power = 0f;
+		}
 		
 	}
 	
