@@ -63,36 +63,18 @@ public class UpdateBowSystem extends EntitySystem {
 		super(BowComponent.class);
 		this.entityFactory = entityFactory;
 		this.controllerSwitcher = controllerSwitcher;
-//
-//		ArrayList<BowController> controllers = new ArrayList<BowController>();
-//
-//		controllers.add(new BowControllerImpl(pointer));
-//		controllers.add(new BowControllerImpl2(pointer, new Vector2(1f, 1f)));
-//		controllers.add(new BowControllerImpl3(pointer));
-//		controllers.add(new BowControllerImpl4(pointer, new Vector2(1f, 1f)));
-//		controllers.add(new BowControllerImpl5(pointer, new Vector2(1f, 1f)));
-//		
-//		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
-//			controllers.add(new BowControllerMutitouchImpl(pointer, new LibgdxPointer(1, pointer.getCamera())));
-//		
-//		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
-//			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
-//
-//		controllerSwitcher = new ControllerSwitcher(controllers);
 	}
 
 	@Override
 	protected void begin() {
-		controllerSwitcher.update();
-		bowController = controllerSwitcher.getController();
-		bowController.update();
+//		controllerSwitcher.update();
+//		bowController = controllerSwitcher.getController();
+//		bowController.update();
 	}
 
 	AngleUtils angleUtils = new AngleUtils();
 
 	Vector2 direction = new Vector2();
-
-	BowController bowController;
 
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
@@ -101,6 +83,8 @@ public class UpdateBowSystem extends EntitySystem {
 
 		if (entities == null)
 			return;
+		
+		BowController bowController = controllerSwitcher.getController();
 
 		if (bowController.isCharging()) {
 

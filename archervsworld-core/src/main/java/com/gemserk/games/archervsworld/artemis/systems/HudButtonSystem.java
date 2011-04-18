@@ -20,7 +20,7 @@ public class HudButtonSystem extends EntitySystem {
 
 	@Override
 	protected void begin() {
-		pointer.update();
+
 	}
 
 	@Override

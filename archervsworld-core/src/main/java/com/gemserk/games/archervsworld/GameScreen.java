@@ -23,6 +23,8 @@ import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
+import com.gemserk.commons.artemis.systems.Layer;
+import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
@@ -123,25 +125,42 @@ public class GameScreen extends ScreenAdapter {
 
 		myCamera = new Libgdx2dCameraTransformImpl(camera);
 
+		ArrayList<Layer> layers = new ArrayList<Layer>();
+		
+		// background layer
+		layers.add(new Layer(-1000, -5, new Libgdx2dCameraTransformImpl()));
+		
+		// world layer
+		layers.add(new Layer(-5, 10, myCamera));
+		
+		// hud layer
+		layers.add(new Layer(10, 1000, new Libgdx2dCameraTransformImpl()));
+
 		textRendererSystem = new TextRendererSystem();
-		spriteRenderSystem = new SpriteRendererSystem(myCamera);
+		spriteRenderSystem = new SpriteRendererSystem(myCamera, layers);
 		spriteUpdateSystem = new SpriteUpdateSystem();
 
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
 
-		LibgdxPointer pointer = new LibgdxPointer(0, myCamera);
+		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
+		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
+		
+		ArrayList<LibgdxPointer> pointers = new ArrayList<LibgdxPointer>();
+		
+		pointers.add(pointer0);
+		pointers.add(pointer1);
 		
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
 
-		controllers.add(new BowControllerImpl(pointer));
-		controllers.add(new BowControllerImpl2(pointer, new Vector2(1f, 1f)));
-		controllers.add(new BowControllerImpl3(pointer));
-		controllers.add(new BowControllerImpl4(pointer, new Vector2(1f, 1f)));
-		controllers.add(new BowControllerImpl5(pointer, new Vector2(1f, 1f)));
+		controllers.add(new BowControllerImpl(pointer0));
+		controllers.add(new BowControllerImpl2(pointer0, new Vector2(1f, 1f)));
+		controllers.add(new BowControllerImpl3(pointer0));
+		controllers.add(new BowControllerImpl4(pointer0, new Vector2(1f, 1f)));
+		controllers.add(new BowControllerImpl5(pointer0, new Vector2(1f, 1f)));
 		
 		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
-			controllers.add(new BowControllerMutitouchImpl(pointer, new LibgdxPointer(1, pointer.getCamera())));
+			controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
 		
 		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
 			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
@@ -152,7 +171,7 @@ public class GameScreen extends ScreenAdapter {
 		updateBowSystem.setResourceManager(resourceManager);
 
 		walkingDeadSystem = new WalkingDeadSystem();
-		gameLogicSystem = new GameLogicSystem();
+		gameLogicSystem = new GameLogicSystem(controllerSwitcher);
 
 		gameLogicSystem.setArcherVsWorldEntityFactory(archerVsWorldEntityFactory);
 		gameLogicSystem.setResourceManager(resourceManager);
@@ -160,7 +179,8 @@ public class GameScreen extends ScreenAdapter {
 		hierarchySystem = new HierarchySystem();
 		aliveSystem = new AliveSystem();
 
-		hudButtonSystem = new HudButtonSystem(pointer);
+		hudButtonSystem = new HudButtonSystem(pointer0);
+		pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
@@ -172,6 +192,8 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(gameLogicSystem);
 		world.getSystemManager().setSystem(hierarchySystem);
 		world.getSystemManager().setSystem(aliveSystem);
+		
+		world.getSystemManager().setSystem(pointerUpdateSystem);
 		
 		world.getSystemManager().setSystem(hudButtonSystem);
 		
@@ -294,6 +316,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private HudButtonSystem hudButtonSystem;
 
+	private PointerUpdateSystem pointerUpdateSystem;
+
 	@Override
 	public void render(float delta) {
 
@@ -305,13 +329,17 @@ public class GameScreen extends ScreenAdapter {
 		world.loopStart();
 		world.setDelta((int) (delta * 1000));
 
-		updateBowSystem.process();
-		walkingDeadSystem.process();
-
 		physicsSystem.process();
 		
-		hudButtonSystem.process();
+		// add a system to process all pointers and remove the pointer.update from the controllers!!
+		pointerUpdateSystem.process();
+		
 		gameLogicSystem.process();
+
+		hudButtonSystem.process();
+
+		updateBowSystem.process();
+		walkingDeadSystem.process();
 		
 		hierarchySystem.process();
 		aliveSystem.process();

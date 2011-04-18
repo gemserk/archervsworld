@@ -45,8 +45,6 @@ public class BowControllerImpl4 implements BowController {
 	@Override
 	public void update() {
 		
-		pointer.update();
-		
 		firing = false;
 		
 		if (pointer.touched) {

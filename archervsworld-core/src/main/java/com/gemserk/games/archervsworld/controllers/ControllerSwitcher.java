@@ -12,16 +12,25 @@ public class ControllerSwitcher {
 
 	int currentController = 0;
 
+	ButtonMonitor switchButtonMonitor;
+
 	public BowController getController() {
 		return controllers.get(currentController);
 	}
-
-	public ControllerSwitcher(ArrayList<BowController> controllers) {
-		this.controllers = controllers;
+	
+	public void setSwitchButtonMonitor(ButtonMonitor switchButtonMonitor) {
+		this.switchButtonMonitor = switchButtonMonitor;
 	}
 
-	ButtonMonitor switchButtonMonitor = new LibgdxButtonMonitor(Keys.KEYCODE_TAB);
+	public ControllerSwitcher(ArrayList<BowController> controllers) {
+		this(controllers, new LibgdxButtonMonitor(Keys.KEYCODE_TAB));
+	}
 
+	public ControllerSwitcher(ArrayList<BowController> controllers, ButtonMonitor buttonMonitor) {
+		this.controllers = controllers;
+		this.switchButtonMonitor = buttonMonitor;
+	}
+	
 	protected boolean shouldSwitch() {
 		switchButtonMonitor.update();
 		return switchButtonMonitor.isPressed();

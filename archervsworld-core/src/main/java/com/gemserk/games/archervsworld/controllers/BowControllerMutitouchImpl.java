@@ -45,9 +45,6 @@ public class BowControllerMutitouchImpl implements BowController {
 	@Override
 	public void update() {
 
-		pointer0.update();
-		pointer1.update();
-
 		firing = false;
 		
 		if (pointer0.touched && pointer1.touched) {

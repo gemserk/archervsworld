@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.values.FloatValue;
+import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
@@ -24,6 +25,8 @@ import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.box2d.Contact;
+import com.gemserk.games.archervsworld.controllers.BowController;
+import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
@@ -57,6 +60,8 @@ public class GameLogicSystem extends EntitySystem {
 
 	AngleUtils angleUtils = new AngleUtils();
 
+	private final ControllerSwitcher controllerSwitcher;
+
 	public void setArcherVsWorldEntityFactory(ArcherVsWorldEntityFactory archerVsWorldEntityFactory) {
 		this.archerVsWorldEntityFactory = archerVsWorldEntityFactory;
 	}
@@ -65,8 +70,16 @@ public class GameLogicSystem extends EntitySystem {
 		this.resourceManager = resourceManager;
 	}
 
-	public GameLogicSystem() {
+	public GameLogicSystem(ControllerSwitcher controllerSwitcher) {
 		super();
+		this.controllerSwitcher = controllerSwitcher;
+
+		controllerSwitcher.setSwitchButtonMonitor(new ButtonMonitor() {
+			@Override
+			protected boolean isDown() {
+				return switchControllersButtonDown;
+			}
+		});
 	}
 
 	@Override
@@ -79,10 +92,18 @@ public class GameLogicSystem extends EntitySystem {
 		processEnemies();
 
 	}
+	
+	boolean switchControllersButtonDown = false;
 
 	private void processButtons() {
 		
+		controllerSwitcher.update();
+		BowController bowController = controllerSwitcher.getController();
+		bowController.update();
+		
 		int entityCount = world.getEntityManager().getEntityCount();
+		
+		switchControllersButtonDown = false;
 		
 		for (int i = 0; i < entityCount; i++) {
 			
@@ -101,8 +122,10 @@ public class GameLogicSystem extends EntitySystem {
 			if (spatialComponent== null)
 				continue;
 			
-			if (buttonComponent.getPressed())
+			if (buttonComponent.getPressed()) {
+				switchControllersButtonDown = true;
 				System.out.println("Button Pressed!!");
+			}
 			
 		}
 		
