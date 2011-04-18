@@ -1,33 +1,19 @@
 package com.gemserk.games.archervsworld.artemis.systems;
 
-import java.util.ArrayList;
-
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.components.SpatialComponent;
-import com.gemserk.commons.gdx.input.LibgdxPointer;
-import com.gemserk.componentsengine.input.ButtonMonitor;
-import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.controllers.BowController;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl2;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl3;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl4;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl5;
-import com.gemserk.games.archervsworld.controllers.BowControllerKeyboardImpl;
-import com.gemserk.games.archervsworld.controllers.BowControllerMutitouchImpl;
+import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
@@ -70,61 +56,29 @@ public class UpdateBowSystem extends EntitySystem {
 		this.resourceManager = resourceManager;
 	}
 
-	public static class ControllerSwitcher {
-
-		ArrayList<BowController> controllers;
-
-		int currentController = 0;
-
-		public BowController getController() {
-			return controllers.get(currentController);
-		}
-
-		public ControllerSwitcher(ArrayList<BowController> controllers) {
-			this.controllers = controllers;
-		}
-
-		ButtonMonitor switchButtonMonitor = new LibgdxButtonMonitor(Keys.KEYCODE_TAB);
-
-		protected boolean shouldSwitch() {
-			switchButtonMonitor.update();
-			return switchButtonMonitor.isPressed();
-		}
-
-		public void update() {
-			
-			if (!shouldSwitch())
-				return;
-
-			currentController++;
-			if (currentController >= controllers.size())
-				currentController = 0;
-		}
-
-	}
-
 	ControllerSwitcher controllerSwitcher;
 
 	@SuppressWarnings("unchecked")
-	public UpdateBowSystem(LibgdxPointer pointer, ArcherVsWorldEntityFactory entityFactory) {
+	public UpdateBowSystem(ControllerSwitcher controllerSwitcher, ArcherVsWorldEntityFactory entityFactory) {
 		super(BowComponent.class);
 		this.entityFactory = entityFactory;
-
-		ArrayList<BowController> controllers = new ArrayList<BowController>();
-
-		controllers.add(new BowControllerImpl(pointer));
-		controllers.add(new BowControllerImpl2(pointer, new Vector2(1f, 1f)));
-		controllers.add(new BowControllerImpl3(pointer));
-		controllers.add(new BowControllerImpl4(pointer, new Vector2(1f, 1f)));
-		controllers.add(new BowControllerImpl5(pointer, new Vector2(1f, 1f)));
-		
-		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
-			controllers.add(new BowControllerMutitouchImpl(pointer, new LibgdxPointer(1, pointer.getCamera())));
-		
-		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
-			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
-
-		controllerSwitcher = new ControllerSwitcher(controllers);
+		this.controllerSwitcher = controllerSwitcher;
+//
+//		ArrayList<BowController> controllers = new ArrayList<BowController>();
+//
+//		controllers.add(new BowControllerImpl(pointer));
+//		controllers.add(new BowControllerImpl2(pointer, new Vector2(1f, 1f)));
+//		controllers.add(new BowControllerImpl3(pointer));
+//		controllers.add(new BowControllerImpl4(pointer, new Vector2(1f, 1f)));
+//		controllers.add(new BowControllerImpl5(pointer, new Vector2(1f, 1f)));
+//		
+//		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
+//			controllers.add(new BowControllerMutitouchImpl(pointer, new LibgdxPointer(1, pointer.getCamera())));
+//		
+//		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
+//			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
+//
+//		controllerSwitcher = new ControllerSwitcher(controllers);
 	}
 
 	@Override

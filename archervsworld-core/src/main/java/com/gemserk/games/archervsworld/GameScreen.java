@@ -7,6 +7,7 @@ import com.artemis.World;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -41,6 +42,15 @@ import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
+import com.gemserk.games.archervsworld.controllers.BowController;
+import com.gemserk.games.archervsworld.controllers.BowControllerImpl;
+import com.gemserk.games.archervsworld.controllers.BowControllerImpl2;
+import com.gemserk.games.archervsworld.controllers.BowControllerImpl3;
+import com.gemserk.games.archervsworld.controllers.BowControllerImpl4;
+import com.gemserk.games.archervsworld.controllers.BowControllerImpl5;
+import com.gemserk.games.archervsworld.controllers.BowControllerKeyboardImpl;
+import com.gemserk.games.archervsworld.controllers.BowControllerMutitouchImpl;
+import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
@@ -122,7 +132,23 @@ public class GameScreen extends ScreenAdapter {
 
 		LibgdxPointer pointer = new LibgdxPointer(0, myCamera);
 		
-		updateBowSystem = new UpdateBowSystem(pointer, archerVsWorldEntityFactory);
+		ArrayList<BowController> controllers = new ArrayList<BowController>();
+
+		controllers.add(new BowControllerImpl(pointer));
+		controllers.add(new BowControllerImpl2(pointer, new Vector2(1f, 1f)));
+		controllers.add(new BowControllerImpl3(pointer));
+		controllers.add(new BowControllerImpl4(pointer, new Vector2(1f, 1f)));
+		controllers.add(new BowControllerImpl5(pointer, new Vector2(1f, 1f)));
+		
+		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
+			controllers.add(new BowControllerMutitouchImpl(pointer, new LibgdxPointer(1, pointer.getCamera())));
+		
+		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
+			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
+
+		ControllerSwitcher controllerSwitcher = new ControllerSwitcher(controllers);
+		
+		updateBowSystem = new UpdateBowSystem(controllerSwitcher, archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
 
 		walkingDeadSystem = new WalkingDeadSystem();
