@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 
-public class WalkingDeadSystem extends EntitySystem {
+public class WalkingDeadSystem extends EntitySystem implements ActivableSystem {
 	
 	private static final Random random = new Random();
 
@@ -63,6 +63,19 @@ public class WalkingDeadSystem extends EntitySystem {
 
 	@Override
 	protected boolean checkProcessing() {
-		return true;
+		return isEnabled();
 	}
+	
+	// implementation of activable system.
+	
+	ActivableSystemImpl activableSystem = new ActivableSystemImpl();
+
+	public boolean isEnabled() {
+		return activableSystem.isEnabled();
+	}
+
+	public void toggle() {
+		activableSystem.toggle();
+	}
+	
 }

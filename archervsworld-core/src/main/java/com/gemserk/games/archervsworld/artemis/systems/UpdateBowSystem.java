@@ -17,8 +17,8 @@ import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
-public class UpdateBowSystem extends EntitySystem {
-
+public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
+	
 	static class ChargingArrowProperty extends AbstractProperty<Vector2> {
 
 		private final BowComponent bowComponent;
@@ -177,6 +177,19 @@ public class UpdateBowSystem extends EntitySystem {
 
 	@Override
 	protected boolean checkProcessing() {
-		return true;
+		return isEnabled();
 	}
+	
+	// implementation of activable system.
+	
+	ActivableSystemImpl activableSystem = new ActivableSystemImpl();
+
+	public boolean isEnabled() {
+		return activableSystem.isEnabled();
+	}
+
+	public void toggle() {
+		activableSystem.toggle();
+	}
+	
 }

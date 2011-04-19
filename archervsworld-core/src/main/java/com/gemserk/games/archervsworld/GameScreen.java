@@ -258,6 +258,8 @@ public class GameScreen extends ScreenAdapter {
 
 		monitorUpdater.add(moveUpMonitor);
 		monitorUpdater.add(moveDownMonitor);
+		
+		monitorUpdater.add(toggleWalkingDeadSystemMonitor);
 
 	}
 
@@ -299,6 +301,8 @@ public class GameScreen extends ScreenAdapter {
 	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_U);
 
 	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_J);
+	
+	private ButtonMonitor toggleWalkingDeadSystemMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_1);
 
 	private MonitorUpdaterImpl monitorUpdater;
 
@@ -328,6 +332,14 @@ public class GameScreen extends ScreenAdapter {
 
 		world.loopStart();
 		world.setDelta((int) (delta * 1000));
+		
+		if (toggleWalkingDeadSystemMonitor.isPressed()) {
+			walkingDeadSystem.toggle();
+			if (walkingDeadSystem.isEnabled())
+				Gdx.app.log("Archer Vs Zombies", "Walking dead system enabled");
+			else 
+				Gdx.app.log("Archer Vs Zombies", "Walking dead system disabled");
+		}
 
 		physicsSystem.process();
 		
