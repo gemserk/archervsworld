@@ -304,7 +304,8 @@ public class EditorScreen extends ScreenAdapter {
 				
 				if (selectedEntity == null) {
 					// add new entity?
-					selectedEntity = archerVsWorldEntityFactory.createBow(new Vector2(pressedPosition));
+//					selectedEntity = archerVsWorldEntityFactory.createBow(new Vector2(pressedPosition));
+					selectedEntity = archerVsWorldEntityFactory.createGround(pressedPosition, new Vector2(5f, 1f));
 //					selectedEntity = archerVsWorldEntityFactory.createPhysicsArrow(new Vector2(pressedPosition), new Vector2(1f, 0f), 10f);
 				}
 				

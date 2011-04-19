@@ -75,7 +75,7 @@ public class ArcherVsWorldEntityFactory {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
-		fixtureDef.friction = 1f;
+		fixtureDef.friction = 3f;
 
 		fixtureDef.filter.categoryBits = CollisionDefinitions.ArrowGroup;
 		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup;
@@ -291,7 +291,7 @@ public class ArcherVsWorldEntityFactory {
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.density = 1f;
-		// fixtureDef.friction = 0.5f;
+		fixtureDef.friction = 0.1f;
 		fixtureDef.shape = shape;
 
 		fixtureDef.filter.categoryBits = CollisionDefinitions.EnemiesGroup;
@@ -411,7 +411,7 @@ public class ArcherVsWorldEntityFactory {
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		// fixtureDef.friction = 0f;
+		fixtureDef.friction = 1f;
 		fixtureDef.density = 1f;
 
 		body.createFixture(fixtureDef);
