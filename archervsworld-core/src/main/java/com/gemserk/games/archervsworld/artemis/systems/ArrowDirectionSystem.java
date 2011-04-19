@@ -22,6 +22,11 @@ public class ArrowDirectionSystem extends EntitySystem {
 		for (int i = 0; i < entities.size(); i++) {
 
 			Entity entity = entities.get(i);
+			
+			ArrowComponent arrowComponent = entity.getComponent(ArrowComponent.class);
+			
+			if (arrowComponent.isDisabled())
+				continue;
 
 			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
 			Body body = physicsComponent.getBody();
@@ -35,6 +40,9 @@ public class ArrowDirectionSystem extends EntitySystem {
 				body.setTransform(body.getPosition(), (float) (angle / 180f * Math.PI));
 
 				continue;
+			} else {
+				// once the arrow collides with something, then the direction correction should be disabled
+				arrowComponent.setDisabled(true);
 			}
 
 		}
