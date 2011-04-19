@@ -9,10 +9,10 @@ import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionC
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.box2d.Contact;
 
-public class ArrowDirectionSystem extends EntitySystem {
+public class CorrectArrowDirectionSystem extends EntitySystem {
 
 	@SuppressWarnings("unchecked")
-	public ArrowDirectionSystem() {
+	public CorrectArrowDirectionSystem() {
 		super(CorrectArrowDirectionComponent.class);
 	}
 
@@ -41,7 +41,7 @@ public class ArrowDirectionSystem extends EntitySystem {
 
 				continue;
 			} else {
-				// once the arrow collides with something, then the direction correction should be disabled
+				// once the arrow collides with something the direction correction should be disabled
 				correctArrowDirectionComponent.setDisabled(true);
 			}
 

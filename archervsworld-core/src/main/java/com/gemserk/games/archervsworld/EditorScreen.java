@@ -37,7 +37,7 @@ import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
-import com.gemserk.games.archervsworld.artemis.systems.ArrowDirectionSystem;
+import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.resources.Resource;
@@ -139,7 +139,7 @@ public class EditorScreen extends ScreenAdapter {
 
 		worldWrapper = new WorldWrapper(world);
 
-		worldWrapper.addSystem(new ArrowDirectionSystem());
+		worldWrapper.addSystem(new CorrectArrowDirectionSystem());
 		worldWrapper.addSystem(physicsSystem);
 		worldWrapper.addSystem(pointerUpdateSystem);
 		worldWrapper.addSystem(hudButtonSystem);
