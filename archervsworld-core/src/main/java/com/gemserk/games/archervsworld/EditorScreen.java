@@ -124,6 +124,9 @@ public class EditorScreen extends ScreenAdapter {
 
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
+		
+		if (physicsSystem.isEnabled())
+			physicsSystem.toggle();
 
 		pointer0 = new LibgdxPointer(0, myCamera);
 		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
@@ -302,6 +305,7 @@ public class EditorScreen extends ScreenAdapter {
 				if (selectedEntity == null) {
 					// add new entity?
 					selectedEntity = archerVsWorldEntityFactory.createBow(new Vector2(pressedPosition));
+//					selectedEntity = archerVsWorldEntityFactory.createPhysicsArrow(new Vector2(pressedPosition), new Vector2(1f, 0f), 10f);
 				}
 				
 			}

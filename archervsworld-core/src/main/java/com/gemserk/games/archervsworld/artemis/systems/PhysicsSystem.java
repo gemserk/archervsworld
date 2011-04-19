@@ -11,7 +11,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 
-public class PhysicsSystem extends EntitySystem {
+public class PhysicsSystem extends EntitySystem implements ActivableSystem {
+	
+	ActivableSystem activableSystem = new ActivableSystemImpl();
 
 	static class PhysicsContactListener implements ContactListener {
 		@Override
@@ -81,7 +83,7 @@ public class PhysicsSystem extends EntitySystem {
 
 	@Override
 	protected boolean checkProcessing() {
-		return true;
+		return isEnabled();
 	}
 	
 	@Override
@@ -112,5 +114,15 @@ public class PhysicsSystem extends EntitySystem {
 	public World getPhysicsWorld() {
 		return physicsWorld;
 	}
+
+	public void toggle() {
+		activableSystem.toggle();
+	}
+
+	public boolean isEnabled() {
+		return activableSystem.isEnabled();
+	}
+	
+	
 
 }

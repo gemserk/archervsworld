@@ -19,6 +19,6 @@ public class Box2dPositionProperty extends AbstractProperty<Vector2> {
 
 	@Override
 	public void set(Vector2 value) {
-		body.getTransform().setPosition(value);
+		body.setTransform(value, body.getAngle());
 	}
 }
