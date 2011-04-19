@@ -3,11 +3,10 @@ package com.gemserk.games.archervsworld;
 import java.util.ArrayList;
 
 import com.artemis.Entity;
+import com.artemis.EntitySystem;
 import com.artemis.World;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -38,17 +37,9 @@ import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
+import com.gemserk.games.archervsworld.artemis.systems.ArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
-import com.gemserk.games.archervsworld.controllers.BowController;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl2;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl3;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl4;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl5;
-import com.gemserk.games.archervsworld.controllers.BowControllerKeyboardImpl;
-import com.gemserk.games.archervsworld.controllers.BowControllerMutitouchImpl;
-import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
@@ -78,15 +69,11 @@ public class EditorScreen extends ScreenAdapter {
 
 	private final Game game;
 
-	private TextRendererSystem textRendererSystem;
-
 	private World world;
 
 	private PhysicsSystem physicsSystem;
 
 	private SpriteRendererSystem spriteRenderSystem;
-
-	private SpriteUpdateSystem spriteUpdateSystem;
 
 	private OrthographicCamera camera;
 
@@ -132,14 +119,12 @@ public class EditorScreen extends ScreenAdapter {
 		// hud layer
 		layers.add(new Layer(10, 1000, new Libgdx2dCameraTransformImpl()));
 
-		textRendererSystem = new TextRendererSystem();
 		spriteRenderSystem = new SpriteRendererSystem(myCamera, layers);
-		spriteUpdateSystem = new SpriteUpdateSystem();
 
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
 
-		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
+		pointer0 = new LibgdxPointer(0, myCamera);
 		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
 
 		ArrayList<LibgdxPointer> pointers = new ArrayList<LibgdxPointer>();
@@ -147,39 +132,24 @@ public class EditorScreen extends ScreenAdapter {
 		pointers.add(pointer0);
 		pointers.add(pointer1);
 
-		ArrayList<BowController> controllers = new ArrayList<BowController>();
-
-		controllers.add(new BowControllerImpl(pointer0));
-		controllers.add(new BowControllerImpl2(pointer0, new Vector2(1f, 1f)));
-		controllers.add(new BowControllerImpl3(pointer0));
-		controllers.add(new BowControllerImpl4(pointer0, new Vector2(1f, 1f)));
-		controllers.add(new BowControllerImpl5(pointer0, new Vector2(1f, 1f)));
-
-		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
-			controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
-
-		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
-			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
-
-		ControllerSwitcher controllerSwitcher = new ControllerSwitcher(controllers);
-
-		hierarchySystem = new HierarchySystem();
-		aliveSystem = new AliveSystem();
-
 		hudButtonSystem = new HudButtonSystem(pointer0);
 		pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		world = new World();
-		world.getSystemManager().setSystem(textRendererSystem);
-		world.getSystemManager().setSystem(spriteRenderSystem);
-		world.getSystemManager().setSystem(spriteUpdateSystem);
-		world.getSystemManager().setSystem(physicsSystem);
-		world.getSystemManager().setSystem(hierarchySystem);
-		world.getSystemManager().setSystem(aliveSystem);
-		world.getSystemManager().setSystem(pointerUpdateSystem);
-		world.getSystemManager().setSystem(hudButtonSystem);
 
-		world.getSystemManager().initializeAll();
+		worldWrapper = new WorldWrapper(world);
+
+		worldWrapper.addSystem(new ArrowDirectionSystem());
+		worldWrapper.addSystem(physicsSystem);
+		worldWrapper.addSystem(pointerUpdateSystem);
+		worldWrapper.addSystem(hudButtonSystem);
+		worldWrapper.addSystem(new HierarchySystem());
+		worldWrapper.addSystem(new AliveSystem());
+		worldWrapper.addSystem(new SpriteUpdateSystem());
+		worldWrapper.addSystem(spriteRenderSystem);
+		worldWrapper.addSystem(new TextRendererSystem());
+
+		worldWrapper.init();
 
 		entityFactory.setWorld(world);
 
@@ -201,7 +171,7 @@ public class EditorScreen extends ScreenAdapter {
 		createBackground();
 
 		monitorUpdater = new MonitorUpdaterImpl();
-		
+
 	}
 
 	public void createBackground() {
@@ -231,13 +201,47 @@ public class EditorScreen extends ScreenAdapter {
 
 	private Libgdx2dCamera myCamera;
 
-	private HierarchySystem hierarchySystem;
-
-	private AliveSystem aliveSystem;
-
 	private HudButtonSystem hudButtonSystem;
 
 	private PointerUpdateSystem pointerUpdateSystem;
+
+	private WorldWrapper worldWrapper;
+
+	private LibgdxPointer pointer0;
+
+	static class WorldWrapper {
+
+		private final World world;
+
+		ArrayList<EntitySystem> systems;
+
+		public WorldWrapper(World world) {
+			this.world = world;
+			systems = new ArrayList<EntitySystem>();
+		}
+
+		public void addSystem(EntitySystem entitySystem) {
+			world.getSystemManager().setSystem(entitySystem);
+			systems.add(entitySystem);
+		}
+
+		public void init() {
+			world.getSystemManager().initializeAll();
+		}
+
+		public void update(int delta) {
+
+			world.loopStart();
+			world.setDelta(delta);
+
+			for (int i = 0; i < systems.size(); i++) {
+				EntitySystem system = systems.get(i);
+				system.process();
+			}
+
+		}
+
+	}
 
 	@Override
 	public void render(float delta) {
@@ -247,22 +251,7 @@ public class EditorScreen extends ScreenAdapter {
 
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		world.loopStart();
-		world.setDelta((int) (delta * 1000));
-		
-		physicsSystem.process();
-
-		// add a system to process all pointers and remove the pointer.update from the controllers!!
-		pointerUpdateSystem.process();
-
-		hudButtonSystem.process();
-
-		hierarchySystem.process();
-		aliveSystem.process();
-
-		spriteUpdateSystem.process();
-		spriteRenderSystem.process();
-		textRendererSystem.process();
+		worldWrapper.update((int) (delta * 1000));
 
 		camera.update();
 		camera.apply(Gdx.gl10);
@@ -270,7 +259,16 @@ public class EditorScreen extends ScreenAdapter {
 		renderer.render(physicsWorld);
 
 		monitorUpdater.update();
+
 		Synchronizers.synchronize();
+
+		if (pointer0.wasPressed) {
+
+			Vector2 position = pointer0.getPressedPosition();
+
+			archerVsWorldEntityFactory.createPhysicsArrow(new Vector2(position), new Vector2(1f, 0f), 10f);
+
+		}
 
 	}
 
