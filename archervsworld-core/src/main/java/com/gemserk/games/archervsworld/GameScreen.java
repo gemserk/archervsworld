@@ -38,7 +38,9 @@ import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.SimpleProperty;
+import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
+import com.gemserk.games.archervsworld.artemis.systems.ActivableSystem;
 import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
 import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
@@ -126,13 +128,13 @@ public class GameScreen extends ScreenAdapter {
 		myCamera = new Libgdx2dCameraTransformImpl(camera);
 
 		ArrayList<Layer> layers = new ArrayList<Layer>();
-		
+
 		// background layer
 		layers.add(new Layer(-1000, -5, new Libgdx2dCameraTransformImpl()));
-		
+
 		// world layer
 		layers.add(new Layer(-5, 10, myCamera));
-		
+
 		// hud layer
 		layers.add(new Layer(10, 1000, new Libgdx2dCameraTransformImpl()));
 
@@ -145,12 +147,12 @@ public class GameScreen extends ScreenAdapter {
 
 		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
 		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
-		
+
 		ArrayList<LibgdxPointer> pointers = new ArrayList<LibgdxPointer>();
-		
+
 		pointers.add(pointer0);
 		pointers.add(pointer1);
-		
+
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
 
 		controllers.add(new BowControllerImpl(pointer0));
@@ -158,15 +160,15 @@ public class GameScreen extends ScreenAdapter {
 		controllers.add(new BowControllerImpl3(pointer0));
 		controllers.add(new BowControllerImpl4(pointer0, new Vector2(1f, 1f)));
 		controllers.add(new BowControllerImpl5(pointer0, new Vector2(1f, 1f)));
-		
+
 		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
 			controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
-		
+
 		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
 			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
 
 		ControllerSwitcher controllerSwitcher = new ControllerSwitcher(controllers);
-		
+
 		updateBowSystem = new UpdateBowSystem(controllerSwitcher, archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
 
@@ -192,11 +194,11 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(gameLogicSystem);
 		world.getSystemManager().setSystem(hierarchySystem);
 		world.getSystemManager().setSystem(aliveSystem);
-		
+
 		world.getSystemManager().setSystem(pointerUpdateSystem);
-		
+
 		world.getSystemManager().setSystem(hudButtonSystem);
-		
+
 		world.getSystemManager().initializeAll();
 
 		entityFactory.setWorld(world);
@@ -241,13 +243,13 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1.25f + y), new Vector2(0.5f, 1.9f), new Vector2(-1.2f, 0f));
 
 		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-1.2f, 0f));
-		
+
 		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
-		
+
 		createBackground();
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
-		
+
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);
 		monitorUpdater.add(zoomInButtonMonitor);
@@ -258,8 +260,12 @@ public class GameScreen extends ScreenAdapter {
 
 		monitorUpdater.add(moveUpMonitor);
 		monitorUpdater.add(moveDownMonitor);
-		
+
+		monitorUpdater.add(toggleBowSystemMonitor);
 		monitorUpdater.add(toggleWalkingDeadSystemMonitor);
+		
+		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, toggleBowSystemMonitor, "Bow system"));
+		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, toggleWalkingDeadSystemMonitor, "Walking dead system"));
 
 	}
 
@@ -301,8 +307,10 @@ public class GameScreen extends ScreenAdapter {
 	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_U);
 
 	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_J);
+
+	private ButtonMonitor toggleBowSystemMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_1);
 	
-	private ButtonMonitor toggleWalkingDeadSystemMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_1);
+	private ButtonMonitor toggleWalkingDeadSystemMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_2);
 
 	private MonitorUpdaterImpl monitorUpdater;
 
@@ -322,6 +330,50 @@ public class GameScreen extends ScreenAdapter {
 
 	private PointerUpdateSystem pointerUpdateSystem;
 
+	static class EntitySystemController {
+
+		static class ActivableSystemRegistration {
+	
+			ActivableSystem activableSystem;
+
+			ButtonMonitor buttonMonitor;
+
+			String name;
+
+			public ActivableSystemRegistration(ActivableSystem activableSystem, ButtonMonitor buttonMonitor, String name) {
+				this.activableSystem = activableSystem;
+				this.buttonMonitor = buttonMonitor;
+				this.name = name;
+			}
+		}
+		
+		ArrayList<ActivableSystemRegistration> registrations = new ArrayList<ActivableSystemRegistration>();
+
+		public void register(ActivableSystemRegistration registration) {
+			registrations.add(registration);
+		}
+
+		public void update() {
+			for (int i = 0; i < registrations.size(); i++) {
+				
+				ActivableSystemRegistration registration = registrations.get(i);
+				
+				if (registration.buttonMonitor.isPressed()) {
+					registration.activableSystem.toggle();
+					if (registration.activableSystem.isEnabled()) {
+						Gdx.app.log("Archer Vs Zombies", registration.name + " enabled");
+					} else {
+						Gdx.app.log("Archer Vs Zombies", registration.name + " disabled");
+					}
+				}
+				
+			}
+		}
+
+	}
+
+	EntitySystemController entitySystemController = new EntitySystemController();
+	
 	@Override
 	public void render(float delta) {
 
@@ -333,26 +385,20 @@ public class GameScreen extends ScreenAdapter {
 		world.loopStart();
 		world.setDelta((int) (delta * 1000));
 		
-		if (toggleWalkingDeadSystemMonitor.isPressed()) {
-			walkingDeadSystem.toggle();
-			if (walkingDeadSystem.isEnabled())
-				Gdx.app.log("Archer Vs Zombies", "Walking dead system enabled");
-			else 
-				Gdx.app.log("Archer Vs Zombies", "Walking dead system disabled");
-		}
+		entitySystemController.update();
 
 		physicsSystem.process();
-		
+
 		// add a system to process all pointers and remove the pointer.update from the controllers!!
 		pointerUpdateSystem.process();
-		
+
 		gameLogicSystem.process();
 
 		hudButtonSystem.process();
 
 		updateBowSystem.process();
 		walkingDeadSystem.process();
-		
+
 		hierarchySystem.process();
 		aliveSystem.process();
 
@@ -463,7 +509,7 @@ public class GameScreen extends ScreenAdapter {
 				t.dispose();
 			}
 		}, false)));
-		
+
 		Texture buttonTexture = new Texture(Gdx.files.internal("data/button-template-64x64.png"));
 		buttonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
