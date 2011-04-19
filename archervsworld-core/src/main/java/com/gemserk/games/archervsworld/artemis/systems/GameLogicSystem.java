@@ -189,11 +189,6 @@ public class GameLogicSystem extends EntitySystem {
 			Contact contact = physicsComponent.getContact();
 
 			if (!contact.inContact) {
-
-				Vector2 linearVelocity = body.getLinearVelocity();
-				float angle = linearVelocity.angle();
-				body.setTransform(body.getPosition(), (float) (angle / 180f * Math.PI));
-
 				continue;
 			}
 

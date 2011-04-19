@@ -42,6 +42,7 @@ import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.ActivableSystem;
+import com.gemserk.games.archervsworld.artemis.systems.ArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
 import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
@@ -185,6 +186,8 @@ public class GameScreen extends ScreenAdapter {
 		hudButtonSystem = new HudButtonSystem(pointer0);
 		pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
+		arrowDirectionSystem = new ArrowDirectionSystem();
+
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
 		world.getSystemManager().setSystem(spriteRenderSystem);
@@ -199,6 +202,8 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(pointerUpdateSystem);
 
 		world.getSystemManager().setSystem(hudButtonSystem);
+		
+		world.getSystemManager().setSystem(arrowDirectionSystem);
 
 		world.getSystemManager().initializeAll();
 
@@ -375,6 +380,8 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	EntitySystemController entitySystemController = new EntitySystemController();
+
+	private ArrowDirectionSystem arrowDirectionSystem;
 	
 	@Override
 	public void render(float delta) {
@@ -389,6 +396,7 @@ public class GameScreen extends ScreenAdapter {
 		
 		entitySystemController.update();
 
+		arrowDirectionSystem.process();
 		physicsSystem.process();
 
 		// add a system to process all pointers and remove the pointer.update from the controllers!!
