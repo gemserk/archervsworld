@@ -115,7 +115,9 @@ public class ArcherVsWorldEntityFactory {
 				new Box2dPositionProperty(body), //
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
 				new Box2dAngleProperty(body)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
+		entity.addComponent(new SpriteComponent( //
+				new SimpleProperty<Sprite>(new Sprite(texture)), // 
+				new SimpleProperty<IntValue>(new IntValue(1))));
 		entity.addComponent(new DamageComponent(1f));
 
 		entity.refresh();

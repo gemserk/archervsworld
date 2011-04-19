@@ -247,7 +247,7 @@ public class GameScreen extends ScreenAdapter {
 		createBackground();
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
-
+		
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);
 		monitorUpdater.add(zoomInButtonMonitor);

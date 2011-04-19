@@ -36,7 +36,7 @@ public class UpdateBowSystem extends EntitySystem {
 
 		@Override
 		public Vector2 get() {
-			position.set(spatialComponent.getPositionProperty().get());
+			position.set(spatialComponent.getPosition());
 
 			diff.set(1f, 0f);
 			diff.rotate(spatialComponent.getAngle());
@@ -91,11 +91,11 @@ public class UpdateBowSystem extends EntitySystem {
 			// update bow direction
 
 			for (int i = 0; i < entities.size(); i++) {
-				Entity entity = entities.get(i);
-				final SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
+				Entity bow = entities.get(i);
+				final SpatialComponent spatialComponent = bow.getComponent(SpatialComponent.class);
 				// Vector2 direction = pointer.getPressedPosition().cpy().sub(pointer.getPosition());
 
-				final BowComponent bowComponent = entity.getComponent(BowComponent.class);
+				final BowComponent bowComponent = bow.getComponent(BowComponent.class);
 
 				float angle = bowController.getAngle();
 
@@ -113,6 +113,7 @@ public class UpdateBowSystem extends EntitySystem {
 					// TODO: add it as a child using scene graph component so transformations will be handled automatically
 
 					Entity arrow = entityFactory.createArrow(new ChargingArrowProperty(bowComponent, spatialComponent), //
+							// PropertyBuilder.property(ValueBuilder.floatValue(spatialComponent.getAngle())) );
 							spatialComponent.getAngleProperty());
 
 					bowComponent.setArrow(arrow);
