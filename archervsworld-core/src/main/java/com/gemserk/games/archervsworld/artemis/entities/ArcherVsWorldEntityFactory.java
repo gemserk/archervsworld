@@ -275,7 +275,7 @@ public class ArcherVsWorldEntityFactory {
 
 	}
 
-	public void createWalkingDead(Vector2 position, Vector2 size, Vector2 velocity) {
+	public Entity createWalkingDead(Vector2 position, Vector2 size, Vector2 velocity) {
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -325,7 +325,8 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new ParentComponent());
 
 		entity.refresh();
-
+		
+		return entity;
 	}
 	
 	Color endColor = new Color(1f, 1f, 1f, 0f);

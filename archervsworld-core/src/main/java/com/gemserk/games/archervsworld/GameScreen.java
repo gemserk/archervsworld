@@ -20,12 +20,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.components.SpawnerComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
+import com.gemserk.commons.artemis.entities.EntityTemplate;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
 import com.gemserk.commons.artemis.systems.Layer;
 import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
+import com.gemserk.commons.artemis.systems.SpawnerSystem;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
@@ -39,6 +42,7 @@ import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.SimpleProperty;
+import com.gemserk.componentsengine.timers.CountDownTimer;
 import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.ActivableSystem;
@@ -187,6 +191,8 @@ public class GameScreen extends ScreenAdapter {
 		pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		correctArrowDirectionSystem = new CorrectArrowDirectionSystem();
+		
+		spawnerSystem = new SpawnerSystem();
 
 		world = new World();
 		world.getSystemManager().setSystem(textRendererSystem);
@@ -204,6 +210,8 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(hudButtonSystem);
 		
 		world.getSystemManager().setSystem(correctArrowDirectionSystem);
+		
+		world.getSystemManager().setSystem(spawnerSystem);
 
 		world.getSystemManager().initializeAll();
 
@@ -227,7 +235,7 @@ public class GameScreen extends ScreenAdapter {
 		Vector2 grassSize = new Vector2(0.5f, 0.5f);
 
 		float x = 0f;
-		float y = 0f;
+		final float y = 0f;
 
 		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
 
@@ -255,6 +263,18 @@ public class GameScreen extends ScreenAdapter {
 		createBackground();
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
+		
+		Entity spawner = world.createEntity();
+		
+		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), 5000, 10000, new EntityTemplate() {
+			@Override
+			public Entity build() {
+				Gdx.app.log("Archer Vs Zombies", "new zombie spawned!");
+				return archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1.25f + y), new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
+			}
+		}));
+		
+		spawner.refresh();
 
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);
@@ -382,6 +402,8 @@ public class GameScreen extends ScreenAdapter {
 	EntitySystemController entitySystemController = new EntitySystemController();
 
 	private CorrectArrowDirectionSystem correctArrowDirectionSystem;
+
+	private SpawnerSystem spawnerSystem;
 	
 	@Override
 	public void render(float delta) {
@@ -411,6 +433,7 @@ public class GameScreen extends ScreenAdapter {
 
 		hierarchySystem.process();
 		aliveSystem.process();
+		spawnerSystem.process();
 
 		spriteUpdateSystem.process();
 		spriteRenderSystem.process();
