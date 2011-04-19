@@ -7,6 +7,7 @@ import com.artemis.World;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
@@ -261,11 +262,8 @@ public class GameScreen extends ScreenAdapter {
 		monitorUpdater.add(moveUpMonitor);
 		monitorUpdater.add(moveDownMonitor);
 
-		monitorUpdater.add(toggleBowSystemMonitor);
-		monitorUpdater.add(toggleWalkingDeadSystemMonitor);
-		
-		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, toggleBowSystemMonitor, "Bow system"));
-		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, toggleWalkingDeadSystemMonitor, "Walking dead system"));
+		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.KEYCODE_1, "Bow system"));
+		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.KEYCODE_2, "Walking dead system"));
 
 	}
 
@@ -308,10 +306,6 @@ public class GameScreen extends ScreenAdapter {
 
 	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_J);
 
-	private ButtonMonitor toggleBowSystemMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_1);
-	
-	private ButtonMonitor toggleWalkingDeadSystemMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_2);
-
 	private MonitorUpdaterImpl monitorUpdater;
 
 	private WalkingDeadSystem walkingDeadSystem;
@@ -345,6 +339,12 @@ public class GameScreen extends ScreenAdapter {
 				this.buttonMonitor = buttonMonitor;
 				this.name = name;
 			}
+			
+			public ActivableSystemRegistration(ActivableSystem activableSystem, int key, String name) {
+				this.activableSystem = activableSystem;
+				this.buttonMonitor = new LibgdxButtonMonitor(key);
+				this.name = name;
+			}
 		}
 		
 		ArrayList<ActivableSystemRegistration> registrations = new ArrayList<ActivableSystemRegistration>();
@@ -357,6 +357,8 @@ public class GameScreen extends ScreenAdapter {
 			for (int i = 0; i < registrations.size(); i++) {
 				
 				ActivableSystemRegistration registration = registrations.get(i);
+				
+				registration.buttonMonitor.update();
 				
 				if (registration.buttonMonitor.isPressed()) {
 					registration.activableSystem.toggle();
