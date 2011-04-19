@@ -252,11 +252,11 @@ public class GameScreen extends ScreenAdapter {
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
 
-		archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1.25f + y), new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
-
-		archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1.25f + y), new Vector2(0.5f, 1.9f), new Vector2(-1.4f, 0f));
-
-		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-2.0f, 0f));
+//		archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1.25f + y), new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
+//
+//		archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1.25f + y), new Vector2(0.5f, 1.9f), new Vector2(-1.4f, 0f));
+//
+//		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-2.0f, 0f));
 
 		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
 
@@ -266,7 +266,7 @@ public class GameScreen extends ScreenAdapter {
 		
 		Entity spawner = world.createEntity();
 		
-		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), 5000, 10000, new EntityTemplate() {
+		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new EntityTemplate() {
 			@Override
 			public Entity build() {
 				Gdx.app.log("Archer Vs Zombies", "new zombie spawned!");
@@ -418,13 +418,15 @@ public class GameScreen extends ScreenAdapter {
 		
 		entitySystemController.update();
 
-		correctArrowDirectionSystem.process();
 		physicsSystem.process();
+		
+		gameLogicSystem.process();
+
+		correctArrowDirectionSystem.process();
 
 		// add a system to process all pointers and remove the pointer.update from the controllers!!
 		pointerUpdateSystem.process();
 
-		gameLogicSystem.process();
 
 		hudButtonSystem.process();
 

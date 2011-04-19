@@ -157,7 +157,7 @@ public class GameLogicSystem extends EntitySystem {
 				Entity arrow = arrows.get(j);
 				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
 				SpriteComponent spriteComponent = arrow.getComponent(SpriteComponent.class);
-				
+
 				// should not be null
 				if (arrowSpatialComponent != null)
 					archerVsWorldEntityFactory.createDyingArrow(arrowSpatialComponent.getPosition(), //
@@ -188,99 +188,96 @@ public class GameLogicSystem extends EntitySystem {
 
 			Contact contact = physicsComponent.getContact();
 
-			if (!contact.inContact) {
+			if (!contact.inContact)
 				continue;
-			}
-
-			Vector2 normal = contact.normal;
-
-			float normalAngle = normal.cpy().mul(-1f).angle();
-
-			float bodyAngle = (float) (body.getAngle() * 180.0 / Math.PI);
-
-			double diff = Math.abs(angleUtils.minimumDifference(normalAngle, bodyAngle));
-
-			int stickAngle = 60;
 
 			int arrowAliveTime = 10000;
 
 			if (!body.isAwake()) {
 
 				SpatialComponent component = entity.getComponent(SpatialComponent.class);
-
-				// archerVsWorldEntityFactory.createArrow(component.getPosition(), component.getAngle());
-
 				archerVsWorldEntityFactory.createDyingArrow(component.getPosition(), component.getAngle(), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
-
 				this.world.deleteEntity(entity);
+				continue;
 
-			} else if (diff < stickAngle) {
-				// remove the physics arrow and convert it to a
+			}
 
-				Entity target = contact.entity;
+			Entity target = contact.entity;
 
-				if (target != null) {
+			if (target == null)
+				continue;
 
-					HealthComponent healthComponent = target.getComponent(HealthComponent.class);
+			String targetGroup = groupManager.getGroupOf(target);
+			
+			Vector2 normal = contact.normal;
+			float normalAngle = normal.cpy().mul(-1f).angle();
+			float bodyAngle = (float) (body.getAngle() * 180.0 / Math.PI);
+			double diff = Math.abs(angleUtils.minimumDifference(normalAngle, bodyAngle));
+			
+			int stickAngle = 60;
+			
+			if (Groups.Enemy.equals(targetGroup)) 
+				stickAngle = 80;
 
-					String targetGroup = groupManager.getGroupOf(target);
+			if (diff < stickAngle) {
 
-					if (healthComponent != null) {
-						// if (Groups.Pierceable.equals(collisionEntityGroup)) {
+				HealthComponent healthComponent = target.getComponent(HealthComponent.class);
 
-						final SpatialComponent targetSpatialComponent = target.getComponent(SpatialComponent.class);
-						PhysicsComponent targetPhysicsComponent = target.getComponent(PhysicsComponent.class);
+				if (healthComponent != null) {
+					// if (Groups.Pierceable.equals(collisionEntityGroup)) {
 
-						Body targetBody = targetPhysicsComponent.getBody();
+					final SpatialComponent targetSpatialComponent = target.getComponent(SpatialComponent.class);
+					PhysicsComponent targetPhysicsComponent = target.getComponent(PhysicsComponent.class);
 
-						if (targetBody.getType().equals(BodyType.DynamicBody))
-							targetBody.applyLinearImpulse(new Vector2(0.5f, 0f), targetSpatialComponent.getPosition());
+					Body targetBody = targetPhysicsComponent.getBody();
 
-						SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
+					if (targetBody.getType().equals(BodyType.DynamicBody))
+						targetBody.applyLinearImpulse(new Vector2(0.5f, 0f), targetSpatialComponent.getPosition());
 
-						Vector2 arrowPosition = spatialComponent.getPosition();
-						float arrowAngle = spatialComponent.getAngle();
+					SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 
-						Vector2 displacement = new Vector2(1f, 0f).mul(0.2f);
-						displacement.rotate(arrowAngle);
+					Vector2 arrowPosition = spatialComponent.getPosition();
+					float arrowAngle = spatialComponent.getAngle();
 
-						final Vector2 targetPosition = targetSpatialComponent.getPosition();
-						final Vector2 difference = targetPosition.cpy().sub(arrowPosition).sub(displacement);
+					Vector2 displacement = new Vector2(1f, 0f).mul(0.2f);
+					displacement.rotate(arrowAngle);
 
-						// Use layer - 1 for the sprite component
+					final Vector2 targetPosition = targetSpatialComponent.getPosition();
+					final Vector2 difference = targetPosition.cpy().sub(arrowPosition).sub(displacement);
 
-						Entity newArrow = archerVsWorldEntityFactory.createDyingArrow(new StickArrowProperty(targetSpatialComponent, difference), new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
+					// Use layer - 1 for the sprite component
 
-						ParentComponent parentComponent = target.getComponent(ParentComponent.class);
-						parentComponent.addChild(newArrow);
+					Entity newArrow = archerVsWorldEntityFactory.createDyingArrow(new StickArrowProperty(targetSpatialComponent, difference), new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
 
-						// add owner to the arrow, so it is deleted when the owner is deleted...
+					ParentComponent parentComponent = target.getComponent(ParentComponent.class);
+					parentComponent.addChild(newArrow);
 
-						this.world.deleteEntity(entity);
+					// add owner to the arrow, so it is deleted when the owner is deleted...
 
-						if (Groups.Enemy.equals(targetGroup)) {
-							// if (targetBody.getType().equals(BodyType.DynamicBody)) {
+					this.world.deleteEntity(entity);
 
-							Container healthContainer = healthComponent.getContainer();
-							float currentHealth = healthContainer.getCurrent();
+					if (Groups.Enemy.equals(targetGroup)) {
+						// if (targetBody.getType().equals(BodyType.DynamicBody)) {
 
-							DamageComponent damageComponent = entity.getComponent(DamageComponent.class);
+						Container healthContainer = healthComponent.getContainer();
+						float currentHealth = healthContainer.getCurrent();
 
-							currentHealth -= damageComponent.getDamage() - damageComponent.getDamage() * healthComponent.getResistance();
+						DamageComponent damageComponent = entity.getComponent(DamageComponent.class);
 
-							healthContainer.setCurrent(currentHealth);
+						currentHealth -= damageComponent.getDamage() - damageComponent.getDamage() * healthComponent.getResistance();
 
-							Resource<Sound> hitSound = resourceManager.get("HitFleshSound");
-							hitSound.get().play(1f);
+						healthContainer.setCurrent(currentHealth);
 
-							// System.out.println("currentHealth: " + currentHealth);
+						Resource<Sound> hitSound = resourceManager.get("HitFleshSound");
+						hitSound.get().play(1f);
 
-						} else {
-							Resource<Sound> hitSound = resourceManager.get("HitGroundSound");
-							hitSound.get().play(1f);
-						}
+						// System.out.println("currentHealth: " + currentHealth);
 
+					} else {
+						Resource<Sound> hitSound = resourceManager.get("HitGroundSound");
+						hitSound.get().play(1f);
 					}
+
 				}
 
 			}

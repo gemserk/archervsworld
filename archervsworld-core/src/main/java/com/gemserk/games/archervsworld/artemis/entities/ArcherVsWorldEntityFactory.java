@@ -75,7 +75,7 @@ public class ArcherVsWorldEntityFactory {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
-		fixtureDef.friction = 3f;
+		// fixtureDef.friction = 3f;
 
 		fixtureDef.filter.categoryBits = CollisionDefinitions.ArrowGroup;
 		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup;
