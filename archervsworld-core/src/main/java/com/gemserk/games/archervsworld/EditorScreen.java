@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.World;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -148,6 +149,8 @@ public class EditorScreen extends ScreenAdapter {
 		worldWrapper.addSystem(new SpriteUpdateSystem());
 		worldWrapper.addSystem(spriteRenderSystem);
 		worldWrapper.addSystem(new TextRendererSystem());
+		
+		worldWrapper.addSystem(new EditorSystem(pointer0));
 
 		worldWrapper.init();
 
@@ -242,7 +245,7 @@ public class EditorScreen extends ScreenAdapter {
 		}
 
 	}
-
+	
 	@Override
 	public void render(float delta) {
 
@@ -262,15 +265,81 @@ public class EditorScreen extends ScreenAdapter {
 
 		Synchronizers.synchronize();
 
-		if (pointer0.wasPressed) {
+	}
+	
+	class EditorSystem extends EntitySystem {
+		
+		private final LibgdxPointer pointer;
+		
+		private Entity selectedEntity = null;
 
-			Vector2 position = pointer0.getPressedPosition();
-
-			archerVsWorldEntityFactory.createPhysicsArrow(new Vector2(position), new Vector2(1f, 0f), 10f);
-
+		@SuppressWarnings("unchecked")
+		public EditorSystem(LibgdxPointer pointer) {
+			super(SpatialComponent.class);
+			this.pointer = pointer;
 		}
 
+		@Override
+		protected void processEntities(ImmutableBag<Entity> entities) {
+			
+			if (pointer.wasPressed) {
+				Vector2 pressedPosition = pointer.getPressedPosition();
+				
+				for (int i = 0; i < entities.size(); i++) {
+
+					Entity entity = entities.get(i);
+					
+					SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
+					
+					if (pressedPosition.dst(spatialComponent.getPosition()) < 1f) {
+						// selected entity!
+						selectedEntity = entity;
+						break;
+					}
+					
+				}
+				
+				if (selectedEntity == null) {
+					// add new entity?
+					selectedEntity = archerVsWorldEntityFactory.createBow(new Vector2(pressedPosition));
+				}
+				
+			}
+			
+			if (pointer.touched) {
+				
+				if (selectedEntity != null) {
+					
+					SpatialComponent spatialComponent = selectedEntity.getComponent(SpatialComponent.class);
+					
+					Vector2 position = pointer.getPosition();
+					
+					spatialComponent.setPosition(position);
+					
+				}
+				
+			}
+			
+			if (pointer.wasReleased) {
+				selectedEntity = null;
+			}
+			
+
+			
+		}
+
+		@Override
+		protected boolean checkProcessing() {
+			return true;
+		}
+
+		@Override
+		public void initialize() {
+			
+		}
+		
 	}
+	
 
 	@Override
 	public void resize(int width, int height) {

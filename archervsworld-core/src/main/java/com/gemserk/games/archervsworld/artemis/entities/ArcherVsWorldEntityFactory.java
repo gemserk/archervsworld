@@ -25,8 +25,8 @@ import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.Container;
-import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
+import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
@@ -149,7 +149,7 @@ public class ArcherVsWorldEntityFactory {
 		return entity;
 	}
 
-	public void createBow(Vector2 position) {
+	public Entity createBow(Vector2 position) {
 
 		Entity entity = world.createEntity();
 
@@ -179,6 +179,7 @@ public class ArcherVsWorldEntityFactory {
 
 		entity.refresh();
 
+		return entity;
 	}
 
 	public void createRock(Vector2 position, Vector2 size, Vector2 startImpulse, float angle) {
