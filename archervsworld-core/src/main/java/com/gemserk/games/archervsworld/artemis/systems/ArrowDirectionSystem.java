@@ -5,7 +5,7 @@ import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.gemserk.games.archervsworld.artemis.components.ArrowComponent;
+import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.box2d.Contact;
 
@@ -13,7 +13,7 @@ public class ArrowDirectionSystem extends EntitySystem {
 
 	@SuppressWarnings("unchecked")
 	public ArrowDirectionSystem() {
-		super(ArrowComponent.class);
+		super(CorrectArrowDirectionComponent.class);
 	}
 
 	@Override
@@ -23,9 +23,9 @@ public class ArrowDirectionSystem extends EntitySystem {
 
 			Entity entity = entities.get(i);
 			
-			ArrowComponent arrowComponent = entity.getComponent(ArrowComponent.class);
+			CorrectArrowDirectionComponent correctArrowDirectionComponent = entity.getComponent(CorrectArrowDirectionComponent.class);
 			
-			if (arrowComponent.isDisabled())
+			if (correctArrowDirectionComponent.isDisabled())
 				continue;
 
 			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
@@ -42,7 +42,7 @@ public class ArrowDirectionSystem extends EntitySystem {
 				continue;
 			} else {
 				// once the arrow collides with something, then the direction correction should be disabled
-				arrowComponent.setDisabled(true);
+				correctArrowDirectionComponent.setDisabled(true);
 			}
 
 		}

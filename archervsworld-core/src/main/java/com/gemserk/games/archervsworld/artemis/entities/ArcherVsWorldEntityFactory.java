@@ -25,7 +25,7 @@ import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.utils.Container;
-import com.gemserk.games.archervsworld.artemis.components.ArrowComponent;
+import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
@@ -120,7 +120,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Sprite>(new Sprite(texture)), // 
 				new SimpleProperty<IntValue>(new IntValue(1))));
 		entity.addComponent(new DamageComponent(1f));
-		entity.addComponent(new ArrowComponent());
+		entity.addComponent(new CorrectArrowDirectionComponent());
 
 		entity.refresh();
 	}
