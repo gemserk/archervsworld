@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
@@ -33,6 +34,7 @@ import com.gemserk.commons.gdx.Libgdx2dCamera;
 import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
+import com.gemserk.commons.gdx.math.MathUtils2;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.input.ButtonMonitor;
@@ -125,7 +127,7 @@ public class EditorScreen extends ScreenAdapter {
 
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
-		
+
 		if (physicsSystem.isEnabled())
 			physicsSystem.toggle();
 
@@ -153,9 +155,9 @@ public class EditorScreen extends ScreenAdapter {
 		worldWrapper.addSystem(new SpriteUpdateSystem());
 		worldWrapper.addSystem(spriteRenderSystem);
 		worldWrapper.addSystem(new TextRendererSystem());
-		
+
 		// worldWrapper.addSystem(new EditorSystem(pointer0));
-		
+
 		worldWrapper.addSystem(new CameraMovementSystem());
 
 		worldWrapper.init();
@@ -178,14 +180,15 @@ public class EditorScreen extends ScreenAdapter {
 		// I NEED AN EDITOR FOR ALL THIS STUFF!!
 
 		createBackground();
-		
+
 		Entity cameraEntity = world.createEntity();
-		
-//		cameraEntity.addComponent(new PointerComponent());
-		cameraEntity.addComponent(new CameraControllerComponent(new CameraController(new LibgdxPointer(0, new Libgdx2dCameraTransformImpl()), myCamera)));
-		
+
+		// cameraEntity.addComponent(new PointerComponent());
+		cameraEntity.addComponent(new CameraControllerComponent(new CameraController(new LibgdxPointer(0, new Libgdx2dCameraTransformImpl()), myCamera, //
+				new Rectangle(0, Gdx.graphics.getHeight() - 200, 200, 200))));
+
 		cameraEntity.refresh();
-		
+
 		Vector2 grassSize = new Vector2(0.5f, 0.5f);
 
 		float x = 0f;
@@ -199,7 +202,7 @@ public class EditorScreen extends ScreenAdapter {
 		}
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
-		
+
 		monitorUpdater = new MonitorUpdaterImpl();
 
 	}
@@ -272,7 +275,7 @@ public class EditorScreen extends ScreenAdapter {
 		}
 
 	}
-	
+
 	@Override
 	public void render(float delta) {
 
@@ -293,11 +296,11 @@ public class EditorScreen extends ScreenAdapter {
 		Synchronizers.synchronize();
 
 	}
-	
+
 	class EditorSystem extends EntitySystem {
-		
+
 		private final LibgdxPointer pointer;
-		
+
 		private Entity selectedEntity = null;
 
 		@SuppressWarnings("unchecked")
@@ -308,53 +311,51 @@ public class EditorScreen extends ScreenAdapter {
 
 		@Override
 		protected void processEntities(ImmutableBag<Entity> entities) {
-			
+
 			if (pointer.wasPressed) {
 				Vector2 pressedPosition = pointer.getPressedPosition();
-				
+
 				for (int i = 0; i < entities.size(); i++) {
 
 					Entity entity = entities.get(i);
-					
+
 					SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
-					
+
 					if (pressedPosition.dst(spatialComponent.getPosition()) < 1f) {
 						// selected entity!
 						selectedEntity = entity;
 						break;
 					}
-					
+
 				}
-				
+
 				if (selectedEntity == null) {
 					// add new entity?
-//					selectedEntity = archerVsWorldEntityFactory.createBow(new Vector2(pressedPosition));
+					// selectedEntity = archerVsWorldEntityFactory.createBow(new Vector2(pressedPosition));
 					selectedEntity = archerVsWorldEntityFactory.createGround(pressedPosition, new Vector2(5f, 1f));
-//					selectedEntity = archerVsWorldEntityFactory.createPhysicsArrow(new Vector2(pressedPosition), new Vector2(1f, 0f), 10f);
+					// selectedEntity = archerVsWorldEntityFactory.createPhysicsArrow(new Vector2(pressedPosition), new Vector2(1f, 0f), 10f);
 				}
-				
+
 			}
-			
+
 			if (pointer.touched) {
-				
+
 				if (selectedEntity != null) {
-					
+
 					SpatialComponent spatialComponent = selectedEntity.getComponent(SpatialComponent.class);
-					
+
 					Vector2 position = pointer.getPosition();
-					
+
 					spatialComponent.setPosition(position);
-					
+
 				}
-				
+
 			}
-			
+
 			if (pointer.wasReleased) {
 				selectedEntity = null;
 			}
-			
 
-			
 		}
 
 		@Override
@@ -364,88 +365,101 @@ public class EditorScreen extends ScreenAdapter {
 
 		@Override
 		public void initialize() {
-			
+
 		}
-		
+
 	}
-	
+
 	static class CameraControllerComponent extends Component {
-		
+
 		private CameraController cameraController;
-		
+
 		public CameraController getCameraController() {
 			return cameraController;
 		}
-		
+
 		public CameraControllerComponent(CameraController cameraController) {
 			this.cameraController = cameraController;
 		}
-		
+
 	}
-	
+
 	static class CameraController {
-		
+
 		private Vector2 previousPosition = new Vector2();
 
 		private LibgdxPointer pointer;
-		
+
 		private Libgdx2dCamera camera;
-		
-		public CameraController(LibgdxPointer pointer, Libgdx2dCamera camera) {
+
+		private Rectangle rectangle;
+
+		boolean moving = false;
+
+		public CameraController(LibgdxPointer pointer, Libgdx2dCamera camera, Rectangle pointerArea) {
 			this.pointer = pointer;
 			this.camera = camera;
+			this.rectangle = pointerArea;
 		}
-		
+
 		public void update() {
 			pointer.update();
-			
-			if (!pointer.touched)
-				return;
-			
+
 			if (pointer.wasPressed) {
-				previousPosition.set(pointer.getPressedPosition());
+				if (MathUtils2.inside(rectangle, pointer.getPressedPosition())) {
+					previousPosition.set(pointer.getPressedPosition());
+					moving = true;
+				} 
 				return;
 			}
 
+			if (pointer.wasReleased) {
+				moving = false;
+				return;
+			}
+
+			if (!moving)
+				return;
+
 			Vector2 pointerPosition = new Vector2(pointer.getPosition());
 			Vector2 pressedPosition = new Vector2(previousPosition);
-			
-			Vector2 cameraPosition = new Vector2(0f,0f);
-			
+
+			Vector2 cameraPosition = new Vector2(0f, 0f);
+
 			camera.unproject(cameraPosition);
 			camera.unproject(pressedPosition);
 			camera.unproject(pointerPosition);
-			
+
 			pointerPosition.sub(pressedPosition);
-			
+
 			camera.move(pointerPosition.x, pointerPosition.y);
-			
+
 			previousPosition.set(pointer.getPosition());
 		}
-		
+
 	}
-	
+
 	class CameraMovementSystem extends EntitySystem {
-		
+
 		// could be an abstraction of the camera controller in the middle
-		
+
 		@SuppressWarnings("unchecked")
 		public CameraMovementSystem() {
 			super(CameraControllerComponent.class);
 		}
-		
+
 		@Override
 		protected void processEntities(ImmutableBag<Entity> entities) {
-			
+
 			for (int i = 0; i < entities.size(); i++) {
-				
+
 				Entity entity = entities.get(i);
-				
+
 				CameraControllerComponent cameraControllerComponent = entity.getComponent(CameraControllerComponent.class);
 				cameraControllerComponent.getCameraController().update();
-				
+
 			}
-			
+
 		}
 
 		@Override
@@ -455,11 +469,10 @@ public class EditorScreen extends ScreenAdapter {
 
 		@Override
 		public void initialize() {
-			
+
 		}
-		
+
 	}
-	
 
 	@Override
 	public void resize(int width, int height) {
