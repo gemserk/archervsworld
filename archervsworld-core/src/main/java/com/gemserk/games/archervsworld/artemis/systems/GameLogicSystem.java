@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -24,9 +26,9 @@ import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
-import com.gemserk.games.archervsworld.artemis.components.PierceComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
+import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.games.archervsworld.box2d.Contact;
 import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
@@ -203,10 +205,6 @@ public class GameLogicSystem extends EntitySystem {
 			if (!contact.inContact)
 				continue;
 			
-			PierceComponent pierceComponent = entity.getComponent(PierceComponent.class);
-			if (pierceComponent == null)
-				continue;
-
 			Entity target = contact.entity;
 
 			if (target == null)
@@ -226,7 +224,14 @@ public class GameLogicSystem extends EntitySystem {
 
 			// if the arrow hits something but not in the expected angle, then it will never be able to hit again.
 			if (diff > stickAngle) {
-				entity.removeComponent(pierceComponent);
+				
+				Fixture fixture = body.getFixtureList().get(0);
+				Filter filter = fixture.getFilterData();
+				
+				filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup & ~CollisionDefinitions.EnemiesGroup; 
+				
+				fixture.setFilterData(filter);
+				
 				continue;
 			}
 

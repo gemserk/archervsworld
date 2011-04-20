@@ -25,6 +25,11 @@ public class CorrectArrowDirectionSystem extends EntitySystem {
 			
 			CorrectArrowDirectionComponent correctArrowDirectionComponent = entity.getComponent(CorrectArrowDirectionComponent.class);
 			
+			if (correctArrowDirectionComponent == null) {
+				// shouldnt be happening
+				continue;
+			}
+			
 			if (correctArrowDirectionComponent.isDisabled())
 				continue;
 
@@ -47,6 +52,13 @@ public class CorrectArrowDirectionSystem extends EntitySystem {
 
 		}
 
+	}
+	
+	@Override
+	protected void removed(Entity e) {
+		CorrectArrowDirectionComponent c = e.getComponent(CorrectArrowDirectionComponent.class);
+		if (c != null)
+			e.removeComponent(c);
 	}
 
 	@Override

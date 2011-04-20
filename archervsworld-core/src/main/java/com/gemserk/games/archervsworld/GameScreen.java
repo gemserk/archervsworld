@@ -233,40 +233,32 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.setResourceManager(resourceManager);
 
 		// I NEED AN EDITOR FOR ALL THIS STUFF!!
+		
+		createBackground();
+		
+		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
 
 		Vector2 grassSize = new Vector2(0.5f, 0.5f);
 
 		float x = 0f;
 		final float y = 0f;
 
-		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
+		 archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
+//		archerVsWorldEntityFactory.createGround(new Vector2(2.5f, 0.22f), new Vector2(5f, 0.44f));
+//		archerVsWorldEntityFactory.createGround(new Vector2(7.5f, 0.22f), new Vector2(5f, 0.44f));
+//		archerVsWorldEntityFactory.createGround(new Vector2(12.5f, 0.22f), new Vector2(5f, 0.44f));
+//		archerVsWorldEntityFactory.createGround(new Vector2(17.5f, 0.22f), new Vector2(5f, 0.44f));
+		
 
 		for (int i = 0; i < 60; i++) {
 			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
 			x += grassSize.x;
 		}
 
-		// archerVsWorldEntityFactory.createRock(new Vector2(5, 3), new Vector2(3f, 3f), new Vector2(0f, 0f), 120f);
-
-		// archerVsWorldEntityFactory.createRock(new Vector2(7, 1), new Vector2(2f, 2f), new Vector2(0f, 0f), 210f);
-
-		// archerVsWorldEntityFactory.createTree(new Vector2(15, 4.1f), new Vector2(8f, 8f));
-
-		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
-
-		// archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1.25f + y), new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
-		//
-		// archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1.25f + y), new Vector2(0.5f, 1.9f), new Vector2(-1.4f, 0f));
-		//
-		// archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-2.0f, 0f));
-
-		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
-
-		createBackground();
-
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
-
 		archerVsWorldEntityFactory.createSpawner(new Vector2(20, 1.25f + y));
+		
+		
 
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);

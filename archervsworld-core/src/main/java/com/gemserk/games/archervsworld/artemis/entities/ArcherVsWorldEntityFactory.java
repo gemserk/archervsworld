@@ -35,7 +35,6 @@ import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
-import com.gemserk.games.archervsworld.artemis.components.PierceComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.games.archervsworld.properties.Box2dAngleProperty;
@@ -80,7 +79,7 @@ public class ArcherVsWorldEntityFactory {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		fixtureDef.density = 1f;
-		// fixtureDef.friction = 3f;
+		fixtureDef.friction = 3f;
 
 		fixtureDef.filter.categoryBits = CollisionDefinitions.ArrowGroup;
 		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup;
@@ -122,14 +121,13 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
 				new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent( //
-				new SimpleProperty<Sprite>(new Sprite(texture)), // 
+				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
 		entity.addComponent(new DamageComponent(1f));
 		entity.addComponent(new CorrectArrowDirectionComponent());
-		entity.addComponent(new PierceComponent());
 
 		entity.refresh();
-		
+
 		return entity;
 	}
 
@@ -173,7 +171,7 @@ public class ArcherVsWorldEntityFactory {
 
 		entity.addComponent(new SpatialComponent( //
 				PropertyBuilder.vector2(position), //
-//				new SimpleProperty<Vector2>(position), //
+				// new SimpleProperty<Vector2>(position), //
 				new SimpleProperty<Vector2>(new Vector2(bowWidth, bowHeight)), //
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
@@ -281,7 +279,7 @@ public class ArcherVsWorldEntityFactory {
 
 	}
 
-	public Entity createWalkingDead(Vector2 position, Vector2 size, Vector2 velocity) {
+	public Entity createWalkingDead(Vector2 position, Vector2 size, Vector2 velocity, float health) {
 
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyType.DynamicBody;
@@ -327,14 +325,14 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(velocity), //
 				new SimpleProperty<IntValue>(new IntValue(0)), //
 				new SimpleProperty<IntValue>(new IntValue(1000)), new SimpleProperty<IntValue>(new IntValue(2000))));
-		entity.addComponent(new HealthComponent(new Container(5f, 5f), 0f));
+		entity.addComponent(new HealthComponent(new Container(health, health), 0f));
 		entity.addComponent(new ParentComponent());
 
 		entity.refresh();
-		
+
 		return entity;
 	}
-	
+
 	Color endColor = new Color(1f, 1f, 1f, 0f);
 
 	public Entity createDyingZombie(Vector2 position, Vector2 size) {
@@ -359,7 +357,7 @@ public class ArcherVsWorldEntityFactory {
 				PropertyBuilder.property(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(2)), // 
+				new SimpleProperty<IntValue>(new IntValue(2)), //
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
 		entity.addComponent(new AliveComponent(aliveTime));
@@ -370,11 +368,11 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	public Entity createDyingArrow(Vector2 position, float angle, int aliveTime, Color startColor) {
-		return createDyingArrow(PropertyBuilder.vector2(position), // 
-				PropertyBuilder.property(ValueBuilder.floatValue(angle)), // 
+		return createDyingArrow(PropertyBuilder.vector2(position), //
+				PropertyBuilder.property(ValueBuilder.floatValue(angle)), //
 				aliveTime, startColor);
 	}
-	
+
 	public Entity createDyingArrow(Property<Vector2> position, Property<FloatValue> angle, int aliveTime, Color startColor) {
 		Entity entity = world.createEntity();
 
@@ -387,7 +385,7 @@ public class ArcherVsWorldEntityFactory {
 				.end(endColor) //
 				.time(aliveTime) //
 				.build());
-		
+
 		Vector2 arrowSize = new Vector2(1f, 1f);
 
 		entity.addComponent(new SpatialComponent( //
@@ -396,13 +394,13 @@ public class ArcherVsWorldEntityFactory {
 				angle));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(1)), // 
+				new SimpleProperty<IntValue>(new IntValue(1)), //
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
 		entity.addComponent(new AliveComponent(aliveTime));
 
 		entity.refresh();
-		
+
 		return entity;
 	}
 
@@ -418,7 +416,7 @@ public class ArcherVsWorldEntityFactory {
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		fixtureDef.friction = 1f;
+		fixtureDef.friction = 0.5f;
 		fixtureDef.density = 1f;
 
 		body.createFixture(fixtureDef);
@@ -463,7 +461,7 @@ public class ArcherVsWorldEntityFactory {
 
 		return entity;
 	}
-	
+
 	public void createButton(Vector2 position) {
 		Entity entity = world.createEntity();
 
@@ -478,13 +476,13 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
-				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), // 
+				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(new Color(0.7f, 1f, 0.7f, 0.7f))));
 		entity.addComponent(new HudButtonComponent());
 
 		entity.refresh();
 	}
-	
+
 	public Entity createSpawner(final Vector2 position) {
 		Entity spawner = world.createEntity();
 
@@ -492,7 +490,8 @@ public class ArcherVsWorldEntityFactory {
 			@Override
 			public Entity build() {
 				Gdx.app.log("Archer Vs Zombies", "new zombie spawned!");
-				return createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
+				return createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 5f);
+				// return createWalkingDead(position, new Vector2(0.3f, 0.3f), new Vector2(-0.1f, 0.05f), 1f);
 			}
 		}));
 
