@@ -181,8 +181,8 @@ public class EditorScreen extends ScreenAdapter {
 		
 		Entity cameraEntity = world.createEntity();
 		
-		cameraEntity.addComponent(new PointerComponent(new LibgdxPointer(0, new Libgdx2dCameraTransformImpl())));
-		cameraEntity.addComponent(new CameraComponent(myCamera));
+//		cameraEntity.addComponent(new PointerComponent());
+		cameraEntity.addComponent(new CameraControllerComponent(new CameraController(new LibgdxPointer(0, new Libgdx2dCameraTransformImpl()), myCamera)));
 		
 		cameraEntity.refresh();
 		
@@ -369,30 +369,58 @@ public class EditorScreen extends ScreenAdapter {
 		
 	}
 	
-	static class CameraComponent extends Component {
+	static class CameraControllerComponent extends Component {
 		
-		private Libgdx2dCamera camera;
+		private CameraController cameraController;
 		
-		public Libgdx2dCamera getCamera() {
-			return camera;
+		public CameraController getCameraController() {
+			return cameraController;
 		}
 		
-		public CameraComponent(Libgdx2dCamera camera) {
-			this.camera = camera;
+		public CameraControllerComponent(CameraController cameraController) {
+			this.cameraController = cameraController;
 		}
 		
 	}
 	
-	static class PointerComponent extends Component {
+	static class CameraController {
 		
+		private Vector2 previousPosition = new Vector2();
+
 		private LibgdxPointer pointer;
 		
-		public LibgdxPointer getPointer() {
-			return pointer;
-		}
-
-		public PointerComponent(LibgdxPointer pointer) {
+		private Libgdx2dCamera camera;
+		
+		public CameraController(LibgdxPointer pointer, Libgdx2dCamera camera) {
 			this.pointer = pointer;
+			this.camera = camera;
+		}
+		
+		public void update() {
+			pointer.update();
+			
+			if (!pointer.touched)
+				return;
+			
+			if (pointer.wasPressed) {
+				previousPosition.set(pointer.getPressedPosition());
+				return;
+			}
+
+			Vector2 pointerPosition = new Vector2(pointer.getPosition());
+			Vector2 pressedPosition = new Vector2(previousPosition);
+			
+			Vector2 cameraPosition = new Vector2(0f,0f);
+			
+			camera.unproject(cameraPosition);
+			camera.unproject(pressedPosition);
+			camera.unproject(pointerPosition);
+			
+			pointerPosition.sub(pressedPosition);
+			
+			camera.move(pointerPosition.x, pointerPosition.y);
+			
+			previousPosition.set(pointer.getPosition());
 		}
 		
 	}
@@ -403,11 +431,9 @@ public class EditorScreen extends ScreenAdapter {
 		
 		@SuppressWarnings("unchecked")
 		public CameraMovementSystem() {
-			super(CameraComponent.class, PointerComponent.class);
+			super(CameraControllerComponent.class);
 		}
 		
-		Vector2 previousPosition = new Vector2();
-
 		@Override
 		protected void processEntities(ImmutableBag<Entity> entities) {
 			
@@ -415,38 +441,9 @@ public class EditorScreen extends ScreenAdapter {
 				
 				Entity entity = entities.get(i);
 				
-				PointerComponent pointerComponent = entity.getComponent(PointerComponent.class);
+				CameraControllerComponent cameraControllerComponent = entity.getComponent(CameraControllerComponent.class);
+				cameraControllerComponent.getCameraController().update();
 				
-				LibgdxPointer pointer = pointerComponent.pointer;
-				
-				pointer.update();
-				
-				if (!pointer.touched)
-					continue;
-				
-				if (pointer.wasPressed) {
-					previousPosition.set(pointer.getPressedPosition());
-					continue;
-				}
-				
-				CameraComponent cameraComponent = entity.getComponent(CameraComponent.class);
-
-				Libgdx2dCamera camera = cameraComponent.getCamera();
-				
-				Vector2 pointerPosition = new Vector2(pointer.getPosition());
-				Vector2 pressedPosition = new Vector2(previousPosition);
-				
-				Vector2 cameraPosition = new Vector2(0f,0f);
-				
-				camera.unproject(cameraPosition);
-				camera.unproject(pressedPosition);
-				camera.unproject(pointerPosition);
-				
-				pointerPosition.sub(pressedPosition);
-				
-				camera.move(pointerPosition.x, pointerPosition.y);
-				
-				previousPosition.set(pointer.getPosition());
 			}
 			
 		}
