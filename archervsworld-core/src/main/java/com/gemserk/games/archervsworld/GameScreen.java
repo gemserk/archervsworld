@@ -28,7 +28,7 @@ import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.entities.EntityTemplate;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
-import com.gemserk.commons.artemis.systems.Layer;
+import com.gemserk.commons.artemis.systems.RenderLayer;
 import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
 import com.gemserk.commons.artemis.systems.SpawnerSystem;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
@@ -136,19 +136,19 @@ public class GameScreen extends ScreenAdapter {
 
 		myCamera = new Libgdx2dCameraTransformImpl(camera);
 
-		ArrayList<Layer> layers = new ArrayList<Layer>();
+		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
 
 		// background layer
-		layers.add(new Layer(-1000, -5, new Libgdx2dCameraTransformImpl()));
+		renderLayers.add(new RenderLayer(-1000, -5, new Libgdx2dCameraTransformImpl()));
 
 		// world layer
-		layers.add(new Layer(-5, 10, myCamera));
+		renderLayers.add(new RenderLayer(-5, 10, myCamera));
 
 		// hud layer
-		layers.add(new Layer(10, 1000, new Libgdx2dCameraTransformImpl()));
+		renderLayers.add(new RenderLayer(10, 1000, new Libgdx2dCameraTransformImpl()));
 
 		textRendererSystem = new TextRendererSystem();
-		spriteRenderSystem = new SpriteRendererSystem(myCamera, layers);
+		spriteRenderSystem = new SpriteRendererSystem(myCamera, renderLayers);
 		spriteUpdateSystem = new SpriteUpdateSystem();
 
 		Vector2 gravity = new Vector2(0f, -10f);

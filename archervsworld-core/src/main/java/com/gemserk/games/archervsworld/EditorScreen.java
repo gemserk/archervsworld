@@ -23,7 +23,7 @@ import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
-import com.gemserk.commons.artemis.systems.Layer;
+import com.gemserk.commons.artemis.systems.RenderLayer;
 import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
@@ -109,18 +109,18 @@ public class EditorScreen extends ScreenAdapter {
 
 		myCamera = new Libgdx2dCameraTransformImpl(camera);
 
-		ArrayList<Layer> layers = new ArrayList<Layer>();
+		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
 
 		// background layer
-		layers.add(new Layer(-1000, -5, new Libgdx2dCameraTransformImpl()));
+		renderLayers.add(new RenderLayer(-1000, -5, new Libgdx2dCameraTransformImpl()));
 
 		// world layer
-		layers.add(new Layer(-5, 10, myCamera));
+		renderLayers.add(new RenderLayer(-5, 10, myCamera));
 
 		// hud layer
-		layers.add(new Layer(10, 1000, new Libgdx2dCameraTransformImpl()));
+		renderLayers.add(new RenderLayer(10, 1000, new Libgdx2dCameraTransformImpl()));
 
-		spriteRenderSystem = new SpriteRendererSystem(myCamera, layers);
+		spriteRenderSystem = new SpriteRendererSystem(myCamera, renderLayers);
 
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
