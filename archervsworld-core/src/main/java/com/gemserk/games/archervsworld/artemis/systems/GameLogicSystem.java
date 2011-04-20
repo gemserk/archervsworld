@@ -24,6 +24,7 @@ import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
+import com.gemserk.games.archervsworld.artemis.components.PierceComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.box2d.Contact;
@@ -186,11 +187,6 @@ public class GameLogicSystem extends EntitySystem {
 			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
 			Body body = physicsComponent.getBody();
 
-			Contact contact = physicsComponent.getContact();
-
-			if (!contact.inContact)
-				continue;
-
 			int arrowAliveTime = 10000;
 
 			if (!body.isAwake()) {
@@ -201,6 +197,15 @@ public class GameLogicSystem extends EntitySystem {
 				continue;
 
 			}
+
+			Contact contact = physicsComponent.getContact();
+
+			if (!contact.inContact)
+				continue;
+			
+			PierceComponent pierceComponent = entity.getComponent(PierceComponent.class);
+			if (pierceComponent == null)
+				continue;
 
 			Entity target = contact.entity;
 
@@ -217,7 +222,13 @@ public class GameLogicSystem extends EntitySystem {
 			int stickAngle = 60;
 			
 			if (Groups.Enemy.equals(targetGroup)) 
-				stickAngle = 80;
+				stickAngle = 180;
+
+			// if the arrow hits something but not in the expected angle, then it will never be able to hit again.
+			if (diff > stickAngle) {
+				entity.removeComponent(pierceComponent);
+				continue;
+			}
 
 			if (diff < stickAngle) {
 

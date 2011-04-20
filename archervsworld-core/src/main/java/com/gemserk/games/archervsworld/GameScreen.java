@@ -10,6 +10,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,6 +23,7 @@ import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpawnerComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
+import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.entities.EntityTemplate;
 import com.gemserk.commons.artemis.systems.AliveSystem;
@@ -41,6 +43,7 @@ import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
+import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.componentsengine.timers.CountDownTimer;
 import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
@@ -173,7 +176,7 @@ public class GameScreen extends ScreenAdapter {
 		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
 			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
 
-		ControllerSwitcher controllerSwitcher = new ControllerSwitcher(controllers);
+		final ControllerSwitcher controllerSwitcher = new ControllerSwitcher(controllers);
 
 		updateBowSystem = new UpdateBowSystem(controllerSwitcher, archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
@@ -191,7 +194,7 @@ public class GameScreen extends ScreenAdapter {
 		pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		correctArrowDirectionSystem = new CorrectArrowDirectionSystem();
-		
+
 		spawnerSystem = new SpawnerSystem();
 
 		world = new World();
@@ -208,9 +211,9 @@ public class GameScreen extends ScreenAdapter {
 		world.getSystemManager().setSystem(pointerUpdateSystem);
 
 		world.getSystemManager().setSystem(hudButtonSystem);
-		
+
 		world.getSystemManager().setSystem(correctArrowDirectionSystem);
-		
+
 		world.getSystemManager().setSystem(spawnerSystem);
 
 		world.getSystemManager().initializeAll();
@@ -223,6 +226,8 @@ public class GameScreen extends ScreenAdapter {
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
 				new SimpleProperty<BitmapFont>(fontResource.get()), //
 				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
+
+		currentControllerLabel(controllerSwitcher);
 
 		physicsWorld = physicsSystem.getPhysicsWorld();
 
@@ -252,20 +257,20 @@ public class GameScreen extends ScreenAdapter {
 
 		// archerVsWorldEntityFactory.createRock(new Vector2(10, 10), new Vector2(1f, 1f), new Vector2(0f, 0f), 50f);
 
-//		archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1.25f + y), new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
-//
-//		archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1.25f + y), new Vector2(0.5f, 1.9f), new Vector2(-1.4f, 0f));
-//
-//		archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-2.0f, 0f));
+		// archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1.25f + y), new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
+		//
+		// archerVsWorldEntityFactory.createWalkingDead(new Vector2(18, 1.25f + y), new Vector2(0.5f, 1.9f), new Vector2(-1.4f, 0f));
+		//
+		// archerVsWorldEntityFactory.createWalkingDead(new Vector2(16, 1.25f + y), new Vector2(0.5f, 2.1f), new Vector2(-2.0f, 0f));
 
 		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
 
 		createBackground();
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
-		
+
 		Entity spawner = world.createEntity();
-		
+
 		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new EntityTemplate() {
 			@Override
 			public Entity build() {
@@ -273,7 +278,7 @@ public class GameScreen extends ScreenAdapter {
 				return archerVsWorldEntityFactory.createWalkingDead(new Vector2(20, 1.25f + y), new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
 			}
 		}));
-		
+
 		spawner.refresh();
 
 		monitorUpdater = new MonitorUpdaterImpl();
@@ -290,6 +295,26 @@ public class GameScreen extends ScreenAdapter {
 		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.KEYCODE_1, "Bow system"));
 		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.KEYCODE_2, "Walking dead system"));
 
+	}
+
+	private void currentControllerLabel(final ControllerSwitcher controllerSwitcher) {
+		Entity entity = world.createEntity();
+		
+		Resource<BitmapFont> fontResource = resourceManager.get("Font");
+
+		entity.addComponent(new TextComponent( //
+				new AbstractProperty<String>() {
+					@Override
+					public String get() {
+						return "" + controllerSwitcher.getCurrentController();
+					}
+				}, //
+				new SimpleProperty<BitmapFont>(fontResource.get()), //
+				new SimpleProperty<Color>(new Color(0f, 0f, 0f, 1f)) //
+		));
+
+		entity.addComponent(new SpatialComponent(new Vector2(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 60), new Vector2(0.5f, 0.5f), 50f));
+		entity.refresh();
 	}
 
 	public void createBackground() {
@@ -352,7 +377,7 @@ public class GameScreen extends ScreenAdapter {
 	static class EntitySystemController {
 
 		static class ActivableSystemRegistration {
-	
+
 			ActivableSystem activableSystem;
 
 			ButtonMonitor buttonMonitor;
@@ -364,14 +389,14 @@ public class GameScreen extends ScreenAdapter {
 				this.buttonMonitor = buttonMonitor;
 				this.name = name;
 			}
-			
+
 			public ActivableSystemRegistration(ActivableSystem activableSystem, int key, String name) {
 				this.activableSystem = activableSystem;
 				this.buttonMonitor = new LibgdxButtonMonitor(key);
 				this.name = name;
 			}
 		}
-		
+
 		ArrayList<ActivableSystemRegistration> registrations = new ArrayList<ActivableSystemRegistration>();
 
 		public void register(ActivableSystemRegistration registration) {
@@ -380,11 +405,11 @@ public class GameScreen extends ScreenAdapter {
 
 		public void update() {
 			for (int i = 0; i < registrations.size(); i++) {
-				
+
 				ActivableSystemRegistration registration = registrations.get(i);
-				
+
 				registration.buttonMonitor.update();
-				
+
 				if (registration.buttonMonitor.isPressed()) {
 					registration.activableSystem.toggle();
 					if (registration.activableSystem.isEnabled()) {
@@ -393,7 +418,7 @@ public class GameScreen extends ScreenAdapter {
 						Gdx.app.log("Archer Vs Zombies", registration.name + " disabled");
 					}
 				}
-				
+
 			}
 		}
 
@@ -404,7 +429,7 @@ public class GameScreen extends ScreenAdapter {
 	private CorrectArrowDirectionSystem correctArrowDirectionSystem;
 
 	private SpawnerSystem spawnerSystem;
-	
+
 	@Override
 	public void render(float delta) {
 
@@ -415,18 +440,17 @@ public class GameScreen extends ScreenAdapter {
 
 		world.loopStart();
 		world.setDelta((int) (delta * 1000));
-		
+
 		entitySystemController.update();
 
 		physicsSystem.process();
-		
+
 		gameLogicSystem.process();
 
 		correctArrowDirectionSystem.process();
 
 		// add a system to process all pointers and remove the pointer.update from the controllers!!
 		pointerUpdateSystem.process();
-
 
 		hudButtonSystem.process();
 

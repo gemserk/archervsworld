@@ -13,6 +13,10 @@ public class ControllerSwitcher {
 	int currentController = 0;
 
 	ButtonMonitor switchButtonMonitor;
+	
+	public int getCurrentController() {
+		return currentController;
+	}
 
 	public BowController getController() {
 		return controllers.get(currentController);
