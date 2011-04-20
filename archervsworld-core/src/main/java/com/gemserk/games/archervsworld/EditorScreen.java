@@ -2,6 +2,7 @@ package com.gemserk.games.archervsworld;
 
 import java.util.ArrayList;
 
+import com.artemis.Component;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.World;
@@ -23,8 +24,8 @@ import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
-import com.gemserk.commons.artemis.systems.RenderLayer;
 import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
+import com.gemserk.commons.artemis.systems.RenderLayer;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
@@ -153,7 +154,9 @@ public class EditorScreen extends ScreenAdapter {
 		worldWrapper.addSystem(spriteRenderSystem);
 		worldWrapper.addSystem(new TextRendererSystem());
 		
-		worldWrapper.addSystem(new EditorSystem(pointer0));
+		// worldWrapper.addSystem(new EditorSystem(pointer0));
+		
+		worldWrapper.addSystem(new CameraMovementSystem());
 
 		worldWrapper.init();
 
@@ -175,7 +178,28 @@ public class EditorScreen extends ScreenAdapter {
 		// I NEED AN EDITOR FOR ALL THIS STUFF!!
 
 		createBackground();
+		
+		Entity cameraEntity = world.createEntity();
+		
+		cameraEntity.addComponent(new PointerComponent(new LibgdxPointer(0, new Libgdx2dCameraTransformImpl())));
+		cameraEntity.addComponent(new CameraComponent(myCamera));
+		
+		cameraEntity.refresh();
+		
+		Vector2 grassSize = new Vector2(0.5f, 0.5f);
 
+		float x = 0f;
+		final float y = 0f;
+
+		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
+
+		for (int i = 0; i < 60; i++) {
+			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
+			x += grassSize.x;
+		}
+
+		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
+		
 		monitorUpdater = new MonitorUpdaterImpl();
 
 	}
@@ -330,6 +354,100 @@ public class EditorScreen extends ScreenAdapter {
 			}
 			
 
+			
+		}
+
+		@Override
+		protected boolean checkProcessing() {
+			return true;
+		}
+
+		@Override
+		public void initialize() {
+			
+		}
+		
+	}
+	
+	static class CameraComponent extends Component {
+		
+		private Libgdx2dCamera camera;
+		
+		public Libgdx2dCamera getCamera() {
+			return camera;
+		}
+		
+		public CameraComponent(Libgdx2dCamera camera) {
+			this.camera = camera;
+		}
+		
+	}
+	
+	static class PointerComponent extends Component {
+		
+		private LibgdxPointer pointer;
+		
+		public LibgdxPointer getPointer() {
+			return pointer;
+		}
+
+		public PointerComponent(LibgdxPointer pointer) {
+			this.pointer = pointer;
+		}
+		
+	}
+	
+	class CameraMovementSystem extends EntitySystem {
+		
+		// could be an abstraction of the camera controller in the middle
+		
+		@SuppressWarnings("unchecked")
+		public CameraMovementSystem() {
+			super(CameraComponent.class, PointerComponent.class);
+		}
+		
+		Vector2 previousPosition = new Vector2();
+
+		@Override
+		protected void processEntities(ImmutableBag<Entity> entities) {
+			
+			for (int i = 0; i < entities.size(); i++) {
+				
+				Entity entity = entities.get(i);
+				
+				PointerComponent pointerComponent = entity.getComponent(PointerComponent.class);
+				
+				LibgdxPointer pointer = pointerComponent.pointer;
+				
+				pointer.update();
+				
+				if (!pointer.touched)
+					continue;
+				
+				if (pointer.wasPressed) {
+					previousPosition.set(pointer.getPressedPosition());
+					continue;
+				}
+				
+				CameraComponent cameraComponent = entity.getComponent(CameraComponent.class);
+
+				Libgdx2dCamera camera = cameraComponent.getCamera();
+				
+				Vector2 pointerPosition = new Vector2(pointer.getPosition());
+				Vector2 pressedPosition = new Vector2(previousPosition);
+				
+				Vector2 cameraPosition = new Vector2(0f,0f);
+				
+				camera.unproject(cameraPosition);
+				camera.unproject(pressedPosition);
+				camera.unproject(pointerPosition);
+				
+				pointerPosition.sub(pressedPosition);
+				
+				camera.move(pointerPosition.x, pointerPosition.y);
+				
+				previousPosition.set(pointer.getPosition());
+			}
 			
 		}
 
