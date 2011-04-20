@@ -2,6 +2,7 @@ package com.gemserk.games.archervsworld.artemis.entities;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,13 +18,16 @@ import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.AliveComponent;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.components.SpawnerComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
+import com.gemserk.commons.artemis.entities.EntityTemplate;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
+import com.gemserk.componentsengine.timers.CountDownTimer;
 import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
@@ -461,7 +465,6 @@ public class ArcherVsWorldEntityFactory {
 	}
 	
 	public void createButton(Vector2 position) {
-
 		Entity entity = world.createEntity();
 
 		int layer = 100;
@@ -480,7 +483,21 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new HudButtonComponent());
 
 		entity.refresh();
+	}
+	
+	public Entity createSpawner(final Vector2 position) {
+		Entity spawner = world.createEntity();
 
+		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new EntityTemplate() {
+			@Override
+			public Entity build() {
+				Gdx.app.log("Archer Vs Zombies", "new zombie spawned!");
+				return createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f));
+			}
+		}));
+
+		spawner.refresh();
+		return spawner;
 	}
 
 }
