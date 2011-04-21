@@ -13,7 +13,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -35,6 +34,9 @@ import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.math.MathUtils2;
+import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
+import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
+import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.input.ButtonMonitor;
@@ -47,7 +49,6 @@ import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
-import com.gemserk.resources.dataloaders.StaticDataLoader;
 import com.gemserk.resources.resourceloaders.CachedResourceLoader;
 import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
@@ -210,9 +211,8 @@ public class EditorScreen extends ScreenAdapter {
 	public void createBackground() {
 
 		Entity entity = world.createEntity();
-
-		Texture texture = new Texture(Gdx.files.internal("data/background-512x512.jpg"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Resource<Texture> r = resourceManager.get("Background");
 
 		int layer = -100;
 
@@ -220,7 +220,7 @@ public class EditorScreen extends ScreenAdapter {
 				new SimpleProperty<Vector2>(new Vector2(0f, 0f)), //
 				new SimpleProperty<Vector2>(new Vector2(camera.viewportWidth, camera.viewportHeight)), //
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(r.get())), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0f, 0f))));
 
@@ -485,108 +485,31 @@ public class EditorScreen extends ScreenAdapter {
 	}
 
 	protected void loadResources() {
+		
+		texture("Background", "data/background-512x512.jpg");
+		texture("Rock", "data/rock-512x512.png");
+		texture("Bow", "data/bow-512x512.png");
+		texture("Arrow", "data/arrow-512x512.png");
+		texture("Tree", "data/tree-512x512.png");
+		texture("Grass", "data/grass-128x128.png");
+		texture("Button", "data/button-template-64x64.png");
+		texture("FontTexture", "data/font.png");
 
-		Texture rockTexture = new Texture(Gdx.files.internal("data/rock-512x512.png"));
-		rockTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		Resource<Texture> fontTextureResource = resourceManager.get("FontTexture");
+		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new BitmapFontDataLoader(Gdx.files.internal("data/font.fnt"), new Sprite(fontTextureResource.get())))));
 
-		resourceManager.add("Rock", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(rockTexture) {
-			@Override
-			public void dispose(Texture t) {
-				t.dispose();
-			}
-		}, false)));
-
-		Texture bowTexture = new Texture(Gdx.files.internal("data/bow-512x512.png"));
-		bowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		resourceManager.add("Bow", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(bowTexture) {
-			@Override
-			public void dispose(Texture t) {
-				t.dispose();
-			}
-		}, false)));
-
-		Texture arrowTexture = new Texture(Gdx.files.internal("data/arrow-512x512.png"));
-		arrowTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		resourceManager.add("Arrow", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(arrowTexture) {
-			@Override
-			public void dispose(Texture t) {
-				t.dispose();
-			}
-		}, false)));
-
-		Texture treeTexture = new Texture(Gdx.files.internal("data/tree-512x512.png"));
-		treeTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		resourceManager.add("Tree", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(treeTexture) {
-			@Override
-			public void dispose(Texture t) {
-				t.dispose();
-			}
-		}, false)));
-
-		Texture grassTexture = new Texture(Gdx.files.internal("data/grass-128x128.png"));
-		grassTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		resourceManager.add("Grass", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(grassTexture) {
-			@Override
-			public void dispose(Texture t) {
-				t.dispose();
-			}
-		}, false)));
-
-		Texture buttonTexture = new Texture(Gdx.files.internal("data/button-template-64x64.png"));
-		buttonTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		resourceManager.add("Button", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(buttonTexture) {
-			@Override
-			public void dispose(Texture t) {
-				t.dispose();
-			}
-		}, false)));
-
-		Texture fontTexture = new Texture(Gdx.files.internal("data/font.png"));
-		fontTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-
-		resourceManager.add("FontTexture", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new StaticDataLoader<Texture>(fontTexture) {
-			@Override
-			public void dispose(Texture t) {
-				t.dispose();
-			}
-		}, false)));
-
-		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new StaticDataLoader<BitmapFont>(new BitmapFont(Gdx.files.internal("data/font.fnt"), new Sprite(fontTexture), false)) {
-			@Override
-			public void dispose(BitmapFont t) {
-				t.dispose();
-			}
-		}, false)));
-
-		resourceManager.add("HitFleshSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
-				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/hit-flesh.ogg"))) {
-					@Override
-					public void dispose(Sound t) {
-						t.dispose();
-					}
-				}, false)));
-
-		resourceManager.add("HitGroundSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
-				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/hit-ground.ogg"))) {
-					@Override
-					public void dispose(Sound t) {
-						t.dispose();
-					}
-				}, false)));
-
-		resourceManager.add("BowSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
-				new StaticDataLoader<Sound>(Gdx.audio.newSound(Gdx.files.internal("data/bow.ogg"))) {
-					@Override
-					public void dispose(Sound t) {
-						t.dispose();
-					}
-				}, false)));
-
+		sound("HitFleshSound", "data/hit-flesh.ogg");
+		sound("HitGroundSound", "data/hit-ground.ogg");
+		sound("BowSound", "data/bow.ogg");
+		
+	}
+	
+	protected void texture(String name, String fileName) {
+		resourceManager.add(name, new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal(fileName)))));
+	}
+	
+	protected void sound(String name, String fileName) {
+		resourceManager.add(name, new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal(fileName)))));
 	}
 
 	@Override

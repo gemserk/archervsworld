@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -314,9 +313,8 @@ public class GameScreen extends ScreenAdapter {
 	public void createBackground() {
 
 		Entity entity = world.createEntity();
-
-		Texture texture = new Texture(Gdx.files.internal("data/background-512x512.jpg"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		Resource<Texture> r = resourceManager.get("Background");
 
 		int layer = -100;
 
@@ -324,7 +322,7 @@ public class GameScreen extends ScreenAdapter {
 				new SimpleProperty<Vector2>(new Vector2(0f, 0f)), //
 				new SimpleProperty<Vector2>(new Vector2(camera.viewportWidth, camera.viewportHeight)), //
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(r.get())), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0f, 0f))));
 
@@ -514,6 +512,7 @@ public class GameScreen extends ScreenAdapter {
 
 	protected void loadResources() {
 		
+		texture("Background", "data/background-512x512.jpg");
 		texture("Rock", "data/rock-512x512.png");
 		texture("Bow", "data/bow-512x512.png");
 		texture("Arrow", "data/arrow-512x512.png");
