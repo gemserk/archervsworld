@@ -63,6 +63,27 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	private MassData massData = new MassData();
+	
+	public Entity createBackground(float w, float h) {
+
+		Entity entity = world.createEntity();
+		
+		Resource<Texture> r = resourceManager.get("Background");
+
+		int layer = -100;
+
+		entity.addComponent(new SpatialComponent( //
+				PropertyBuilder.vector2(0f, 0f),
+				PropertyBuilder.vector2(w, h),
+				PropertyBuilder.property(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(r.get())), //
+				new SimpleProperty<IntValue>(new IntValue(layer)), //
+				PropertyBuilder.vector2(0f, 0f)));
+
+		entity.refresh();
+		
+		return entity;
+	}
 
 	public Entity createPhysicsArrow(Vector2 position, Vector2 direction, float power) {
 

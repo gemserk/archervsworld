@@ -20,7 +20,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
-import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.AliveSystem;
@@ -39,7 +38,6 @@ import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
 import com.gemserk.commons.values.FloatValue;
-import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
@@ -235,7 +233,7 @@ public class GameScreen extends ScreenAdapter {
 
 		// I NEED AN EDITOR FOR ALL THIS STUFF!!
 
-		createBackground();
+		archerVsWorldEntityFactory.createBackground(camera.viewportWidth, camera.viewportHeight);
 
 		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
 
@@ -308,26 +306,6 @@ public class GameScreen extends ScreenAdapter {
 
 		entity.addComponent(new SpatialComponent(new Vector2(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 60), new Vector2(0.5f, 0.5f), 50f));
 		entity.refresh();
-	}
-
-	public void createBackground() {
-
-		Entity entity = world.createEntity();
-		
-		Resource<Texture> r = resourceManager.get("Background");
-
-		int layer = -100;
-
-		entity.addComponent(new SpatialComponent( //
-				new SimpleProperty<Vector2>(new Vector2(0f, 0f)), //
-				new SimpleProperty<Vector2>(new Vector2(camera.viewportWidth, camera.viewportHeight)), //
-				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(r.get())), //
-				new SimpleProperty<IntValue>(new IntValue(layer)), //
-				new SimpleProperty<Vector2>(new Vector2(0f, 0f))));
-
-		entity.refresh();
-
 	}
 
 	private UpdateBowSystem updateBowSystem;
