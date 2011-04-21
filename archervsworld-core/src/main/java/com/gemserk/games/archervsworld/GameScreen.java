@@ -10,7 +10,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,10 +17,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.utils.Disposable;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -39,6 +36,9 @@ import com.gemserk.commons.gdx.Libgdx2dCamera;
 import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
+import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
+import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
+import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.componentsengine.input.ButtonMonitor;
@@ -67,7 +67,6 @@ import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
-import com.gemserk.resources.dataloaders.DataLoader;
 import com.gemserk.resources.resourceloaders.CachedResourceLoader;
 import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
@@ -513,82 +512,31 @@ public class GameScreen extends ScreenAdapter {
 
 	}
 
-	static abstract class DisposableDataLoader<T extends Disposable> extends DataLoader<T> {
-
-		protected FileHandle fileHandle;
-
-		public DisposableDataLoader(FileHandle fileHandle) {
-			this.fileHandle = fileHandle;
-		}
-
-		@Override
-		public void dispose(Disposable t) {
-			t.dispose();
-		}
-
-	}
-
-	static class TextureDataLoader extends DisposableDataLoader<Texture> {
-
-		public TextureDataLoader(FileHandle fileHandle) {
-			super(fileHandle);
-		}
-
-		@Override
-		public Texture load() {
-			Texture texture = new Texture(fileHandle);
-			texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			return texture;
-		}
-
-	}
-
-	static class SoundDataLoader extends DisposableDataLoader<Sound> {
-
-		public SoundDataLoader(FileHandle fileHandle) {
-			super(fileHandle);
-		}
-
-		@Override
-		public Sound load() {
-			return Gdx.audio.newSound(fileHandle);
-		}
-
-	}
-	
-	static class BitmapFontDataLoader extends DisposableDataLoader<BitmapFont> {
-
-		private final TextureRegion fontImage;
-
-		public BitmapFontDataLoader(FileHandle fontFile, TextureRegion fontImage) {
-			super(fontFile);
-			this.fontImage = fontImage;
-		}
-
-		@Override
-		public BitmapFont load() {
-			return new BitmapFont(fileHandle, fontImage, false);
-		}
-
-	}
-
 	protected void loadResources() {
-
-		resourceManager.add("Rock", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal("data/rock-512x512.png")))));
-		resourceManager.add("Bow", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal("data/bow-512x512.png")))));
-		resourceManager.add("Arrow", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal("data/arrow-512x512.png")))));
-		resourceManager.add("Tree", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal("data/tree-512x512.png")))));
-		resourceManager.add("Grass", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal("data/grass-128x128.png")))));
-		resourceManager.add("Button", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal("data/button-template-64x64.png")))));
-		resourceManager.add("FontTexture", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal("data/font.png")))));
+		
+		texture("Rock", "data/rock-512x512.png");
+		texture("Bow", "data/bow-512x512.png");
+		texture("Arrow", "data/arrow-512x512.png");
+		texture("Tree", "data/tree-512x512.png");
+		texture("Grass", "data/grass-128x128.png");
+		texture("Button", "data/button-template-64x64.png");
+		texture("FontTexture", "data/font.png");
 
 		Resource<Texture> fontTextureResource = resourceManager.get("FontTexture");
 		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new BitmapFontDataLoader(Gdx.files.internal("data/font.fnt"), new Sprite(fontTextureResource.get())))));
 
-		resourceManager.add("HitFleshSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal("data/hit-flesh.ogg")))));
-		resourceManager.add("HitGroundSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal("data/hit-ground.ogg")))));
-		resourceManager.add("BowSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal("data/bow.ogg")))));
-
+		sound("HitFleshSound", "data/hit-flesh.ogg");
+		sound("HitGroundSound", "data/hit-ground.ogg");
+		sound("BowSound", "data/bow.ogg");
+		
+	}
+	
+	protected void texture(String name, String fileName) {
+		resourceManager.add(name, new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal(fileName)))));
+	}
+	
+	protected void sound(String name, String fileName) {
+		resourceManager.add(name, new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal(fileName)))));
 	}
 
 	@Override
