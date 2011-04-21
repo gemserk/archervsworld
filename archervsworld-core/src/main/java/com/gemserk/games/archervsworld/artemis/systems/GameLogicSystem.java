@@ -189,7 +189,7 @@ public class GameLogicSystem extends EntitySystem {
 			PhysicsComponent physicsComponent = entity.getComponent(PhysicsComponent.class);
 			Body body = physicsComponent.getBody();
 
-			int arrowAliveTime = 10000;
+			int arrowAliveTime = 6000;
 
 			if (!body.isAwake()) {
 

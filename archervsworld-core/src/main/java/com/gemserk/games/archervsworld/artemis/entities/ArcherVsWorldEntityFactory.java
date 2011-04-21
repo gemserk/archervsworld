@@ -285,8 +285,6 @@ public class ArcherVsWorldEntityFactory {
 		bodyDef.type = BodyType.DynamicBody;
 		bodyDef.position.set(position);
 		bodyDef.fixedRotation = true;
-		// bodyDef.angularDamping = 1f;
-		// bodyDef.linearDamping = 1f;
 
 		Body body = physicsWorld.createBody(bodyDef);
 
@@ -406,9 +404,22 @@ public class ArcherVsWorldEntityFactory {
 
 	public Entity createGround(Vector2 position, Vector2 size) {
 
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(size.x / 2f, size.y / 2f);
+		Vector2[] vertices = new Vector2[] { //
+				new Vector2(-size.x * 0.5f, -size.y * 0.5f), //
+				new Vector2(size.x * 0.5f, -size.y * 0.5f), //
+				new Vector2(size.x * 0.5f, size.y * 0.5f), //
+				new Vector2(-size.x * 0.5f, size.y * 0.5f), //
+		};
 
+		return createGround(position, vertices);
+	}
+
+	public Entity createGround(Vector2 position, final Vector2[] vertices) {
+		PolygonShape shape = new PolygonShape();
+		shape.set(vertices);
+
+		// shape.setAsBox(2f, 2f);
+		
 		BodyDef groundBodyDef = new BodyDef();
 		groundBodyDef.type = BodyType.StaticBody;
 		groundBodyDef.position.set(position);
@@ -430,8 +441,7 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
-				new SimpleProperty<Vector2>(size), //
-				new Box2dAngleProperty(body)));
+				PropertyBuilder.vector2(0f, 0f), new Box2dAngleProperty(body)));
 		entity.addComponent(new HealthComponent(new Container(0, 0), 1f));
 		entity.addComponent(new ParentComponent());
 
