@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Disposable;
@@ -67,7 +68,6 @@ import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
 import com.gemserk.resources.dataloaders.DataLoader;
-import com.gemserk.resources.dataloaders.StaticDataLoader;
 import com.gemserk.resources.resourceloaders.CachedResourceLoader;
 import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
@@ -555,6 +555,22 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 	}
+	
+	static class BitmapFontDataLoader extends DisposableDataLoader<BitmapFont> {
+
+		private final TextureRegion fontImage;
+
+		public BitmapFontDataLoader(FileHandle fontFile, TextureRegion fontImage) {
+			super(fontFile);
+			this.fontImage = fontImage;
+		}
+
+		@Override
+		public BitmapFont load() {
+			return new BitmapFont(fileHandle, fontImage, false);
+		}
+
+	}
 
 	protected void loadResources() {
 
@@ -567,23 +583,11 @@ public class GameScreen extends ScreenAdapter {
 		resourceManager.add("FontTexture", new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal("data/font.png")))));
 
 		Resource<Texture> fontTextureResource = resourceManager.get("FontTexture");
+		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new BitmapFontDataLoader(Gdx.files.internal("data/font.fnt"), new Sprite(fontTextureResource.get())))));
 
-		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new StaticDataLoader<BitmapFont>(new BitmapFont(Gdx.files.internal("data/font.fnt"), new Sprite(fontTextureResource.get()), false)) {
-			@Override
-			public void dispose(BitmapFont t) {
-				t.dispose();
-			}
-		}, false)));
-
-		resourceManager.add("HitFleshSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
-				new SoundDataLoader(Gdx.files.internal("data/hit-flesh.ogg") //
-				))));
-		resourceManager.add("HitGroundSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
-				new SoundDataLoader(Gdx.files.internal("data/hit-ground.ogg") //
-				))));
-		resourceManager.add("BowSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>( //
-				new SoundDataLoader(Gdx.files.internal("data/bow.ogg") //
-				))));
+		resourceManager.add("HitFleshSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal("data/hit-flesh.ogg")))));
+		resourceManager.add("HitGroundSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal("data/hit-ground.ogg")))));
+		resourceManager.add("BowSound", new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal("data/bow.ogg")))));
 
 	}
 
