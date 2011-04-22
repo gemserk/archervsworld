@@ -17,7 +17,7 @@ public class GameEditor extends Game {
 		Converters.register(Color.class, LibgdxConverters.color());
 		Converters.register(FloatValue.class, CommonConverters.floatValue());
 		
-		setScreen(new EditorScreen(this));
+		setScreen(new EditorScreen2(this));
 		
 	}
 

@@ -476,20 +476,27 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	public Entity createGrass(Vector2 position, Vector2 size) {
-
 		Resource<Texture> resource = resourceManager.get("Grass");
 		Texture texture = resource.get();
+		return createGrass(position, size, texture, 2);
+	}
+	
+	public Entity createGrass2(Vector2 position, Vector2 size) {
+		Resource<Texture> resource = resourceManager.get("Grass02");
+		Texture texture = resource.get();
+		return createGrass(position, size, texture, 3);
+	}
 
+	private Entity createGrass(Vector2 position, Vector2 size, Texture texture, int layer) {
 		Entity entity = world.createEntity();
 		entity.addComponent(new SpatialComponent( //
 				PropertyBuilder.vector2(position), //
-				new SimpleProperty<Vector2>(size), //
+				PropertyBuilder.vector2(size), //
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(2))));
+				new SimpleProperty<IntValue>(new IntValue(layer))));
 		entity.refresh();
-
 		return entity;
 	}
 

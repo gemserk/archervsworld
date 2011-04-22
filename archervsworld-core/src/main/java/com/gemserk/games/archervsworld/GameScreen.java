@@ -87,8 +87,6 @@ public class GameScreen extends ScreenAdapter {
 
 	}
 
-	private final Game game;
-
 	private TextRendererSystem textRendererSystem;
 
 	private World world;
@@ -114,7 +112,6 @@ public class GameScreen extends ScreenAdapter {
 	ResourceManager<String> resourceManager = new ResourceManagerImpl<String>();
 
 	public GameScreen(Game game) {
-		this.game = game;
 
 		loadResources();
 
@@ -237,12 +234,12 @@ public class GameScreen extends ScreenAdapter {
 
 		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
 
-		Vector2 grassSize = new Vector2(0.5f, 0.5f);
+		Vector2 grassSize = new Vector2(1f, 0.5f);
 
 		float x = 0f;
-		final float y = 0f;
+		final float y = 2f;
 
-		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
+		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f + y), new Vector2(80f, 0.44f));
 
 		// Vector2[] polygon = new Vector2[] {
 		// new Vector2(-0.25f, 0.22f),
@@ -263,13 +260,15 @@ public class GameScreen extends ScreenAdapter {
 
 		// archerVsWorldEntityFactory.createGround(new Vector2(3f, 1f), new Vector2(5f, 0.44f));
 
-		for (int i = 0; i < 60; i++) {
+		for (int i = 0; i < 20; i++) {
 			// archerVsWorldEntityFactory.createGround(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), polygon);
 			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
 			x += grassSize.x;
 		}
+		
+		archerVsWorldEntityFactory.createGrass2(new Vector2(10, 1), new Vector2(20f, 2f));
 
-		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
+		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f + y));
 		archerVsWorldEntityFactory.createSpawner(new Vector2(20, 1.25f + y));
 
 		monitorUpdater = new MonitorUpdaterImpl();
@@ -495,7 +494,10 @@ public class GameScreen extends ScreenAdapter {
 		texture("Bow", "data/bow-512x512.png");
 		texture("Arrow", "data/arrow-512x512.png");
 		texture("Tree", "data/tree-512x512.png");
+		
 		texture("Grass", "data/grass-128x128.png");
+		texture("Grass02", "data/grass-02-128x128.png");
+		
 		texture("Button", "data/button-template-64x64.png");
 		texture("FontTexture", "data/font.png");
 
