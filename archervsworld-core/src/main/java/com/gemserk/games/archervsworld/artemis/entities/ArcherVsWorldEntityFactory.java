@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,7 +17,9 @@ import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
+import com.gemserk.commons.artemis.components.AliveAreaComponent;
 import com.gemserk.commons.artemis.components.AliveComponent;
+import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpawnerComponent;
@@ -63,25 +67,23 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	private MassData massData = new MassData();
-	
+
 	public Entity createBackground(float w, float h) {
 
 		Entity entity = world.createEntity();
-		
+
 		Resource<Texture> r = resourceManager.get("Background");
 
 		int layer = -100;
 
 		entity.addComponent(new SpatialComponent( //
-				PropertyBuilder.vector2(0f, 0f),
-				PropertyBuilder.vector2(w, h),
-				PropertyBuilder.property(new FloatValue(0f))));
+				PropertyBuilder.vector2(0f, 0f), PropertyBuilder.vector2(w, h), PropertyBuilder.property(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(r.get())), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				PropertyBuilder.vector2(0f, 0f)));
 
 		entity.refresh();
-		
+
 		return entity;
 	}
 
@@ -426,7 +428,7 @@ public class ArcherVsWorldEntityFactory {
 	public Entity createGround(Vector2 position, Vector2 size) {
 
 		Vector2[] vertices = new Vector2[] { //
-				new Vector2(-size.x * 0.5f, -size.y * 0.5f), //
+		new Vector2(-size.x * 0.5f, -size.y * 0.5f), //
 				new Vector2(size.x * 0.5f, -size.y * 0.5f), //
 				new Vector2(size.x * 0.5f, size.y * 0.5f), //
 				new Vector2(-size.x * 0.5f, size.y * 0.5f), //
@@ -440,7 +442,7 @@ public class ArcherVsWorldEntityFactory {
 		shape.set(vertices);
 
 		// shape.setAsBox(2f, 2f);
-		
+
 		BodyDef groundBodyDef = new BodyDef();
 		groundBodyDef.type = BodyType.StaticBody;
 		groundBodyDef.position.set(position);
@@ -480,7 +482,7 @@ public class ArcherVsWorldEntityFactory {
 		Texture texture = resource.get();
 		return createGrass(position, size, texture, 2);
 	}
-	
+
 	public Entity createGrass2(Vector2 position, Vector2 size) {
 		Resource<Texture> resource = resourceManager.get("Grass02");
 		Texture texture = resource.get();
@@ -535,6 +537,73 @@ public class ArcherVsWorldEntityFactory {
 
 		spawner.refresh();
 		return spawner;
+	}
+
+	public Entity createCloud(Vector2 position, Vector2 velocity, Vector2 size, Rectangle areaLimit, int layer) {
+		Entity entity = world.createEntity();
+
+		Resource<Texture> resource = resourceManager.get("Cloud");
+		Texture texture = resource.get();
+
+		Color color = new Color();
+
+		Synchronizers.transition(color, Transitions.transitionBuilder(endColor) //
+				.end(Color.WHITE) //
+				.time(2000) //
+				.build());
+
+		entity.addComponent(new SpatialComponent( //
+				PropertyBuilder.vector2(position), //
+				PropertyBuilder.vector2(size), //
+				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+				new SimpleProperty<IntValue>(new IntValue(layer)), //
+				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
+				PropertyBuilder.property(color)));
+		entity.addComponent(new MovementComponent(velocity, 0f));
+		
+		entity.addComponent(new AliveAreaComponent(areaLimit));
+		
+		entity.refresh();
+
+		return entity;
+	}
+
+	public Entity createCloudsSpawner(final Rectangle spawnArea, final Rectangle limitArea, Vector2 direction, final float minSpeed, final float maxSpeed) {
+
+		Entity spawner = world.createEntity();
+		
+		// TODO: Limit entity type component/system, to avoid creating a lot of entities of the same type?
+
+		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), 2000, 15000, new EntityTemplate() {
+			@Override
+			public Entity build() {
+				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");
+
+				Vector2 size = new Vector2(5, 5).mul(MathUtils.random(0.3f, 1.2f));
+
+				Vector2 velocity = new Vector2(-1f, 0f).mul(MathUtils.random(minSpeed, maxSpeed));
+
+				Vector2 newPosition = new Vector2( //
+						MathUtils.random(spawnArea.x, spawnArea.x + spawnArea.width), //
+						MathUtils.random(spawnArea.y, spawnArea.y + spawnArea.height));
+				
+				// newPosition.set(position);
+
+				// newPosition.y += MathUtils.random(-3, 3);
+				
+				int layer = -4;
+				
+				if (size.x > 3f)
+					layer = 5;
+
+				return createCloud(newPosition, velocity, size, limitArea, layer);
+			}
+		}));
+
+		spawner.refresh();
+		return spawner;
+
 	}
 
 }

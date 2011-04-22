@@ -144,19 +144,19 @@ public class EditorScreen extends ScreenAdapter {
 
 		worldWrapper = new WorldWrapper(world);
 
-		worldWrapper.addSystem(new CorrectArrowDirectionSystem());
-		worldWrapper.addSystem(physicsSystem);
-		worldWrapper.addSystem(pointerUpdateSystem);
-		worldWrapper.addSystem(hudButtonSystem);
-		worldWrapper.addSystem(new HierarchySystem());
-		worldWrapper.addSystem(new AliveSystem());
-		worldWrapper.addSystem(new SpriteUpdateSystem());
-		worldWrapper.addSystem(spriteRenderSystem);
-		worldWrapper.addSystem(new TextRendererSystem());
+		worldWrapper.add(new CorrectArrowDirectionSystem());
+		worldWrapper.add(physicsSystem);
+		worldWrapper.add(pointerUpdateSystem);
+		worldWrapper.add(hudButtonSystem);
+		worldWrapper.add(new HierarchySystem());
+		worldWrapper.add(new AliveSystem());
+		worldWrapper.add(new SpriteUpdateSystem());
+		worldWrapper.add(spriteRenderSystem);
+		worldWrapper.add(new TextRendererSystem());
 
 		// worldWrapper.addSystem(new EditorSystem(pointer0));
 
-		worldWrapper.addSystem(new CameraMovementSystem());
+		worldWrapper.add(new CameraMovementSystem());
 
 		worldWrapper.init();
 
@@ -218,40 +218,6 @@ public class EditorScreen extends ScreenAdapter {
 	private WorldWrapper worldWrapper;
 
 	private LibgdxPointer pointer0;
-
-	static class WorldWrapper {
-
-		private final World world;
-
-		ArrayList<EntitySystem> systems;
-
-		public WorldWrapper(World world) {
-			this.world = world;
-			systems = new ArrayList<EntitySystem>();
-		}
-
-		public void addSystem(EntitySystem entitySystem) {
-			world.getSystemManager().setSystem(entitySystem);
-			systems.add(entitySystem);
-		}
-
-		public void init() {
-			world.getSystemManager().initializeAll();
-		}
-
-		public void update(int delta) {
-
-			world.loopStart();
-			world.setDelta(delta);
-
-			for (int i = 0; i < systems.size(); i++) {
-				EntitySystem system = systems.get(i);
-				system.process();
-			}
-
-		}
-
-	}
 
 	@Override
 	public void render(float delta) {

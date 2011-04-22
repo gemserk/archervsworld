@@ -16,14 +16,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
+import com.gemserk.commons.artemis.systems.AliveAreaSystem;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
+import com.gemserk.commons.artemis.systems.MovementSystem;
 import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
 import com.gemserk.commons.artemis.systems.RenderLayer;
 import com.gemserk.commons.artemis.systems.SpawnerSystem;
@@ -191,25 +194,27 @@ public class GameScreen extends ScreenAdapter {
 		spawnerSystem = new SpawnerSystem();
 
 		world = new World();
-		world.getSystemManager().setSystem(textRendererSystem);
-		world.getSystemManager().setSystem(spriteRenderSystem);
-		world.getSystemManager().setSystem(spriteUpdateSystem);
-		world.getSystemManager().setSystem(physicsSystem);
-		world.getSystemManager().setSystem(updateBowSystem);
-		world.getSystemManager().setSystem(walkingDeadSystem);
-		world.getSystemManager().setSystem(gameLogicSystem);
-		world.getSystemManager().setSystem(hierarchySystem);
-		world.getSystemManager().setSystem(aliveSystem);
-
-		world.getSystemManager().setSystem(pointerUpdateSystem);
-
-		world.getSystemManager().setSystem(hudButtonSystem);
-
-		world.getSystemManager().setSystem(correctArrowDirectionSystem);
-
-		world.getSystemManager().setSystem(spawnerSystem);
-
-		world.getSystemManager().initializeAll();
+		
+		worldWrapper = new WorldWrapper(world);
+		
+		worldWrapper.add(physicsSystem);
+		worldWrapper.add(gameLogicSystem);
+		worldWrapper.add(correctArrowDirectionSystem);
+		worldWrapper.add(pointerUpdateSystem);
+		worldWrapper.add(hudButtonSystem);
+		worldWrapper.add(updateBowSystem);
+		worldWrapper.add(walkingDeadSystem);
+		worldWrapper.add(hierarchySystem);
+		worldWrapper.add(aliveSystem);
+		worldWrapper.add(new AliveAreaSystem());
+		worldWrapper.add(spawnerSystem);
+		worldWrapper.add(spriteUpdateSystem);
+		worldWrapper.add(spriteRenderSystem);
+		worldWrapper.add(textRendererSystem);
+		
+		worldWrapper.add(new MovementSystem());
+		
+		worldWrapper.init();
 
 		entityFactory.setWorld(world);
 
@@ -270,6 +275,18 @@ public class GameScreen extends ScreenAdapter {
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f + y));
 		archerVsWorldEntityFactory.createSpawner(new Vector2(20, 1.25f + y));
+		
+		Vector2 direction = new Vector2(-1, 0);
+		
+		Rectangle spawnArea = new Rectangle(0, 7, 20, 5);
+		Rectangle limitArea = new Rectangle(-5, 0, 20, 12);
+		
+		float minSpeed = 0.1f;
+		float maxSpeed = 0.7f;
+			
+		 archerVsWorldEntityFactory.createCloudsSpawner(spawnArea, limitArea, direction, minSpeed, maxSpeed);
+		
+//		archerVsWorldEntityFactory.createCloud(position, new Vector2(-0.1f, 0f), new Vector2(5,5));
 
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);
@@ -399,6 +416,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private SpawnerSystem spawnerSystem;
 
+	private WorldWrapper worldWrapper;
+
 	@Override
 	public void render(float delta) {
 
@@ -407,32 +426,35 @@ public class GameScreen extends ScreenAdapter {
 
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		world.loopStart();
-		world.setDelta((int) (delta * 1000));
-
 		entitySystemController.update();
 
-		physicsSystem.process();
-
-		gameLogicSystem.process();
-
-		correctArrowDirectionSystem.process();
-
-		// add a system to process all pointers and remove the pointer.update from the controllers!!
-		pointerUpdateSystem.process();
-
-		hudButtonSystem.process();
-
-		updateBowSystem.process();
-		walkingDeadSystem.process();
-
-		hierarchySystem.process();
-		aliveSystem.process();
-		spawnerSystem.process();
-
-		spriteUpdateSystem.process();
-		spriteRenderSystem.process();
-		textRendererSystem.process();
+		worldWrapper.update((int) (delta * 1000));
+		
+//		world.loopStart();
+//		world.setDelta((int) (delta * 1000));
+//
+//
+//		physicsSystem.process();
+//
+//		gameLogicSystem.process();
+//
+//		correctArrowDirectionSystem.process();
+//
+//		// add a system to process all pointers and remove the pointer.update from the controllers!!
+//		pointerUpdateSystem.process();
+//
+//		hudButtonSystem.process();
+//
+//		updateBowSystem.process();
+//		walkingDeadSystem.process();
+//
+//		hierarchySystem.process();
+//		aliveSystem.process();
+//		spawnerSystem.process();
+//
+//		spriteUpdateSystem.process();
+//		spriteRenderSystem.process();
+//		textRendererSystem.process();
 
 		camera.update();
 		camera.apply(Gdx.gl10);
@@ -497,6 +519,8 @@ public class GameScreen extends ScreenAdapter {
 		
 		texture("Grass", "data/grass-128x128.png");
 		texture("Grass02", "data/grass-02-128x128.png");
+		
+		texture("Cloud", "data/cloud-256x256.png");
 		
 		texture("Button", "data/button-template-64x64.png");
 		texture("FontTexture", "data/font.png");
