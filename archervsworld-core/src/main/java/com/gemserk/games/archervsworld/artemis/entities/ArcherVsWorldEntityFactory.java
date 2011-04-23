@@ -338,14 +338,14 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
 		entity.addComponent(new SpatialComponent( //
 				new Box2dPositionProperty(body), //
-				new SimpleProperty<Vector2>(size), //
+				PropertyBuilder.vector2(size), //
 				new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(2))));
 		entity.addComponent(new WalkingDeadComponent( //
-				new SimpleProperty<Vector2>(null), //
-				new SimpleProperty<Vector2>(velocity), //
+				PropertyBuilder.vector2(velocity), //
 				new SimpleProperty<IntValue>(new IntValue(0)), //
-				new SimpleProperty<IntValue>(new IntValue(1000)), new SimpleProperty<IntValue>(new IntValue(2000))));
+				new SimpleProperty<IntValue>(new IntValue(1000)), //
+				new SimpleProperty<IntValue>(new IntValue(2000))));
 		entity.addComponent(new HealthComponent(new Container(health, health), 0f));
 		entity.addComponent(new ParentComponent());
 
@@ -539,16 +539,18 @@ public class ArcherVsWorldEntityFactory {
 		return spawner;
 	}
 
-	public Entity createCloud(Vector2 position, Vector2 velocity, Vector2 size, Rectangle areaLimit, int layer) {
+	public Entity createCloud(Vector2 position, Vector2 velocity, Vector2 size, Rectangle areaLimit, int layer, float alpha) {
 		Entity entity = world.createEntity();
 
 		Resource<Texture> resource = resourceManager.get("Cloud");
 		Texture texture = resource.get();
 
 		Color color = new Color();
+		
+		Color endColor = new Color(1f,1f,1f,alpha);
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(endColor) //
-				.end(Color.WHITE) //
+				.end(endColor) //
 				.time(2000) //
 				.build());
 
@@ -580,7 +582,7 @@ public class ArcherVsWorldEntityFactory {
 			public Entity build() {
 				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");
 
-				Vector2 size = new Vector2(5, 5).mul(MathUtils.random(0.3f, 1.2f));
+				Vector2 size = new Vector2(5, 5).mul(MathUtils.random(0.5f, 1.2f));
 
 				Vector2 velocity = new Vector2(-1f, 0f).mul(MathUtils.random(minSpeed, maxSpeed));
 
@@ -594,10 +596,10 @@ public class ArcherVsWorldEntityFactory {
 				
 				int layer = -4;
 				
-				if (size.x > 3f)
+				if (size.x > 4f)
 					layer = 5;
 
-				return createCloud(newPosition, velocity, size, limitArea, layer);
+				return createCloud(newPosition, velocity, size, limitArea, layer, 1f);
 			}
 		}));
 

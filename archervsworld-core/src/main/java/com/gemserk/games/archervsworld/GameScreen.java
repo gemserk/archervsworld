@@ -198,21 +198,23 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper = new WorldWrapper(world);
 		
 		worldWrapper.add(physicsSystem);
-		worldWrapper.add(gameLogicSystem);
 		worldWrapper.add(correctArrowDirectionSystem);
 		worldWrapper.add(pointerUpdateSystem);
 		worldWrapper.add(hudButtonSystem);
-		worldWrapper.add(updateBowSystem);
 		worldWrapper.add(walkingDeadSystem);
+		worldWrapper.add(new MovementSystem());
+		
+		worldWrapper.add(spriteUpdateSystem);
+		worldWrapper.add(spriteRenderSystem);
+		worldWrapper.add(textRendererSystem);
+
+		worldWrapper.add(updateBowSystem);
+		worldWrapper.add(gameLogicSystem);
 		worldWrapper.add(hierarchySystem);
 		worldWrapper.add(aliveSystem);
 		worldWrapper.add(new AliveAreaSystem());
 		worldWrapper.add(spawnerSystem);
-		worldWrapper.add(spriteUpdateSystem);
-		worldWrapper.add(spriteRenderSystem);
-		worldWrapper.add(textRendererSystem);
 		
-		worldWrapper.add(new MovementSystem());
 		
 		worldWrapper.init();
 
@@ -278,8 +280,8 @@ public class GameScreen extends ScreenAdapter {
 		
 		Vector2 direction = new Vector2(-1, 0);
 		
-		Rectangle spawnArea = new Rectangle(0, 7, 20, 5);
-		Rectangle limitArea = new Rectangle(-5, 0, 20, 12);
+		Rectangle spawnArea = new Rectangle(10, 7, 15, 5);
+		Rectangle limitArea = new Rectangle(-5, 0, 30, 12);
 		
 		float minSpeed = 0.1f;
 		float maxSpeed = 0.7f;

@@ -153,6 +153,8 @@ public class GameLogicSystem extends EntitySystem {
 			SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
 			ParentComponent parentComponent = entity.getComponent(ParentComponent.class);
 
+			world.deleteEntity(entity);
+			
 			archerVsWorldEntityFactory.createDyingZombie(spatialComponent.getPosition(), spatialComponent.getSize());
 
 			ArrayList<Entity> arrows = parentComponent.getChildren();
@@ -166,8 +168,7 @@ public class GameLogicSystem extends EntitySystem {
 					archerVsWorldEntityFactory.createDyingArrow(arrowSpatialComponent.getPosition(), //
 							arrowSpatialComponent.getAngle(), 300, spriteComponent.getColor());
 			}
-
-			world.deleteEntity(entity);
+			
 
 		}
 

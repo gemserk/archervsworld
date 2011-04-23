@@ -3,9 +3,9 @@ package com.gemserk.games.archervsworld.artemis.systems;
 import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.artemis.EntityDebugger;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
@@ -135,16 +135,23 @@ public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
 				Entity entity = entities.get(i);
 				BowComponent bowComponent = entity.getComponent(BowComponent.class);
 
-				if (bowComponent.getArrow() == null)
+				if (bowComponent.getArrow() == null) {
+					EntityDebugger.debug("bow component missing in bow entity", entity);
 					continue;
+				}
 
 				float power = bowComponent.getPower();
 
-				Gdx.app.log("Archer vs Zombies", "Bow power: " + power);
+				// Gdx.app.log("Archer vs Zombies", "Bow power: " + power);
 
 				Entity arrow = bowComponent.getArrow();
 				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
-
+				
+				if (arrowSpatialComponent == null) {
+					EntityDebugger.debug("arrow spatial component missing in arrow entity", entity);
+					continue;
+				}
+				
 				direction.set(1f, 0f);
 				direction.rotate(arrowSpatialComponent.getAngle());
 

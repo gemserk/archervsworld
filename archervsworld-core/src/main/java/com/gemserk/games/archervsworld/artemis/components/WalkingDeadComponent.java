@@ -7,8 +7,6 @@ import com.gemserk.componentsengine.properties.Property;
 
 public class WalkingDeadComponent extends Component {
 
-	private Property<Vector2> target;
-	
 	private Property<Vector2> force;
 
 	private Property<IntValue> walkSleep;
@@ -16,10 +14,6 @@ public class WalkingDeadComponent extends Component {
 	private Property<IntValue> minSleepTime;
 
 	private Property<IntValue> maxSleepTime;
-	
-	public Vector2 getTarget() {
-		return target.get();
-	}
 	
 	public Vector2 getForce() {
 		return force.get();
@@ -41,8 +35,7 @@ public class WalkingDeadComponent extends Component {
 		return maxSleepTime.get().value;
 	}
 
-	public WalkingDeadComponent(Property<Vector2> target, Property<Vector2> force, Property<IntValue> walkSleep, Property<IntValue> minSleepTime, Property<IntValue> maxSleepTime) {
-		this.target = target;
+	public WalkingDeadComponent(Property<Vector2> force, Property<IntValue> walkSleep, Property<IntValue> minSleepTime, Property<IntValue> maxSleepTime) {
 		this.force = force;
 		this.walkSleep = walkSleep;
 		this.minSleepTime = minSleepTime;
