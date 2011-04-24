@@ -16,6 +16,11 @@ public class DebugInformationSystem extends EntityProcessingSystem {
 	}
 	
 	@Override
+	public void initialize() {
+		
+	}
+	
+	@Override
 	protected void added(Entity e) {
 		
 		InformationComponent c = e.getComponent(InformationComponent.class);

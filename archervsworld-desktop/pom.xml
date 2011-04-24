@@ -143,6 +143,9 @@
 		<profile>
 			<id>assembly</id>
 			<build>
+				
+				<finalName>archervsworld-desktop</finalName>
+				
 				<plugins>
 					<plugin>
 						<groupId>com.googlecode.mavennatives</groupId>
