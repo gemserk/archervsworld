@@ -9,7 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Peripheral;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,9 +36,8 @@ import com.gemserk.commons.gdx.Libgdx2dCamera;
 import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
+import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
-import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
-import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
@@ -50,6 +48,7 @@ import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.Activab
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.ActivableSystem;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
+import com.gemserk.games.archervsworld.artemis.systems.DebugInformationSystem;
 import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
 import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
@@ -160,8 +159,8 @@ public class GameScreen extends ScreenAdapter {
 
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
 
-		controllers.add(new BowControllerImpl(pointer0));
 		controllers.add(new BowControllerImpl2(pointer0, new Vector2(1f, 1f)));
+		controllers.add(new BowControllerImpl(pointer0));
 		controllers.add(new BowControllerImpl3(pointer0));
 		controllers.add(new BowControllerImpl4(pointer0, new Vector2(1f, 1f)));
 		controllers.add(new BowControllerImpl5(pointer0, new Vector2(1f, 1f)));
@@ -194,16 +193,16 @@ public class GameScreen extends ScreenAdapter {
 		spawnerSystem = new SpawnerSystem();
 
 		world = new World();
-		
+
 		worldWrapper = new WorldWrapper(world);
-		
+
 		worldWrapper.add(physicsSystem);
 		worldWrapper.add(correctArrowDirectionSystem);
 		worldWrapper.add(pointerUpdateSystem);
 		worldWrapper.add(hudButtonSystem);
 		worldWrapper.add(walkingDeadSystem);
 		worldWrapper.add(new MovementSystem());
-		
+
 		worldWrapper.add(spriteUpdateSystem);
 		worldWrapper.add(spriteRenderSystem);
 		worldWrapper.add(textRendererSystem);
@@ -214,8 +213,9 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.add(aliveSystem);
 		worldWrapper.add(new AliveAreaSystem());
 		worldWrapper.add(spawnerSystem);
-		
-		
+
+		worldWrapper.add(new DebugInformationSystem());
+
 		worldWrapper.init();
 
 		entityFactory.setWorld(world);
@@ -272,23 +272,24 @@ public class GameScreen extends ScreenAdapter {
 			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
 			x += grassSize.x;
 		}
-		
+
 		archerVsWorldEntityFactory.createGrass2(new Vector2(10, 1), new Vector2(20f, 2f));
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f + y));
-		archerVsWorldEntityFactory.createSpawner(new Vector2(20, 1.25f + y));
-		
+
+		// archerVsWorldEntityFactory.createSpawner(new Vector2(20, 1.25f + y));
+
 		Vector2 direction = new Vector2(-1, 0);
-		
+
 		Rectangle spawnArea = new Rectangle(10, 7, 15, 5);
 		Rectangle limitArea = new Rectangle(-5, 0, 30, 12);
-		
+
 		float minSpeed = 0.1f;
 		float maxSpeed = 0.7f;
-			
-		 archerVsWorldEntityFactory.createCloudsSpawner(spawnArea, limitArea, direction, minSpeed, maxSpeed);
-		
-//		archerVsWorldEntityFactory.createCloud(position, new Vector2(-0.1f, 0f), new Vector2(5,5));
+
+		archerVsWorldEntityFactory.createCloudsSpawner(spawnArea, limitArea, direction, minSpeed, maxSpeed, 2000, 2001);
+
+		// archerVsWorldEntityFactory.createCloud(position, new Vector2(-0.1f, 0f), new Vector2(5,5));
 
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);
@@ -431,32 +432,32 @@ public class GameScreen extends ScreenAdapter {
 		entitySystemController.update();
 
 		worldWrapper.update((int) (delta * 1000));
-		
-//		world.loopStart();
-//		world.setDelta((int) (delta * 1000));
-//
-//
-//		physicsSystem.process();
-//
-//		gameLogicSystem.process();
-//
-//		correctArrowDirectionSystem.process();
-//
-//		// add a system to process all pointers and remove the pointer.update from the controllers!!
-//		pointerUpdateSystem.process();
-//
-//		hudButtonSystem.process();
-//
-//		updateBowSystem.process();
-//		walkingDeadSystem.process();
-//
-//		hierarchySystem.process();
-//		aliveSystem.process();
-//		spawnerSystem.process();
-//
-//		spriteUpdateSystem.process();
-//		spriteRenderSystem.process();
-//		textRendererSystem.process();
+
+		// world.loopStart();
+		// world.setDelta((int) (delta * 1000));
+		//
+		//
+		// physicsSystem.process();
+		//
+		// gameLogicSystem.process();
+		//
+		// correctArrowDirectionSystem.process();
+		//
+		// // add a system to process all pointers and remove the pointer.update from the controllers!!
+		// pointerUpdateSystem.process();
+		//
+		// hudButtonSystem.process();
+		//
+		// updateBowSystem.process();
+		// walkingDeadSystem.process();
+		//
+		// hierarchySystem.process();
+		// aliveSystem.process();
+		// spawnerSystem.process();
+		//
+		// spriteUpdateSystem.process();
+		// spriteRenderSystem.process();
+		// textRendererSystem.process();
 
 		camera.update();
 		camera.apply(Gdx.gl10);
@@ -512,36 +513,32 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	protected void loadResources() {
-		
-		texture("Background", "data/background-512x512.jpg");
-		texture("Rock", "data/rock-512x512.png");
-		texture("Bow", "data/bow-512x512.png");
-		texture("Arrow", "data/arrow-512x512.png");
-		texture("Tree", "data/tree-512x512.png");
-		
-		texture("Grass", "data/grass-128x128.png");
-		texture("Grass02", "data/grass-02-128x128.png");
-		
-		texture("Cloud", "data/cloud-256x256.png");
-		
-		texture("Button", "data/button-template-64x64.png");
-		texture("FontTexture", "data/font.png");
+
+		new LibgdxResourceBuilder(resourceManager) {
+			{
+				texture("Background", "data/background-512x512.jpg");
+				texture("Rock", "data/rock-512x512.png");
+				texture("Bow", "data/bow-512x512.png");
+				texture("Arrow", "data/arrow-512x512.png");
+				texture("Tree", "data/tree-512x512.png");
+
+				texture("Grass", "data/grass-128x128.png");
+				texture("Grass02", "data/grass-02-128x128.png");
+
+				texture("Cloud", "data/cloud-256x256.png");
+
+				texture("Button", "data/button-template-64x64.png");
+				texture("FontTexture", "data/font.png");
+
+				sound("HitFleshSound", "data/hit-flesh.ogg");
+				sound("HitGroundSound", "data/hit-ground.ogg");
+				sound("BowSound", "data/bow.ogg");
+			}
+		};
 
 		Resource<Texture> fontTextureResource = resourceManager.get("FontTexture");
 		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new BitmapFontDataLoader(Gdx.files.internal("data/font.fnt"), new Sprite(fontTextureResource.get())))));
 
-		sound("HitFleshSound", "data/hit-flesh.ogg");
-		sound("HitGroundSound", "data/hit-ground.ogg");
-		sound("BowSound", "data/bow.ogg");
-		
-	}
-	
-	protected void texture(String name, String fileName) {
-		resourceManager.add(name, new CachedResourceLoader<Texture>(new ResourceLoaderImpl<Texture>(new TextureDataLoader(Gdx.files.internal(fileName)))));
-	}
-	
-	protected void sound(String name, String fileName) {
-		resourceManager.add(name, new CachedResourceLoader<Sound>(new ResourceLoaderImpl<Sound>(new SoundDataLoader(Gdx.files.internal(fileName)))));
 	}
 
 	@Override

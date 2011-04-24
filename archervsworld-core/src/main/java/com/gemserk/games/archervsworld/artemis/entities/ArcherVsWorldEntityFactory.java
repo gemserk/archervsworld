@@ -38,6 +38,7 @@ import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionC
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
+import com.gemserk.games.archervsworld.artemis.components.InformationComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
@@ -148,6 +149,8 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(1))));
 		entity.addComponent(new DamageComponent(1f));
 		entity.addComponent(new CorrectArrowDirectionComponent());
+		
+		entity.addComponent(new InformationComponent("physical arrow"));
 
 		entity.refresh();
 
@@ -173,6 +176,8 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
+		
+		entity.addComponent(new InformationComponent("graphical arrow"));
 
 		entity.refresh();
 		return entity;
@@ -348,6 +353,8 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(2000))));
 		entity.addComponent(new HealthComponent(new Container(health, health), 0f));
 		entity.addComponent(new ParentComponent());
+		
+		entity.addComponent(new InformationComponent("zombie"));
 
 		entity.refresh();
 
@@ -382,6 +389,8 @@ public class ArcherVsWorldEntityFactory {
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
 		entity.addComponent(new AliveComponent(aliveTime));
+		
+		entity.addComponent(new InformationComponent("fade out zombie"));
 
 		entity.refresh();
 
@@ -419,6 +428,8 @@ public class ArcherVsWorldEntityFactory {
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
 		entity.addComponent(new AliveComponent(aliveTime));
+		
+		entity.addComponent(new InformationComponent("fade out arrow"));
 
 		entity.refresh();
 
@@ -571,13 +582,13 @@ public class ArcherVsWorldEntityFactory {
 		return entity;
 	}
 
-	public Entity createCloudsSpawner(final Rectangle spawnArea, final Rectangle limitArea, Vector2 direction, final float minSpeed, final float maxSpeed) {
+	public Entity createCloudsSpawner(final Rectangle spawnArea, final Rectangle limitArea, Vector2 direction, final float minSpeed, final float maxSpeed, int minTime, int maxTime) {
 
 		Entity spawner = world.createEntity();
 		
 		// TODO: Limit entity type component/system, to avoid creating a lot of entities of the same type?
 
-		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), 2000, 15000, new EntityTemplate() {
+		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new EntityTemplate() {
 			@Override
 			public Entity build() {
 				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");

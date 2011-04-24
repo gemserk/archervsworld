@@ -149,6 +149,10 @@ public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
 				
 				if (arrowSpatialComponent == null) {
 					EntityDebugger.debug("arrow spatial component missing in arrow entity", entity);
+					
+//					world.deleteEntity(arrow);
+//					bowComponent.setArrow(null);
+					
 					continue;
 				}
 				

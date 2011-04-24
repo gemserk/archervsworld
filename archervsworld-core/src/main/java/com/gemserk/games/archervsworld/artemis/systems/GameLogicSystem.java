@@ -134,7 +134,7 @@ public class GameLogicSystem extends EntitySystem {
 		}
 
 	}
-
+	
 	private void processEnemies() {
 		GroupManager groupManager = world.getGroupManager();
 
@@ -264,7 +264,8 @@ public class GameLogicSystem extends EntitySystem {
 
 					// Use layer - 1 for the sprite component
 
-					Entity newArrow = archerVsWorldEntityFactory.createDyingArrow(new StickArrowProperty(targetSpatialComponent, difference), new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
+					Entity newArrow = archerVsWorldEntityFactory.createDyingArrow(new StickArrowProperty(targetSpatialComponent, difference), 
+							new SimpleProperty<FloatValue>(new FloatValue(arrowAngle)), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
 
 					ParentComponent parentComponent = target.getComponent(ParentComponent.class);
 					parentComponent.addChild(newArrow);
