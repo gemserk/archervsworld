@@ -160,11 +160,11 @@ public class GameScreen extends ScreenAdapter {
 
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
 
-		controllers.add(new BowControllerImpl2(pointer0, new Vector2(1f, 1f)));
+		controllers.add(new BowControllerImpl2(pointer0, new Vector2(0f, 3f)));
 		controllers.add(new BowControllerImpl(pointer0));
 		controllers.add(new BowControllerImpl3(pointer0));
-		controllers.add(new BowControllerImpl4(pointer0, new Vector2(1f, 1f)));
-		controllers.add(new BowControllerImpl5(pointer0, new Vector2(1f, 1f)));
+		controllers.add(new BowControllerImpl4(pointer0, new Vector2(0f, 3f)));
+		controllers.add(new BowControllerImpl5(pointer0, new Vector2(0f, 3f)));
 
 		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
 			controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
@@ -279,12 +279,16 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.createGrass2(new Vector2(10, 1), new Vector2(20f, 2f));
 
 		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f + y));
+		
+		archerVsWorldEntityFactory.createBow(new Vector2(1f, 2.7f + y));
+		
+		archerVsWorldEntityFactory.createBow(new Vector2(1f, 3.7f + y));
 
 		// archerVsWorldEntityFactory.createSpawner(new Vector2(20, 1.25f + y));
 
 		Vector2 direction = new Vector2(-1, 0);
 
-		Rectangle spawnArea = new Rectangle(10, 7, 15, 5);
+		Rectangle spawnArea = new Rectangle(10, 8, 15, 5);
 		Rectangle limitArea = new Rectangle(-5, 0, 30, 12);
 
 		float minSpeed = 0.1f;

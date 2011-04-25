@@ -42,24 +42,18 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 
 		BowController bowController = controllerSwitcher.getController();
 
+		float angle = bowController.getAngle();
+		float power = bowController.getPower();
+		
 		if (bowController.isCharging()) {
 
-			// update bow direction
+			// updates bow direction based on the controller
 
-			final SpatialComponent spatialComponent = bow.getComponent(SpatialComponent.class);
-			// Vector2 direction = pointer.getPressedPosition().cpy().sub(pointer.getPosition());
+			SpatialComponent spatialComponent = bow.getComponent(SpatialComponent.class);
+			BowComponent bowComponent = bow.getComponent(BowComponent.class);
 
-			final BowComponent bowComponent = bow.getComponent(BowComponent.class);
-
-			float angle = bowController.getAngle();
-
-			int minFireAngle = -70;
-			int maxFireAngle = 80;
-
-			float power = MathUtils2.truncate(bowController.getPower(), bowComponent.getMinPower(), bowComponent.getMaxPower());
-
-			bowComponent.setPower(power);
-
+			bowComponent.setPower(MathUtils2.truncate(power, bowComponent.getMinPower(), bowComponent.getMaxPower()));
+			
 			if (bowComponent.getArrow() == null) {
 
 				// TODO: add it as a child using scene graph component so transformations will be handled automatically?
@@ -69,9 +63,11 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 
 			}
 
-			if ((AngleUtils.minimumDifference(angle, minFireAngle) < 0) && (AngleUtils.minimumDifference(angle, maxFireAngle) > 0)) {
+			float minFireAngle = -70f;
+			float maxFireAngle = 80f;
+
+			if (AngleUtils.between(angle, minFireAngle, maxFireAngle)) 
 				spatialComponent.setAngle(angle);
-			}
 
 		}
 
@@ -79,27 +75,22 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 
 			BowComponent bowComponent = bow.getComponent(BowComponent.class);
 
-			if (bowComponent.getArrow() == null) {
-				EntityDebugger.debug("bow component missing in bow entity", bow);
-				return;
-			}
-
-			float power = bowComponent.getPower();
-
-			// Gdx.app.log("Archer vs Zombies", "Bow power: " + power);
-
 			Entity arrow = bowComponent.getArrow();
+
+			if (arrow == null)
+				return;
+
 			SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
 
 			if (arrowSpatialComponent == null) {
 				EntityDebugger.debug("arrow spatial component missing in arrow entity", bow);
-				return;
+				throw new RuntimeException("spatial component missing on arrow entity " + arrow.getUniqueId() );
 			}
 
 			direction.set(1f, 0f);
 			direction.rotate(arrowSpatialComponent.getAngle());
 
-			entityFactory.createPhysicsArrow(arrowSpatialComponent.getPosition(), direction, power);
+			entityFactory.createPhysicsArrow(arrowSpatialComponent.getPosition(), direction, bowComponent.getPower());
 
 			world.deleteEntity(arrow);
 			bowComponent.setArrow(null);
