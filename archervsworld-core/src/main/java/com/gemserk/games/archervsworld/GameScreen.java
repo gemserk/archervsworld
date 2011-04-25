@@ -56,10 +56,6 @@ import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl2;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl3;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl4;
 import com.gemserk.games.archervsworld.controllers.BowControllerImpl5;
 import com.gemserk.games.archervsworld.controllers.BowControllerKeyboardImpl;
 import com.gemserk.games.archervsworld.controllers.BowControllerMutitouchImpl;
@@ -160,11 +156,12 @@ public class GameScreen extends ScreenAdapter {
 
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
 
-		controllers.add(new BowControllerImpl2(pointer0, new Vector2(0f, 3f)));
-		controllers.add(new BowControllerImpl(pointer0));
-		controllers.add(new BowControllerImpl3(pointer0));
-		controllers.add(new BowControllerImpl4(pointer0, new Vector2(0f, 3f)));
-		controllers.add(new BowControllerImpl5(pointer0, new Vector2(0f, 3f)));
+//		controllers.add(new BowControllerImpl2(pointer0, new Vector2(0f, 3f)));
+//		controllers.add(new BowControllerImpl(pointer0));
+//		controllers.add(new BowControllerImpl3(pointer0));
+//		controllers.add(new BowControllerImpl4(pointer0, new Vector2(0f, 3f)));
+		
+		controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
 
 		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
 			controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
@@ -200,7 +197,9 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.add(physicsSystem);
 		worldWrapper.add(correctArrowDirectionSystem);
 		worldWrapper.add(pointerUpdateSystem);
-		worldWrapper.add(hudButtonSystem);
+		
+		// worldWrapper.add(hudButtonSystem);
+		
 		worldWrapper.add(walkingDeadSystem);
 		worldWrapper.add(new MovementSystem());
 
@@ -230,7 +229,7 @@ public class GameScreen extends ScreenAdapter {
 				new SimpleProperty<BitmapFont>(fontResource.get()), //
 				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
 
-		currentControllerLabel(controllerSwitcher);
+		// currentControllerLabel(controllerSwitcher);
 
 		physicsWorld = physicsSystem.getPhysicsWorld();
 
@@ -242,7 +241,7 @@ public class GameScreen extends ScreenAdapter {
 
 		archerVsWorldEntityFactory.createBackground(camera.viewportWidth, camera.viewportHeight);
 
-		archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
+		// archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
 
 		Vector2 grassSize = new Vector2(1f, 0.5f);
 
@@ -278,18 +277,20 @@ public class GameScreen extends ScreenAdapter {
 
 		archerVsWorldEntityFactory.createGrass2(new Vector2(10, 1), new Vector2(20f, 2f));
 
-		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f + y));
+		archerVsWorldEntityFactory.createArcher(new Vector2(2.5f, 1.7f + y + 3 + 2));
 		
-		archerVsWorldEntityFactory.createBow(new Vector2(1f, 2.7f + y));
+		 archerVsWorldEntityFactory.createTower(new Vector2(1f, y + 3f), new Vector2(6f, 6f));
 		
-		archerVsWorldEntityFactory.createBow(new Vector2(1f, 3.7f + y));
+//		archerVsWorldEntityFactory.createBow(new Vector2(1f, 2.7f + y));
+//		
+//		archerVsWorldEntityFactory.createBow(new Vector2(1f, 3.7f + y));
 
-		// archerVsWorldEntityFactory.createSpawner(new Vector2(20, 1.25f + y));
+		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(20, 1.25f + y));
 
 		Vector2 direction = new Vector2(-1, 0);
 
-		Rectangle spawnArea = new Rectangle(10, 8, 15, 5);
-		Rectangle limitArea = new Rectangle(-5, 0, 30, 12);
+		Rectangle spawnArea = new Rectangle(10, 10, 15, 5);
+		Rectangle limitArea = new Rectangle(-5, 0, 30, 20);
 
 		float minSpeed = 0.1f;
 		float maxSpeed = 0.7f;
@@ -507,6 +508,8 @@ public class GameScreen extends ScreenAdapter {
 				texture("Grass02", "data/grass-02-128x128.png");
 
 				texture("Cloud", "data/cloud-256x256.png");
+				
+				texture("Tower", "data/tower-128x128.png");
 
 				texture("Button", "data/button-template-64x64.png");
 				texture("FontTexture", "data/font.png");

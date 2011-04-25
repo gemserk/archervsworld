@@ -149,7 +149,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(1))));
 		entity.addComponent(new DamageComponent(1f));
 		entity.addComponent(new CorrectArrowDirectionComponent());
-		
+
 		entity.addComponent(new InformationComponent("physical arrow"));
 
 		entity.refresh();
@@ -176,14 +176,14 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
-		
+
 		entity.addComponent(new InformationComponent("graphical arrow"));
 
 		entity.refresh();
 		return entity;
 	}
 
-	public Entity createBow(Vector2 position) {
+	public Entity createArcher(Vector2 position) {
 
 		Entity entity = world.createEntity();
 
@@ -353,7 +353,7 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(2000))));
 		entity.addComponent(new HealthComponent(new Container(health, health), 0f));
 		entity.addComponent(new ParentComponent());
-		
+
 		entity.addComponent(new InformationComponent("zombie"));
 
 		entity.refresh();
@@ -389,7 +389,7 @@ public class ArcherVsWorldEntityFactory {
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
 		entity.addComponent(new AliveComponent(aliveTime));
-		
+
 		entity.addComponent(new InformationComponent("fade out zombie"));
 
 		entity.refresh();
@@ -428,7 +428,7 @@ public class ArcherVsWorldEntityFactory {
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
 		entity.addComponent(new AliveComponent(aliveTime));
-		
+
 		entity.addComponent(new InformationComponent("fade out arrow"));
 
 		entity.refresh();
@@ -534,7 +534,7 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 	}
 
-	public Entity createSpawner(final Vector2 position) {
+	public Entity createZombiesSpawner(final Vector2 position) {
 		Entity spawner = world.createEntity();
 
 		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new EntityTemplate() {
@@ -557,8 +557,8 @@ public class ArcherVsWorldEntityFactory {
 		Texture texture = resource.get();
 
 		Color color = new Color();
-		
-		Color endColor = new Color(1f,1f,1f,alpha);
+
+		Color endColor = new Color(1f, 1f, 1f, alpha);
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(endColor) //
 				.end(endColor) //
@@ -574,9 +574,9 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color)));
 		entity.addComponent(new MovementComponent(velocity, 0f));
-		
+
 		entity.addComponent(new AliveAreaComponent(areaLimit));
-		
+
 		entity.refresh();
 
 		return entity;
@@ -585,7 +585,7 @@ public class ArcherVsWorldEntityFactory {
 	public Entity createCloudsSpawner(final Rectangle spawnArea, final Rectangle limitArea, Vector2 direction, final float minSpeed, final float maxSpeed, int minTime, int maxTime) {
 
 		Entity spawner = world.createEntity();
-		
+
 		// TODO: Limit entity type component/system, to avoid creating a lot of entities of the same type?
 
 		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new EntityTemplate() {
@@ -600,13 +600,13 @@ public class ArcherVsWorldEntityFactory {
 				Vector2 newPosition = new Vector2( //
 						MathUtils.random(spawnArea.x, spawnArea.x + spawnArea.width), //
 						MathUtils.random(spawnArea.y, spawnArea.y + spawnArea.height));
-				
+
 				// newPosition.set(position);
 
 				// newPosition.y += MathUtils.random(-3, 3);
-				
+
 				int layer = -4;
-				
+
 				if (size.x > 4f)
 					layer = 5;
 
@@ -617,6 +617,55 @@ public class ArcherVsWorldEntityFactory {
 		spawner.refresh();
 		return spawner;
 
+	}
+
+	public Entity createTower(Vector2 position, Vector2 size) {
+
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(size.x/2f, size.y/2f);
+
+		BodyDef groundBodyDef = new BodyDef();
+		groundBodyDef.type = BodyType.StaticBody;
+		groundBodyDef.position.set(position);
+		
+		groundBodyDef.position.y -= size.y * 0.15f;
+		groundBodyDef.position.x -= size.x * 0.05f;
+		
+		Body body = physicsWorld.createBody(groundBodyDef);
+
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.friction = 0.5f;
+		fixtureDef.density = 1f;
+
+		body.createFixture(fixtureDef);
+		shape.dispose();
+
+		Entity entity = world.createEntity();
+
+		Resource<Texture> resource = resourceManager.get("Tower");
+		Texture texture = resource.get();
+
+		Color color = new Color(1f, 1f, 1f, 1f);
+
+		body.setUserData(entity);
+		entity.addComponent(new PhysicsComponent(body));
+		
+		entity.addComponent(new SpatialComponent( //
+				PropertyBuilder.vector2(position), //
+				PropertyBuilder.vector2(size), //
+				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+				new SimpleProperty<IntValue>(new IntValue(2)), //
+				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
+				PropertyBuilder.property(color)));
+
+		entity.addComponent(new HealthComponent(new Container(0, 0), 1f));
+		entity.addComponent(new ParentComponent());
+		
+		entity.refresh();
+
+		return entity;
 	}
 
 }

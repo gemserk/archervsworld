@@ -199,7 +199,7 @@ public class EditorScreen extends ScreenAdapter {
 			x += grassSize.x;
 		}
 
-		archerVsWorldEntityFactory.createBow(new Vector2(1f, 1.7f));
+		archerVsWorldEntityFactory.createArcher(new Vector2(1f, 1.7f));
 
 		monitorUpdater = new MonitorUpdaterImpl();
 
