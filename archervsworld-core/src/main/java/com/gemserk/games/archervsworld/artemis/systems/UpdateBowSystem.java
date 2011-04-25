@@ -9,7 +9,6 @@ import com.gemserk.commons.artemis.EntityDebugger;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
-import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
@@ -20,35 +19,6 @@ import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
 public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
-	
-	static class ChargingArrowProperty extends AbstractProperty<Vector2> {
-
-		private final BowComponent bowComponent;
-
-		private final SpatialComponent spatialComponent;
-
-		Vector2 position = new Vector2();
-
-		Vector2 diff = new Vector2();
-
-		ChargingArrowProperty(BowComponent bowComponent, SpatialComponent spatialComponent) {
-			this.bowComponent = bowComponent;
-			this.spatialComponent = spatialComponent;
-		}
-
-		@Override
-		public Vector2 get() {
-			position.set(spatialComponent.getPosition());
-
-			diff.set(1f, 0f);
-			diff.rotate(spatialComponent.getAngle());
-			diff.mul(bowComponent.getPower() * 0.012f);
-
-			position.sub(diff);
-
-			return position;
-		}
-	}
 
 	private ArcherVsWorldEntityFactory entityFactory;
 
@@ -67,13 +37,6 @@ public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
 		this.controllerSwitcher = controllerSwitcher;
 	}
 
-	@Override
-	protected void begin() {
-//		controllerSwitcher.update();
-//		bowController = controllerSwitcher.getController();
-//		bowController.update();
-	}
-
 	AngleUtils angleUtils = new AngleUtils();
 
 	Vector2 direction = new Vector2();
@@ -85,7 +48,7 @@ public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
 
 		if (entities == null)
 			return;
-		
+
 		BowController bowController = controllerSwitcher.getController();
 
 		if (bowController.isCharging()) {
@@ -112,12 +75,9 @@ public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
 
 				if (bowComponent.getArrow() == null) {
 
-					// TODO: add it as a child using scene graph component so transformations will be handled automatically
+					// TODO: add it as a child using scene graph component so transformations will be handled automatically?
 
-					Entity arrow = entityFactory.createArrow(new ChargingArrowProperty(bowComponent, spatialComponent), //
-							// PropertyBuilder.property(ValueBuilder.floatValue(spatialComponent.getAngle())) );
-							spatialComponent.getAngleProperty());
-
+					Entity arrow = entityFactory.createArrow(new Vector2(), 0f);
 					bowComponent.setArrow(arrow);
 
 				}
@@ -148,16 +108,16 @@ public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
 
 				Entity arrow = bowComponent.getArrow();
 				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
-				
+
 				if (arrowSpatialComponent == null) {
 					EntityDebugger.debug("arrow spatial component missing in arrow entity", entity);
-					
-//					world.deleteEntity(arrow);
-//					bowComponent.setArrow(null);
-					
+
+					// world.deleteEntity(arrow);
+					// bowComponent.setArrow(null);
+
 					continue;
 				}
-				
+
 				direction.set(1f, 0f);
 				direction.rotate(arrowSpatialComponent.getAngle());
 
@@ -192,9 +152,9 @@ public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
 	protected boolean checkProcessing() {
 		return isEnabled();
 	}
-	
+
 	// implementation of activable system.
-	
+
 	ActivableSystemImpl activableSystem = new ActivableSystemImpl();
 
 	public boolean isEnabled() {
@@ -204,5 +164,5 @@ public class UpdateBowSystem extends EntitySystem implements ActivableSystem {
 	public void toggle() {
 		activableSystem.toggle();
 	}
-	
+
 }

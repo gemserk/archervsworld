@@ -5,6 +5,9 @@ import com.artemis.Entity;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.componentsengine.properties.Property;
 
+/**
+ * Whether the entity can shoot arrows or not.
+ */
 public class BowComponent extends Component {
 
 	private Property<FloatValue> power;
@@ -22,11 +25,11 @@ public class BowComponent extends Component {
 	public void setPower(float power) {
 		this.power.get().value = power;
 	}
-	
+
 	public float getMinPower() {
 		return minPower.get().value;
 	}
-	
+
 	public float getMaxPower() {
 		return maxPower.get().value;
 	}

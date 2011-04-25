@@ -53,6 +53,7 @@ import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
 import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
+import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowControllerImpl;
@@ -208,6 +209,8 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.add(textRendererSystem);
 
 		worldWrapper.add(updateBowSystem);
+		worldWrapper.add(new UpdateChargingArrowSystem());
+		
 		worldWrapper.add(gameLogicSystem);
 		worldWrapper.add(hierarchySystem);
 		worldWrapper.add(aliveSystem);
