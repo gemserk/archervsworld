@@ -63,8 +63,6 @@ public class GameLogicSystem extends EntitySystem {
 
 	ResourceManager<String> resourceManager;
 
-	AngleUtils angleUtils = new AngleUtils();
-
 	private final ControllerSwitcher controllerSwitcher;
 
 	public void setArcherVsWorldEntityFactory(ArcherVsWorldEntityFactory archerVsWorldEntityFactory) {
@@ -216,7 +214,7 @@ public class GameLogicSystem extends EntitySystem {
 			Vector2 normal = contact.normal;
 			float normalAngle = normal.cpy().mul(-1f).angle();
 			float bodyAngle = (float) (body.getAngle() * 180.0 / Math.PI);
-			double diff = Math.abs(angleUtils.minimumDifference(normalAngle, bodyAngle));
+			double diff = Math.abs(AngleUtils.minimumDifference(normalAngle, bodyAngle));
 			
 			int stickAngle = 60;
 			

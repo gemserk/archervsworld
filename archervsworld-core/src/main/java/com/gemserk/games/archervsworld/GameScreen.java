@@ -290,7 +290,7 @@ public class GameScreen extends ScreenAdapter {
 		float minSpeed = 0.1f;
 		float maxSpeed = 0.7f;
 
-		archerVsWorldEntityFactory.createCloudsSpawner(spawnArea, limitArea, direction, minSpeed, maxSpeed, 2000, 2001);
+		archerVsWorldEntityFactory.createCloudsSpawner(spawnArea, limitArea, direction, minSpeed, maxSpeed, 2000, 9000);
 
 		// archerVsWorldEntityFactory.createCloud(position, new Vector2(-0.1f, 0f), new Vector2(5,5));
 

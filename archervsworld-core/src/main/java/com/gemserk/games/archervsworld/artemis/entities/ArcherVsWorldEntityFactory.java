@@ -187,7 +187,7 @@ public class ArcherVsWorldEntityFactory {
 
 		Entity entity = world.createEntity();
 
-		entity.setGroup(Groups.Bow);
+		// entity.setGroup(Groups.Bow);
 
 		int layer = 2;
 
