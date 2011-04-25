@@ -22,6 +22,7 @@ import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
+import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.AliveAreaSystem;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
@@ -46,7 +47,6 @@ import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
-import com.gemserk.games.archervsworld.artemis.systems.ActivableSystem;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.DebugInformationSystem;
 import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
@@ -432,32 +432,6 @@ public class GameScreen extends ScreenAdapter {
 		entitySystemController.update();
 
 		worldWrapper.update((int) (delta * 1000));
-
-		// world.loopStart();
-		// world.setDelta((int) (delta * 1000));
-		//
-		//
-		// physicsSystem.process();
-		//
-		// gameLogicSystem.process();
-		//
-		// correctArrowDirectionSystem.process();
-		//
-		// // add a system to process all pointers and remove the pointer.update from the controllers!!
-		// pointerUpdateSystem.process();
-		//
-		// hudButtonSystem.process();
-		//
-		// updateBowSystem.process();
-		// walkingDeadSystem.process();
-		//
-		// hierarchySystem.process();
-		// aliveSystem.process();
-		// spawnerSystem.process();
-		//
-		// spriteUpdateSystem.process();
-		// spriteRenderSystem.process();
-		// textRendererSystem.process();
 
 		camera.update();
 		camera.apply(Gdx.gl10);

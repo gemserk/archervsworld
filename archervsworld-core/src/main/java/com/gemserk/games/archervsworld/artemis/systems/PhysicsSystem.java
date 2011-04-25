@@ -9,6 +9,8 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.systems.ActivableSystem;
+import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 
 public class PhysicsSystem extends EntitySystem implements ActivableSystem {
