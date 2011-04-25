@@ -13,7 +13,7 @@ public class Contact {
 
 	public void setBox2dContact(com.badlogic.gdx.physics.box2d.Contact contact, Entity entity) {
 		this.entity = entity;
-		this.normal.set(contact.GetWorldManifold().getNormal());
+		this.normal.set(contact.getWorldManifold().getNormal());
 		// other info...
 		this.inContact = true;
 	}
