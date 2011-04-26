@@ -181,7 +181,7 @@ public class GameScreen extends ScreenAdapter {
 		// moveLeftMonitor, moveRightMonitor, //
 		// moveUpMonitor, moveDownMonitor, //
 		// zoomInButtonMonitor, zoomOutButtonMonitor);
-		cameraController = new CameraControllerLibgdxPointerImpl(cameraPosition, 40f, pointer2);
+		cameraController = new CameraControllerLibgdxPointerImpl(cameraPosition, 40f, pointer2, new Rectangle(140, 0, viewportWidth - 140, viewportHeight));
 
 		controllers.add(cameraController);
 
@@ -195,7 +195,7 @@ public class GameScreen extends ScreenAdapter {
 		// controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
 
 //		bowController = new BowControllerHudImpl(pointer2, new Vector2(90f, 90f), 80f);
-		bowController = new BowControllerHudImpl2(pointer2, new Vector2(90f, 90f), 80f);
+		bowController = new BowControllerHudImpl2(pointer2, new Vector2(70f, 70f), 60f);
 
 		bowControllers.add(bowController);
 
