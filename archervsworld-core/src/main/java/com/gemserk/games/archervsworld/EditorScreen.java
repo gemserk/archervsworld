@@ -108,7 +108,8 @@ public class EditorScreen extends ScreenAdapter {
 
 	protected void restart() {
 
-		myCamera = new Libgdx2dCameraTransformImpl(camera);
+//		myCamera = new Libgdx2dCameraTransformImpl(camera);
+		myCamera = new Libgdx2dCameraTransformImpl();
 
 		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
 

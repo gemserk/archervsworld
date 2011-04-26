@@ -11,7 +11,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -98,7 +97,7 @@ public class GameScreen extends ScreenAdapter {
 
 	private SpriteUpdateSystem spriteUpdateSystem;
 
-	private OrthographicCamera camera;
+//	private OrthographicCamera camera;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
@@ -169,8 +168,8 @@ public class GameScreen extends ScreenAdapter {
 		entityFactory = new EntityFactory();
 		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
 
-		camera = new OrthographicCamera(viewportWidth, viewportHeight);
-		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
+//		camera = new OrthographicCamera(viewportWidth, viewportHeight);
+//		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
 
 		restart();
 
@@ -178,7 +177,10 @@ public class GameScreen extends ScreenAdapter {
 
 	protected void restart() {
 
-		myCamera = new Libgdx2dCameraTransformImpl(camera);
+		myCamera = new Libgdx2dCameraTransformImpl();
+		// myCamera.center(viewportWidth / 2, viewportHeight / 2);
+//		myCamera.move(viewportWidth / 2, viewportHeight / 2);
+		// cameraPosition.set(-viewportWidth / 2, -viewportHeight / 2);
 		myCamera.zoom(zoom.value);
 
 		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
@@ -292,7 +294,7 @@ public class GameScreen extends ScreenAdapter {
 
 		// I NEED AN EDITOR FOR ALL THIS STUFF!!
 
-		archerVsWorldEntityFactory.createBackground(camera.viewportWidth, camera.viewportHeight);
+		archerVsWorldEntityFactory.createBackground(viewportWidth, viewportHeight);
 
 		// archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
 
@@ -441,8 +443,8 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 
-		camera.update();
-		camera.apply(Gdx.gl10);
+//		camera.update();
+//		camera.apply(Gdx.gl10);
 
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
@@ -450,8 +452,8 @@ public class GameScreen extends ScreenAdapter {
 
 		worldWrapper.update((int) (delta * 1000));
 
-		camera.update();
-		camera.apply(Gdx.gl10);
+//		camera.update();
+//		camera.apply(Gdx.gl10);
 
 		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D))
 			renderer.render(physicsWorld);
