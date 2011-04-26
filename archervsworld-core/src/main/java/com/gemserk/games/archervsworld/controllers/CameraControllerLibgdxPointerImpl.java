@@ -7,34 +7,27 @@ import com.gemserk.commons.gdx.math.MathUtils2;
 
 public class CameraControllerLibgdxPointerImpl implements CameraController {
 	
-	private final Vector2 position = new Vector2();
-	
 	private final Vector2 previousPosition = new Vector2();
 
 	private final LibgdxPointer libgdxPointer;
 	
 	private final Vector2 tmp = new Vector2();
 
-	private final float zoom;
-
 	private final Rectangle area;
 	
 	private boolean inside = true;
-
+	
+	private Camera camera = new Camera();
+	
 	@Override
-	public Vector2 getPosition() {
-		return position;
-	}
-
-	@Override
-	public float getZoom() {
-		return zoom;
+	public Camera getCamera() {
+		return camera;
 	}
 	
 	public CameraControllerLibgdxPointerImpl(Vector2 position, float zoom, LibgdxPointer libgdxPointer, Rectangle area) {
-		this.zoom = zoom;
+		this.camera.position.set(position);
+		this.camera.zoom = zoom;
 		this.area = area;
-		this.position.set(position);
 		this.libgdxPointer = libgdxPointer;
 	}
 	
@@ -55,11 +48,13 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 
 		tmp.set(previousPosition);
 		tmp.sub(pointerPosition);
-		tmp.mul(1f / zoom);
+		tmp.mul(1f / camera.zoom);
 		
-		position.add(tmp);
+		camera.position.add(tmp);
 		
 		previousPosition.set(pointerPosition);
 	}
+
+
 	
 }

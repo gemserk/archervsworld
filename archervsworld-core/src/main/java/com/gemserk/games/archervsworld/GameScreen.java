@@ -57,6 +57,7 @@ import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl2;
 import com.gemserk.games.archervsworld.controllers.CameraController;
+import com.gemserk.games.archervsworld.controllers.CameraControllerButtonMonitorImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.Controller;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
@@ -177,10 +178,10 @@ public class GameScreen extends ScreenAdapter {
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
-		// cameraController = new CameraControllerButtonMonitorImpl(cameraPosition, 40f, //
-		// moveLeftMonitor, moveRightMonitor, //
-		// moveUpMonitor, moveDownMonitor, //
-		// zoomInButtonMonitor, zoomOutButtonMonitor);
+		cameraController = new CameraControllerButtonMonitorImpl(cameraPosition, 40f, //
+				moveLeftMonitor, moveRightMonitor, //
+				moveUpMonitor, moveDownMonitor, //
+				zoomInButtonMonitor, zoomOutButtonMonitor);
 		cameraController = new CameraControllerLibgdxPointerImpl(cameraPosition, 40f, pointer2, new Rectangle(140, 0, viewportWidth - 140, viewportHeight));
 
 		controllers.add(cameraController);
@@ -194,7 +195,7 @@ public class GameScreen extends ScreenAdapter {
 
 		// controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
 
-//		bowController = new BowControllerHudImpl(pointer2, new Vector2(90f, 90f), 80f);
+		// bowController = new BowControllerHudImpl(pointer2, new Vector2(90f, 90f), 80f);
 		bowController = new BowControllerHudImpl2(pointer2, new Vector2(70f, 70f), 60f);
 
 		bowControllers.add(bowController);
@@ -443,9 +444,9 @@ public class GameScreen extends ScreenAdapter {
 
 		cameraController.update(deltaInMs);
 
-		Vector2 cameraPosition = cameraController.getPosition();
+		Vector2 cameraPosition = cameraController.getCamera().position;
 
-		myCamera.zoom(cameraController.getZoom());
+		myCamera.zoom(cameraController.getCamera().zoom);
 		myCamera.move(cameraPosition.x, cameraPosition.y);
 
 		entitySystemController.update();
@@ -459,16 +460,14 @@ public class GameScreen extends ScreenAdapter {
 
 		if (bowController instanceof BowControllerHudImpl) {
 			BowControllerHudImpl controller = (BowControllerHudImpl) bowController;
-			ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), 
-					bowController.getAngle(), Color.WHITE);
+			ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), bowController.getAngle(), Color.WHITE);
 		}
-		
+
 		if (bowController instanceof BowControllerHudImpl2) {
 			BowControllerHudImpl2 controller = (BowControllerHudImpl2) bowController;
-			ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), 
-					bowController.getAngle(), Color.WHITE);
+			ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), bowController.getAngle(), Color.WHITE);
 		}
-		
+
 	}
 
 	protected void loadResources() {
