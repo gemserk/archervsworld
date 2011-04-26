@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.gdx.camera.Camera;
+import com.gemserk.commons.gdx.controllers.CameraController;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.input.ButtonMonitor;
