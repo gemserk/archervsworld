@@ -201,7 +201,15 @@ public class GameScreen extends ScreenAdapter {
 
 		final ControllerSwitcher controllerSwitcher = new ControllerSwitcher(controllers);
 
-		UpdateBowSystem updateBowSystem = new UpdateBowSystem(controllerSwitcher, archerVsWorldEntityFactory);
+		AbstractProperty<BowController> currentController = new AbstractProperty<BowController>() {
+			@Override
+			public BowController get() {
+				return controllerSwitcher.getController();
+			}
+		};
+		
+		UpdateBowSystem updateBowSystem = new UpdateBowSystem(currentController);
+		updateBowSystem.setEntityFactory(archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
 
 		WalkingDeadSystem walkingDeadSystem = new WalkingDeadSystem();
