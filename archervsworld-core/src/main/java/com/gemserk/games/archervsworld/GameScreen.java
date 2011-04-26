@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -56,7 +57,7 @@ import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
-import com.gemserk.games.archervsworld.controllers.BowControllerImpl5;
+import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
@@ -110,7 +111,11 @@ public class GameScreen extends ScreenAdapter {
 	private FloatValue zoom = new FloatValue(40f);
 
 	private Vector2 cameraPosition = new Vector2(0, 0);
-	
+
+	private ImmediateModeRenderer immediateModeRenderer = new ImmediateModeRenderer();
+
+	private BowControllerHudImpl controller;
+
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
 		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
@@ -128,7 +133,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 	}
-	
+
 	public GameScreen(Game game) {
 		loadResources();
 
@@ -144,7 +149,7 @@ public class GameScreen extends ScreenAdapter {
 		myCamera.center(viewportWidth / 2, viewportHeight / 2);
 		cameraPosition.set(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		myCamera.zoom(zoom.value);
-		
+
 		box2dDebugRenderer = new Box2DCustomDebugRenderer((Libgdx2dCameraTransformImpl) myCamera);
 
 		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
@@ -164,10 +169,13 @@ public class GameScreen extends ScreenAdapter {
 		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
 		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
 
+		LibgdxPointer pointer2 = new LibgdxPointer(0);
+
 		ArrayList<LibgdxPointer> pointers = new ArrayList<LibgdxPointer>();
 
 		pointers.add(pointer0);
 		pointers.add(pointer1);
+		pointers.add(pointer2);
 
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
@@ -178,7 +186,11 @@ public class GameScreen extends ScreenAdapter {
 		// controllers.add(new BowControllerImpl3(pointer0));
 		// controllers.add(new BowControllerImpl4(pointer0, new Vector2(0f, 3f)));
 
-		controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
+		// controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
+
+		controller = new BowControllerHudImpl(pointer2, new Vector2(70f, 70f), 60f);
+
+		controllers.add(controller);
 
 		// if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
 		// controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
@@ -431,7 +443,7 @@ public class GameScreen extends ScreenAdapter {
 
 		myCamera.zoom(zoom.value);
 		myCamera.move(cameraPosition.x, cameraPosition.y);
-		
+
 		entitySystemController.update();
 
 		worldWrapper.update((int) (delta * 1000));
@@ -441,6 +453,29 @@ public class GameScreen extends ScreenAdapter {
 		if (restartButtonMonitor.isReleased())
 			restart();
 
+		Vector2 axis = new Vector2(1, 0).rotate(controller.getAngle());
+		drawSolidCircle(controller.getPosition(), controller.getRadius(), axis, Color.WHITE);
+	}
+
+	private void drawSolidCircle(Vector2 center, float radius, Vector2 axis, Color color) {
+		Vector2 v = new Vector2();
+
+		immediateModeRenderer.begin(GL10.GL_LINE_LOOP);
+		float angle = 0;
+		float angleInc = 2 * (float) Math.PI / 20;
+		for (int i = 0; i < 20; i++, angle += angleInc) {
+			v.set((float) Math.cos(angle) * radius + center.x, (float) Math.sin(angle) * radius + center.y);
+			immediateModeRenderer.color(color.r, color.g, color.b, color.a);
+			immediateModeRenderer.vertex(v.x, v.y, 0);
+		}
+		immediateModeRenderer.end();
+
+		immediateModeRenderer.begin(GL10.GL_LINES);
+		immediateModeRenderer.color(color.r, color.g, color.b, color.a);
+		immediateModeRenderer.vertex(center.x, center.y, 0);
+		immediateModeRenderer.color(color.r, color.g, color.b, color.a);
+		immediateModeRenderer.vertex(center.x + axis.x * radius, center.y + axis.y * radius, 0);
+		immediateModeRenderer.end();
 	}
 
 	@Override
