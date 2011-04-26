@@ -31,10 +31,10 @@ import com.gemserk.commons.artemis.systems.SpawnerSystem;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
-import com.gemserk.commons.gdx.Libgdx2dCamera;
-import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.box2d.Box2DCustomDebugRenderer;
+import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
+import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
@@ -179,11 +179,11 @@ public class GameScreen extends ScreenAdapter {
 
 		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		Camera camera = new Camera(cameraPosition, 40f, 0f);
-		
-//		cameraController = new CameraControllerButtonMonitorImpl(camera, //
-//				moveLeftMonitor, moveRightMonitor, //
-//				moveUpMonitor, moveDownMonitor, //
-//				zoomInButtonMonitor, zoomOutButtonMonitor);
+
+		// cameraController = new CameraControllerButtonMonitorImpl(camera, //
+		// moveLeftMonitor, moveRightMonitor, //
+		// moveUpMonitor, moveDownMonitor, //
+		// zoomInButtonMonitor, zoomOutButtonMonitor);
 		cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, new Rectangle(140, 0, viewportWidth - 140, viewportHeight));
 
 		controllers.add(cameraController);
