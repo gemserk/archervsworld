@@ -8,7 +8,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,6 +35,7 @@ import com.gemserk.commons.artemis.systems.TextRendererSystem;
 import com.gemserk.commons.gdx.Libgdx2dCamera;
 import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.ScreenAdapter;
+import com.gemserk.commons.gdx.box2d.Box2DCustomDebugRenderer;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
@@ -57,8 +57,6 @@ import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowControllerImpl5;
-import com.gemserk.games.archervsworld.controllers.BowControllerKeyboardImpl;
-import com.gemserk.games.archervsworld.controllers.BowControllerMutitouchImpl;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
@@ -68,24 +66,6 @@ import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
 public class GameScreen extends ScreenAdapter {
 
-	static class MonitorUpdaterImpl implements MonitorUpdater {
-
-		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
-
-		@Override
-		public void update() {
-			for (int i = 0; i < buttonMonitors.size(); i++) {
-				ButtonMonitor buttonMonitor = buttonMonitors.get(i);
-				buttonMonitor.update();
-			}
-		}
-
-		public void add(ButtonMonitor buttonMonitor) {
-			buttonMonitors.add(buttonMonitor);
-		}
-
-	}
-
 	private World world;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
@@ -94,10 +74,10 @@ public class GameScreen extends ScreenAdapter {
 	// int viewportHeight = 12;
 
 	int viewportWidth = 800;
-	
+
 	int viewportHeight = 480;
 
-	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
+	Box2DDebugRenderer box2dDebugRenderer;
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
@@ -130,7 +110,25 @@ public class GameScreen extends ScreenAdapter {
 	private FloatValue zoom = new FloatValue(40f);
 
 	private Vector2 cameraPosition = new Vector2(0, 0);
+	
+	static class MonitorUpdaterImpl implements MonitorUpdater {
 
+		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
+
+		@Override
+		public void update() {
+			for (int i = 0; i < buttonMonitors.size(); i++) {
+				ButtonMonitor buttonMonitor = buttonMonitors.get(i);
+				buttonMonitor.update();
+			}
+		}
+
+		public void add(ButtonMonitor buttonMonitor) {
+			buttonMonitors.add(buttonMonitor);
+		}
+
+	}
+	
 	public GameScreen(Game game) {
 		loadResources();
 
@@ -146,6 +144,8 @@ public class GameScreen extends ScreenAdapter {
 		myCamera.center(viewportWidth / 2, viewportHeight / 2);
 		cameraPosition.set(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		myCamera.zoom(zoom.value);
+		
+		box2dDebugRenderer = new Box2DCustomDebugRenderer((Libgdx2dCameraTransformImpl) myCamera);
 
 		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
 
@@ -155,7 +155,7 @@ public class GameScreen extends ScreenAdapter {
 		renderLayers.add(new RenderLayer(-5, 10, myCamera));
 		// hud layer
 		renderLayers.add(new RenderLayer(10, 1000, new Libgdx2dCameraTransformImpl()));
-		
+
 		SpriteRendererSystem spriteRenderSystem = new SpriteRendererSystem(renderLayers);
 
 		Vector2 gravity = new Vector2(0f, -10f);
@@ -168,7 +168,7 @@ public class GameScreen extends ScreenAdapter {
 
 		pointers.add(pointer0);
 		pointers.add(pointer1);
-		
+
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
@@ -180,11 +180,11 @@ public class GameScreen extends ScreenAdapter {
 
 		controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
 
-		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
-			controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
-
-		if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
-			controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
+		// if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
+		// controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
+		//
+		// if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
+		// controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
 
 		final ControllerSwitcher controllerSwitcher = new ControllerSwitcher(controllers);
 
@@ -403,8 +403,9 @@ public class GameScreen extends ScreenAdapter {
 
 		worldWrapper.update((int) (delta * 1000));
 
-		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D))
-			renderer.render(physicsWorld);
+		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D)) {
+			box2dDebugRenderer.render(physicsWorld);
+		}
 
 		monitorUpdater.update();
 
