@@ -108,10 +108,8 @@ public class GameScreen extends ScreenAdapter {
 
 	private WorldWrapper worldWrapper;
 
-	private FloatValue zoom = new FloatValue(40f);
-
 	private BowControllerHudImpl controller;
-	
+
 	private CameraController cameraController;
 
 	static class MonitorUpdaterImpl implements MonitorUpdater {
@@ -145,10 +143,13 @@ public class GameScreen extends ScreenAdapter {
 
 		myCamera = new Libgdx2dCameraTransformImpl();
 		myCamera.center(viewportWidth / 2, viewportHeight / 2);
-		myCamera.zoom(zoom.value);
+		// myCamera.zoom(zoom.value);
 
 		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
-		cameraController = new CameraControllerKeyboardImpl(cameraPosition, moveLeftMonitor, moveRightMonitor, moveUpMonitor, moveDownMonitor);
+		cameraController = new CameraControllerKeyboardImpl(cameraPosition, 40f, //
+				moveLeftMonitor, moveRightMonitor, //
+				moveUpMonitor, moveDownMonitor, //
+				zoomInButtonMonitor, zoomOutButtonMonitor);
 
 		box2dDebugRenderer = new Box2DCustomDebugRenderer((Libgdx2dCameraTransformImpl) myCamera);
 
@@ -405,23 +406,27 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 	}
-	
+
 	static interface Controller {
-		
+
 		void update(int delta);
-		
+
 	}
 
 	static interface CameraController extends Controller {
 
 		Vector2 getPosition();
 
+		float getZoom();
+
 	}
 
 	static class CameraControllerKeyboardImpl implements CameraController {
 
 		private final Vector2 position = new Vector2();
-		
+
+		private final FloatValue zoom = new FloatValue(1f);
+
 		private final ButtonMonitor left;
 
 		private final ButtonMonitor right;
@@ -430,34 +435,57 @@ public class GameScreen extends ScreenAdapter {
 
 		private final ButtonMonitor down;
 
+		private final ButtonMonitor zoomIn;
+
+		private final ButtonMonitor zoomOut;
+
 		@Override
 		public Vector2 getPosition() {
 			return position;
 		}
-		
-		public CameraControllerKeyboardImpl(Vector2 position, ButtonMonitor left, ButtonMonitor right, ButtonMonitor up, ButtonMonitor down) {
+
+		public CameraControllerKeyboardImpl(Vector2 position, float zoom, //
+				ButtonMonitor left, ButtonMonitor right, //
+				ButtonMonitor up, ButtonMonitor down, //
+				ButtonMonitor zoomIn, ButtonMonitor zoomOut) {
 			this.left = left;
 			this.right = right;
 			this.up = up;
 			this.down = down;
+			this.zoomIn = zoomIn;
+			this.zoomOut = zoomOut;
+			this.zoom.value = zoom;
 			this.position.set(position);
 		}
 
 		@Override
 		public void update(int delta) {
 
-			if (down.isHolded()) 
+			if (down.isHolded())
 				position.y -= 0.01f * delta;
 
-			if (up.isHolded()) 
+			if (up.isHolded())
 				position.y += 0.01f * delta;
 
-			if (right.isHolded()) 
+			if (right.isHolded())
 				position.x += 0.01f * delta;
 
-			if (left.isHolded()) 
+			if (left.isHolded())
 				position.x -= 0.01f * delta;
 
+			if (zoomIn.isPressed()) {
+				Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300).build());
+			}
+
+			if (zoomOut.isPressed()) {
+				Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300).build());
+			}
+
+		}
+
+		@Override
+		public float getZoom() {
+			return zoom.value;
 		}
 
 	}
@@ -473,19 +501,11 @@ public class GameScreen extends ScreenAdapter {
 
 		monitorUpdater.update();
 
-		if (zoomInButtonMonitor.isPressed()) {
-			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300).build());
-		}
-
-		if (zoomOutButtonMonitor.isPressed()) {
-			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300).build());
-		}
-
 		cameraController.update((int) (delta * 1000));
 
 		Vector2 cameraPosition = cameraController.getPosition();
 
-		myCamera.zoom(zoom.value);
+		myCamera.zoom(cameraController.getZoom());
 		myCamera.move(cameraPosition.x, cameraPosition.y);
 
 		entitySystemController.update();
