@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
@@ -40,6 +41,7 @@ import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
 import com.gemserk.commons.values.FloatValue;
+import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
@@ -100,15 +102,65 @@ public class GameScreen extends ScreenAdapter {
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
-	int viewportWidth = 20;
+	// int viewportWidth = 20;
+	//
+	// int viewportHeight = 12;
 
-	int viewportHeight = 12;
+	int viewportWidth = 800;
+
+	int viewportHeight = 480;
 
 	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
 	ResourceManager<String> resourceManager = new ResourceManagerImpl<String>();
+
+	private UpdateBowSystem updateBowSystem;
+
+	private EntityFactory entityFactory;
+
+	private ButtonMonitor restartButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_R);
+
+	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_PLUS);
+
+	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_MINUS);
+
+	private ButtonMonitor moveRightMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_RIGHT);
+
+	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_LEFT);
+
+	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
+
+	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
+
+	private MonitorUpdaterImpl monitorUpdater;
+
+	private WalkingDeadSystem walkingDeadSystem;
+
+	private GameLogicSystem gameLogicSystem;
+
+	private Libgdx2dCamera myCamera;
+
+	private HierarchySystem hierarchySystem;
+
+	private AliveSystem aliveSystem;
+
+	private HudButtonSystem hudButtonSystem;
+
+	private PointerUpdateSystem pointerUpdateSystem;
+
+	EntitySystemController entitySystemController = new EntitySystemController();
+
+	private CorrectArrowDirectionSystem correctArrowDirectionSystem;
+
+	private SpawnerSystem spawnerSystem;
+
+	private WorldWrapper worldWrapper;
+
+	private FloatValue zoom = new FloatValue(40f);
+
+	private Vector2 cameraPosition = new Vector2(0, 0);
 
 	public GameScreen(Game game) {
 
@@ -127,6 +179,7 @@ public class GameScreen extends ScreenAdapter {
 	protected void restart() {
 
 		myCamera = new Libgdx2dCameraTransformImpl(camera);
+		myCamera.zoom(zoom.value);
 
 		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
 
@@ -156,11 +209,11 @@ public class GameScreen extends ScreenAdapter {
 
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
 
-//		controllers.add(new BowControllerImpl2(pointer0, new Vector2(0f, 3f)));
-//		controllers.add(new BowControllerImpl(pointer0));
-//		controllers.add(new BowControllerImpl3(pointer0));
-//		controllers.add(new BowControllerImpl4(pointer0, new Vector2(0f, 3f)));
-		
+		// controllers.add(new BowControllerImpl2(pointer0, new Vector2(0f, 3f)));
+		// controllers.add(new BowControllerImpl(pointer0));
+		// controllers.add(new BowControllerImpl3(pointer0));
+		// controllers.add(new BowControllerImpl4(pointer0, new Vector2(0f, 3f)));
+
 		controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
 
 		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
@@ -197,9 +250,9 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.add(physicsSystem);
 		worldWrapper.add(correctArrowDirectionSystem);
 		worldWrapper.add(pointerUpdateSystem);
-		
+
 		// worldWrapper.add(hudButtonSystem);
-		
+
 		worldWrapper.add(walkingDeadSystem);
 		worldWrapper.add(new MovementSystem());
 
@@ -209,7 +262,7 @@ public class GameScreen extends ScreenAdapter {
 
 		worldWrapper.add(updateBowSystem);
 		worldWrapper.add(new UpdateChargingArrowSystem());
-		
+
 		worldWrapper.add(gameLogicSystem);
 		worldWrapper.add(hierarchySystem);
 		worldWrapper.add(aliveSystem);
@@ -278,12 +331,12 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.createGrass2(new Vector2(10, 1), new Vector2(20f, 2f));
 
 		archerVsWorldEntityFactory.createArcher(new Vector2(2.5f, 1.7f + y + 3 + 2));
-		
-		 archerVsWorldEntityFactory.createTower(new Vector2(1f, y + 3f), new Vector2(6f, 6f));
-		
-//		archerVsWorldEntityFactory.createBow(new Vector2(1f, 2.7f + y));
-//		
-//		archerVsWorldEntityFactory.createBow(new Vector2(1f, 3.7f + y));
+
+		archerVsWorldEntityFactory.createTower(new Vector2(1f, y + 3f), new Vector2(6f, 6f));
+
+		// archerVsWorldEntityFactory.createBow(new Vector2(1f, 2.7f + y));
+		//
+		// archerVsWorldEntityFactory.createBow(new Vector2(1f, 3.7f + y));
 
 		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(20, 1.25f + y));
 
@@ -335,42 +388,6 @@ public class GameScreen extends ScreenAdapter {
 		entity.refresh();
 	}
 
-	private UpdateBowSystem updateBowSystem;
-
-	private EntityFactory entityFactory;
-
-	private ButtonMonitor restartButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_R);
-
-	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_PLUS);
-
-	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_MINUS);
-
-	private ButtonMonitor moveRightMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_RIGHT);
-
-	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_LEFT);
-
-	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_U);
-
-	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_J);
-
-	private MonitorUpdaterImpl monitorUpdater;
-
-	private WalkingDeadSystem walkingDeadSystem;
-
-	private FloatValue zoom = new FloatValue(1f);
-
-	private GameLogicSystem gameLogicSystem;
-
-	private Libgdx2dCamera myCamera;
-
-	private HierarchySystem hierarchySystem;
-
-	private AliveSystem aliveSystem;
-
-	private HudButtonSystem hudButtonSystem;
-
-	private PointerUpdateSystem pointerUpdateSystem;
-
 	static class EntitySystemController {
 
 		static class ActivableSystemRegistration {
@@ -421,14 +438,6 @@ public class GameScreen extends ScreenAdapter {
 
 	}
 
-	EntitySystemController entitySystemController = new EntitySystemController();
-
-	private CorrectArrowDirectionSystem correctArrowDirectionSystem;
-
-	private SpawnerSystem spawnerSystem;
-
-	private WorldWrapper worldWrapper;
-
 	@Override
 	public void render(float delta) {
 
@@ -451,33 +460,35 @@ public class GameScreen extends ScreenAdapter {
 
 		Synchronizers.synchronize();
 
-		if (zoomInButtonMonitor.isHolded()) {
-			zoom.value = zoom.value + 1f * delta;
-			myCamera.zoom(zoom.value);
-			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
+		if (zoomInButtonMonitor.isPressed()) {
+			// zoom.value *= 2f;
+			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300).build());
 		}
 
-		if (zoomOutButtonMonitor.isHolded()) {
-			zoom.value = zoom.value - 1f * delta;
-			myCamera.zoom(zoom.value);
-			// Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(nextZoom).time(300).build());
+		if (zoomOutButtonMonitor.isPressed()) {
+			// zoom.value *= 0.5f;
+			// myCamera.zoom(zoom.value);
+			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300).build());
 		}
 
 		if (moveDownMonitor.isHolded()) {
-			myCamera.rotate(36f * delta);
+			cameraPosition.y -= 10f * delta;
 		}
 
 		if (moveUpMonitor.isHolded()) {
-			myCamera.rotate(-36f * delta);
+			cameraPosition.y += 10f * delta;
 		}
 
 		if (moveRightMonitor.isHolded()) {
-			myCamera.move(-2f * delta, 0f);
+			cameraPosition.x += 10f * delta;
 		}
 
 		if (moveLeftMonitor.isHolded()) {
-			myCamera.move(2f * delta, 0f);
+			cameraPosition.x -= 10f * delta;
 		}
+
+		myCamera.zoom(zoom.value);
+		myCamera.move(cameraPosition.x, cameraPosition.y);
 
 		if (restartButtonMonitor.isReleased())
 			restart();
@@ -508,7 +519,7 @@ public class GameScreen extends ScreenAdapter {
 				texture("Grass02", "data/grass-02-128x128.png");
 
 				texture("Cloud", "data/cloud-256x256.png");
-				
+
 				texture("Tower", "data/tower-128x128.png");
 
 				texture("Button", "data/button-template-64x64.png");
