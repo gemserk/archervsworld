@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 
-public class ControllerSwitcher {
+public class ControllerSwitcher implements Controller {
 
 	ArrayList<BowController> controllers;
 
@@ -40,7 +40,7 @@ public class ControllerSwitcher {
 		return switchButtonMonitor.isPressed();
 	}
 
-	public void update() {
+	public void update(int delta) {
 		
 		if (!shouldSwitch())
 			return;

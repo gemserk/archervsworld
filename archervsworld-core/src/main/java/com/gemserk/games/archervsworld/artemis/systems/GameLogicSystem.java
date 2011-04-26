@@ -30,7 +30,6 @@ import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFacto
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.games.archervsworld.box2d.Contact;
-import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
@@ -63,7 +62,7 @@ public class GameLogicSystem extends EntitySystem {
 
 	ResourceManager<String> resourceManager;
 
-	private final ControllerSwitcher controllerSwitcher;
+	boolean switchControllersButtonDown = false;
 
 	public void setArcherVsWorldEntityFactory(ArcherVsWorldEntityFactory archerVsWorldEntityFactory) {
 		this.archerVsWorldEntityFactory = archerVsWorldEntityFactory;
@@ -75,8 +74,6 @@ public class GameLogicSystem extends EntitySystem {
 
 	public GameLogicSystem(ControllerSwitcher controllerSwitcher) {
 		super();
-		this.controllerSwitcher = controllerSwitcher;
-
 		controllerSwitcher.setSwitchButtonMonitor(new ButtonMonitor() {
 			@Override
 			protected boolean isDown() {
@@ -96,13 +93,8 @@ public class GameLogicSystem extends EntitySystem {
 
 	}
 
-	boolean switchControllersButtonDown = false;
 
 	private void processButtons() {
-
-		controllerSwitcher.update();
-		BowController bowController = controllerSwitcher.getController();
-		bowController.update(world.getDelta());
 
 		int entityCount = world.getEntityManager().getEntityCount();
 
