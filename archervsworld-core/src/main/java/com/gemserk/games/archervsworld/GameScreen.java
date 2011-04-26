@@ -399,17 +399,11 @@ public class GameScreen extends ScreenAdapter {
 
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		entitySystemController.update();
-
-		worldWrapper.update((int) (delta * 1000));
-
 		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D)) {
 			box2dDebugRenderer.render(physicsWorld);
 		}
 
 		monitorUpdater.update();
-
-		Synchronizers.synchronize();
 
 		if (zoomInButtonMonitor.isPressed()) {
 			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300).build());
@@ -437,8 +431,12 @@ public class GameScreen extends ScreenAdapter {
 
 		myCamera.zoom(zoom.value);
 		myCamera.move(cameraPosition.x, cameraPosition.y);
+		
+		entitySystemController.update();
 
-		// System.out.println(cameraPosition);
+		worldWrapper.update((int) (delta * 1000));
+
+		Synchronizers.synchronize();
 
 		if (restartButtonMonitor.isReleased())
 			restart();
