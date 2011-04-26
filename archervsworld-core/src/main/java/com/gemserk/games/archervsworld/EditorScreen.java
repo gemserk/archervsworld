@@ -122,7 +122,7 @@ public class EditorScreen extends ScreenAdapter {
 		// hud layer
 		renderLayers.add(new RenderLayer(10, 1000, new Libgdx2dCameraTransformImpl()));
 
-		spriteRenderSystem = new SpriteRendererSystem(myCamera, renderLayers);
+		spriteRenderSystem = new SpriteRendererSystem(renderLayers);
 
 		Vector2 gravity = new Vector2(0f, -10f);
 		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));

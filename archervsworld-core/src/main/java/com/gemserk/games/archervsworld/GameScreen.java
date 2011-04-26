@@ -51,7 +51,6 @@ import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFacto
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.DebugInformationSystem;
 import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
-import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
 import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
@@ -87,26 +86,15 @@ public class GameScreen extends ScreenAdapter {
 
 	}
 
-	private TextRendererSystem textRendererSystem;
-
 	private World world;
-
-	private PhysicsSystem physicsSystem;
-
-	private SpriteRendererSystem spriteRenderSystem;
-
-	private SpriteUpdateSystem spriteUpdateSystem;
-
-//	private OrthographicCamera camera;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
 	// int viewportWidth = 20;
-	//
 	// int viewportHeight = 12;
 
 	int viewportWidth = 800;
-
+	
 	int viewportHeight = 480;
 
 	Box2DDebugRenderer renderer = new Box2DDebugRenderer();
@@ -114,8 +102,6 @@ public class GameScreen extends ScreenAdapter {
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
 	ResourceManager<String> resourceManager = new ResourceManagerImpl<String>();
-
-	private UpdateBowSystem updateBowSystem;
 
 	private EntityFactory entityFactory;
 
@@ -135,25 +121,9 @@ public class GameScreen extends ScreenAdapter {
 
 	private MonitorUpdaterImpl monitorUpdater;
 
-	private WalkingDeadSystem walkingDeadSystem;
-
-	private GameLogicSystem gameLogicSystem;
-
 	private Libgdx2dCamera myCamera;
 
-	private HierarchySystem hierarchySystem;
-
-	private AliveSystem aliveSystem;
-
-	private HudButtonSystem hudButtonSystem;
-
-	private PointerUpdateSystem pointerUpdateSystem;
-
 	EntitySystemController entitySystemController = new EntitySystemController();
-
-	private CorrectArrowDirectionSystem correctArrowDirectionSystem;
-
-	private SpawnerSystem spawnerSystem;
 
 	private WorldWrapper worldWrapper;
 
@@ -162,44 +132,34 @@ public class GameScreen extends ScreenAdapter {
 	private Vector2 cameraPosition = new Vector2(0, 0);
 
 	public GameScreen(Game game) {
-
 		loadResources();
 
 		entityFactory = new EntityFactory();
 		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
 
-//		camera = new OrthographicCamera(viewportWidth, viewportHeight);
-//		camera.position.set(viewportWidth / 2, viewportHeight / 2, 0);
-
 		restart();
-
 	}
 
 	protected void restart() {
 
 		myCamera = new Libgdx2dCameraTransformImpl();
-		// myCamera.center(viewportWidth / 2, viewportHeight / 2);
-//		myCamera.move(viewportWidth / 2, viewportHeight / 2);
-		// cameraPosition.set(-viewportWidth / 2, -viewportHeight / 2);
+		myCamera.center(viewportWidth / 2, viewportHeight / 2);
+		cameraPosition.set(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		myCamera.zoom(zoom.value);
 
 		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
 
 		// background layer
 		renderLayers.add(new RenderLayer(-1000, -5, new Libgdx2dCameraTransformImpl()));
-
 		// world layer
 		renderLayers.add(new RenderLayer(-5, 10, myCamera));
-
 		// hud layer
 		renderLayers.add(new RenderLayer(10, 1000, new Libgdx2dCameraTransformImpl()));
-
-		textRendererSystem = new TextRendererSystem();
-		spriteRenderSystem = new SpriteRendererSystem(myCamera, renderLayers);
-		spriteUpdateSystem = new SpriteUpdateSystem();
+		
+		SpriteRendererSystem spriteRenderSystem = new SpriteRendererSystem(renderLayers);
 
 		Vector2 gravity = new Vector2(0f, -10f);
-		physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
+		PhysicsSystem physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
 
 		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
 		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
@@ -208,6 +168,8 @@ public class GameScreen extends ScreenAdapter {
 
 		pointers.add(pointer0);
 		pointers.add(pointer1);
+		
+		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
 
@@ -226,31 +188,23 @@ public class GameScreen extends ScreenAdapter {
 
 		final ControllerSwitcher controllerSwitcher = new ControllerSwitcher(controllers);
 
-		updateBowSystem = new UpdateBowSystem(controllerSwitcher, archerVsWorldEntityFactory);
+		UpdateBowSystem updateBowSystem = new UpdateBowSystem(controllerSwitcher, archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
 
-		walkingDeadSystem = new WalkingDeadSystem();
-		gameLogicSystem = new GameLogicSystem(controllerSwitcher);
+		WalkingDeadSystem walkingDeadSystem = new WalkingDeadSystem();
+		GameLogicSystem gameLogicSystem = new GameLogicSystem(controllerSwitcher);
 
 		gameLogicSystem.setArcherVsWorldEntityFactory(archerVsWorldEntityFactory);
 		gameLogicSystem.setResourceManager(resourceManager);
 
-		hierarchySystem = new HierarchySystem();
-		aliveSystem = new AliveSystem();
-
-		hudButtonSystem = new HudButtonSystem(pointer0);
-		pointerUpdateSystem = new PointerUpdateSystem(pointers);
-
-		correctArrowDirectionSystem = new CorrectArrowDirectionSystem();
-
-		spawnerSystem = new SpawnerSystem();
+		// HudButtonSystem hudButtonSystem = new HudButtonSystem(pointer0);
 
 		world = new World();
 
 		worldWrapper = new WorldWrapper(world);
 
 		worldWrapper.add(physicsSystem);
-		worldWrapper.add(correctArrowDirectionSystem);
+		worldWrapper.add(new CorrectArrowDirectionSystem());
 		worldWrapper.add(pointerUpdateSystem);
 
 		// worldWrapper.add(hudButtonSystem);
@@ -258,18 +212,18 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.add(walkingDeadSystem);
 		worldWrapper.add(new MovementSystem());
 
-		worldWrapper.add(spriteUpdateSystem);
+		worldWrapper.add(new SpriteUpdateSystem());
 		worldWrapper.add(spriteRenderSystem);
-		worldWrapper.add(textRendererSystem);
+		worldWrapper.add(new TextRendererSystem());
 
 		worldWrapper.add(updateBowSystem);
 		worldWrapper.add(new UpdateChargingArrowSystem());
 
 		worldWrapper.add(gameLogicSystem);
-		worldWrapper.add(hierarchySystem);
-		worldWrapper.add(aliveSystem);
+		worldWrapper.add(new HierarchySystem());
+		worldWrapper.add(new AliveSystem());
 		worldWrapper.add(new AliveAreaSystem());
-		worldWrapper.add(spawnerSystem);
+		worldWrapper.add(new SpawnerSystem());
 
 		worldWrapper.add(new DebugInformationSystem());
 
@@ -443,17 +397,11 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 
-//		camera.update();
-//		camera.apply(Gdx.gl10);
-
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		entitySystemController.update();
 
 		worldWrapper.update((int) (delta * 1000));
-
-//		camera.update();
-//		camera.apply(Gdx.gl10);
 
 		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D))
 			renderer.render(physicsWorld);
@@ -463,13 +411,10 @@ public class GameScreen extends ScreenAdapter {
 		Synchronizers.synchronize();
 
 		if (zoomInButtonMonitor.isPressed()) {
-			// zoom.value *= 2f;
 			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300).build());
 		}
 
 		if (zoomOutButtonMonitor.isPressed()) {
-			// zoom.value *= 0.5f;
-			// myCamera.zoom(zoom.value);
 			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300).build());
 		}
 
@@ -491,6 +436,8 @@ public class GameScreen extends ScreenAdapter {
 
 		myCamera.zoom(zoom.value);
 		myCamera.move(cameraPosition.x, cameraPosition.y);
+
+		// System.out.println(cameraPosition);
 
 		if (restartButtonMonitor.isReleased())
 			restart();
