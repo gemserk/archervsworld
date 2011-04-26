@@ -17,16 +17,15 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 	
 	private boolean inside = true;
 	
-	private Camera camera = new Camera();
+	private Camera camera;
 	
 	@Override
 	public Camera getCamera() {
 		return camera;
 	}
 	
-	public CameraControllerLibgdxPointerImpl(Vector2 position, float zoom, LibgdxPointer libgdxPointer, Rectangle area) {
-		this.camera.position.set(position);
-		this.camera.zoom = zoom;
+	public CameraControllerLibgdxPointerImpl(Camera camera, LibgdxPointer libgdxPointer, Rectangle area) {
+		this.camera = camera;
 		this.area = area;
 		this.libgdxPointer = libgdxPointer;
 	}

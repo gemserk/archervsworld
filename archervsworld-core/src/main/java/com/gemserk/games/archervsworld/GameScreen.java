@@ -56,8 +56,8 @@ import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl2;
+import com.gemserk.games.archervsworld.controllers.Camera;
 import com.gemserk.games.archervsworld.controllers.CameraController;
-import com.gemserk.games.archervsworld.controllers.CameraControllerButtonMonitorImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.Controller;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
@@ -178,11 +178,13 @@ public class GameScreen extends ScreenAdapter {
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
-		cameraController = new CameraControllerButtonMonitorImpl(cameraPosition, 40f, //
-				moveLeftMonitor, moveRightMonitor, //
-				moveUpMonitor, moveDownMonitor, //
-				zoomInButtonMonitor, zoomOutButtonMonitor);
-		cameraController = new CameraControllerLibgdxPointerImpl(cameraPosition, 40f, pointer2, new Rectangle(140, 0, viewportWidth - 140, viewportHeight));
+		Camera camera = new Camera(cameraPosition, 40f, 0f);
+		
+//		cameraController = new CameraControllerButtonMonitorImpl(camera, //
+//				moveLeftMonitor, moveRightMonitor, //
+//				moveUpMonitor, moveDownMonitor, //
+//				zoomInButtonMonitor, zoomOutButtonMonitor);
+		cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, new Rectangle(140, 0, viewportWidth - 140, viewportHeight));
 
 		controllers.add(cameraController);
 
@@ -444,10 +446,12 @@ public class GameScreen extends ScreenAdapter {
 
 		cameraController.update(deltaInMs);
 
-		Vector2 cameraPosition = cameraController.getCamera().position;
+		Camera camera = cameraController.getCamera();
+		Vector2 cameraPosition = camera.position;
 
-		myCamera.zoom(cameraController.getCamera().zoom);
+		myCamera.zoom(camera.zoom);
 		myCamera.move(cameraPosition.x, cameraPosition.y);
+		myCamera.rotate(camera.angle);
 
 		entitySystemController.update();
 

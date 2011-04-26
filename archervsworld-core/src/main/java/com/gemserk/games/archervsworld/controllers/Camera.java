@@ -10,4 +10,16 @@ public class Camera {
 	
 	public float angle = 0f;
 	
+	public Camera() {
+
+	}
+
+	public Camera(Vector2 position, float zoom, float angle) {
+		this.position.set(position);
+		this.zoom = zoom;
+		this.angle = angle;
+	}
+	
+	
+	
 }
