@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
@@ -40,8 +39,6 @@ import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
-import com.gemserk.commons.values.FloatValue;
-import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
@@ -58,6 +55,9 @@ import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl;
+import com.gemserk.games.archervsworld.controllers.CameraController;
+import com.gemserk.games.archervsworld.controllers.CameraControllerButtonMonitorImpl;
+import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
@@ -143,13 +143,6 @@ public class GameScreen extends ScreenAdapter {
 
 		myCamera = new Libgdx2dCameraTransformImpl();
 		myCamera.center(viewportWidth / 2, viewportHeight / 2);
-		// myCamera.zoom(zoom.value);
-
-		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
-		cameraController = new CameraControllerKeyboardImpl(cameraPosition, 40f, //
-				moveLeftMonitor, moveRightMonitor, //
-				moveUpMonitor, moveDownMonitor, //
-				zoomInButtonMonitor, zoomOutButtonMonitor);
 
 		box2dDebugRenderer = new Box2DCustomDebugRenderer((Libgdx2dCameraTransformImpl) myCamera);
 
@@ -179,6 +172,13 @@ public class GameScreen extends ScreenAdapter {
 		pointers.add(pointer2);
 
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
+		
+		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
+		cameraController = new CameraControllerButtonMonitorImpl(cameraPosition, 40f, //
+				moveLeftMonitor, moveRightMonitor, //
+				moveUpMonitor, moveDownMonitor, //
+				zoomInButtonMonitor, zoomOutButtonMonitor);
+		cameraController = new CameraControllerLibgdxPointerImpl(cameraPosition, 40f, pointer2);
 
 		ArrayList<BowController> controllers = new ArrayList<BowController>();
 
@@ -403,89 +403,6 @@ public class GameScreen extends ScreenAdapter {
 				}
 
 			}
-		}
-
-	}
-
-	static interface Controller {
-
-		void update(int delta);
-
-	}
-
-	static interface CameraController extends Controller {
-
-		Vector2 getPosition();
-
-		float getZoom();
-
-	}
-
-	static class CameraControllerKeyboardImpl implements CameraController {
-
-		private final Vector2 position = new Vector2();
-
-		private final FloatValue zoom = new FloatValue(1f);
-
-		private final ButtonMonitor left;
-
-		private final ButtonMonitor right;
-
-		private final ButtonMonitor up;
-
-		private final ButtonMonitor down;
-
-		private final ButtonMonitor zoomIn;
-
-		private final ButtonMonitor zoomOut;
-
-		@Override
-		public Vector2 getPosition() {
-			return position;
-		}
-
-		public CameraControllerKeyboardImpl(Vector2 position, float zoom, //
-				ButtonMonitor left, ButtonMonitor right, //
-				ButtonMonitor up, ButtonMonitor down, //
-				ButtonMonitor zoomIn, ButtonMonitor zoomOut) {
-			this.left = left;
-			this.right = right;
-			this.up = up;
-			this.down = down;
-			this.zoomIn = zoomIn;
-			this.zoomOut = zoomOut;
-			this.zoom.value = zoom;
-			this.position.set(position);
-		}
-
-		@Override
-		public void update(int delta) {
-
-			if (down.isHolded())
-				position.y -= 0.01f * delta;
-
-			if (up.isHolded())
-				position.y += 0.01f * delta;
-
-			if (right.isHolded())
-				position.x += 0.01f * delta;
-
-			if (left.isHolded())
-				position.x -= 0.01f * delta;
-
-			if (zoomIn.isPressed()) {
-				Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300).build());
-			}
-
-			if (zoomOut.isPressed()) {
-				Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300).build());
-			}
-
-		}
-
-		@Override
-		public float getZoom() {
-			return zoom.value;
 		}
 
 	}
