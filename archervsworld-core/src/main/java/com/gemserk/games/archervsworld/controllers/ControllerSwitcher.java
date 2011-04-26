@@ -3,6 +3,7 @@ package com.gemserk.games.archervsworld.controllers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Input.Keys;
+import com.gemserk.commons.gdx.controllers.Controller;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 
