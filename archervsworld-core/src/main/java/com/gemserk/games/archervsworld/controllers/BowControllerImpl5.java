@@ -46,18 +46,19 @@ public class BowControllerImpl5 implements BowController {
 	public void update() {
 		
 		firing = false;
+
+		Vector2 p0 = source;
+		Vector2 p1 = pointer.getPosition();
 		
+		Vector2 direction = p1.cpy().sub(p0);
+		
+		angle = direction.angle();
+
 		if (pointer.touched) {
-			Vector2 p0 = source;
-			Vector2 p1 = pointer.getPosition();
-			
-			Vector2 direction = p1.cpy().sub(p0);
-			
 			// the power multiplier
 			float multiplier = 0.3f;
 			
-			angle = direction.angle();
-			power += 1f * multiplier; 
+			power += 1f * multiplier;
 			
 			charging = true;
 		} 

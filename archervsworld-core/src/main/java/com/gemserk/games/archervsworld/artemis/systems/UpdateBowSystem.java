@@ -45,11 +45,18 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 		float angle = bowController.getAngle();
 		float power = bowController.getPower();
 		
+		float minFireAngle = -70f;
+		float maxFireAngle = 80f;
+
+		SpatialComponent spatialComponent = bow.getComponent(SpatialComponent.class);
+		
+		if (AngleUtils.between(angle, minFireAngle, maxFireAngle)) 
+			spatialComponent.setAngle(angle);
+		
 		if (bowController.isCharging()) {
 
 			// updates bow direction based on the controller
 
-			SpatialComponent spatialComponent = bow.getComponent(SpatialComponent.class);
 			BowComponent bowComponent = bow.getComponent(BowComponent.class);
 
 			bowComponent.setPower(MathUtils2.truncate(power, bowComponent.getMinPower(), bowComponent.getMaxPower()));
@@ -62,12 +69,6 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 				bowComponent.setArrow(arrow);
 
 			}
-
-			float minFireAngle = -70f;
-			float maxFireAngle = 80f;
-
-			if (AngleUtils.between(angle, minFireAngle, maxFireAngle)) 
-				spatialComponent.setAngle(angle);
 
 		}
 
