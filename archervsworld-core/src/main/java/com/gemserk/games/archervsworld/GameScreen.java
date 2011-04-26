@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -37,6 +36,7 @@ import com.gemserk.commons.gdx.Libgdx2dCamera;
 import com.gemserk.commons.gdx.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.box2d.Box2DCustomDebugRenderer;
+import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
@@ -110,11 +110,9 @@ public class GameScreen extends ScreenAdapter {
 
 	private FloatValue zoom = new FloatValue(40f);
 
-	private Vector2 cameraPosition = new Vector2(0, 0);
-
-	private ImmediateModeRenderer immediateModeRenderer = new ImmediateModeRenderer();
-
 	private BowControllerHudImpl controller;
+	
+	private CameraController cameraController;
 
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
@@ -147,8 +145,10 @@ public class GameScreen extends ScreenAdapter {
 
 		myCamera = new Libgdx2dCameraTransformImpl();
 		myCamera.center(viewportWidth / 2, viewportHeight / 2);
-		cameraPosition.set(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		myCamera.zoom(zoom.value);
+
+		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
+		cameraController = new CameraControllerKeyboardImpl(cameraPosition, moveLeftMonitor, moveRightMonitor, moveUpMonitor, moveDownMonitor);
 
 		box2dDebugRenderer = new Box2DCustomDebugRenderer((Libgdx2dCameraTransformImpl) myCamera);
 
@@ -188,7 +188,7 @@ public class GameScreen extends ScreenAdapter {
 
 		// controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
 
-		controller = new BowControllerHudImpl(pointer2, new Vector2(70f, 70f), 60f);
+		controller = new BowControllerHudImpl(pointer2, new Vector2(90f, 90f), 80f);
 
 		controllers.add(controller);
 
@@ -405,6 +405,62 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 	}
+	
+	static interface Controller {
+		
+		void update(int delta);
+		
+	}
+
+	static interface CameraController extends Controller {
+
+		Vector2 getPosition();
+
+	}
+
+	static class CameraControllerKeyboardImpl implements CameraController {
+
+		private final Vector2 position = new Vector2();
+		
+		private final ButtonMonitor left;
+
+		private final ButtonMonitor right;
+
+		private final ButtonMonitor up;
+
+		private final ButtonMonitor down;
+
+		@Override
+		public Vector2 getPosition() {
+			return position;
+		}
+		
+		public CameraControllerKeyboardImpl(Vector2 position, ButtonMonitor left, ButtonMonitor right, ButtonMonitor up, ButtonMonitor down) {
+			this.left = left;
+			this.right = right;
+			this.up = up;
+			this.down = down;
+			this.position.set(position);
+		}
+
+		@Override
+		public void update(int delta) {
+
+			if (down.isHolded()) 
+				position.y -= 0.01f * delta;
+
+			if (up.isHolded()) 
+				position.y += 0.01f * delta;
+
+			if (right.isHolded()) 
+				position.x += 0.01f * delta;
+
+			if (left.isHolded()) 
+				position.x -= 0.01f * delta;
+
+		}
+
+	}
 
 	@Override
 	public void render(float delta) {
@@ -425,21 +481,9 @@ public class GameScreen extends ScreenAdapter {
 			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300).build());
 		}
 
-		if (moveDownMonitor.isHolded()) {
-			cameraPosition.y -= 10f * delta;
-		}
+		cameraController.update((int) (delta * 1000));
 
-		if (moveUpMonitor.isHolded()) {
-			cameraPosition.y += 10f * delta;
-		}
-
-		if (moveRightMonitor.isHolded()) {
-			cameraPosition.x += 10f * delta;
-		}
-
-		if (moveLeftMonitor.isHolded()) {
-			cameraPosition.x -= 10f * delta;
-		}
+		Vector2 cameraPosition = cameraController.getPosition();
 
 		myCamera.zoom(zoom.value);
 		myCamera.move(cameraPosition.x, cameraPosition.y);
@@ -454,38 +498,7 @@ public class GameScreen extends ScreenAdapter {
 			restart();
 
 		Vector2 axis = new Vector2(1, 0).rotate(controller.getAngle());
-		drawSolidCircle(controller.getPosition(), controller.getRadius(), axis, Color.WHITE);
-	}
-
-	private void drawSolidCircle(Vector2 center, float radius, Vector2 axis, Color color) {
-		Vector2 v = new Vector2();
-
-		immediateModeRenderer.begin(GL10.GL_LINE_LOOP);
-		float angle = 0;
-		float angleInc = 2 * (float) Math.PI / 20;
-		for (int i = 0; i < 20; i++, angle += angleInc) {
-			v.set((float) Math.cos(angle) * radius + center.x, (float) Math.sin(angle) * radius + center.y);
-			immediateModeRenderer.color(color.r, color.g, color.b, color.a);
-			immediateModeRenderer.vertex(v.x, v.y, 0);
-		}
-		immediateModeRenderer.end();
-
-		immediateModeRenderer.begin(GL10.GL_LINES);
-		immediateModeRenderer.color(color.r, color.g, color.b, color.a);
-		immediateModeRenderer.vertex(center.x, center.y, 0);
-		immediateModeRenderer.color(color.r, color.g, color.b, color.a);
-		immediateModeRenderer.vertex(center.x + axis.x * radius, center.y + axis.y * radius, 0);
-		immediateModeRenderer.end();
-	}
-
-	@Override
-	public void resize(int width, int height) {
-
-	}
-
-	@Override
-	public void show() {
-
+		ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), axis, Color.WHITE);
 	}
 
 	protected void loadResources() {
@@ -521,7 +534,7 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void dispose() {
-
+		// dispose resources!!
 	}
 
 }
