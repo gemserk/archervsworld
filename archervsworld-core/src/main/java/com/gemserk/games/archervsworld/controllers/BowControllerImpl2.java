@@ -43,7 +43,7 @@ public class BowControllerImpl2 implements BowController {
 	}
 	
 	@Override
-	public void update() {
+	public void update(int delta) {
 		
 		firing = false;
 		

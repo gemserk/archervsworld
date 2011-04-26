@@ -46,7 +46,7 @@ public class BowControllerKeyboardImpl implements BowController {
 	}
 	
 	@Override
-	public void update() {
+	public void update(int delta) {
 		
 		increaseAngleMonitor.update();
 		decreaseAngleMonitor.update();

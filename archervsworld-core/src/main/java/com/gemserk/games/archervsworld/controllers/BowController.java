@@ -1,6 +1,6 @@
 package com.gemserk.games.archervsworld.controllers;
 
-public interface BowController {
+public interface BowController extends Controller {
 
 	float getAngle();
 
@@ -9,7 +9,5 @@ public interface BowController {
 	boolean isCharging();
 
 	boolean shouldFire();
-
-	void update();
 
 }

@@ -43,7 +43,7 @@ public class BowControllerMutitouchImpl implements BowController {
 	}
 
 	@Override
-	public void update() {
+	public void update(int delta) {
 
 		firing = false;
 		

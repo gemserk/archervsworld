@@ -102,7 +102,7 @@ public class GameLogicSystem extends EntitySystem {
 
 		controllerSwitcher.update();
 		BowController bowController = controllerSwitcher.getController();
-		bowController.update();
+		bowController.update(world.getDelta());
 
 		int entityCount = world.getEntityManager().getEntityCount();
 
