@@ -28,7 +28,7 @@ public class ControllerSwitcher implements Controller {
 	}
 
 	public ControllerSwitcher(ArrayList<BowController> controllers) {
-		this(controllers, new LibgdxButtonMonitor(Keys.KEYCODE_TAB));
+		this(controllers, new LibgdxButtonMonitor(Keys.TAB));
 	}
 
 	public ControllerSwitcher(ArrayList<BowController> controllers, ButtonMonitor buttonMonitor) {

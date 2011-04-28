@@ -88,19 +88,19 @@ public class GameScreen extends ScreenAdapter {
 
 	private EntityFactory entityFactory;
 
-	private ButtonMonitor restartButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_R);
+	private ButtonMonitor restartButtonMonitor = new LibgdxButtonMonitor(Input.Keys.R);
 
-	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_PLUS);
+	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.PLUS);
 
-	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_MINUS);
+	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.MINUS);
 
-	private ButtonMonitor moveRightMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_RIGHT);
+	private ButtonMonitor moveRightMonitor = new LibgdxButtonMonitor(Input.Keys.DPAD_RIGHT);
 
-	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_LEFT);
+	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.DPAD_LEFT);
 
-	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_UP);
+	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.DPAD_UP);
 
-	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.KEYCODE_DPAD_DOWN);
+	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.DPAD_DOWN);
 
 	private MonitorUpdaterImpl monitorUpdater;
 
@@ -353,8 +353,8 @@ public class GameScreen extends ScreenAdapter {
 		monitorUpdater.add(moveUpMonitor);
 		monitorUpdater.add(moveDownMonitor);
 
-		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.KEYCODE_1, "Bow system"));
-		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.KEYCODE_2, "Walking dead system"));
+		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.NUM_1, "Bow system"));
+		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.NUM_2, "Walking dead system"));
 
 	}
 
@@ -433,10 +433,6 @@ public class GameScreen extends ScreenAdapter {
 
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		if (Gdx.input.isKeyPressed(Input.Keys.KEYCODE_D)) {
-			box2dDebugRenderer.render(physicsWorld);
-		}
-
 		monitorUpdater.update();
 
 		int deltaInMs = (int) (delta * 1000);
@@ -472,6 +468,9 @@ public class GameScreen extends ScreenAdapter {
 			ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), bowController.getAngle(), Color.WHITE);
 		}
 
+		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+			box2dDebugRenderer.render(physicsWorld);
+		}
 	}
 
 	protected void loadResources() {
