@@ -643,9 +643,6 @@ public class ArcherVsWorldEntityFactory {
 
 		Entity entity = world.createEntity();
 
-		Resource<Texture> resource = resourceManager.get("Tower");
-		Texture texture = resource.get();
-
 		Color color = new Color(1f, 1f, 1f, 1f);
 
 		body.setUserData(entity);
@@ -655,10 +652,10 @@ public class ArcherVsWorldEntityFactory {
 				PropertyBuilder.vector2(position), //
 				PropertyBuilder.vector2(size), //
 				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(2)), //
-				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-				PropertyBuilder.property(color)));
+//		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+//				new SimpleProperty<IntValue>(new IntValue(2)), //
+//				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
+//				PropertyBuilder.property(color)));
 
 		entity.addComponent(new HealthComponent(new Container(0, 0), 1f));
 		entity.addComponent(new ParentComponent());

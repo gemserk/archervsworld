@@ -2,6 +2,10 @@ package com.gemserk.games.archervsworld;
 
 import java.util.ArrayList;
 
+import javax.vecmath.Matrix3f;
+import javax.vecmath.Vector2f;
+import javax.vecmath.Vector3f;
+
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Game;
@@ -18,6 +22,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
@@ -42,10 +47,21 @@ import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
+import com.gemserk.commons.svg.inkscape.SvgDocument;
+import com.gemserk.commons.svg.inkscape.SvgDocumentHandler;
+import com.gemserk.commons.svg.inkscape.SvgInkscapeGroup;
+import com.gemserk.commons.svg.inkscape.SvgInkscapeGroupHandler;
+import com.gemserk.commons.svg.inkscape.SvgInkscapeImage;
+import com.gemserk.commons.svg.inkscape.SvgInkscapeImageHandler;
+import com.gemserk.commons.svg.inkscape.SvgInkscapePath;
+import com.gemserk.commons.svg.inkscape.SvgInkscapePathHandler;
+import com.gemserk.commons.svg.inkscape.SvgParser;
+import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.AbstractProperty;
+import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
@@ -115,6 +131,8 @@ public class GameScreen extends ScreenAdapter {
 	private CameraController cameraController;
 
 	private ArrayList<Controller> controllers = new ArrayList<Controller>();
+	
+	private SvgDocument svgDocument;
 
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
@@ -281,6 +299,7 @@ public class GameScreen extends ScreenAdapter {
 		archerVsWorldEntityFactory.setResourceManager(resourceManager);
 
 		// I NEED AN EDITOR FOR ALL THIS STUFF!!
+		// I HAVE NOW AN EDITOR FOR ALL THIS STUFF!!!
 
 		archerVsWorldEntityFactory.createBackground(viewportWidth, viewportHeight);
 
@@ -291,42 +310,7 @@ public class GameScreen extends ScreenAdapter {
 		float x = 0f;
 		final float y = 2f;
 
-		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f + y), new Vector2(80f, 0.44f));
-
-		// Vector2[] polygon = new Vector2[] {
-		// new Vector2(-0.25f, 0.22f),
-		// new Vector2(0.25f, 0.20f),
-		// };
-
-		// archerVsWorldEntityFactory.createGround(new Vector2(2.5f, 0.22f), new Vector2(5f, 0.5f));
-		// archerVsWorldEntityFactory.createGround(new Vector2(7.5f, 0.22f), new Vector2(5f, 0.5f));
-		// archerVsWorldEntityFactory.createGround(new Vector2(12.5f, 0.22f), new Vector2(5f, 0.5f));
-		// archerVsWorldEntityFactory.createGround(new Vector2(17.5f, 0.22f), new Vector2(5f, 0.5f));
-		// archerVsWorldEntityFactory.createGround(new Vector2(22.5f, 0.22f), new Vector2(5f, 0.5f));
-
-		// archerVsWorldEntityFactory.createGround(new Vector2(2.5f, 0.22f), polygon);
-		// archerVsWorldEntityFactory.createGround(new Vector2(7.5f, 0.22f), polygon);
-		// archerVsWorldEntityFactory.createGround(new Vector2(12.5f, 0.22f), polygon);
-		// archerVsWorldEntityFactory.createGround(new Vector2(17.5f, 0.22f), polygon);
-		// archerVsWorldEntityFactory.createGround(new Vector2(22.5f, 0.22f), polygon);
-
-		// archerVsWorldEntityFactory.createGround(new Vector2(3f, 1f), new Vector2(5f, 0.44f));
-
-		for (int i = 0; i < 20; i++) {
-			// archerVsWorldEntityFactory.createGround(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), polygon);
-			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
-			x += grassSize.x;
-		}
-
-		archerVsWorldEntityFactory.createGrass2(new Vector2(10, 1), new Vector2(20f, 2f));
-
-		archerVsWorldEntityFactory.createArcher(new Vector2(2.5f, 1.7f + y + 3 + 2));
-
-		archerVsWorldEntityFactory.createTower(new Vector2(1f, y + 3f), new Vector2(6f, 6f));
-
-		// archerVsWorldEntityFactory.createBow(new Vector2(1f, 2.7f + y));
-		//
-		// archerVsWorldEntityFactory.createBow(new Vector2(1f, 3.7f + y));
+		archerVsWorldEntityFactory.createArcher(new Vector2(3.5f, 1.7f + y + 3 + 1f));
 
 		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(20, 1.25f + y));
 
@@ -355,7 +339,116 @@ public class GameScreen extends ScreenAdapter {
 
 		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.NUM_1, "Bow system"));
 		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.NUM_2, "Walking dead system"));
+		
+		SvgParser svgParser = new SvgParser();
+		svgParser.addHandler(new SvgDocumentHandler() {
+			@Override
+			protected void handle(SvgParser svgParser, SvgDocument svgDocument) {
+				GameScreen.this.svgDocument = svgDocument;
+			}
+		});
+		svgParser.addHandler(new SvgInkscapeGroupHandler() {
+			@Override
+			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup) {
+				
+				if (svgInkscapeGroup.getGroupMode().equals("layer") && !svgInkscapeGroup.getLabel().equalsIgnoreCase("World")) {
+					svgParser.processChildren(false);
+					return;
+				}
 
+			}
+		});
+		svgParser.addHandler(new SvgInkscapeImageHandler() {
+
+			private boolean isFlipped(Matrix3f matrix) {
+				return matrix.getM00() != matrix.getM11();
+			}
+
+			@Override
+			protected void handle(SvgParser svgParser, SvgInkscapeImage svgImage) {
+
+				if (svgImage.getLabel() == null)
+					return;
+
+				Resource<Texture> texture = resourceManager.get(svgImage.getLabel());
+
+				if (texture == null)
+					return;
+
+				float width = svgImage.getWidth();
+				float height = svgImage.getHeight();
+
+				Matrix3f transform = svgImage.getTransform();
+
+				Vector3f position = new Vector3f(svgImage.getX() + width * 0.5f, svgImage.getY() + height * 0.5f, 0f);
+				transform.transform(position);
+
+				Vector3f direction = new Vector3f(1f, 0f, 0f);
+				transform.transform(direction);
+
+				float angle = 360f - (float) (Math.atan2(direction.y, direction.x) * 180 / Math.PI);
+
+				float sx = 1f;
+				float sy = 1f;
+
+				if (isFlipped(transform)) {
+					sy = -1f;
+				}
+
+//				System.out.println(MessageFormat.format("id={0}, label={1}, x={2}, y={3}, angle={4}", svgImage.getId(), svgImage.getLabel(), svgImage.getX(), svgImage.getY(), angle));
+
+				float x = position.x;
+				float y = svgDocument.getHeight() - position.y;
+
+//				System.out.println(MessageFormat.format("id={0}, label={1}, x={2}, y={3}, angle={4}", svgImage.getId(), svgImage.getLabel(), x, y, angle));
+
+				Sprite sprite = new Sprite(texture.get());
+				sprite.setScale(sx, sy);
+
+				Entity entity = world.createEntity();
+				
+				entity.addComponent(new SpatialComponent(new Vector2(x,y), new Vector2(width, height), angle));
+				entity.addComponent(new SpriteComponent(PropertyBuilder.property(sprite), PropertyBuilder.property(ValueBuilder.intValue(2)), 
+						PropertyBuilder.vector2(0.5f, 0.5f)));
+				
+				entity.refresh();
+			}
+		});
+		svgParser.parse(Gdx.files.internal("data/scene01.svg").read());
+		
+		// parsing physics bodies...
+		
+		svgParser = new SvgParser();
+		svgParser.addHandler(new SvgInkscapeGroupHandler() {
+			@Override
+			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup) {
+				
+				if (svgInkscapeGroup.getGroupMode().equals("layer") && !svgInkscapeGroup.getLabel().equalsIgnoreCase("Physics")) {
+					svgParser.processChildren(false);
+					return;
+				}
+
+			}
+		});
+		svgParser.addHandler(new SvgInkscapePathHandler() {
+			@Override
+			protected void handle(SvgParser svgParser, SvgInkscapePath svgPath) {
+				
+				Vector2f[] points = svgPath.getPoints();
+				Vector2[] vertices = new Vector2[points.length];
+				
+				for (int i = 0; i < points.length; i++) {
+					Vector2f point = points[i];
+					vertices[i] = new Vector2(point.x, svgDocument.getHeight() - point.y);
+					System.out.println(vertices[i]);
+				}
+				
+				archerVsWorldEntityFactory.createGround(new Vector2(), vertices);
+				
+			}
+		});
+		svgParser.parse(Gdx.files.internal("data/scene01.svg").read());
+		
 	}
 
 	private void currentControllerLabel(final ControllerSwitcher controllerSwitcher) {
@@ -470,6 +563,11 @@ public class GameScreen extends ScreenAdapter {
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 			box2dDebugRenderer.render(physicsWorld);
+			Libgdx2dCameraTransformImpl myCamera2 = (Libgdx2dCameraTransformImpl) myCamera;
+			myCamera2.push();
+			ImmediateModeRendererUtils.drawHorizontalAxis(0, Color.RED);
+			ImmediateModeRendererUtils.drawVerticalAxis(0f, Color.RED);
+			myCamera2.pop();
 		}
 	}
 
@@ -484,7 +582,17 @@ public class GameScreen extends ScreenAdapter {
 				texture("Tree", "data/tree-512x512.png");
 
 				texture("Grass", "data/grass-128x128.png");
-				texture("Grass02", "data/grass-02-128x128.png");
+				
+				texture("Ground01", internal("data/ground-01.png"));
+				texture("Ground02", internal("data/ground-02.png"));
+				texture("Ground03", internal("data/ground-03.png"));
+				texture("Ground04", internal("data/ground-04.png"));
+				texture("Ground05", internal("data/ground-05.png"));
+				texture("Ground06", internal("data/ground-06.png"));
+
+				texture("Grass01", internal("data/grass-01.png"));
+				texture("Grass02", internal("data/grass-02.png"));
+				texture("Grass03", internal("data/grass-03.png"));
 
 				texture("Cloud", "data/cloud-256x256.png");
 
