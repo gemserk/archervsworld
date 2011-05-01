@@ -197,7 +197,7 @@ public class GameScreen extends ScreenAdapter {
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
-		Camera camera = new Camera(cameraPosition, 40f, 0f);
+		Camera camera = new Camera(cameraPosition.x, cameraPosition.y, 40f, 0f);
 
 		// cameraController = new CameraControllerButtonMonitorImpl(camera, //
 		// moveLeftMonitor, moveRightMonitor, //
