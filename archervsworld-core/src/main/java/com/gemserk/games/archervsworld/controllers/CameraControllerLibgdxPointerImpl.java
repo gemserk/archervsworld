@@ -43,8 +43,8 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 		this.area = area;
 		this.libgdxPointer = libgdxPointer;
 		
-		this.maxZoom = camera.zoom * 1.5f;
-		this.minZoom = camera.zoom * 0.5f;
+		this.maxZoom = camera.getZoom() * 1.5f;
+		this.minZoom = camera.getZoom() * 0.5f;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 		if (libgdxPointer.wasPressed) {
 			previousPosition.set(libgdxPointer.getPressedPosition());
 			inside = MathUtils2.inside(area, previousPosition);
-			currentZoom = camera.zoom;
+			currentZoom = camera.getZoom();
 			return;
 		}
 
@@ -67,7 +67,7 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 
 		tmp.set(previousPosition);
 		tmp.sub(pointerPosition);
-		tmp.mul(1f / camera.zoom);
+		tmp.mul(1f / camera.getZoom());
 
 		if (tmp.len() <= 0f) {
 			timeSamePosition += delta;
@@ -84,11 +84,11 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 			tmp.set(previousPosition);
 			tmp.sub(pointerPosition);
 			
-			camera.zoom = currentZoom - tmp.x * 0.1f;
-			camera.zoom = MathUtils2.truncate(camera.zoom, minZoom, maxZoom);
+			camera.setZoom(currentZoom - tmp.x * 0.1f);
+			camera.setZoom(MathUtils2.truncate(camera.getZoom(), minZoom, maxZoom));
 			
 		} else {
-			camera.position.add(tmp);
+			camera.setPosition(camera.getX() + tmp.x, camera.getY() + tmp.y); 
 			previousPosition.set(pointerPosition);
 		}
 

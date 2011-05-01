@@ -6,6 +6,8 @@ import javax.vecmath.Matrix3f;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 
+import org.w3c.dom.Element;
+
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Game;
@@ -19,7 +21,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -96,7 +97,7 @@ public class GameScreen extends ScreenAdapter {
 
 	int viewportHeight = 480;
 
-	Box2DDebugRenderer box2dDebugRenderer;
+	Box2DCustomDebugRenderer box2dDebugRenderer;
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
@@ -166,8 +167,6 @@ public class GameScreen extends ScreenAdapter {
 		myCamera = new Libgdx2dCameraTransformImpl();
 		myCamera.center(viewportWidth / 2, viewportHeight / 2);
 
-		box2dDebugRenderer = new Box2DCustomDebugRenderer((Libgdx2dCameraTransformImpl) myCamera);
-
 		ArrayList<RenderLayer> renderLayers = new ArrayList<RenderLayer>();
 
 		// background layer
@@ -181,6 +180,8 @@ public class GameScreen extends ScreenAdapter {
 
 		Vector2 gravity = new Vector2(0f, -10f);
 		PhysicsSystem physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
+		
+		box2dDebugRenderer = new Box2DCustomDebugRenderer((Libgdx2dCameraTransformImpl) myCamera, physicsSystem.getPhysicsWorld());
 
 		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
 		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
@@ -343,13 +344,13 @@ public class GameScreen extends ScreenAdapter {
 		SvgParser svgParser = new SvgParser();
 		svgParser.addHandler(new SvgDocumentHandler() {
 			@Override
-			protected void handle(SvgParser svgParser, SvgDocument svgDocument) {
+			protected void handle(SvgParser svgParser, SvgDocument svgDocument, Element element) {
 				GameScreen.this.svgDocument = svgDocument;
 			}
 		});
 		svgParser.addHandler(new SvgInkscapeGroupHandler() {
 			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup) {
+			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element) {
 				
 				if (svgInkscapeGroup.getGroupMode().equals("layer") && !svgInkscapeGroup.getLabel().equalsIgnoreCase("World")) {
 					svgParser.processChildren(false);
@@ -365,7 +366,7 @@ public class GameScreen extends ScreenAdapter {
 			}
 
 			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapeImage svgImage) {
+			protected void handle(SvgParser svgParser, SvgInkscapeImage svgImage, Element element) {
 
 				if (svgImage.getLabel() == null)
 					return;
@@ -421,7 +422,7 @@ public class GameScreen extends ScreenAdapter {
 		svgParser = new SvgParser();
 		svgParser.addHandler(new SvgInkscapeGroupHandler() {
 			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup) {
+			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element) {
 				
 				if (svgInkscapeGroup.getGroupMode().equals("layer") && !svgInkscapeGroup.getLabel().equalsIgnoreCase("Physics")) {
 					svgParser.processChildren(false);
@@ -432,13 +433,14 @@ public class GameScreen extends ScreenAdapter {
 		});
 		svgParser.addHandler(new SvgInkscapePathHandler() {
 			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapePath svgPath) {
+			protected void handle(SvgParser svgParser, SvgInkscapePath svgPath, Element element) {
 				
 				Vector2f[] points = svgPath.getPoints();
 				Vector2[] vertices = new Vector2[points.length];
 				
 				for (int i = 0; i < points.length; i++) {
 					Vector2f point = points[i];
+					// this coordinates transform, should be processed when parsed 
 					vertices[i] = new Vector2(point.x, svgDocument.getHeight() - point.y);
 					System.out.println(vertices[i]);
 				}
@@ -536,11 +538,11 @@ public class GameScreen extends ScreenAdapter {
 		cameraController.update(deltaInMs);
 
 		Camera camera = cameraController.getCamera();
-		Vector2 cameraPosition = camera.position;
+		Vector2 cameraPosition = new Vector2(camera.getX(), camera.getY());
 
-		myCamera.zoom(camera.zoom);
+		myCamera.zoom(camera.getZoom());
 		myCamera.move(cameraPosition.x, cameraPosition.y);
-		myCamera.rotate(camera.angle);
+		myCamera.rotate(camera.getAngle());
 
 		entitySystemController.update();
 
@@ -562,7 +564,9 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			box2dDebugRenderer.render(physicsWorld);
+			
+			box2dDebugRenderer.render();
+			
 			Libgdx2dCameraTransformImpl myCamera2 = (Libgdx2dCameraTransformImpl) myCamera;
 			myCamera2.push();
 			ImmediateModeRendererUtils.drawHorizontalAxis(0, Color.RED);
