@@ -683,6 +683,13 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3005"
+       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -691,9 +698,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="32"
-     inkscape:cx="13.0939"
-     inkscape:cy="2.93509"
+     inkscape:zoom="22.6274"
+     inkscape:cx="14.5464"
+     inkscape:cy="2.41696"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -769,6 +776,16 @@
        xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
        sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
     <image
+       y="17.6356"
+       x="5.65625"
+       id="image3455-3-2-8"
+       height="2"
+       width="2"
+       style="display:inline"
+       inkscape:label="Ground01"
+       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
+       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
+    <image
        sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
        xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
        style="display:inline"
@@ -785,16 +802,6 @@
        id="image3455-3-3-2"
        height="2"
        width="2"
-       style="display:inline"
-       inkscape:label="Ground01"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
-    <image
-       y="13.0836"
-       x="7.53192"
-       id="image3455-3"
-       height="4.375"
-       width="5.34375"
        style="display:inline"
        inkscape:label="Ground01"
        xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
