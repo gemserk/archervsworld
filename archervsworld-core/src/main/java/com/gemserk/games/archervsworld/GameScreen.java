@@ -587,16 +587,16 @@ public class GameScreen extends ScreenAdapter {
 
 				texture("Grass", "data/grass-128x128.png");
 				
-				texture("Ground01", internal("data/ground-01.png"));
-				texture("Ground02", internal("data/ground-02.png"));
-				texture("Ground03", internal("data/ground-03.png"));
-				texture("Ground04", internal("data/ground-04.png"));
-				texture("Ground05", internal("data/ground-05.png"));
-				texture("Ground06", internal("data/ground-06.png"));
+				texture("Ground01", internal("data/ground-01.png"), true);
+				texture("Ground02", internal("data/ground-02.png"), true);
+				texture("Ground03", internal("data/ground-03.png"), true);
+				texture("Ground04", internal("data/ground-04.png"), true);
+				texture("Ground05", internal("data/ground-05.png"), true);
+				texture("Ground06", internal("data/ground-06.png"), true);
 
-				texture("Grass01", internal("data/grass-01.png"));
-				texture("Grass02", internal("data/grass-02.png"));
-				texture("Grass03", internal("data/grass-03.png"));
+				texture("Grass01", internal("data/grass-01.png"), true);
+				texture("Grass02", internal("data/grass-02.png"), true);
+				texture("Grass03", internal("data/grass-03.png"), true);
 
 				texture("Cloud", "data/cloud-256x256.png");
 
