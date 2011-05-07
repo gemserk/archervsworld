@@ -1,5 +1,6 @@
 package com.gemserk.games.archervsworld;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.vecmath.Matrix3f;
@@ -48,6 +49,7 @@ import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
+import com.gemserk.commons.svg.inkscape.DocumentParser;
 import com.gemserk.commons.svg.inkscape.SvgDocument;
 import com.gemserk.commons.svg.inkscape.SvgDocumentHandler;
 import com.gemserk.commons.svg.inkscape.SvgInkscapeGroup;
@@ -415,7 +417,8 @@ public class GameScreen extends ScreenAdapter {
 				entity.refresh();
 			}
 		});
-		svgParser.parse(Gdx.files.internal("data/scene01.svg").read());
+		InputStream svg = Gdx.files.internal("data/scene01.svg").read();
+		svgParser.parse(new DocumentParser().parse(svg));
 		
 		// parsing physics bodies...
 		
@@ -449,7 +452,9 @@ public class GameScreen extends ScreenAdapter {
 				
 			}
 		});
-		svgParser.parse(Gdx.files.internal("data/scene01.svg").read());
+		
+		svg = Gdx.files.internal("data/scene01.svg").read();
+		svgParser.parse(new DocumentParser().parse(svg));
 		
 	}
 
