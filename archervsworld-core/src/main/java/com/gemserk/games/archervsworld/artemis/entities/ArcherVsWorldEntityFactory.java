@@ -24,7 +24,7 @@ import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpawnerComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
-import com.gemserk.commons.artemis.entities.EntityTemplate;
+import com.gemserk.commons.artemis.triggers.AbstractTrigger;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.commons.values.ValueBuilder;
@@ -537,12 +537,12 @@ public class ArcherVsWorldEntityFactory {
 	public Entity createZombiesSpawner(final Vector2 position) {
 		Entity spawner = world.createEntity();
 
-		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new EntityTemplate() {
+		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new AbstractTrigger() {
 			@Override
-			public void trigger(Entity e) {
+			protected boolean handle(Entity e) {
 				Gdx.app.log("Archer Vs Zombies", "new zombie spawned!");
 				createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 5f);
-				// return createWalkingDead(position, new Vector2(0.3f, 0.3f), new Vector2(-0.1f, 0.05f), 1f);
+				return true;
 			}
 		}));
 
@@ -588,9 +588,10 @@ public class ArcherVsWorldEntityFactory {
 
 		// TODO: Limit entity type component/system, to avoid creating a lot of entities of the same type?
 
-		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new EntityTemplate() {
+		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new AbstractTrigger() {
+			
 			@Override
-			public void trigger(Entity e) {
+			protected boolean handle(Entity e) {
 				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");
 
 				Vector2 size = new Vector2(5, 5).mul(MathUtils.random(0.5f, 1.2f));
@@ -611,6 +612,7 @@ public class ArcherVsWorldEntityFactory {
 					layer = 5;
 
 				createCloud(newPosition, velocity, size, limitArea, layer, 1f);
+				return true;
 			}
 		}));
 
