@@ -539,9 +539,9 @@ public class ArcherVsWorldEntityFactory {
 
 		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new EntityTemplate() {
 			@Override
-			public void build() {
+			public void trigger(Entity e) {
 				Gdx.app.log("Archer Vs Zombies", "new zombie spawned!");
-				return createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 5f);
+				createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 5f);
 				// return createWalkingDead(position, new Vector2(0.3f, 0.3f), new Vector2(-0.1f, 0.05f), 1f);
 			}
 		}));
@@ -590,7 +590,7 @@ public class ArcherVsWorldEntityFactory {
 
 		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new EntityTemplate() {
 			@Override
-			public void build() {
+			public void trigger(Entity e) {
 				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");
 
 				Vector2 size = new Vector2(5, 5).mul(MathUtils.random(0.5f, 1.2f));
@@ -610,7 +610,7 @@ public class ArcherVsWorldEntityFactory {
 				if (size.x > 4f)
 					layer = 5;
 
-				return createCloud(newPosition, velocity, size, limitArea, layer, 1f);
+				createCloud(newPosition, velocity, size, limitArea, layer, 1f);
 			}
 		}));
 
