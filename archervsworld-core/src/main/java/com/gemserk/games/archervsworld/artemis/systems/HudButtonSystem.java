@@ -4,6 +4,7 @@ import com.artemis.Entity;
 import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
@@ -38,17 +39,17 @@ public class HudButtonSystem extends EntitySystem {
 			if (!pointer.touched) 
 				continue;
 			
-			Vector2 position = spatialComponent.getPosition();
-			Vector2 size = spatialComponent.getSize();
+			Spatial spatial = spatialComponent.getSpatial();
 			
+			Vector2 position = spatial.getPosition();
 			Vector2 pointerPosition = pointer.getPosition();
 			
 			float distance = pointerPosition.tmp().sub(position).len();
 			
-			if (Math.abs(distance) > size.x)
+			if (Math.abs(distance) > spatial.getWidth())
 				continue;
 
-			if (Math.abs(distance) > size.y)
+			if (Math.abs(distance) > spatial.getHeight())
 				continue;
 			
 			buttonComponent.setPressed(true);

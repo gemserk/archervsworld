@@ -22,6 +22,8 @@ import com.gemserk.commons.artemis.components.AliveComponent;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.components.SpatialImpl;
+import com.gemserk.commons.artemis.components.SpatialPhysicsImpl;
 import com.gemserk.commons.artemis.components.SpawnerComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.triggers.AbstractTrigger;
@@ -42,8 +44,6 @@ import com.gemserk.games.archervsworld.artemis.components.InformationComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
-import com.gemserk.games.archervsworld.properties.Box2dAngleProperty;
-import com.gemserk.games.archervsworld.properties.Box2dPositionProperty;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
@@ -77,8 +77,9 @@ public class ArcherVsWorldEntityFactory {
 
 		int layer = -100;
 
-		entity.addComponent(new SpatialComponent( //
-				PropertyBuilder.vector2(0f, 0f), PropertyBuilder.vector2(w, h), PropertyBuilder.property(new FloatValue(0f))));
+		// entity.addComponent(new SpatialComponent( //
+		// PropertyBuilder.vector2(0f, 0f), PropertyBuilder.vector2(w, h), PropertyBuilder.property(new FloatValue(0f))));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(0f, 0f, w, h, 0f)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(r.get())), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				PropertyBuilder.vector2(0f, 0f)));
@@ -140,10 +141,11 @@ public class ArcherVsWorldEntityFactory {
 		body.setUserData(entity);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		entity.addComponent(new SpatialComponent( //
-				new Box2dPositionProperty(body), //
-				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
-				new Box2dAngleProperty(body)));
+		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, 1f, 1f)));
+		// entity.addComponent(new SpatialComponent( //
+		// new Box2dPositionProperty(body), //
+		// new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
+		// new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
@@ -169,10 +171,14 @@ public class ArcherVsWorldEntityFactory {
 		Resource<Texture> resource = resourceManager.get("Arrow");
 		Texture texture = resource.get();
 
-		entity.addComponent(new SpatialComponent( //
-				positionProperty, //
-				new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
-				angleProperty));
+		Vector2 position = positionProperty.get();
+		float angle = angleProperty.get().value;
+
+		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, 1f, 1f, angle)));
+		// entity.addComponent(new SpatialComponent( //
+		// positionProperty, //
+		// new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
+		// angleProperty));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1))));
@@ -197,11 +203,12 @@ public class ArcherVsWorldEntityFactory {
 		Resource<Texture> resource = resourceManager.get("Bow");
 		Texture texture = resource.get();
 
-		entity.addComponent(new SpatialComponent( //
-				PropertyBuilder.vector2(position), //
-				// new SimpleProperty<Vector2>(position), //
-				new SimpleProperty<Vector2>(new Vector2(bowWidth, bowHeight)), //
-				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, bowWidth, bowHeight, 0f)));
+		// entity.addComponent(new SpatialComponent( //
+		// PropertyBuilder.vector2(position), //
+		// // new SimpleProperty<Vector2>(position), //
+		// new SimpleProperty<Vector2>(new Vector2(bowWidth, bowHeight)), //
+		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f))));
@@ -254,10 +261,11 @@ public class ArcherVsWorldEntityFactory {
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
 
-		entity.addComponent(new SpatialComponent( //
-				new Box2dPositionProperty(body), //
-				new SimpleProperty<Vector2>(size), //
-				new Box2dAngleProperty(body)));
+		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, size.x, size.y)));
+		// entity.addComponent(new SpatialComponent( //
+		// new Box2dPositionProperty(body), //
+		// new SimpleProperty<Vector2>(size), //
+		// new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
@@ -297,10 +305,11 @@ public class ArcherVsWorldEntityFactory {
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
 
-		entity.addComponent(new SpatialComponent( //
-				new Box2dPositionProperty(body), //
-				new SimpleProperty<Vector2>(size), //
-				new Box2dAngleProperty(body)));
+		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, size.x, size.y)));
+		// entity.addComponent(new SpatialComponent( //
+		// new Box2dPositionProperty(body), //
+		// new SimpleProperty<Vector2>(size), //
+		// new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(1))));
 
 		entity.refresh();
@@ -341,10 +350,11 @@ public class ArcherVsWorldEntityFactory {
 		entity.setGroup(Groups.Enemy);
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
-		entity.addComponent(new SpatialComponent( //
-				new Box2dPositionProperty(body), //
-				PropertyBuilder.vector2(size), //
-				new Box2dAngleProperty(body)));
+		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, size.x, size.y)));
+		// entity.addComponent(new SpatialComponent( //
+		// new Box2dPositionProperty(body), //
+		// PropertyBuilder.vector2(size), //
+		// new Box2dAngleProperty(body)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(2))));
 		entity.addComponent(new WalkingDeadComponent( //
 				PropertyBuilder.vector2(velocity), //
@@ -379,10 +389,11 @@ public class ArcherVsWorldEntityFactory {
 				.time(aliveTime) //
 				.build());
 
-		entity.addComponent(new SpatialComponent( //
-				PropertyBuilder.vector2(position), //
-				new SimpleProperty<Vector2>(size), //
-				PropertyBuilder.property(new FloatValue(0f))));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
+		// entity.addComponent(new SpatialComponent( //
+		// PropertyBuilder.vector2(position), //
+		// new SimpleProperty<Vector2>(size), //
+		// PropertyBuilder.property(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(2)), //
@@ -416,12 +427,14 @@ public class ArcherVsWorldEntityFactory {
 				.time(aliveTime) //
 				.build());
 
-		Vector2 arrowSize = new Vector2(1f, 1f);
+		Vector2 positionValue = position.get();
+		float angleValue = angle.get().value;
 
-		entity.addComponent(new SpatialComponent( //
-				position, //
-				PropertyBuilder.property(arrowSize), //
-				angle));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(positionValue.x, positionValue.y, 1f, 1f, angleValue)));
+		// entity.addComponent(new SpatialComponent( //
+		// position, //
+		// PropertyBuilder.property(arrowSize), //
+		// angle));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1)), //
@@ -473,9 +486,10 @@ public class ArcherVsWorldEntityFactory {
 
 		// entity.setGroup(Groups.Enemy);
 		entity.addComponent(new PhysicsComponent(body));
-		entity.addComponent(new SpatialComponent( //
-				new Box2dPositionProperty(body), //
-				PropertyBuilder.vector2(0f, 0f), new Box2dAngleProperty(body)));
+		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, 0f, 0f)));
+		// entity.addComponent(new SpatialComponent( //
+		// new Box2dPositionProperty(body), //
+		// PropertyBuilder.vector2(0f, 0f), new Box2dAngleProperty(body)));
 		entity.addComponent(new HealthComponent(new Container(0, 0), 1f));
 		entity.addComponent(new ParentComponent());
 
@@ -502,10 +516,11 @@ public class ArcherVsWorldEntityFactory {
 
 	private Entity createGrass(Vector2 position, Vector2 size, Texture texture, int layer) {
 		Entity entity = world.createEntity();
-		entity.addComponent(new SpatialComponent( //
-				PropertyBuilder.vector2(position), //
-				PropertyBuilder.vector2(size), //
-				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
+		// entity.addComponent(new SpatialComponent( //
+		// PropertyBuilder.vector2(position), //
+		// PropertyBuilder.vector2(size), //
+		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(layer))));
@@ -521,10 +536,11 @@ public class ArcherVsWorldEntityFactory {
 		Resource<Texture> resource = resourceManager.get("Button");
 		Texture texture = resource.get();
 
-		entity.addComponent(new SpatialComponent( //
-				PropertyBuilder.vector2(position), //
-				new SimpleProperty<Vector2>(new Vector2(2, 2)), //
-				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, 2f, 2f, 0f)));
+		// entity.addComponent(new SpatialComponent( //
+		// PropertyBuilder.vector2(position), //
+		// new SimpleProperty<Vector2>(new Vector2(2, 2)), //
+		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
@@ -565,10 +581,11 @@ public class ArcherVsWorldEntityFactory {
 				.time(2000) //
 				.build());
 
-		entity.addComponent(new SpatialComponent( //
-				PropertyBuilder.vector2(position), //
-				PropertyBuilder.vector2(size), //
-				new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
+		// entity.addComponent(new SpatialComponent( //
+		// PropertyBuilder.vector2(position), //
+		// PropertyBuilder.vector2(size), //
+		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
@@ -589,7 +606,7 @@ public class ArcherVsWorldEntityFactory {
 		// TODO: Limit entity type component/system, to avoid creating a lot of entities of the same type?
 
 		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new AbstractTrigger() {
-			
+
 			@Override
 			protected boolean handle(Entity e) {
 				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");
@@ -624,15 +641,15 @@ public class ArcherVsWorldEntityFactory {
 	public Entity createTower(Vector2 position, Vector2 size) {
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(size.x/2f, size.y/2f);
+		shape.setAsBox(size.x / 2f, size.y / 2f);
 
 		BodyDef groundBodyDef = new BodyDef();
 		groundBodyDef.type = BodyType.StaticBody;
 		groundBodyDef.position.set(position);
-		
+
 		groundBodyDef.position.y -= size.y * 0.15f;
 		groundBodyDef.position.x -= size.x * 0.05f;
-		
+
 		Body body = physicsWorld.createBody(groundBodyDef);
 
 		FixtureDef fixtureDef = new FixtureDef();
@@ -649,19 +666,20 @@ public class ArcherVsWorldEntityFactory {
 
 		body.setUserData(entity);
 		entity.addComponent(new PhysicsComponent(body));
-		
-		entity.addComponent(new SpatialComponent( //
-				PropertyBuilder.vector2(position), //
-				PropertyBuilder.vector2(size), //
-				new SimpleProperty<FloatValue>(new FloatValue(0f))));
-//		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
-//				new SimpleProperty<IntValue>(new IntValue(2)), //
-//				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-//				PropertyBuilder.property(color)));
+
+		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
+		// entity.addComponent(new SpatialComponent( //
+		// PropertyBuilder.vector2(position), //
+		// PropertyBuilder.vector2(size), //
+		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
+		// entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
+		// new SimpleProperty<IntValue>(new IntValue(2)), //
+		// new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
+		// PropertyBuilder.property(color)));
 
 		entity.addComponent(new HealthComponent(new Container(0, 0), 1f));
 		entity.addComponent(new ParentComponent());
-		
+
 		entity.refresh();
 
 		return entity;

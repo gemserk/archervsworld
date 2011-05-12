@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.gemserk.commons.artemis.components.ParentComponent;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.values.FloatValue;
@@ -51,7 +52,7 @@ public class GameLogicSystem extends EntitySystem {
 
 		@Override
 		public Vector2 get() {
-			Vector2 targetPosition = spatial.getPosition();
+			Vector2 targetPosition = spatial.getSpatial().getPosition();
 			position.set(targetPosition).sub(difference);
 			return position;
 		}
@@ -145,18 +146,21 @@ public class GameLogicSystem extends EntitySystem {
 
 			world.deleteEntity(entity);
 			
-			archerVsWorldEntityFactory.createDyingZombie(spatialComponent.getPosition(), spatialComponent.getSize());
+			Spatial zombieSpatial = spatialComponent.getSpatial();
+			archerVsWorldEntityFactory.createDyingZombie(zombieSpatial.getPosition(), new Vector2(zombieSpatial.getWidth(), zombieSpatial.getHeight()));
 
 			ArrayList<Entity> arrows = parentComponent.getChildren();
 			for (int j = 0; j < arrows.size(); j++) {
 				Entity arrow = arrows.get(j);
 				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
 				SpriteComponent spriteComponent = arrow.getComponent(SpriteComponent.class);
+				
+				Spatial arrowSpatial = arrowSpatialComponent.getSpatial();
 
 				// should not be null
 				if (arrowSpatialComponent != null)
-					archerVsWorldEntityFactory.createDyingArrow(arrowSpatialComponent.getPosition(), //
-							arrowSpatialComponent.getAngle(), 300, spriteComponent.getColor());
+					archerVsWorldEntityFactory.createDyingArrow(arrowSpatial.getPosition(), //
+							arrowSpatial.getAngle(), 300, spriteComponent.getColor());
 			}
 			
 
@@ -185,7 +189,8 @@ public class GameLogicSystem extends EntitySystem {
 			if (!body.isAwake()) {
 
 				SpatialComponent component = entity.getComponent(SpatialComponent.class);
-				archerVsWorldEntityFactory.createDyingArrow(component.getPosition(), component.getAngle(), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
+				Spatial spatial = component.getSpatial();
+				archerVsWorldEntityFactory.createDyingArrow(spatial.getPosition(), spatial.getAngle(), arrowAliveTime, new Color(1f, 1f, 1f, 1f));
 				this.world.deleteEntity(entity);
 				continue;
 
@@ -242,9 +247,10 @@ public class GameLogicSystem extends EntitySystem {
 						targetBody.applyLinearImpulse(new Vector2(0.5f, 0f), targetSpatialComponent.getPosition());
 
 					SpatialComponent spatialComponent = entity.getComponent(SpatialComponent.class);
+					Spatial spatial = spatialComponent.getSpatial();
 
-					Vector2 arrowPosition = spatialComponent.getPosition();
-					float arrowAngle = spatialComponent.getAngle();
+					Vector2 arrowPosition = spatial.getPosition();
+					float arrowAngle = spatial.getAngle();
 
 					Vector2 displacement = new Vector2(1f, 0f).mul(0.2f);
 					displacement.rotate(arrowAngle);

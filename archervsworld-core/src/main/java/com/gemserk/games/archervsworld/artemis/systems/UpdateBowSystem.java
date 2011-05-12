@@ -5,6 +5,7 @@ import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.artemis.EntityDebugger;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
@@ -54,9 +55,10 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 		float maxFireAngle = 80f;
 
 		SpatialComponent spatialComponent = bow.getComponent(SpatialComponent.class);
+		Spatial spatial = spatialComponent.getSpatial();
 
 		if (AngleUtils.between(angle, minFireAngle, maxFireAngle))
-			spatialComponent.setAngle(angle);
+			spatial.setAngle(angle);
 
 		if (bowController.isCharging()) {
 
@@ -93,10 +95,12 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 				throw new RuntimeException("spatial component missing on arrow entity " + arrow.getUniqueId());
 			}
 
+			Spatial arrowSpatial = arrowSpatialComponent.getSpatial();
+			
 			direction.set(1f, 0f);
-			direction.rotate(arrowSpatialComponent.getAngle());
+			direction.rotate(arrowSpatial.getAngle());
 
-			entityFactory.createPhysicsArrow(arrowSpatialComponent.getPosition(), direction, bowComponent.getPower());
+			entityFactory.createPhysicsArrow(arrowSpatial.getPosition(), direction, bowComponent.getPower());
 
 			world.deleteEntity(arrow);
 			bowComponent.setArrow(null);

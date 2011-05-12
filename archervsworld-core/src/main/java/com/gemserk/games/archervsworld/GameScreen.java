@@ -24,6 +24,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.components.SpatialImpl;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
@@ -134,7 +135,7 @@ public class GameScreen extends ScreenAdapter {
 	private CameraController cameraController;
 
 	private ArrayList<Controller> controllers = new ArrayList<Controller>();
-	
+
 	private SvgDocument svgDocument;
 
 	static class MonitorUpdaterImpl implements MonitorUpdater {
@@ -182,7 +183,7 @@ public class GameScreen extends ScreenAdapter {
 
 		Vector2 gravity = new Vector2(0f, -10f);
 		PhysicsSystem physicsSystem = new PhysicsSystem(new com.badlogic.gdx.physics.box2d.World(gravity, true));
-		
+
 		box2dDebugRenderer = new Box2DCustomDebugRenderer((Libgdx2dCameraTransformImpl) myCamera, physicsSystem.getPhysicsWorld());
 
 		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
@@ -289,9 +290,14 @@ public class GameScreen extends ScreenAdapter {
 		Resource<BitmapFont> fontResource = resourceManager.get("Font");
 
 		entityFactory.fpsEntity( //
-				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-				new SimpleProperty<BitmapFont>(fontResource.get()), //
-				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
+				new Vector2(0.5f, 0.5f), //
+				fontResource.get(), //
+				new SpatialImpl(10f, Gdx.graphics.getHeight() - 20, 1f, 1f, 0f));
+
+		// entityFactory.fpsEntity( //
+		// new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
+		// new SimpleProperty<BitmapFont>(fontResource.get()), //
+		// new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
 
 		// currentControllerLabel(controllerSwitcher);
 
@@ -342,7 +348,7 @@ public class GameScreen extends ScreenAdapter {
 
 		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.NUM_1, "Bow system"));
 		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.NUM_2, "Walking dead system"));
-		
+
 		SvgParser svgParser = new SvgParser();
 		svgParser.addHandler(new SvgDocumentHandler() {
 			@Override
@@ -353,7 +359,7 @@ public class GameScreen extends ScreenAdapter {
 		svgParser.addHandler(new SvgInkscapeGroupHandler() {
 			@Override
 			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element) {
-				
+
 				if (svgInkscapeGroup.getGroupMode().equals("layer") && !svgInkscapeGroup.getLabel().equalsIgnoreCase("World")) {
 					svgParser.processChildren(false);
 					return;
@@ -398,35 +404,35 @@ public class GameScreen extends ScreenAdapter {
 					sy = -1f;
 				}
 
-//				System.out.println(MessageFormat.format("id={0}, label={1}, x={2}, y={3}, angle={4}", svgImage.getId(), svgImage.getLabel(), svgImage.getX(), svgImage.getY(), angle));
+				// System.out.println(MessageFormat.format("id={0}, label={1}, x={2}, y={3}, angle={4}", svgImage.getId(), svgImage.getLabel(), svgImage.getX(), svgImage.getY(), angle));
 
 				float x = position.x;
 				float y = svgDocument.getHeight() - position.y;
 
-//				System.out.println(MessageFormat.format("id={0}, label={1}, x={2}, y={3}, angle={4}", svgImage.getId(), svgImage.getLabel(), x, y, angle));
+				// System.out.println(MessageFormat.format("id={0}, label={1}, x={2}, y={3}, angle={4}", svgImage.getId(), svgImage.getLabel(), x, y, angle));
 
 				Sprite sprite = new Sprite(texture.get());
 				sprite.setScale(sx, sy);
 
 				Entity entity = world.createEntity();
-				
-				entity.addComponent(new SpatialComponent(new Vector2(x,y), new Vector2(width, height), angle));
-				entity.addComponent(new SpriteComponent(PropertyBuilder.property(sprite), PropertyBuilder.property(ValueBuilder.intValue(2)), 
-						PropertyBuilder.vector2(0.5f, 0.5f)));
-				
+
+				// entity.addComponent(new SpatialComponent(new Vector2(x, y), new Vector2(width, height), angle));
+				entity.addComponent(new SpatialComponent(new SpatialImpl(x, y, width, height, angle)));
+				entity.addComponent(new SpriteComponent(PropertyBuilder.property(sprite), PropertyBuilder.property(ValueBuilder.intValue(2)), PropertyBuilder.vector2(0.5f, 0.5f)));
+
 				entity.refresh();
 			}
 		});
 		InputStream svg = Gdx.files.internal("data/scene01.svg").read();
 		svgParser.parse(new DocumentParser().parse(svg));
-		
+
 		// parsing physics bodies...
-		
+
 		svgParser = new SvgParser();
 		svgParser.addHandler(new SvgInkscapeGroupHandler() {
 			@Override
 			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element) {
-				
+
 				if (svgInkscapeGroup.getGroupMode().equals("layer") && !svgInkscapeGroup.getLabel().equalsIgnoreCase("Physics")) {
 					svgParser.processChildren(false);
 					return;
@@ -437,25 +443,25 @@ public class GameScreen extends ScreenAdapter {
 		svgParser.addHandler(new SvgInkscapePathHandler() {
 			@Override
 			protected void handle(SvgParser svgParser, SvgInkscapePath svgPath, Element element) {
-				
+
 				Vector2f[] points = svgPath.getPoints();
 				Vector2[] vertices = new Vector2[points.length];
-				
+
 				for (int i = 0; i < points.length; i++) {
 					Vector2f point = points[i];
-					// this coordinates transform, should be processed when parsed 
+					// this coordinates transform, should be processed when parsed
 					vertices[i] = new Vector2(point.x, svgDocument.getHeight() - point.y);
 					System.out.println(vertices[i]);
 				}
-				
+
 				archerVsWorldEntityFactory.createGround(new Vector2(), vertices);
-				
+
 			}
 		});
-		
+
 		svg = Gdx.files.internal("data/scene01.svg").read();
 		svgParser.parse(new DocumentParser().parse(svg));
-		
+
 	}
 
 	private void currentControllerLabel(final ControllerSwitcher controllerSwitcher) {
@@ -474,7 +480,8 @@ public class GameScreen extends ScreenAdapter {
 				new SimpleProperty<Color>(new Color(0f, 0f, 0f, 1f)) //
 		));
 
-		entity.addComponent(new SpatialComponent(new Vector2(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 60), new Vector2(0.5f, 0.5f), 50f));
+		// entity.addComponent(new SpatialComponent(new Vector2(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 60), new Vector2(0.5f, 0.5f), 50f));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 60, 0.5f, 0.5f, 50f)));
 		entity.refresh();
 	}
 
@@ -569,9 +576,9 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			
+
 			box2dDebugRenderer.render();
-			
+
 			Libgdx2dCameraTransformImpl myCamera2 = (Libgdx2dCameraTransformImpl) myCamera;
 			myCamera2.push();
 			ImmediateModeRendererUtils.drawHorizontalAxis(0, Color.RED);
@@ -591,7 +598,7 @@ public class GameScreen extends ScreenAdapter {
 				texture("Tree", "data/tree-512x512.png");
 
 				texture("Grass", "data/grass-128x128.png");
-				
+
 				texture("Ground01", internal("data/ground-01.png"), true);
 				texture("Ground02", internal("data/ground-02.png"), true);
 				texture("Ground03", internal("data/ground-03.png"), true);

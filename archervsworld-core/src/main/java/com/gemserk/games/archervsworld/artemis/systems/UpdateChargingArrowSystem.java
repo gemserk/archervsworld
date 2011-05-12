@@ -3,6 +3,7 @@ package com.gemserk.games.archervsworld.artemis.systems;
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector2;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
@@ -44,18 +45,22 @@ public class UpdateChargingArrowSystem extends EntityProcessingSystem implements
 			return;
 
 		SpatialComponent spatialComponent = bow.getComponent(SpatialComponent.class);
-		SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
+		
+		Spatial spatial = spatialComponent.getSpatial();
 
-		position.set(spatialComponent.getPosition());
+		position.set(spatial.getPosition());
 
 		diff.set(1f, 0f);
-		diff.rotate(spatialComponent.getAngle());
+		diff.rotate(spatial.getAngle());
 		diff.mul(bowComponent.getPower() * 0.012f);
 
 		position.sub(diff);
 
-		arrowSpatialComponent.setPosition(position);
-		arrowSpatialComponent.setAngle(spatialComponent.getAngle());
+		SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
+		Spatial arrowSpatial = arrowSpatialComponent.getSpatial();
+		
+		arrowSpatial.setPosition(position.x, position.y);
+		arrowSpatial.setAngle(spatial.getAngle());
 
 	}
 

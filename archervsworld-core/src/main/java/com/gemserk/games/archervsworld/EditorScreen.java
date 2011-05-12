@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
+import com.gemserk.commons.artemis.components.SpatialImpl;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
@@ -38,7 +39,6 @@ import com.gemserk.commons.gdx.resources.dataloaders.SoundDataLoader;
 import com.gemserk.commons.gdx.resources.dataloaders.TextureDataLoader;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
-import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.HudButtonSystem;
@@ -165,10 +165,12 @@ public class EditorScreen extends ScreenAdapter {
 
 		Resource<BitmapFont> fontResource = resourceManager.get("Font");
 
+//		new Vector2(10, Gdx.graphics.getHeight() - 20)
+		
 		entityFactory.fpsEntity( //
-				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-				new SimpleProperty<BitmapFont>(fontResource.get()), //
-				new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
+				new Vector2(0.5f, 0.5f), //
+				fontResource.get(), //
+				new SpatialImpl(10f, Gdx.graphics.getHeight() - 20, 1f, 1f, 0f));
 
 		physicsWorld = physicsSystem.getPhysicsWorld();
 

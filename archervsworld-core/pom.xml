@@ -16,7 +16,7 @@
 
 	<properties>
 		<animation4j.version>0.0.10</animation4j.version>
-		<commons.gdx.version>0.0.1-SNAPSHOT</commons.gdx.version>
+		<commons.gdx.version>0.0.2-SNAPSHOT</commons.gdx.version>
 	</properties>
 
 	<dependencies>
