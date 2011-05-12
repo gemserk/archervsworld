@@ -25,7 +25,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpatialImpl;
-import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
@@ -60,12 +59,10 @@ import com.gemserk.commons.svg.inkscape.SvgInkscapeImageHandler;
 import com.gemserk.commons.svg.inkscape.SvgInkscapePath;
 import com.gemserk.commons.svg.inkscape.SvgInkscapePathHandler;
 import com.gemserk.commons.svg.inkscape.SvgParser;
-import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.AbstractProperty;
-import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
@@ -92,9 +89,6 @@ public class GameScreen extends ScreenAdapter {
 	private World world;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
-
-	// int viewportWidth = 20;
-	// int viewportHeight = 12;
 
 	int viewportWidth = 800;
 
@@ -294,11 +288,6 @@ public class GameScreen extends ScreenAdapter {
 				fontResource.get(), //
 				new SpatialImpl(10f, Gdx.graphics.getHeight() - 20, 1f, 1f, 0f));
 
-		// entityFactory.fpsEntity( //
-		// new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-		// new SimpleProperty<BitmapFont>(fontResource.get()), //
-		// new SimpleProperty<Vector2>(new Vector2(10, Gdx.graphics.getHeight() - 20)));
-
 		// currentControllerLabel(controllerSwitcher);
 
 		physicsWorld = physicsSystem.getPhysicsWorld();
@@ -414,13 +403,7 @@ public class GameScreen extends ScreenAdapter {
 				Sprite sprite = new Sprite(texture.get());
 				sprite.setScale(sx, sy);
 
-				Entity entity = world.createEntity();
-
-				// entity.addComponent(new SpatialComponent(new Vector2(x, y), new Vector2(width, height), angle));
-				entity.addComponent(new SpatialComponent(new SpatialImpl(x, y, width, height, angle)));
-				entity.addComponent(new SpriteComponent(PropertyBuilder.property(sprite), PropertyBuilder.property(ValueBuilder.intValue(2)), PropertyBuilder.vector2(0.5f, 0.5f)));
-
-				entity.refresh();
+				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, sprite, 2, Color.WHITE, 0.5f, 0.5f);
 			}
 		});
 		InputStream svg = Gdx.files.internal("data/scene01.svg").read();
@@ -480,7 +463,6 @@ public class GameScreen extends ScreenAdapter {
 				new SimpleProperty<Color>(new Color(0f, 0f, 0f, 1f)) //
 		));
 
-		// entity.addComponent(new SpatialComponent(new Vector2(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 60), new Vector2(0.5f, 0.5f), 50f));
 		entity.addComponent(new SpatialComponent(new SpatialImpl(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 60, 0.5f, 0.5f, 50f)));
 		entity.refresh();
 	}
