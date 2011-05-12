@@ -32,6 +32,7 @@ import com.gemserk.commons.artemis.systems.AliveAreaSystem;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
 import com.gemserk.commons.artemis.systems.MovementSystem;
+import com.gemserk.commons.artemis.systems.PhysicsSystem;
 import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
 import com.gemserk.commons.artemis.systems.RenderLayer;
 import com.gemserk.commons.artemis.systems.SpawnerSystem;
@@ -69,7 +70,6 @@ import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFacto
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.DebugInformationSystem;
 import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
-import com.gemserk.games.archervsworld.artemis.systems.PhysicsSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;

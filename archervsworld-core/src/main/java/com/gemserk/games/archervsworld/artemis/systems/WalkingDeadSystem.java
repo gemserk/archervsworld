@@ -7,9 +7,9 @@ import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gemserk.commons.artemis.EntityDebugger;
+import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
-import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 
 public class WalkingDeadSystem extends EntityProcessingSystem implements ActivableSystem {

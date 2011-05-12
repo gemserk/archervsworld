@@ -5,9 +5,9 @@ import com.artemis.EntitySystem;
 import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.gemserk.commons.artemis.components.Contact;
+import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
-import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
-import com.gemserk.games.archervsworld.box2d.Contact;
 
 public class CorrectArrowDirectionSystem extends EntitySystem {
 
@@ -38,7 +38,7 @@ public class CorrectArrowDirectionSystem extends EntitySystem {
 
 			Contact contact = physicsComponent.getContact();
 
-			if (!contact.inContact) {
+			if (!contact.isInContact()) {
 
 				Vector2 linearVelocity = body.getLinearVelocity();
 				float angle = linearVelocity.angle();

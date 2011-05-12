@@ -17,6 +17,7 @@ import com.gemserk.commons.artemis.components.AliveAreaComponent;
 import com.gemserk.commons.artemis.components.AliveComponent;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.ParentComponent;
+import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpatialImpl;
 import com.gemserk.commons.artemis.components.SpatialPhysicsImpl;
@@ -37,7 +38,6 @@ import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionC
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.InformationComponent;
-import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.resources.Resource;
@@ -76,7 +76,6 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	public void createPhysicsArrow(Vector2 position, Vector2 direction, float power) {
-
 		Entity entity = world.createEntity();
 
 		entity.setGroup(Groups.Arrow);

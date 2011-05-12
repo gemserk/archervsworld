@@ -13,7 +13,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.gemserk.commons.artemis.components.Contact;
 import com.gemserk.commons.artemis.components.ParentComponent;
+import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
@@ -26,11 +28,9 @@ import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
-import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
-import com.gemserk.games.archervsworld.box2d.Contact;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
@@ -198,17 +198,17 @@ public class GameLogicSystem extends EntitySystem {
 
 			Contact contact = physicsComponent.getContact();
 
-			if (!contact.inContact)
+			if (!contact.isInContact())
 				continue;
 			
-			Entity target = contact.entity;
+			Entity target = contact.getEntity();
 
 			if (target == null)
 				continue;
 
 			String targetGroup = groupManager.getGroupOf(target);
 			
-			Vector2 normal = contact.normal;
+			Vector2 normal = contact.getNormal();
 			float normalAngle = normal.cpy().mul(-1f).angle();
 			float bodyAngle = (float) (body.getAngle() * 180.0 / Math.PI);
 			double diff = Math.abs(AngleUtils.minimumDifference(normalAngle, bodyAngle));
