@@ -43,6 +43,7 @@ import com.gemserk.commons.artemis.systems.TimerSystem;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.box2d.Box2DCustomDebugRenderer;
 import com.gemserk.commons.gdx.camera.Camera;
+import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.controllers.CameraController;
@@ -195,7 +196,8 @@ public class GameScreen extends ScreenAdapter {
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
 		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
-		Camera camera = new Camera(cameraPosition.x, cameraPosition.y, 40f, 0f);
+		// Camera camera = new CameraImpl(cameraPosition.x, cameraPosition.y, 40f, 0f);
+		Camera camera = new CameraRestrictedImpl(cameraPosition.x, cameraPosition.y, 40f, 0f, viewportWidth, viewportHeight, new Rectangle(0f, 0f, 20f, 12f));
 
 		// cameraController = new CameraControllerButtonMonitorImpl(camera, //
 		// moveLeftMonitor, moveRightMonitor, //
@@ -522,12 +524,12 @@ public class GameScreen extends ScreenAdapter {
 	public void internalRender(float delta) {
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		Camera camera = cameraController.getCamera();
-		Vector2 cameraPosition = new Vector2(camera.getX(), camera.getY());
+		Camera cameraImpl = cameraController.getCamera();
+		Vector2 cameraPosition = new Vector2(cameraImpl.getX(), cameraImpl.getY());
 
-		myCamera.zoom(camera.getZoom());
+		myCamera.zoom(cameraImpl.getZoom());
 		myCamera.move(cameraPosition.x, cameraPosition.y);
-		myCamera.rotate(camera.getAngle());
+		myCamera.rotate(cameraImpl.getAngle());
 
 		worldWrapper.render();
 

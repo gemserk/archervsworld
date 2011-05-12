@@ -1,5 +1,7 @@
 package com.gemserk.games.archervsworld.controllers;
 
+import java.text.MessageFormat;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.camera.Camera;
@@ -22,15 +24,15 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 	private Camera camera;
 
 	private int timeSamePosition = 0;
-	
+
 	private int timeToZoom = 1000;
 
 	private boolean zooming = false;
-	
+
 	private float currentZoom;
-	
+
 	private float maxZoom;
-	
+
 	private float minZoom;
 
 	@Override
@@ -42,7 +44,6 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 		this.camera = camera;
 		this.area = area;
 		this.libgdxPointer = libgdxPointer;
-		
 		this.maxZoom = camera.getZoom() * 1.5f;
 		this.minZoom = camera.getZoom() * 0.5f;
 	}
@@ -75,22 +76,22 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 			timeSamePosition = 0;
 		}
 
-		
-		if (timeSamePosition > timeToZoom) 
+		if (timeSamePosition > timeToZoom)
 			zooming = true;
 
 		if (zooming) {
-			
+
 			tmp.set(previousPosition);
 			tmp.sub(pointerPosition);
-			
+
 			camera.setZoom(currentZoom - tmp.x * 0.1f);
-			camera.setZoom(MathUtils2.truncate(camera.getZoom(), minZoom, maxZoom));
-			
+			// camera.setZoom(MathUtils2.truncate(camera.getZoom(), minZoom, maxZoom));
 		} else {
-			camera.setPosition(camera.getX() + tmp.x, camera.getY() + tmp.y); 
+			camera.setPosition(camera.getX() + tmp.x, camera.getY() + tmp.y);
 			previousPosition.set(pointerPosition);
 		}
+
+		System.out.println(MessageFormat.format("position=({0},{1}), zoom={2}, angle={3}", camera.getX(), camera.getY(), camera.getZoom(), camera.getAngle()));
 
 	}
 

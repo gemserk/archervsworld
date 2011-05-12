@@ -27,7 +27,7 @@ public class CameraControllerButtonMonitorImpl implements CameraController {
 
 	private final ButtonMonitor zoomOut;
 
-	private final Camera camera;
+	private final Camera cameraImpl;
 
 	public Vector2 getPosition() {
 		return position;
@@ -39,10 +39,10 @@ public class CameraControllerButtonMonitorImpl implements CameraController {
 
 	@Override
 	public Camera getCamera() {
-		return camera;
+		return cameraImpl;
 	}
 
-	public CameraControllerButtonMonitorImpl(Camera camera, //
+	public CameraControllerButtonMonitorImpl(Camera cameraImpl, //
 			ButtonMonitor left, ButtonMonitor right, //
 			ButtonMonitor up, ButtonMonitor down, //
 			ButtonMonitor zoomIn, ButtonMonitor zoomOut) {
@@ -52,9 +52,9 @@ public class CameraControllerButtonMonitorImpl implements CameraController {
 		this.down = down;
 		this.zoomIn = zoomIn;
 		this.zoomOut = zoomOut;
-		this.camera = camera;
-		this.position.set(camera.getX(), camera.getY());
-		this.zoom.value = camera.getZoom();
+		this.cameraImpl = cameraImpl;
+		this.position.set(cameraImpl.getX(), cameraImpl.getY());
+		this.zoom.value = cameraImpl.getZoom();
 	}
 
 	@Override
@@ -80,8 +80,8 @@ public class CameraControllerButtonMonitorImpl implements CameraController {
 			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300).build());
 		}
 
-		camera.setPosition(position.x, position.y);
-		camera.setZoom(zoom.value);
+		cameraImpl.setPosition(position.x, position.y);
+		cameraImpl.setZoom(zoom.value);
 	}
 
 }
