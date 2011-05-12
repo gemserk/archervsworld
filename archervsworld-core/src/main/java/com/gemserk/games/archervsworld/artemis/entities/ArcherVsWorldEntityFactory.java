@@ -3,6 +3,7 @@ package com.gemserk.games.archervsworld.artemis.entities;
 import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,13 +12,18 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.AliveAreaComponent;
 import com.gemserk.commons.artemis.components.AliveComponent;
+import com.gemserk.commons.artemis.components.Contact;
+import com.gemserk.commons.artemis.components.HitComponent;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
+import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpatialImpl;
 import com.gemserk.commons.artemis.components.SpatialPhysicsImpl;
@@ -31,6 +37,7 @@ import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
+import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
@@ -106,12 +113,75 @@ public class ArcherVsWorldEntityFactory {
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, 1f, 1f)));
-		entity.addComponent(new SpriteComponent(new Sprite(texture), 1, new Vector2(0.5f, 0.5f), Color.WHITE));
+		entity.addComponent(new SpriteComponent(new Sprite(texture), 1, new Vector2(0.5f, 0.5f), new Color(Color.WHITE)));
 		entity.addComponent(new DamageComponent(1f));
 		entity.addComponent(new CorrectArrowDirectionComponent());
 		entity.addComponent(new InformationComponent("physical arrow"));
+		entity.addComponent(new HitComponent(new AbstractTrigger() {
+			@Override
+			protected boolean handle(Entity e) {
+				PhysicsComponent physicsComponent = e.getComponent(PhysicsComponent.class);
+				Body body = physicsComponent.getBody();
+				Contact contact = physicsComponent.getContact();
+
+				for (int i = 0; i < contact.getContactCount(); i++) {
+					if (!contact.isInContact(i))
+						continue;
+					
+					Entity targetEntity = contact.getEntity(i);
+					String group = world.getGroupManager().getGroupOf(targetEntity);
+					
+					Vector2 normal = contact.getNormal();
+					float normalAngle = normal.cpy().mul(-1f).angle();
+					float bodyAngle = (float) (body.getAngle() * 180.0 / Math.PI);
+					double diff = Math.abs(AngleUtils.minimumDifference(normalAngle, bodyAngle));
+					
+					int stickAngle = 60;
+					
+					if (Groups.Enemy.equals(group)) 
+						stickAngle = 180;
+
+					// if the arrow hits something but not in the expected angle, then it will never be able to hit again.
+					if (diff > stickAngle) {
+						Fixture fixture = body.getFixtureList().get(0);
+						Filter filter = fixture.getFilterData();
+						filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup & ~CollisionDefinitions.EnemiesGroup; 
+						fixture.setFilterData(filter);
+						SpriteComponent spriteComponent = e.getComponent(SpriteComponent.class);
+						Synchronizers.transition(spriteComponent.getColor(), Transitions.transitionBuilder(spriteComponent.getColor()).end(endColor).time(5000));
+						e.addComponent(new AliveComponent(5000));
+						e.refresh();
+						return true;
+					}
+
+					SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
+					createDyingArrow(spatialComponent.getSpatial(), 5000, Color.WHITE);
+
+					// if target is dynamic body....
+					if (Groups.Enemy.equalsIgnoreCase(group)) {
+						// in this case create a special arrow which follows the enemy...
+						Sound sound = resourceManager.getResourceValue("HitFleshSound");
+						sound.play();
+					} else {
+						Sound sound = resourceManager.getResourceValue("HitGroundSound");
+						sound.play();
+					}
+					
+					world.deleteEntity(e);
+					return true;
+				}
+
+				return false;
+			}
+		}));
 
 		entity.refresh();
+	}
+
+	public Entity createArrow(Spatial spatial) {
+		Property<Vector2> positionProperty = PropertyBuilder.vector2(spatial.getPosition());
+		Property<FloatValue> angleProperty = PropertyBuilder.property((new FloatValue(spatial.getAngle())));
+		return createArrow(positionProperty, angleProperty);
 	}
 
 	public Entity createArrow(Vector2 position, float angle) {
@@ -232,6 +302,12 @@ public class ArcherVsWorldEntityFactory {
 
 		return entity;
 	}
+	
+	public void createDyingArrow(Spatial spatial, int aliveTime, Color startColor) {
+		createDyingArrow(PropertyBuilder.vector2(spatial.getPosition()), //
+				PropertyBuilder.property(ValueBuilder.floatValue(spatial.getAngle())), //
+				aliveTime, startColor);
+	}
 
 	public Entity createDyingArrow(Vector2 position, float angle, int aliveTime, Color startColor) {
 		return createDyingArrow(PropertyBuilder.vector2(position), //
@@ -245,7 +321,7 @@ public class ArcherVsWorldEntityFactory {
 		Resource<Texture> resource = resourceManager.get("Arrow");
 		Texture texture = resource.get();
 
-		Color color = startColor;
+		Color color = new Color(startColor);
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(color) //
 				.end(endColor) //
@@ -255,17 +331,12 @@ public class ArcherVsWorldEntityFactory {
 		float angleValue = angle.get().value;
 
 		entity.addComponent(new SpatialComponent(new SpatialImpl(positionValue.x, positionValue.y, 1f, 1f, angleValue)));
-		// entity.addComponent(new SpatialComponent( //
-		// position, //
-		// PropertyBuilder.property(arrowSize), //
-		// angle));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(1)), //
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
 		entity.addComponent(new AliveComponent(aliveTime));
-
 		entity.addComponent(new InformationComponent("fade out arrow"));
 
 		entity.refresh();
@@ -274,14 +345,12 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	public Entity createStaticBody(Vector2 position, Vector2 size) {
-
 		Vector2[] vertices = new Vector2[] { //
 		new Vector2(-size.x * 0.5f, -size.y * 0.5f), //
 				new Vector2(size.x * 0.5f, -size.y * 0.5f), //
 				new Vector2(size.x * 0.5f, size.y * 0.5f), //
 				new Vector2(-size.x * 0.5f, size.y * 0.5f), //
 		};
-
 		return createStaticBody(position, vertices);
 	}
 
@@ -293,9 +362,8 @@ public class ArcherVsWorldEntityFactory {
 				.polygonShape(vertices)//
 				.density(1f)//
 				.friction(0.5f) //
-				.userData(entity).build();
-
-		body.setUserData(entity);
+				.userData(entity) //
+				.build();
 
 		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, 0f, 0f)));

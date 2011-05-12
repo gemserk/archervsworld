@@ -32,6 +32,7 @@ import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.AliveAreaSystem;
 import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
+import com.gemserk.commons.artemis.systems.HitDetectionSystem;
 import com.gemserk.commons.artemis.systems.MovementSystem;
 import com.gemserk.commons.artemis.systems.PhysicsSystem;
 import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
@@ -197,7 +198,7 @@ public class GameScreen extends ScreenAdapter {
 
 		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		// Camera camera = new CameraImpl(cameraPosition.x, cameraPosition.y, 40f, 0f);
-		Camera camera = new CameraRestrictedImpl(cameraPosition.x, cameraPosition.y, 40f, 0f, viewportWidth, viewportHeight, new Rectangle(0f, 0f, 20f, 12f));
+		Camera camera = new CameraRestrictedImpl(cameraPosition.x, cameraPosition.y, 40f, 0f, viewportWidth, viewportHeight, new Rectangle(0f, 0f, 20f, 16f));
 
 		// cameraController = new CameraControllerButtonMonitorImpl(camera, //
 		// moveLeftMonitor, moveRightMonitor, //
@@ -256,7 +257,12 @@ public class GameScreen extends ScreenAdapter {
 
 		worldWrapper = new WorldWrapper(world);
 
+		worldWrapper.addRenderSystem(new SpriteUpdateSystem());
+		worldWrapper.addRenderSystem(spriteRenderSystem);
+		worldWrapper.addRenderSystem(new TextRendererSystem());
+
 		worldWrapper.addUpdateSystem(physicsSystem);
+		worldWrapper.addUpdateSystem(new HitDetectionSystem());
 		worldWrapper.addUpdateSystem(new CorrectArrowDirectionSystem());
 		worldWrapper.addUpdateSystem(pointerUpdateSystem);
 
@@ -265,9 +271,6 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.addUpdateSystem(walkingDeadSystem);
 		worldWrapper.addUpdateSystem(new MovementSystem());
 
-		worldWrapper.addRenderSystem(new SpriteUpdateSystem());
-		worldWrapper.addRenderSystem(spriteRenderSystem);
-		worldWrapper.addRenderSystem(new TextRendererSystem());
 
 		worldWrapper.addUpdateSystem(updateBowSystem);
 		worldWrapper.addUpdateSystem(new UpdateChargingArrowSystem());
@@ -555,11 +558,11 @@ public class GameScreen extends ScreenAdapter {
 
 	@Override
 	public void internalUpdate(float delta) {
-		Synchronizers.synchronize();
+		int deltaInMs = (int) (delta * 1000);
+
+		Synchronizers.synchronize(deltaInMs);
 
 		monitorUpdater.update();
-
-		int deltaInMs = (int) (delta * 1000);
 
 		for (int i = 0; i < controllers.size(); i++)
 			controllers.get(i).update(deltaInMs);

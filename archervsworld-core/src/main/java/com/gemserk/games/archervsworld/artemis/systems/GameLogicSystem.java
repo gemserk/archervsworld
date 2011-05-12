@@ -86,9 +86,9 @@ public class GameLogicSystem extends EntitySystem {
 	@Override
 	protected void processEntities(ImmutableBag<Entity> entities) {
 
-		processButtons();
+		// processButtons();
 
-		processArrows();
+		// processArrows();
 
 		processEnemies();
 
