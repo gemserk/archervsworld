@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
@@ -27,6 +26,7 @@ import com.gemserk.commons.artemis.components.SpatialPhysicsImpl;
 import com.gemserk.commons.artemis.components.SpawnerComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.triggers.AbstractTrigger;
+import com.gemserk.commons.gdx.box2d.BodyBuilder;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.commons.values.ValueBuilder;
@@ -49,9 +49,13 @@ import com.gemserk.resources.ResourceManager;
 
 public class ArcherVsWorldEntityFactory {
 
-	World world;
+	private World world;
 
-	com.badlogic.gdx.physics.box2d.World physicsWorld;
+	private com.badlogic.gdx.physics.box2d.World physicsWorld;
+
+	private BodyBuilder bodyBuilder;
+
+	ResourceManager<String> resourceManager;
 
 	public void setWorld(World world) {
 		this.world = world;
@@ -59,15 +63,12 @@ public class ArcherVsWorldEntityFactory {
 
 	public void setPhysicsWorld(com.badlogic.gdx.physics.box2d.World physicsWorld) {
 		this.physicsWorld = physicsWorld;
+		this.bodyBuilder = new BodyBuilder(physicsWorld);
 	}
-
-	ResourceManager<String> resourceManager;
 
 	public void setResourceManager(ResourceManager<String> resourceManager) {
 		this.resourceManager = resourceManager;
 	}
-
-	private MassData massData = new MassData();
 
 	public void createBackground(float w, float h) {
 		Texture texture = resourceManager.getResourceValue("Background");
@@ -81,38 +82,20 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 	}
 
-	public Entity createPhysicsArrow(Vector2 position, Vector2 direction, float power) {
+	public void createPhysicsArrow(Vector2 position, Vector2 direction, float power) {
 
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyType.DynamicBody;
-		bodyDef.bullet = true;
-		bodyDef.position.set(position);
+		short categoryBits = CollisionDefinitions.ArrowGroup;
+		short maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup;
 
-		Body body = physicsWorld.createBody(bodyDef);
-
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(0.72f / 2f, 0.05f / 2f);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.density = 1f;
-		fixtureDef.friction = 3f;
-
-		fixtureDef.filter.categoryBits = CollisionDefinitions.ArrowGroup;
-		fixtureDef.filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup;
-
-		body.createFixture(fixtureDef);
-
-		shape.dispose();
-
-		// 0.7112 mts
-
-		massData.center.set(0.35f / 2f, 0f);
-		massData.I = 0f;
-		massData.mass = 0.8f;
-
-		body.setMassData(massData);
-		body.resetMassData();
+		Body body = bodyBuilder.type(BodyType.DynamicBody) //
+				.bullet() //
+				.boxShape(0.72f / 2f, 0.05f / 2f) //
+				.density(1f)//
+				.friction(3f) //
+				.mass(0.8f) //
+				.categoryBits(categoryBits) //
+				.maskBits(maskBits) //
+				.build();
 
 		body.setTransform(position, (float) (direction.angle() / 180f * Math.PI));
 
@@ -134,21 +117,12 @@ public class ArcherVsWorldEntityFactory {
 
 		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, 1f, 1f)));
-		// entity.addComponent(new SpatialComponent( //
-		// new Box2dPositionProperty(body), //
-		// new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
-		// new Box2dAngleProperty(body)));
-		entity.addComponent(new SpriteComponent( //
-				new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(1))));
+		entity.addComponent(new SpriteComponent(new Sprite(texture), 1, new Vector2(0.5f, 0.5f), Color.WHITE));
 		entity.addComponent(new DamageComponent(1f));
 		entity.addComponent(new CorrectArrowDirectionComponent());
-
 		entity.addComponent(new InformationComponent("physical arrow"));
 
 		entity.refresh();
-
-		return entity;
 	}
 
 	public Entity createArrow(Vector2 position, float angle) {
