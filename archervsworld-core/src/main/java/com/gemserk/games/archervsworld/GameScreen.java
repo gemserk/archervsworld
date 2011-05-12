@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
+import com.gemserk.commons.artemis.WorldWrapper;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpatialImpl;
 import com.gemserk.commons.artemis.components.TextComponent;
@@ -253,31 +254,30 @@ public class GameScreen extends ScreenAdapter {
 
 		worldWrapper = new WorldWrapper(world);
 
-		worldWrapper.add(physicsSystem);
-		worldWrapper.add(new CorrectArrowDirectionSystem());
-		worldWrapper.add(pointerUpdateSystem);
+		worldWrapper.addUpdateSystem(physicsSystem);
+		worldWrapper.addUpdateSystem(new CorrectArrowDirectionSystem());
+		worldWrapper.addUpdateSystem(pointerUpdateSystem);
 
 		// worldWrapper.add(hudButtonSystem);
 
-		worldWrapper.add(walkingDeadSystem);
-		worldWrapper.add(new MovementSystem());
+		worldWrapper.addUpdateSystem(walkingDeadSystem);
+		worldWrapper.addUpdateSystem(new MovementSystem());
 
-		worldWrapper.add(new SpriteUpdateSystem());
-		worldWrapper.add(spriteRenderSystem);
-		worldWrapper.add(new TextRendererSystem());
+		worldWrapper.addRenderSystem(new SpriteUpdateSystem());
+		worldWrapper.addRenderSystem(spriteRenderSystem);
+		worldWrapper.addRenderSystem(new TextRendererSystem());
 
-		worldWrapper.add(updateBowSystem);
-		worldWrapper.add(new UpdateChargingArrowSystem());
+		worldWrapper.addUpdateSystem(updateBowSystem);
+		worldWrapper.addUpdateSystem(new UpdateChargingArrowSystem());
 
-		worldWrapper.add(gameLogicSystem);
-		worldWrapper.add(new HierarchySystem());
-		worldWrapper.add(new AliveSystem());
-		worldWrapper.add(new AliveAreaSystem());
+		worldWrapper.addUpdateSystem(gameLogicSystem);
+		worldWrapper.addUpdateSystem(new HierarchySystem());
+		worldWrapper.addUpdateSystem(new AliveSystem());
+		worldWrapper.addUpdateSystem(new AliveAreaSystem());
 
-		//		worldWrapper.add(new SpawnerSystem());
-		worldWrapper.add(new TimerSystem());
-
-		worldWrapper.add(new DebugInformationSystem());
+		// worldWrapper.add(new SpawnerSystem());
+		worldWrapper.addUpdateSystem(new TimerSystem());
+		worldWrapper.addUpdateSystem(new DebugInformationSystem());
 
 		worldWrapper.init();
 
@@ -519,18 +519,8 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	@Override
-	public void render(float delta) {
-
+	public void internalRender(float delta) {
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-		monitorUpdater.update();
-
-		int deltaInMs = (int) (delta * 1000);
-
-		for (int i = 0; i < controllers.size(); i++)
-			controllers.get(i).update(deltaInMs);
-
-		cameraController.update(deltaInMs);
 
 		Camera camera = cameraController.getCamera();
 		Vector2 cameraPosition = new Vector2(camera.getX(), camera.getY());
@@ -539,14 +529,7 @@ public class GameScreen extends ScreenAdapter {
 		myCamera.move(cameraPosition.x, cameraPosition.y);
 		myCamera.rotate(camera.getAngle());
 
-		entitySystemController.update();
-
-		worldWrapper.update(deltaInMs);
-
-		Synchronizers.synchronize();
-
-		if (restartButtonMonitor.isReleased())
-			restart();
+		worldWrapper.render();
 
 		if (bowController instanceof BowControllerHudImpl) {
 			BowControllerHudImpl controller = (BowControllerHudImpl) bowController;
@@ -559,15 +542,33 @@ public class GameScreen extends ScreenAdapter {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-
 			box2dDebugRenderer.render();
-
 			Libgdx2dCameraTransformImpl myCamera2 = (Libgdx2dCameraTransformImpl) myCamera;
 			myCamera2.push();
 			ImmediateModeRendererUtils.drawHorizontalAxis(0, Color.RED);
 			ImmediateModeRendererUtils.drawVerticalAxis(0f, Color.RED);
 			myCamera2.pop();
 		}
+	}
+
+	@Override
+	public void internalUpdate(float delta) {
+		Synchronizers.synchronize();
+
+		monitorUpdater.update();
+
+		int deltaInMs = (int) (delta * 1000);
+
+		for (int i = 0; i < controllers.size(); i++)
+			controllers.get(i).update(deltaInMs);
+
+		cameraController.update(deltaInMs);
+		entitySystemController.update();
+
+		worldWrapper.update(deltaInMs);
+
+		if (restartButtonMonitor.isReleased())
+			restart();
 	}
 
 	protected void loadResources() {
