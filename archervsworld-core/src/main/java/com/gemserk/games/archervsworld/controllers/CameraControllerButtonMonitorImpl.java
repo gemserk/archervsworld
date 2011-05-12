@@ -73,11 +73,11 @@ public class CameraControllerButtonMonitorImpl implements CameraController {
 			position.x -= 0.01f * delta;
 
 		if (zoomIn.isPressed()) {
-			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300).build());
+			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300));
 		}
 
 		if (zoomOut.isPressed()) {
-			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300).build());
+			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300));
 		}
 
 		cameraImpl.setPosition(position.x, position.y);

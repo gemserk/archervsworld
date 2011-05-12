@@ -212,8 +212,7 @@ public class ArcherVsWorldEntityFactory {
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(color) //
 				.end(endColor) //
-				.time(aliveTime) //
-				.build());
+				.time(aliveTime));
 
 		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
 		// entity.addComponent(new SpatialComponent( //
@@ -250,8 +249,7 @@ public class ArcherVsWorldEntityFactory {
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(color) //
 				.end(endColor) //
-				.time(aliveTime) //
-				.build());
+				.time(aliveTime));
 
 		Vector2 positionValue = position.get();
 		float angleValue = angle.get().value;
@@ -335,8 +333,7 @@ public class ArcherVsWorldEntityFactory {
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(endColor) //
 				.end(endColor) //
-				.time(2000) //
-				.build());
+				.time(2000));
 
 		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
@@ -359,7 +356,7 @@ public class ArcherVsWorldEntityFactory {
 			protected boolean handle(Entity e) {
 				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
 				timerComponent.setCurrentTime(MathUtils.random(minTime, maxTime));
-				
+
 				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");
 
 				Vector2 size = new Vector2(5, 5).mul(MathUtils.random(0.5f, 1.2f));
