@@ -195,13 +195,7 @@ public class EditorScreen extends ScreenAdapter {
 		float x = 0f;
 		final float y = 0f;
 
-		archerVsWorldEntityFactory.createGround(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
-
-		for (int i = 0; i < 60; i++) {
-			archerVsWorldEntityFactory.createGrass(new Vector2(x + grassSize.x / 2f, y + grassSize.y / 2f), grassSize);
-			x += grassSize.x;
-		}
-
+		archerVsWorldEntityFactory.createStaticBody(new Vector2(40f, 0.22f), new Vector2(80f, 0.44f));
 		archerVsWorldEntityFactory.createArcher(new Vector2(1f, 1.7f));
 
 		monitorUpdater = new MonitorUpdaterImpl();
@@ -278,7 +272,7 @@ public class EditorScreen extends ScreenAdapter {
 				if (selectedEntity == null) {
 					// add new entity?
 					// selectedEntity = archerVsWorldEntityFactory.createBow(new Vector2(pressedPosition));
-					selectedEntity = archerVsWorldEntityFactory.createGround(pressedPosition, new Vector2(5f, 1f));
+					selectedEntity = archerVsWorldEntityFactory.createStaticBody(pressedPosition, new Vector2(5f, 1f));
 					// selectedEntity = archerVsWorldEntityFactory.createPhysicsArrow(new Vector2(pressedPosition), new Vector2(1f, 0f), 10f);
 				}
 

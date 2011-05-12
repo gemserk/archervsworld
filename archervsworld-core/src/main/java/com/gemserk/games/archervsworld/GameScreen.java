@@ -309,7 +309,6 @@ public class GameScreen extends ScreenAdapter {
 		final float y = 2f;
 
 		archerVsWorldEntityFactory.createArcher(new Vector2(3.5f, 1.7f + y + 3 + 1f));
-
 		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(20, 1.25f + y));
 
 		Vector2 direction = new Vector2(-1, 0);
@@ -437,7 +436,7 @@ public class GameScreen extends ScreenAdapter {
 					System.out.println(vertices[i]);
 				}
 
-				archerVsWorldEntityFactory.createGround(new Vector2(), vertices);
+				archerVsWorldEntityFactory.createStaticBody(new Vector2(), vertices);
 
 			}
 		});

@@ -10,10 +10,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.AliveAreaComponent;
@@ -39,7 +36,6 @@ import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
-import com.gemserk.games.archervsworld.artemis.components.HudButtonComponent;
 import com.gemserk.games.archervsworld.artemis.components.InformationComponent;
 import com.gemserk.games.archervsworld.artemis.components.PhysicsComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
@@ -51,8 +47,6 @@ public class ArcherVsWorldEntityFactory {
 
 	private World world;
 
-	private com.badlogic.gdx.physics.box2d.World physicsWorld;
-
 	private BodyBuilder bodyBuilder;
 
 	private ResourceManager<String> resourceManager;
@@ -62,7 +56,6 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	public void setPhysicsWorld(com.badlogic.gdx.physics.box2d.World physicsWorld) {
-		this.physicsWorld = physicsWorld;
 		this.bodyBuilder = new BodyBuilder(physicsWorld);
 	}
 
@@ -284,7 +277,7 @@ public class ArcherVsWorldEntityFactory {
 		return entity;
 	}
 
-	public Entity createGround(Vector2 position, Vector2 size) {
+	public Entity createStaticBody(Vector2 position, Vector2 size) {
 
 		Vector2[] vertices = new Vector2[] { //
 		new Vector2(-size.x * 0.5f, -size.y * 0.5f), //
@@ -293,10 +286,10 @@ public class ArcherVsWorldEntityFactory {
 				new Vector2(-size.x * 0.5f, size.y * 0.5f), //
 		};
 
-		return createGround(position, vertices);
+		return createStaticBody(position, vertices);
 	}
 
-	public Entity createGround(Vector2 position, final Vector2[] vertices) {
+	public Entity createStaticBody(Vector2 position, final Vector2[] vertices) {
 		Entity entity = world.createEntity();
 
 		Body body = bodyBuilder.type(BodyType.StaticBody) //
@@ -317,57 +310,8 @@ public class ArcherVsWorldEntityFactory {
 		return entity;
 	}
 
-	public Entity createGrass(Vector2 position, Vector2 size) {
-		Resource<Texture> resource = resourceManager.get("Grass");
-		Texture texture = resource.get();
-		return createGrass(position, size, texture, 2);
-	}
-
-	public Entity createGrass2(Vector2 position, Vector2 size) {
-		Resource<Texture> resource = resourceManager.get("Grass02");
-		Texture texture = resource.get();
-		return createGrass(position, size, texture, 3);
-	}
-
-	private Entity createGrass(Vector2 position, Vector2 size, Texture texture, int layer) {
-		Entity entity = world.createEntity();
-		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
-		// entity.addComponent(new SpatialComponent( //
-		// PropertyBuilder.vector2(position), //
-		// PropertyBuilder.vector2(size), //
-		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent( //
-				new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(layer))));
-		entity.refresh();
-		return entity;
-	}
-
-	public void createButton(Vector2 position) {
-		Entity entity = world.createEntity();
-
-		int layer = 100;
-
-		Resource<Texture> resource = resourceManager.get("Button");
-		Texture texture = resource.get();
-
-		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, 2f, 2f, 0f)));
-		// entity.addComponent(new SpatialComponent( //
-		// PropertyBuilder.vector2(position), //
-		// new SimpleProperty<Vector2>(new Vector2(2, 2)), //
-		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(layer)), //
-				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-				PropertyBuilder.property(new Color(0.7f, 1f, 0.7f, 0.7f))));
-		entity.addComponent(new HudButtonComponent());
-
-		entity.refresh();
-	}
-
-	public Entity createZombiesSpawner(final Vector2 position) {
+	public void createZombiesSpawner(final Vector2 position) {
 		Entity spawner = world.createEntity();
-
 		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new AbstractTrigger() {
 			@Override
 			protected boolean handle(Entity e) {
@@ -376,19 +320,15 @@ public class ArcherVsWorldEntityFactory {
 				return true;
 			}
 		}));
-
 		spawner.refresh();
-		return spawner;
 	}
 
-	public Entity createCloud(Vector2 position, Vector2 velocity, Vector2 size, Rectangle areaLimit, int layer, float alpha) {
+	public void createCloud(Vector2 position, Vector2 velocity, Vector2 size, Rectangle areaLimit, int layer, float alpha) {
 		Entity entity = world.createEntity();
 
-		Resource<Texture> resource = resourceManager.get("Cloud");
-		Texture texture = resource.get();
+		Texture texture = resourceManager.getResourceValue("Cloud");
 
 		Color color = new Color();
-
 		Color endColor = new Color(1f, 1f, 1f, alpha);
 
 		Synchronizers.transition(color, Transitions.transitionBuilder(endColor) //
@@ -397,30 +337,20 @@ public class ArcherVsWorldEntityFactory {
 				.build());
 
 		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
-		// entity.addComponent(new SpatialComponent( //
-		// PropertyBuilder.vector2(position), //
-		// PropertyBuilder.vector2(size), //
-		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(layer)), //
 				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color)));
 		entity.addComponent(new MovementComponent(velocity, 0f));
-
 		entity.addComponent(new AliveAreaComponent(areaLimit));
 
 		entity.refresh();
-
-		return entity;
 	}
 
-	public Entity createCloudsSpawner(final Rectangle spawnArea, final Rectangle limitArea, Vector2 direction, final float minSpeed, final float maxSpeed, int minTime, int maxTime) {
-
-		Entity spawner = world.createEntity();
-
+	public void createCloudsSpawner(final Rectangle spawnArea, final Rectangle limitArea, Vector2 direction, final float minSpeed, final float maxSpeed, int minTime, int maxTime) {
+		Entity entity = world.createEntity();
 		// TODO: Limit entity type component/system, to avoid creating a lot of entities of the same type?
-
-		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new AbstractTrigger() {
+		entity.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new AbstractTrigger() {
 
 			@Override
 			protected boolean handle(Entity e) {
@@ -447,57 +377,7 @@ public class ArcherVsWorldEntityFactory {
 				return true;
 			}
 		}));
-
-		spawner.refresh();
-		return spawner;
-
-	}
-
-	public Entity createTower(Vector2 position, Vector2 size) {
-
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(size.x / 2f, size.y / 2f);
-
-		BodyDef groundBodyDef = new BodyDef();
-		groundBodyDef.type = BodyType.StaticBody;
-		groundBodyDef.position.set(position);
-
-		groundBodyDef.position.y -= size.y * 0.15f;
-		groundBodyDef.position.x -= size.x * 0.05f;
-
-		Body body = physicsWorld.createBody(groundBodyDef);
-
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.friction = 0.5f;
-		fixtureDef.density = 1f;
-
-		body.createFixture(fixtureDef);
-		shape.dispose();
-
-		Entity entity = world.createEntity();
-
-		Color color = new Color(1f, 1f, 1f, 1f);
-
-		body.setUserData(entity);
-		entity.addComponent(new PhysicsComponent(body));
-
-		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
-		// entity.addComponent(new SpatialComponent( //
-		// PropertyBuilder.vector2(position), //
-		// PropertyBuilder.vector2(size), //
-		// new SimpleProperty<FloatValue>(new FloatValue(0f))));
-		// entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
-		// new SimpleProperty<IntValue>(new IntValue(2)), //
-		// new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-		// PropertyBuilder.property(color)));
-
-		entity.addComponent(new HealthComponent(new Container(0, 0), 1f));
-		entity.addComponent(new ParentComponent());
-
 		entity.refresh();
-
-		return entity;
 	}
 
 }
