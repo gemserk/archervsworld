@@ -21,8 +21,8 @@ import com.gemserk.commons.artemis.components.PhysicsComponent;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpatialImpl;
 import com.gemserk.commons.artemis.components.SpatialPhysicsImpl;
-import com.gemserk.commons.artemis.components.SpawnerComponent;
 import com.gemserk.commons.artemis.components.SpriteComponent;
+import com.gemserk.commons.artemis.components.TimerComponent;
 import com.gemserk.commons.artemis.triggers.AbstractTrigger;
 import com.gemserk.commons.gdx.box2d.BodyBuilder;
 import com.gemserk.commons.values.FloatValue;
@@ -31,7 +31,6 @@ import com.gemserk.commons.values.ValueBuilder;
 import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.properties.PropertyBuilder;
 import com.gemserk.componentsengine.properties.SimpleProperty;
-import com.gemserk.componentsengine.timers.CountDownTimer;
 import com.gemserk.componentsengine.utils.Container;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
@@ -311,14 +310,18 @@ public class ArcherVsWorldEntityFactory {
 
 	public void createZombiesSpawner(final Vector2 position) {
 		Entity spawner = world.createEntity();
-		spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, new AbstractTrigger() {
+		int time = MathUtils.random(5000, 7000);
+		spawner.addComponent(new TimerComponent(time, new AbstractTrigger() {
 			@Override
 			protected boolean handle(Entity e) {
-				Gdx.app.log("Archer Vs Zombies", "new zombie spawned!");
+				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
+				timerComponent.setCurrentTime(MathUtils.random(5000, 7000));
+				Gdx.app.log("Archer Vs Zombies", "New Zombie spawned");
 				createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 5f);
-				return true;
+				return false;
 			}
 		}));
+		// spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, ));
 		spawner.refresh();
 	}
 
@@ -346,19 +349,21 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 	}
 
-	public void createCloudsSpawner(final Rectangle spawnArea, final Rectangle limitArea, Vector2 direction, final float minSpeed, final float maxSpeed, int minTime, int maxTime) {
+	public void createCloudsSpawner(final Rectangle spawnArea, final Rectangle limitArea, Vector2 direction, final float minSpeed, final float maxSpeed, final int minTime, final int maxTime) {
 		Entity entity = world.createEntity();
 		// TODO: Limit entity type component/system, to avoid creating a lot of entities of the same type?
-		entity.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, new AbstractTrigger() {
+		int time = MathUtils.random(minTime, maxTime);
+		entity.addComponent(new TimerComponent(time, new AbstractTrigger() {
 
 			@Override
 			protected boolean handle(Entity e) {
+				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
+				timerComponent.setCurrentTime(MathUtils.random(minTime, maxTime));
+				
 				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");
 
 				Vector2 size = new Vector2(5, 5).mul(MathUtils.random(0.5f, 1.2f));
-
 				Vector2 velocity = new Vector2(-1f, 0f).mul(MathUtils.random(minSpeed, maxSpeed));
-
 				Vector2 newPosition = new Vector2( //
 						MathUtils.random(spawnArea.x, spawnArea.x + spawnArea.width), //
 						MathUtils.random(spawnArea.y, spawnArea.y + spawnArea.height));
@@ -373,9 +378,10 @@ public class ArcherVsWorldEntityFactory {
 					layer = 5;
 
 				createCloud(newPosition, velocity, size, limitArea, layer, 1f);
-				return true;
+				return false;
 			}
 		}));
+		// entity.addComponent(new SpawnerComponent(new CountDownTimer(0, false), minTime, maxTime, ));
 		entity.refresh();
 	}
 

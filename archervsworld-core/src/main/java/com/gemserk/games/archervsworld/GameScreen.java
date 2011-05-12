@@ -35,10 +35,10 @@ import com.gemserk.commons.artemis.systems.MovementSystem;
 import com.gemserk.commons.artemis.systems.PhysicsSystem;
 import com.gemserk.commons.artemis.systems.PointerUpdateSystem;
 import com.gemserk.commons.artemis.systems.RenderLayer;
-import com.gemserk.commons.artemis.systems.SpawnerSystem;
 import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
+import com.gemserk.commons.artemis.systems.TimerSystem;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.gdx.box2d.Box2DCustomDebugRenderer;
 import com.gemserk.commons.gdx.camera.Camera;
@@ -273,7 +273,9 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.add(new HierarchySystem());
 		worldWrapper.add(new AliveSystem());
 		worldWrapper.add(new AliveAreaSystem());
-		worldWrapper.add(new SpawnerSystem());
+
+		//		worldWrapper.add(new SpawnerSystem());
+		worldWrapper.add(new TimerSystem());
 
 		worldWrapper.add(new DebugInformationSystem());
 
