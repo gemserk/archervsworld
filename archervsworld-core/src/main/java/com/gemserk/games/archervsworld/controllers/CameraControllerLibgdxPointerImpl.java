@@ -85,7 +85,9 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 			tmp.sub(pointerPosition);
 
 			camera.setZoom(currentZoom - tmp.x * 0.1f);
-			// camera.setZoom(MathUtils2.truncate(camera.getZoom(), minZoom, maxZoom));
+//			if (camera.getZoom() > maxZoom)
+//				camera.setZoom(maxZoom);
+			camera.setZoom(MathUtils2.truncate(camera.getZoom(), minZoom, maxZoom));
 		} else {
 			camera.setPosition(camera.getX() + tmp.x, camera.getY() + tmp.y);
 			previousPosition.set(pointerPosition);

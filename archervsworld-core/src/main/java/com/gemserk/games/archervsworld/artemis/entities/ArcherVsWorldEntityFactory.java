@@ -31,6 +31,7 @@ import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TimerComponent;
 import com.gemserk.commons.artemis.triggers.AbstractTrigger;
 import com.gemserk.commons.gdx.box2d.BodyBuilder;
+import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
 import com.gemserk.commons.values.ValueBuilder;
@@ -71,7 +72,8 @@ public class ArcherVsWorldEntityFactory {
 
 	public void createBackground(float w, float h) {
 		Texture texture = resourceManager.getResourceValue("Background");
-		createStaticSprite(0f, 0f, w, h, 0f, new Sprite(texture), -100, Color.WHITE, 0f, 0f);
+		createStaticSprite(0f, 0f, texture.getWidth(), texture.getHeight(), 0f, new Sprite(texture), -100, Color.WHITE, 0f, 0f);
+		createStaticSprite(texture.getWidth(), 0f, texture.getWidth(), texture.getHeight(), 0f, new Sprite(texture), -100, Color.WHITE, 0f, 0f);
 	}
 
 	public void createStaticSprite(float x, float y, float w, float h, float angle, Sprite sprite, int layer, Color color, float centerx, float centery) {
@@ -127,25 +129,25 @@ public class ArcherVsWorldEntityFactory {
 				for (int i = 0; i < contact.getContactCount(); i++) {
 					if (!contact.isInContact(i))
 						continue;
-					
+
 					Entity targetEntity = contact.getEntity(i);
 					String group = world.getGroupManager().getGroupOf(targetEntity);
-					
+
 					Vector2 normal = contact.getNormal();
 					float normalAngle = normal.cpy().mul(-1f).angle();
 					float bodyAngle = (float) (body.getAngle() * 180.0 / Math.PI);
 					double diff = Math.abs(AngleUtils.minimumDifference(normalAngle, bodyAngle));
-					
+
 					int stickAngle = 60;
-					
-					if (Groups.Enemy.equals(group)) 
+
+					if (Groups.Enemy.equals(group))
 						stickAngle = 180;
 
 					// if the arrow hits something but not in the expected angle, then it will never be able to hit again.
 					if (diff > stickAngle) {
 						Fixture fixture = body.getFixtureList().get(0);
 						Filter filter = fixture.getFilterData();
-						filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup & ~CollisionDefinitions.EnemiesGroup; 
+						filter.maskBits = CollisionDefinitions.All & ~CollisionDefinitions.ArrowGroup & ~CollisionDefinitions.EnemiesGroup;
 						fixture.setFilterData(filter);
 						SpriteComponent spriteComponent = e.getComponent(SpriteComponent.class);
 						Synchronizers.transition(spriteComponent.getColor(), Transitions.transitionBuilder(spriteComponent.getColor()).end(endColor).time(5000));
@@ -166,7 +168,7 @@ public class ArcherVsWorldEntityFactory {
 						Sound sound = resourceManager.getResourceValue("HitGroundSound");
 						sound.play();
 					}
-					
+
 					world.deleteEntity(e);
 					return true;
 				}
@@ -302,7 +304,7 @@ public class ArcherVsWorldEntityFactory {
 
 		return entity;
 	}
-	
+
 	public void createDyingArrow(Spatial spatial, int aliveTime, Color startColor) {
 		createDyingArrow(PropertyBuilder.vector2(spatial.getPosition()), //
 				PropertyBuilder.property(ValueBuilder.floatValue(spatial.getAngle())), //
@@ -391,26 +393,19 @@ public class ArcherVsWorldEntityFactory {
 		spawner.refresh();
 	}
 
-	public void createCloud(Vector2 position, Vector2 velocity, Vector2 size, Rectangle areaLimit, int layer, float alpha) {
+	public void createCloud(Vector2 position, Vector2 velocity, Rectangle areaLimit, int layer, float size, Sprite sprite, Color cloudColor) {
 		Entity entity = world.createEntity();
 
-		Texture texture = resourceManager.getResourceValue("Cloud");
-
-		Color color = new Color();
-		Color endColor = new Color(1f, 1f, 1f, alpha);
-
-		Synchronizers.transition(color, Transitions.transitionBuilder(endColor) //
-				.end(endColor) //
+		Color color = new Color(cloudColor.r, cloudColor.g, cloudColor.b, 0f);
+		Synchronizers.transition(color, Transitions.transitionBuilder(color) //
+				.end(cloudColor) //
 				.time(2000));
 
-		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(layer)), //
-				new SimpleProperty<Vector2>(new Vector2(0.5f, 0.5f)), //
-				PropertyBuilder.property(color)));
+		SpriteUtils.resize(sprite, size);
+		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, sprite.getWidth(), sprite.getHeight(), 0f)));
+		entity.addComponent(new SpriteComponent(sprite, layer, new Vector2(0.5f, 0.5f), color));
 		entity.addComponent(new MovementComponent(velocity, 0f));
 		entity.addComponent(new AliveAreaComponent(areaLimit));
-
 		entity.refresh();
 	}
 
@@ -427,22 +422,29 @@ public class ArcherVsWorldEntityFactory {
 
 				Gdx.app.log("Archer Vs Zombies", "new cloud spawned!");
 
-				Vector2 size = new Vector2(5, 5).mul(MathUtils.random(0.5f, 1.2f));
+				float size = MathUtils.random(10f, 20f);
+				// float gray = MathUtils.random(0.7f, 1f);
+				float gray = 1f;
+
 				Vector2 velocity = new Vector2(-1f, 0f).mul(MathUtils.random(minSpeed, maxSpeed));
 				Vector2 newPosition = new Vector2( //
 						MathUtils.random(spawnArea.x, spawnArea.x + spawnArea.width), //
 						MathUtils.random(spawnArea.y, spawnArea.y + spawnArea.height));
 
-				// newPosition.set(position);
-
-				// newPosition.y += MathUtils.random(-3, 3);
-
 				int layer = -4;
 
-				if (size.x > 4f)
-					layer = 5;
+				// if (size > 9f)
+				// layer = 5;
 
-				createCloud(newPosition, velocity, size, limitArea, layer, 1f);
+				Sprite sprite = null;
+
+				if (MathUtils.randomBoolean()) {
+					sprite = resourceManager.getResourceValue("Cloud02");
+				} else {
+					sprite = resourceManager.getResourceValue("Cloud01");
+				}
+
+				createCloud(newPosition, velocity, limitArea, layer, size, sprite, new Color(gray, gray, gray, 1f));
 				return false;
 			}
 		}));

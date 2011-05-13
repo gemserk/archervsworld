@@ -320,8 +320,8 @@ public class GameScreen extends ScreenAdapter {
 
 		Vector2 direction = new Vector2(-1, 0);
 
-		Rectangle spawnArea = new Rectangle(10, 10, 15, 5);
-		Rectangle limitArea = new Rectangle(-5, 0, 30, 20);
+		Rectangle spawnArea = new Rectangle(10, 12, 25, 5);
+		Rectangle limitArea = new Rectangle(-15, 0, 45, 20);
 
 		float minSpeed = 0.1f;
 		float maxSpeed = 0.7f;
@@ -580,14 +580,14 @@ public class GameScreen extends ScreenAdapter {
 
 		new LibgdxResourceBuilder(resourceManager) {
 			{
-				texture("Background", "data/background-512x512.jpg");
+				texture("Background", "data/background-512x512.jpg", false );
+				
 				texture("Rock", "data/rock-512x512.png");
 				texture("Bow", "data/bow-512x512.png");
 				texture("Arrow", "data/arrow-512x512.png");
 				texture("Tree", "data/tree-512x512.png");
-
 				texture("Grass", "data/grass-128x128.png");
-
+				
 				texture("Ground01", internal("data/ground-01.png"), true);
 				texture("Ground02", internal("data/ground-02.png"), true);
 				texture("Ground03", internal("data/ground-03.png"), true);
@@ -609,8 +609,6 @@ public class GameScreen extends ScreenAdapter {
 				texture("Tile14", internal("data/tile14.png"), true);
 				texture("Tile21", internal("data/tile21.png"), true);
 
-				texture("Cloud", "data/cloud-256x256.png");
-
 				texture("Tower", "data/tower-128x128.png");
 
 				texture("Button", "data/button-template-64x64.png");
@@ -619,6 +617,11 @@ public class GameScreen extends ScreenAdapter {
 				sound("HitFleshSound", "data/hit-flesh.ogg");
 				sound("HitGroundSound", "data/hit-ground.ogg");
 				sound("BowSound", "data/bow.ogg");
+				
+				texture("CloudsSpritesheet", "data/clouds-spritesheet.png", false);
+				
+				sprite("Cloud01", "CloudsSpritesheet", 0, 0, 512, 128);
+				sprite("Cloud02", "CloudsSpritesheet", 0, 128, 512, 128);
 			}
 		};
 
