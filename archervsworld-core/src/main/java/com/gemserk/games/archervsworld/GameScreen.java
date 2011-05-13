@@ -597,9 +597,9 @@ public class GameScreen extends ScreenAdapter {
 				texture("Button", "data/button-template-64x64.png");
 				texture("FontTexture", "data/font.png");
 
-				sound("HitFleshSound", "data/hit-flesh.ogg");
-				sound("HitGroundSound", "data/hit-ground.ogg");
-				sound("BowSound", "data/bow.ogg");
+				sound("HitFleshSound", "data/sounds/hit-flesh.ogg");
+				sound("HitGroundSound", "data/sounds/hit-ground.ogg");
+				sound("BowSound", "data/sounds/bow.ogg");
 
 				texture("CloudsSpritesheet", "data/clouds-spritesheet.png", false);
 
