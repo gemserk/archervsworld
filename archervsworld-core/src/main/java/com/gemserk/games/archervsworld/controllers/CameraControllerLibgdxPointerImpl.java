@@ -1,7 +1,5 @@
 package com.gemserk.games.archervsworld.controllers;
 
-import java.text.MessageFormat;
-
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.camera.Camera;
@@ -85,15 +83,15 @@ public class CameraControllerLibgdxPointerImpl implements CameraController {
 			tmp.sub(pointerPosition);
 
 			camera.setZoom(currentZoom - tmp.x * 0.1f);
-//			if (camera.getZoom() > maxZoom)
-//				camera.setZoom(maxZoom);
+			// if (camera.getZoom() > maxZoom)
+			// camera.setZoom(maxZoom);
 			camera.setZoom(MathUtils2.truncate(camera.getZoom(), minZoom, maxZoom));
 		} else {
 			camera.setPosition(camera.getX() + tmp.x, camera.getY() + tmp.y);
 			previousPosition.set(pointerPosition);
 		}
 
-		System.out.println(MessageFormat.format("position=({0},{1}), zoom={2}, angle={3}", camera.getX(), camera.getY(), camera.getZoom(), camera.getAngle()));
+		// System.out.println(MessageFormat.format("position=({0},{1}), zoom={2}, angle={3}", camera.getX(), camera.getY(), camera.getZoom(), camera.getAngle()));
 
 	}
 

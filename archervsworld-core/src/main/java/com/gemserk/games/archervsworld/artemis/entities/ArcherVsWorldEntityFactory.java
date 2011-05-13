@@ -151,8 +151,15 @@ public class ArcherVsWorldEntityFactory {
 						fixture.setFilterData(filter);
 						SpriteComponent spriteComponent = e.getComponent(SpriteComponent.class);
 						Synchronizers.transition(spriteComponent.getColor(), Transitions.transitionBuilder(spriteComponent.getColor()).end(endColor).time(5000));
+
+						// cant damage any more...
+						// DamageComponent damageComponent = e.getComponent(DamageComponent.class);
+						// e.removeComponent(damageComponent);
+
 						e.addComponent(new AliveComponent(5000));
+
 						e.refresh();
+
 						return true;
 					}
 
@@ -260,6 +267,54 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new HealthComponent(new Container(health, health), 0f));
 		entity.addComponent(new ParentComponent());
 		entity.addComponent(new InformationComponent("zombie"));
+		entity.addComponent(new HitComponent(new AbstractTrigger() {
+			@Override
+			protected boolean handle(Entity e) {
+
+				PhysicsComponent phyiscsComponent = e.getComponent(PhysicsComponent.class);
+				Contact contact = phyiscsComponent.getContact();
+				
+				if (!contact.isInContact())
+					return false;
+				
+				Entity contactEntity = null;
+				
+				for (int i = 0; i < contact.getContactCount(); i++) {
+
+					if (!contact.isInContact(i))
+						continue;
+
+					// hack to avoid processing the same entity twice because we have multiple contacts with it...
+					if (contactEntity == contact.getEntity(i))
+						continue;
+					
+					contactEntity = contact.getEntity(i);
+					// if contactEntity is arrow?
+
+					String contactEntityGroup = world.getGroupManager().getGroupOf(contactEntity);
+					// is bullet maybe?
+					if (!Groups.isArrow(contactEntityGroup))
+						continue;
+
+					HealthComponent healthComponent = e.getComponent(HealthComponent.class);
+					DamageComponent damageComponent = contactEntity.getComponent(DamageComponent.class);
+
+					if (damageComponent == null)
+						continue;
+
+					Container health = healthComponent.getContainer();
+					health.remove(damageComponent.getDamage());
+
+					if (health.isEmpty()) {
+						world.deleteEntity(e);
+						return true;
+					}
+
+				}
+				
+				return false;
+			}
+		}));
 
 		entity.refresh();
 	}
@@ -282,10 +337,6 @@ public class ArcherVsWorldEntityFactory {
 				.time(aliveTime));
 
 		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
-		// entity.addComponent(new SpatialComponent( //
-		// PropertyBuilder.vector2(position), //
-		// new SimpleProperty<Vector2>(size), //
-		// PropertyBuilder.property(new FloatValue(0f))));
 		entity.addComponent(new SpriteComponent( //
 				new SimpleProperty<Sprite>(new Sprite(texture)), //
 				new SimpleProperty<IntValue>(new IntValue(2)), //

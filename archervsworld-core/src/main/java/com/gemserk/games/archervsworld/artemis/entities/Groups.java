@@ -8,4 +8,12 @@ public class Groups {
 	
 	public static final String Enemy = "Enemy".intern();
 	
+	public static boolean isArrow(String group) {
+		return Arrow.equalsIgnoreCase(group);
+	}
+	
+	public static boolean isEnemy(String group) {
+		return Enemy.equalsIgnoreCase(group);
+	}
+	
 }
