@@ -3,13 +3,9 @@ package com.gemserk.games.archervsworld;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Vector2f;
-import javax.vecmath.Vector3f;
-
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -24,9 +20,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.WorldWrapper;
-import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.components.SpatialImpl;
-import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.AliveAreaSystem;
@@ -53,19 +47,12 @@ import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.svg.inkscape.DocumentParser;
 import com.gemserk.commons.svg.inkscape.SvgDocument;
-import com.gemserk.commons.svg.inkscape.SvgDocumentHandler;
-import com.gemserk.commons.svg.inkscape.SvgInkscapeGroup;
-import com.gemserk.commons.svg.inkscape.SvgInkscapeGroupHandler;
 import com.gemserk.commons.svg.inkscape.SvgInkscapeImage;
-import com.gemserk.commons.svg.inkscape.SvgInkscapeImageHandler;
 import com.gemserk.commons.svg.inkscape.SvgInkscapePath;
-import com.gemserk.commons.svg.inkscape.SvgInkscapePathHandler;
-import com.gemserk.commons.svg.inkscape.SvgParser;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.AbstractProperty;
-import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
@@ -288,9 +275,6 @@ public class GameScreen extends ScreenAdapter {
 
 		// archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
 
-		Vector2 grassSize = new Vector2(1f, 0.5f);
-
-		float x = 0f;
 		final float y = 2f;
 
 		archerVsWorldEntityFactory.createArcher(new Vector2(3.5f, 1.7f + y + 3 + 1f));
@@ -322,133 +306,26 @@ public class GameScreen extends ScreenAdapter {
 		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.NUM_1, "Bow system"));
 		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.NUM_2, "Walking dead system"));
 
-		SvgParser svgParser = new SvgParser();
-		svgParser.addHandler(new SvgDocumentHandler() {
-			@Override
-			protected void handle(SvgParser svgParser, SvgDocument svgDocument, Element element) {
-				GameScreen.this.svgDocument = svgDocument;
-			}
-		});
-		svgParser.addHandler(new SvgInkscapeGroupHandler() {
-			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element) {
+		InputStream svg = Gdx.files.internal("data/scenes/scene01.svg").read();
+		Document document = new DocumentParser().parse(svg);
 
-				if (svgInkscapeGroup.getGroupMode().equals("layer") && !svgInkscapeGroup.getLabel().equalsIgnoreCase("World")) {
-					svgParser.processChildren(false);
-					return;
-				}
-
-			}
-		});
-		svgParser.addHandler(new SvgInkscapeImageHandler() {
-
-			private boolean isFlipped(Matrix3f matrix) {
-				return matrix.getM00() != matrix.getM11();
-			}
-
-			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapeImage svgImage, Element element) {
-
-				if (svgImage.getLabel() == null)
-					return;
-
-				Resource<Texture> texture = resourceManager.get(svgImage.getLabel());
-
+		new LayerProcessor("World") {
+			protected void handleImageObject(SvgInkscapeImage svgImage, Element element, float x, float y, float width, float height, float sx, float sy, float angle) {
+				// create stuff..
+				Texture texture = resourceManager.getResourceValue(svgImage.getLabel());
 				if (texture == null)
 					return;
+				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, new Sprite(texture), 2, Color.WHITE, 0.5f, 0.5f);
+			};
+		}.processWorld(document);
 
-				float width = svgImage.getWidth();
-				float height = svgImage.getHeight();
-
-				Matrix3f transform = svgImage.getTransform();
-
-				Vector3f position = new Vector3f(svgImage.getX() + width * 0.5f, svgImage.getY() + height * 0.5f, 0f);
-				transform.transform(position);
-
-				Vector3f direction = new Vector3f(1f, 0f, 0f);
-				transform.transform(direction);
-
-				float angle = 360f - (float) (Math.atan2(direction.y, direction.x) * 180 / Math.PI);
-
-				float sx = 1f;
-				float sy = 1f;
-
-				if (isFlipped(transform)) {
-					sy = -1f;
-				}
-
-				// System.out.println(MessageFormat.format("id={0}, label={1}, x={2}, y={3}, angle={4}", svgImage.getId(), svgImage.getLabel(), svgImage.getX(), svgImage.getY(), angle));
-
-				float x = position.x;
-				float y = svgDocument.getHeight() - position.y;
-
-				// System.out.println(MessageFormat.format("id={0}, label={1}, x={2}, y={3}, angle={4}", svgImage.getId(), svgImage.getLabel(), x, y, angle));
-
-				Sprite sprite = new Sprite(texture.get());
-				sprite.setScale(sx, sy);
-
-				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, sprite, 2, Color.WHITE, 0.5f, 0.5f);
-			}
-		});
-		InputStream svg = Gdx.files.internal("data/scenes/scene01.svg").read();
-		svgParser.parse(new DocumentParser().parse(svg));
-
-		// parsing physics bodies...
-
-		svgParser = new SvgParser();
-		svgParser.addHandler(new SvgInkscapeGroupHandler() {
+		new LayerProcessor("Physics") {
 			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapeGroup svgInkscapeGroup, Element element) {
-
-				if (svgInkscapeGroup.getGroupMode().equals("layer") && !svgInkscapeGroup.getLabel().equalsIgnoreCase("Physics")) {
-					svgParser.processChildren(false);
-					return;
-				}
-
-			}
-		});
-		svgParser.addHandler(new SvgInkscapePathHandler() {
-			@Override
-			protected void handle(SvgParser svgParser, SvgInkscapePath svgPath, Element element) {
-
-				Vector2f[] points = svgPath.getPoints();
-				Vector2[] vertices = new Vector2[points.length];
-
-				for (int i = 0; i < points.length; i++) {
-					Vector2f point = points[i];
-					// this coordinates transform, should be processed when parsed
-					vertices[i] = new Vector2(point.x, svgDocument.getHeight() - point.y);
-					System.out.println(vertices[i]);
-				}
-
+			protected void handlePathObject(SvgInkscapePath svgPath, Element element, Vector2[] vertices) {
 				archerVsWorldEntityFactory.createStaticBody(new Vector2(), vertices);
-
 			}
-		});
+		}.processWorld(document);
 
-		svg = Gdx.files.internal("data/scenes/scene01.svg").read();
-		svgParser.parse(new DocumentParser().parse(svg));
-
-	}
-
-	private void currentControllerLabel(final ControllerSwitcher controllerSwitcher) {
-		Entity entity = world.createEntity();
-
-		Resource<BitmapFont> fontResource = resourceManager.get("Font");
-
-		entity.addComponent(new TextComponent( //
-				new AbstractProperty<String>() {
-					@Override
-					public String get() {
-						return "" + controllerSwitcher.getCurrentController();
-					}
-				}, //
-				new SimpleProperty<BitmapFont>(fontResource.get()), //
-				new SimpleProperty<Color>(new Color(0f, 0f, 0f, 1f)) //
-		));
-
-		entity.addComponent(new SpatialComponent(new SpatialImpl(Gdx.graphics.getWidth() - 80, Gdx.graphics.getHeight() - 60, 0.5f, 0.5f, 50f)));
-		entity.refresh();
 	}
 
 	static class EntitySystemController {
