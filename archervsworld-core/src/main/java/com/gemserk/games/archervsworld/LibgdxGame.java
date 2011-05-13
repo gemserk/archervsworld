@@ -6,42 +6,47 @@ import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.commons.values.converters.CommonConverters;
 import com.gemserk.animation4j.converters.Converters;
 import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
+import com.gemserk.commons.gdx.InternalScreen;
+import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.values.FloatValue;
+import com.gemserk.games.archervsworld.gamestates.PlayGameState;
+import com.gemserk.games.archervsworld.gamestates.SplashGameState;
 
 public class LibgdxGame extends Game {
 	
-	public GameScreen gameScreen;
+	public InternalScreen gameScreen;
+	
+	private FadeTransitionScreen fadeTransitionScreen;
 
 	@Override
 	public void create() {
-		
 		Converters.register(Vector2.class, LibgdxConverters.vector2());
 		Converters.register(Color.class, LibgdxConverters.color());
 		Converters.register(FloatValue.class, CommonConverters.floatValue());
 		
-		gameScreen = new GameScreen(this);
+		gameScreen = new InternalScreen(new PlayGameState(this));
+		
+		fadeTransitionScreen = new FadeTransitionScreen(this);
+		
+		InternalScreen splashScreen = new InternalScreen(new SplashGameState(this));
 		
 		setScreen(gameScreen);
 		
-//		final Game game = this;
-//		
-//		final Texture gemserkLogo = new Texture(Gdx.files.internal("data/logo-gemserk-512x128-white.png"));
-//		gemserkLogo.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-//		
-//		setScreen(new SplashScreen(gemserkLogo) {
-//			
-//			@Override
-//			protected void onSplashScreenFinished() {
-//				game.setScreen(new GameScreen(game));				
-//			}
-//			
-//			@Override
-//			public void dispose() {
-//				gemserkLogo.dispose();
-//			}
-//			
-//		});
-		
+		transition(null, splashScreen);
+	}
+	
+	public void transition(ScreenAdapter nextScreen) {
+		this.transition(nextScreen, false);
+	}
+
+	public void transition(ScreenAdapter nextScreen, boolean shouldDisposeCurrent) {
+		fadeTransitionScreen.transition((ScreenAdapter) this.getScreen(), nextScreen, 1500, shouldDisposeCurrent);
+		setScreen(fadeTransitionScreen);
+	}
+
+	public void transition(ScreenAdapter currentScreen, ScreenAdapter nextScreen) {
+		fadeTransitionScreen.transition(currentScreen, nextScreen, 1500);
+		setScreen(fadeTransitionScreen);
 	}
 
 }

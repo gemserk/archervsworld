@@ -1,4 +1,4 @@
-package com.gemserk.games.archervsworld;
+package com.gemserk.games.archervsworld.gamestates;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
 import com.gemserk.commons.artemis.systems.TimerSystem;
-import com.gemserk.commons.gdx.ScreenAdapter;
+import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.commons.gdx.box2d.Box2DCustomDebugRenderer;
 import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
@@ -54,7 +54,7 @@ import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.componentsengine.properties.AbstractProperty;
-import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
+import com.gemserk.games.archervsworld.LayerProcessor;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
@@ -67,11 +67,12 @@ import com.gemserk.games.archervsworld.controllers.CameraControllerButtonMonitor
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.games.archervsworld.controllers.MultitouchCameraControllerImpl;
+import com.gemserk.games.archervsworld.gamestates.PlayGameState.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
 
-public class GameScreen extends ScreenAdapter {
+public class PlayGameState extends GameStateImpl {
 
 	private World world;
 
@@ -85,7 +86,7 @@ public class GameScreen extends ScreenAdapter {
 
 	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
-	ResourceManager<String> resourceManager = new ResourceManagerImpl<String>();
+	ResourceManager<String> resourceManager;
 
 	private EntityFactory entityFactory;
 
@@ -125,16 +126,24 @@ public class GameScreen extends ScreenAdapter {
 
 	}
 
-	public GameScreen(Game game) {
-		loadResources();
-
+	public PlayGameState(Game game) {
+		// loadResources();
 		entityFactory = new EntityFactory();
 		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
+		// restart();
+	}
 
+	@Override
+	public void init() {
+		// if gameOver
 		restart();
 	}
 
 	protected void restart() {
+		
+		resourceManager = new ResourceManagerImpl<String>();
+		
+		loadResources();
 
 		myCamera = new Libgdx2dCameraTransformImpl();
 		myCamera.center(viewportWidth / 2, viewportHeight / 2);
@@ -317,7 +326,8 @@ public class GameScreen extends ScreenAdapter {
 				archerVsWorldEntityFactory.createStaticBody(new Vector2(), vertices);
 			}
 		}.processWorld(document);
-
+		
+		world.loopStart();
 	}
 
 	static class EntitySystemController {
@@ -371,15 +381,15 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	@Override
-	public void internalRender(float delta) {
+	public void render(int delta) {
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		Camera cameraImpl = cameraController.getCamera();
-		Vector2 cameraPosition = new Vector2(cameraImpl.getX(), cameraImpl.getY());
+		Camera camera = cameraController.getCamera();
+		Vector2 cameraPosition = new Vector2(camera.getX(), camera.getY());
 
-		myCamera.zoom(cameraImpl.getZoom());
+		myCamera.zoom(camera.getZoom());
 		myCamera.move(cameraPosition.x, cameraPosition.y);
-		myCamera.rotate(cameraImpl.getAngle());
+		myCamera.rotate(camera.getAngle());
 
 		worldWrapper.render();
 
@@ -404,20 +414,17 @@ public class GameScreen extends ScreenAdapter {
 	}
 
 	@Override
-	public void internalUpdate(float delta) {
-		int deltaInMs = (int) (delta * 1000);
-
-		Synchronizers.synchronize(deltaInMs);
-
+	public void update(int delta) {
+		Synchronizers.synchronize(delta);
 		monitorUpdater.update();
 
 		for (int i = 0; i < controllers.size(); i++)
-			controllers.get(i).update(deltaInMs);
+			controllers.get(i).update(delta);
 
-		cameraController.update(deltaInMs);
+		cameraController.update(delta);
 		entitySystemController.update();
 
-		worldWrapper.update(deltaInMs);
+		worldWrapper.update(delta);
 
 		if (restartButtonMonitor.isReleased())
 			restart();
@@ -482,6 +489,7 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void dispose() {
 		// dispose resources!!
+		resourceManager.unloadAll();
 	}
 
 }
