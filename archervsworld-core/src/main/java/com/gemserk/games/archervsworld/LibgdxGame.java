@@ -10,6 +10,8 @@ import com.gemserk.commons.values.FloatValue;
 
 public class LibgdxGame extends Game {
 	
+	public GameScreen gameScreen;
+
 	@Override
 	public void create() {
 		
@@ -17,7 +19,9 @@ public class LibgdxGame extends Game {
 		Converters.register(Color.class, LibgdxConverters.color());
 		Converters.register(FloatValue.class, CommonConverters.floatValue());
 		
-		setScreen(new GameScreen(this));
+		gameScreen = new GameScreen(this);
+		
+		setScreen(gameScreen);
 		
 //		final Game game = this;
 //		

@@ -7,6 +7,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.artemis.World;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -62,6 +63,7 @@ import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl2;
+import com.gemserk.games.archervsworld.controllers.CameraControllerButtonMonitorImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.games.archervsworld.controllers.MultitouchCameraControllerImpl;
@@ -88,18 +90,6 @@ public class GameScreen extends ScreenAdapter {
 	private EntityFactory entityFactory;
 
 	private ButtonMonitor restartButtonMonitor = new LibgdxButtonMonitor(Input.Keys.R);
-
-	private ButtonMonitor zoomInButtonMonitor = new LibgdxButtonMonitor(Input.Keys.PLUS);
-
-	private ButtonMonitor zoomOutButtonMonitor = new LibgdxButtonMonitor(Input.Keys.MINUS);
-
-	private ButtonMonitor moveRightMonitor = new LibgdxButtonMonitor(Input.Keys.DPAD_RIGHT);
-
-	private ButtonMonitor moveLeftMonitor = new LibgdxButtonMonitor(Input.Keys.DPAD_LEFT);
-
-	private ButtonMonitor moveUpMonitor = new LibgdxButtonMonitor(Input.Keys.DPAD_UP);
-
-	private ButtonMonitor moveDownMonitor = new LibgdxButtonMonitor(Input.Keys.DPAD_DOWN);
 
 	private MonitorUpdaterImpl monitorUpdater;
 
@@ -182,19 +172,19 @@ public class GameScreen extends ScreenAdapter {
 		// Camera camera = new CameraImpl(cameraPosition.x, cameraPosition.y, 40f, 0f);
 		Camera camera = new CameraRestrictedImpl(cameraPosition.x, cameraPosition.y, 40f, 0f, viewportWidth, viewportHeight, new Rectangle(-5f, -2f, 35f, 20f));
 
-		// cameraController = new CameraControllerButtonMonitorImpl(camera, //
-		// moveLeftMonitor, moveRightMonitor, //
-		// moveUpMonitor, moveDownMonitor, //
-		// zoomInButtonMonitor, zoomOutButtonMonitor);
-
 		Rectangle controllerArea = new Rectangle(140, 0, viewportWidth - 140, viewportHeight);
 
 		// cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
 
 		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
 			cameraController = new MultitouchCameraControllerImpl(camera, controllerArea);
-		else
+		else if (Gdx.app.getType() == ApplicationType.Android)
 			cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
+		else
+			cameraController = new CameraControllerButtonMonitorImpl(camera, //
+					Keys.DPAD_LEFT, Keys.DPAD_RIGHT, //
+					Keys.DPAD_UP, Keys.DPAD_DOWN, //
+					Keys.W, Keys.S);
 
 		// on pc use another camera controller...
 
@@ -271,8 +261,6 @@ public class GameScreen extends ScreenAdapter {
 				fontResource.get(), //
 				new SpatialImpl(10f, Gdx.graphics.getHeight() - 20, 1f, 1f, 0f));
 
-		// currentControllerLabel(controllerSwitcher);
-
 		physicsWorld = physicsSystem.getPhysicsWorld();
 
 		archerVsWorldEntityFactory.setWorld(world);
@@ -283,13 +271,7 @@ public class GameScreen extends ScreenAdapter {
 		// I HAVE NOW AN EDITOR FOR ALL THIS STUFF!!!
 
 		archerVsWorldEntityFactory.createBackground(viewportWidth, viewportHeight);
-
-		// archerVsWorldEntityFactory.createButton(new Vector2(viewportWidth - 2, viewportHeight - 2));
-
-		final float y = 2f;
-
-		// archerVsWorldEntityFactory.createArcher(new Vector2(3.5f, 1.7f + y + 3 + 1f));
-		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + y));
+		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + 2f));
 
 		Vector2 direction = new Vector2(-1, 0);
 
@@ -301,18 +283,8 @@ public class GameScreen extends ScreenAdapter {
 
 		archerVsWorldEntityFactory.createCloudsSpawner(spawnArea, limitArea, direction, minSpeed, maxSpeed, 2000, 9000);
 
-		// archerVsWorldEntityFactory.createCloud(position, new Vector2(-0.1f, 0f), new Vector2(5,5));
-
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);
-		monitorUpdater.add(zoomInButtonMonitor);
-		monitorUpdater.add(zoomOutButtonMonitor);
-
-		monitorUpdater.add(moveLeftMonitor);
-		monitorUpdater.add(moveRightMonitor);
-
-		monitorUpdater.add(moveUpMonitor);
-		monitorUpdater.add(moveDownMonitor);
 
 		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.NUM_1, "Bow system"));
 		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.NUM_2, "Walking dead system"));

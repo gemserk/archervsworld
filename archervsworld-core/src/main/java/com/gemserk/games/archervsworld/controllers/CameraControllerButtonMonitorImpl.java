@@ -1,87 +1,69 @@
 package com.gemserk.games.archervsworld.controllers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.gemserk.animation4j.transitions.Transitions;
-import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.gdx.camera.Camera;
 import com.gemserk.commons.gdx.controllers.CameraController;
-import com.gemserk.commons.values.FloatValue;
-import com.gemserk.commons.values.ValueBuilder;
-import com.gemserk.componentsengine.input.ButtonMonitor;
 
 public class CameraControllerButtonMonitorImpl implements CameraController {
 
 	private final Vector2 position = new Vector2();
 
-	private final FloatValue zoom = new FloatValue(1f);
+	private final int left;
 
-	private final ButtonMonitor left;
+	private final int right;
 
-	private final ButtonMonitor right;
+	private final int up;
 
-	private final ButtonMonitor up;
+	private final int down;
 
-	private final ButtonMonitor down;
+	private final int zoomIn;
 
-	private final ButtonMonitor zoomIn;
+	private final int zoomOut;
 
-	private final ButtonMonitor zoomOut;
-
-	private final Camera cameraImpl;
-
-	public Vector2 getPosition() {
-		return position;
-	}
-
-	public float getZoom() {
-		return zoom.value;
-	}
+	private final Camera camera;
 
 	@Override
 	public Camera getCamera() {
-		return cameraImpl;
+		return camera;
 	}
 
-	public CameraControllerButtonMonitorImpl(Camera cameraImpl, //
-			ButtonMonitor left, ButtonMonitor right, //
-			ButtonMonitor up, ButtonMonitor down, //
-			ButtonMonitor zoomIn, ButtonMonitor zoomOut) {
+	public CameraControllerButtonMonitorImpl(Camera camera, //
+			int left, int right, int up, int down, //
+			int zoomIn, int zoomOut) {
 		this.left = left;
 		this.right = right;
 		this.up = up;
 		this.down = down;
 		this.zoomIn = zoomIn;
 		this.zoomOut = zoomOut;
-		this.cameraImpl = cameraImpl;
-		this.position.set(cameraImpl.getX(), cameraImpl.getY());
-		this.zoom.value = cameraImpl.getZoom();
+		this.camera = camera;
 	}
 
 	@Override
 	public void update(int delta) {
+		
+		position.set(camera.getX(), camera.getY());
 
-		if (down.isHolded())
+		if (Gdx.input.isKeyPressed(down))
 			position.y -= 0.01f * delta;
 
-		if (up.isHolded())
+		if (Gdx.input.isKeyPressed(up))
 			position.y += 0.01f * delta;
 
-		if (right.isHolded())
+		if (Gdx.input.isKeyPressed(right))
 			position.x += 0.01f * delta;
 
-		if (left.isHolded())
+		if (Gdx.input.isKeyPressed(left))
 			position.x -= 0.01f * delta;
 
-		if (zoomIn.isPressed()) {
-			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 2f)).time(300));
-		}
+		if (Gdx.input.isKeyPressed(zoomIn)) 
+			camera.setZoom(camera.getZoom() + delta * 0.05f);
 
-		if (zoomOut.isPressed()) {
-			Synchronizers.transition(zoom, Transitions.transitionBuilder(zoom).end(ValueBuilder.floatValue(zoom.value * 0.5f)).time(300));
-		}
+		if (Gdx.input.isKeyPressed(zoomOut)) 
+			camera.setZoom(camera.getZoom() - delta * 0.05f);
 
-		cameraImpl.setPosition(position.x, position.y);
-		cameraImpl.setZoom(zoom.value);
+		camera.setPosition(position.x, position.y);
 	}
 
 }
