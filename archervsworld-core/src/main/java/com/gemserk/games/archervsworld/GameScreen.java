@@ -69,7 +69,6 @@ import com.gemserk.componentsengine.properties.SimpleProperty;
 import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
-import com.gemserk.games.archervsworld.artemis.systems.DebugInformationSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
@@ -259,10 +258,9 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.addUpdateSystem(updateBowSystem);
 		worldWrapper.addUpdateSystem(new UpdateChargingArrowSystem());
 		worldWrapper.addUpdateSystem(new HierarchySystem());
-		// worldWrapper.addUpdateSystem(new AliveSystem());
 		worldWrapper.addUpdateSystem(new AliveAreaSystem());
 		worldWrapper.addUpdateSystem(new TimerSystem());
-		worldWrapper.addUpdateSystem(new DebugInformationSystem());
+		// worldWrapper.addUpdateSystem(new DebugInformationSystem());
 
 		worldWrapper.init();
 
@@ -560,48 +558,32 @@ public class GameScreen extends ScreenAdapter {
 
 		new LibgdxResourceBuilder(resourceManager) {
 			{
+				setCacheWhenLoad(true);
+
 				texture("Background", "data/background-512x512.jpg", false);
 
 				texture("Rock", "data/rock-512x512.png");
 				texture("Bow", "data/bow-512x512.png");
 				texture("Arrow", "data/arrow-512x512.png");
-				texture("Tree", "data/tree-512x512.png");
-				texture("Grass", "data/grass-128x128.png");
 
-				texture("Ground01", internal("data/ground-01.png"), true);
-				texture("Ground02", internal("data/ground-02.png"), true);
-				texture("Ground03", internal("data/ground-03.png"), true);
-				texture("Ground04", internal("data/ground-04.png"), true);
-				texture("Ground05", internal("data/ground-05.png"), true);
-				texture("Ground06", internal("data/ground-06.png"), true);
+				texture("Tile01", "data/tile01.png");
+				texture("Tile02", "data/tile02.png");
+				texture("Tile03", "data/tile03.png");
+				texture("Tile04", "data/tile04.png");
+				texture("Tile11", "data/tile11.png");
+				texture("Tile12", "data/tile12.png");
+				texture("Tile13", "data/tile13.png");
+				texture("Tile14", "data/tile14.png");
+				texture("Tile21", "data/tile21.png");
 
-				texture("Grass01", internal("data/grass-01.png"), true);
-				texture("Grass02", internal("data/grass-02.png"), true);
-				texture("Grass03", internal("data/grass-03.png"), true);
-
-				texture("Tile01", internal("data/tile01.png"), true);
-				texture("Tile02", internal("data/tile02.png"), true);
-				texture("Tile03", internal("data/tile03.png"), true);
-				texture("Tile04", internal("data/tile04.png"), true);
-				texture("Tile11", internal("data/tile11.png"), true);
-				texture("Tile12", internal("data/tile12.png"), true);
-				texture("Tile13", internal("data/tile13.png"), true);
-				texture("Tile14", internal("data/tile14.png"), true);
-				texture("Tile21", internal("data/tile21.png"), true);
-
-				texture("Tower", "data/tower-128x128.png");
-
-				texture("Button", "data/button-template-64x64.png");
+				texture("CloudsSpritesheet", "data/clouds-spritesheet.png", false);
+				sprite("Cloud01", "CloudsSpritesheet", 0, 0, 512, 128);
+				sprite("Cloud02", "CloudsSpritesheet", 0, 128, 512, 128);
 
 				sound("HitFleshSound", "data/sounds/hit-flesh.ogg");
 				sound("HitGroundSound", "data/sounds/hit-ground.ogg");
 				sound("BowSound", "data/sounds/bow.ogg");
 
-				texture("CloudsSpritesheet", "data/clouds-spritesheet.png", false);
-
-				sprite("Cloud01", "CloudsSpritesheet", 0, 0, 512, 128);
-				sprite("Cloud02", "CloudsSpritesheet", 0, 128, 512, 128);
-				
 				font("Font", "data/fonts/font.png", "data/fonts/font.fnt");
 			}
 		};
