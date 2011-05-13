@@ -113,7 +113,7 @@ public class ArcherVsWorldEntityFactory {
 		Resource<Texture> resource = resourceManager.get("Arrow");
 		Texture texture = resource.get();
 
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
+		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, 1f, 1f)));
 		entity.addComponent(new SpriteComponent(new Sprite(texture), 1, new Vector2(0.5f, 0.5f), new Color(Color.WHITE)));
 		entity.addComponent(new DamageComponent(1f));
@@ -202,13 +202,8 @@ public class ArcherVsWorldEntityFactory {
 		float angle = angleProperty.get().value;
 
 		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, 1f, 1f, angle)));
-		// entity.addComponent(new SpatialComponent( //
-		// positionProperty, //
-		// new SimpleProperty<Vector2>(new Vector2(1f, 1f)), //
-		// angleProperty));
 		entity.addComponent(new SpriteComponent(new Sprite(texture), 1, new Vector2(0.5f, 0.5f), Color.WHITE));
 		entity.addComponent(new InformationComponent("graphical arrow"));
-
 		entity.refresh();
 		return entity;
 	}
@@ -254,7 +249,7 @@ public class ArcherVsWorldEntityFactory {
 
 		entity.setGroup(Groups.Enemy);
 
-		entity.addComponent(new PhysicsComponent(new SimpleProperty<Body>(body)));
+		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, size.x, size.y)));
 		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(2))));
 		entity.addComponent(new WalkingDeadComponent( //
