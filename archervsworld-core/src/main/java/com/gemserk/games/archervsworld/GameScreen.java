@@ -51,7 +51,6 @@ import com.gemserk.commons.gdx.controllers.Controller;
 import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
-import com.gemserk.commons.gdx.resources.dataloaders.BitmapFontDataLoader;
 import com.gemserk.commons.svg.inkscape.DocumentParser;
 import com.gemserk.commons.svg.inkscape.SvgDocument;
 import com.gemserk.commons.svg.inkscape.SvgDocumentHandler;
@@ -82,8 +81,6 @@ import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
-import com.gemserk.resources.resourceloaders.CachedResourceLoader;
-import com.gemserk.resources.resourceloaders.ResourceLoaderImpl;
 
 public class GameScreen extends ScreenAdapter {
 
@@ -595,7 +592,6 @@ public class GameScreen extends ScreenAdapter {
 				texture("Tower", "data/tower-128x128.png");
 
 				texture("Button", "data/button-template-64x64.png");
-				texture("FontTexture", "data/font.png");
 
 				sound("HitFleshSound", "data/sounds/hit-flesh.ogg");
 				sound("HitGroundSound", "data/sounds/hit-ground.ogg");
@@ -605,11 +601,10 @@ public class GameScreen extends ScreenAdapter {
 
 				sprite("Cloud01", "CloudsSpritesheet", 0, 0, 512, 128);
 				sprite("Cloud02", "CloudsSpritesheet", 0, 128, 512, 128);
+				
+				font("Font", "data/fonts/font.png", "data/fonts/font.fnt");
 			}
 		};
-
-		Resource<Texture> fontTextureResource = resourceManager.get("FontTexture");
-		resourceManager.add("Font", new CachedResourceLoader<BitmapFont>(new ResourceLoaderImpl<BitmapFont>(new BitmapFontDataLoader(Gdx.files.internal("data/font.fnt"), new Sprite(fontTextureResource.get())))));
 
 	}
 
