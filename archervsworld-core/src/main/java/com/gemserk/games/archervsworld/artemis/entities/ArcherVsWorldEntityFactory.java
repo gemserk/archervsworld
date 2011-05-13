@@ -229,8 +229,8 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 		return entity;
 	}
-
-	public void createArcher(Vector2 position) {
+	
+	public void createArcher(float x, float y) {
 		Entity entity = world.createEntity();
 
 		float bowHeight = 1.6f;
@@ -239,7 +239,7 @@ public class ArcherVsWorldEntityFactory {
 		Resource<Texture> resource = resourceManager.get("Bow");
 		Texture texture = resource.get();
 
-		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, bowWidth, bowHeight, 0f)));
+		entity.addComponent(new SpatialComponent(new SpatialImpl(x, y, bowWidth, bowHeight, 0f)));
 		entity.addComponent(new SpriteComponent(new Sprite(texture), 2, new Vector2(0.5f, 0.5f), Color.WHITE));
 		entity.addComponent(new BowComponent( //
 				new SimpleProperty<FloatValue>(new FloatValue(0f)), //

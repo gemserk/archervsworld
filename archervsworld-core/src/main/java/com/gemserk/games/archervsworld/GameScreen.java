@@ -13,7 +13,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -277,7 +276,7 @@ public class GameScreen extends ScreenAdapter {
 
 		final float y = 2f;
 
-		archerVsWorldEntityFactory.createArcher(new Vector2(3.5f, 1.7f + y + 3 + 1f));
+		// archerVsWorldEntityFactory.createArcher(new Vector2(3.5f, 1.7f + y + 3 + 1f));
 		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + y));
 
 		Vector2 direction = new Vector2(-1, 0);
@@ -312,10 +311,19 @@ public class GameScreen extends ScreenAdapter {
 		new LayerProcessor("World") {
 			protected void handleImageObject(SvgInkscapeImage svgImage, Element element, float x, float y, float width, float height, float sx, float sy, float angle) {
 				// create stuff..
-				Texture texture = resourceManager.getResourceValue(svgImage.getLabel());
-				if (texture == null)
+
+				if (element.hasAttribute("start")) {
+					archerVsWorldEntityFactory.createArcher(x, y);
 					return;
-				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, new Sprite(texture), 2, Color.WHITE, 0.5f, 0.5f);
+				}
+
+				Sprite sprite = resourceManager.getResourceValue(svgImage.getLabel());
+				if (sprite == null)
+					return;
+				int layer = 2;
+				if (element.hasAttribute("layer")) 
+					layer = Integer.parseInt(element.getAttribute("layer"));
+				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, sprite, layer, Color.WHITE, 0.5f, 0.5f);
 			};
 		}.processWorld(document);
 
@@ -443,15 +451,40 @@ public class GameScreen extends ScreenAdapter {
 				texture("Bow", "data/images/bow-512x512.png");
 				texture("Arrow", "data/images/arrow-512x512.png");
 
-				texture("Tile01", "data/images/tile01.png");
-				texture("Tile02", "data/images/tile02.png");
-				texture("Tile03", "data/images/tile03.png");
-				texture("Tile04", "data/images/tile04.png");
-				texture("Tile11", "data/images/tile11.png");
-				texture("Tile12", "data/images/tile12.png");
-				texture("Tile13", "data/images/tile13.png");
-				texture("Tile14", "data/images/tile14.png");
-				texture("Tile21", "data/images/tile21.png");
+				texture("Tile01Texture", "data/images/tile01.png");
+				texture("Tile02Texture", "data/images/tile02.png");
+				texture("Tile03Texture", "data/images/tile03.png");
+				texture("Tile04Texture", "data/images/tile04.png");
+				texture("Tile11Texture", "data/images/tile11.png");
+				texture("Tile12Texture", "data/images/tile12.png");
+				texture("Tile13Texture", "data/images/tile13.png");
+				texture("Tile14Texture", "data/images/tile14.png");
+				texture("Tile21Texture", "data/images/tile21.png");
+
+				sprite("Tile01", "Tile01Texture");
+				sprite("Tile02", "Tile02Texture");
+				sprite("Tile03", "Tile03Texture");
+				sprite("Tile04", "Tile04Texture");
+				sprite("Tile11", "Tile11Texture");
+				sprite("Tile12", "Tile12Texture");
+				sprite("Tile13", "Tile13Texture");
+				sprite("Tile14", "Tile14Texture");
+				sprite("Tile21", "Tile21Texture");
+
+				// WallTile01
+
+				texture("BuildingSpritesheet", "data/images/building-spritesheet.png");
+
+				sprite("WindowTile01", "BuildingSpritesheet", 0, 0, 64, 64);
+				sprite("WallTile01", "BuildingSpritesheet", 64 * 0, 64 * 1, 64, 64);
+				sprite("WallTile02", "BuildingSpritesheet", 64 * 1, 64 * 1, 64, 64);
+				sprite("WallTile03", "BuildingSpritesheet", 64 * 2, 64 * 1, 64, 64);
+
+				// texture("WallTile01", "data/images/tile_wall_01.png");
+				// texture("WallTile02", "data/images/tile_wall_02.png");
+				// texture("WallTile03", "data/images/tile_wall_03.png");
+
+				// texture("WindowTile01", "data/images/tile_small_window.png");
 
 				texture("CloudsSpritesheet", "data/images/clouds-spritesheet.png", false);
 				sprite("Cloud01", "CloudsSpritesheet", 0, 0, 512, 128);
