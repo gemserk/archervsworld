@@ -390,7 +390,7 @@ public class GameScreen extends ScreenAdapter {
 				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, sprite, 2, Color.WHITE, 0.5f, 0.5f);
 			}
 		});
-		InputStream svg = Gdx.files.internal("data/scene01.svg").read();
+		InputStream svg = Gdx.files.internal("data/scenes/scene01.svg").read();
 		svgParser.parse(new DocumentParser().parse(svg));
 
 		// parsing physics bodies...
@@ -426,7 +426,7 @@ public class GameScreen extends ScreenAdapter {
 			}
 		});
 
-		svg = Gdx.files.internal("data/scene01.svg").read();
+		svg = Gdx.files.internal("data/scenes/scene01.svg").read();
 		svgParser.parse(new DocumentParser().parse(svg));
 
 	}
@@ -560,23 +560,23 @@ public class GameScreen extends ScreenAdapter {
 			{
 				setCacheWhenLoad(true);
 
-				texture("Background", "data/background-512x512.jpg", false);
+				texture("Background", "data/images/background-512x512.jpg", false);
 
-				texture("Rock", "data/rock-512x512.png");
-				texture("Bow", "data/bow-512x512.png");
-				texture("Arrow", "data/arrow-512x512.png");
+				texture("Rock", "data/images/rock-512x512.png");
+				texture("Bow", "data/images/bow-512x512.png");
+				texture("Arrow", "data/images/arrow-512x512.png");
 
-				texture("Tile01", "data/tile01.png");
-				texture("Tile02", "data/tile02.png");
-				texture("Tile03", "data/tile03.png");
-				texture("Tile04", "data/tile04.png");
-				texture("Tile11", "data/tile11.png");
-				texture("Tile12", "data/tile12.png");
-				texture("Tile13", "data/tile13.png");
-				texture("Tile14", "data/tile14.png");
-				texture("Tile21", "data/tile21.png");
+				texture("Tile01", "data/images/tile01.png");
+				texture("Tile02", "data/images/tile02.png");
+				texture("Tile03", "data/images/tile03.png");
+				texture("Tile04", "data/images/tile04.png");
+				texture("Tile11", "data/images/tile11.png");
+				texture("Tile12", "data/images/tile12.png");
+				texture("Tile13", "data/images/tile13.png");
+				texture("Tile14", "data/images/tile14.png");
+				texture("Tile21", "data/images/tile21.png");
 
-				texture("CloudsSpritesheet", "data/clouds-spritesheet.png", false);
+				texture("CloudsSpritesheet", "data/images/clouds-spritesheet.png", false);
 				sprite("Cloud01", "CloudsSpritesheet", 0, 0, 512, 128);
 				sprite("Cloud02", "CloudsSpritesheet", 0, 128, 512, 128);
 
