@@ -198,7 +198,7 @@ public class GameScreen extends ScreenAdapter {
 
 		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		// Camera camera = new CameraImpl(cameraPosition.x, cameraPosition.y, 40f, 0f);
-		Camera camera = new CameraRestrictedImpl(cameraPosition.x, cameraPosition.y, 40f, 0f, viewportWidth, viewportHeight, new Rectangle(0f, 0f, 20f, 16f));
+		Camera camera = new CameraRestrictedImpl(cameraPosition.x, cameraPosition.y, 40f, 0f, viewportWidth, viewportHeight, new Rectangle(-5f, -2f, 35f, 20f));
 
 		// cameraController = new CameraControllerButtonMonitorImpl(camera, //
 		// moveLeftMonitor, moveRightMonitor, //
@@ -316,7 +316,7 @@ public class GameScreen extends ScreenAdapter {
 		final float y = 2f;
 
 		archerVsWorldEntityFactory.createArcher(new Vector2(3.5f, 1.7f + y + 3 + 1f));
-		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(20, 1.25f + y));
+		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + y));
 
 		Vector2 direction = new Vector2(-1, 0);
 
@@ -598,6 +598,16 @@ public class GameScreen extends ScreenAdapter {
 				texture("Grass01", internal("data/grass-01.png"), true);
 				texture("Grass02", internal("data/grass-02.png"), true);
 				texture("Grass03", internal("data/grass-03.png"), true);
+				
+				texture("Tile01", internal("data/tile01.png"), true);
+				texture("Tile02", internal("data/tile02.png"), true);
+				texture("Tile03", internal("data/tile03.png"), true);
+				texture("Tile04", internal("data/tile04.png"), true);
+				texture("Tile11", internal("data/tile11.png"), true);
+				texture("Tile12", internal("data/tile12.png"), true);
+				texture("Tile13", internal("data/tile13.png"), true);
+				texture("Tile14", internal("data/tile14.png"), true);
+				texture("Tile21", internal("data/tile21.png"), true);
 
 				texture("Cloud", "data/cloud-256x256.png");
 

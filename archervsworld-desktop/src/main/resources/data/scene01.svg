@@ -2,1503 +2,2562 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="20"
-   height="20"
-   id="svg3120"
-   version="1.1"
-   inkscape:version="0.47 r22583"
-   sodipodi:docname="scene01.svg">
-  <defs
-     id="defs3122">
-    <inkscape:perspective
-       sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 526.181 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="744.094 : 526.181 : 1"
-       inkscape:persp3d-origin="372.047 : 350.787 : 1"
-       id="perspective3128" />
-    <inkscape:perspective
-       id="perspective3138"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3171"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3193"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3237"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2826"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2848"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2832"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2832-6"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2854"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2854-8"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2854-0"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2894"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2916"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2993"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2968"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2990"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3012"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3034"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3056"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3147"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3184"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3206"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3228"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3319"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3341"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3363"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3385"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3385-9"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3385-0"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3425"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3425-6"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3525"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3547"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3569"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3591"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3591-0"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3622"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3644"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2993-4"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3715"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3737"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3759"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3781"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3803"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3825"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3825-4"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3856"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3878"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3900"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3900-8"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3945"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective4000"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective4088"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective4140"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2954"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2942"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3047"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3075"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3103"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3127"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3208"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3248"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3281"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3303"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3325"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3347"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3369"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3391"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3413"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3435"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3457"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3457-6"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3457-60"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3497"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3497-5"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3497-8"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective4311"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective4311-4"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2971"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective2993-8"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3015"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3037"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3059"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3084"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3109"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3200"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3224"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3224-8"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3224-1"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3264"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3286"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3308"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3330"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3352"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective3005"
-       inkscape:persp3d-origin="0.5 : 0.333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-  </defs>
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
-     inkscape:pageshadow="2"
-     inkscape:zoom="22.6274"
-     inkscape:cx="14.5464"
-     inkscape:cy="2.41696"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer2"
-     showgrid="false"
-     inkscape:window-width="1440"
-     inkscape:window-height="851"
-     inkscape:window-x="0"
-     inkscape:window-y="24"
-     inkscape:window-maximized="1"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:snap-global="true">
-    <sodipodi:guide
-       orientation="1,0"
-       position="3.75,10.125"
-       id="guide2820" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="7.44987,-0.394591"
-       id="guide2822" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="3.48029,2.36439"
-       id="guide3117" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="4.88346,6.91639"
-       id="guide3198" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-3.91118,8.6952"
-       id="guide3271" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="4.45256,5.92202"
-       id="guide3366" />
-  </sodipodi:namedview>
-  <metadata
-     id="metadata3125">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
-      </cc:Work>
-    </rdf:RDF>
-  </metadata>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="World"
-     style="display:inline">
-    <image
-       y="17.5922"
-       x="-1.72979"
-       id="image3659-2-5-0"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       transform="scale(-1,1)" />
-    <image
-       y="17.5901"
-       x="-2.21071"
-       id="image3568-0-8"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
-    <image
-       y="17.6356"
-       x="5.65625"
-       id="image3455-3-2-8"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground01"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-9-1-4-7-2"
-       x="15.7798"
-       y="3.44199"
-       inkscape:label="Ground05"
-       transform="matrix(0.013432,0.99991,0.99991,-0.013432,0,0)" />
-    <image
-       y="15.7344"
-       x="1.72944"
-       id="image3455-3-3-2"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground01"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
-    <image
-       y="17.6416"
-       x="3.6673"
-       id="image3659-2-5"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-1-2"
-       x="-0.279762"
-       y="21.5217"
-       inkscape:label="Ground05" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4775-2-9"
-       x="-2.21041"
-       y="21.5509"
-       inkscape:label="Ground04" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-1-7"
-       x="-5.66989"
-       y="21.5199"
-       inkscape:label="Ground05"
-       transform="scale(-1,1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-1"
-       x="5.64989"
-       y="21.5243"
-       inkscape:label="Ground05" />
-    <image
-       y="-19.5924"
-       x="-9.64688"
-       id="image3568-0-8-9"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       transform="scale(-1,-1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-2-3"
-       x="7.70626"
-       y="21.5203"
-       inkscape:label="Ground05" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4775-2-3-4"
-       x="17.5959"
-       y="1.63477"
-       inkscape:label="Ground04"
-       transform="matrix(0.010638,0.999943,-0.999943,0.010638,0,0)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-1-9-0"
-       x="-5.70659"
-       y="17.5903"
-       inkscape:label="Grass03"
-       transform="scale(-1,1)" />
-    <image
-       y="-19.5936"
-       x="1.69301"
-       id="image3568-0-8-3"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       transform="scale(1,-1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4775-2-9-3"
-       x="1.70436"
-       y="21.5654"
-       inkscape:label="Ground04" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-1-9"
-       x="-7.68656"
-       y="17.5947"
-       inkscape:label="Grass03"
-       transform="scale(-1,1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-5-0"
-       x="7.59636"
-       y="17.5947"
-       inkscape:label="Grass03" />
-    <image
-       y="17.5932"
-       x="-13.569"
-       id="image3659-2-5-0-9"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       transform="scale(-1,1)" />
-    <image
-       y="17.5911"
-       x="9.61728"
-       id="image3568-0-8-5"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
-    <image
-       y="17.6343"
-       x="15.5116"
-       id="image3455-3-2"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground01"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
-    <image
-       y="17.5958"
-       x="17.4986"
-       id="image3659-2-5-1"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-1-2-3"
-       x="11.5593"
-       y="21.5228"
-       inkscape:label="Ground05" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4775-2-9-0"
-       x="9.62858"
-       y="21.5519"
-       inkscape:label="Ground04" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-1-7-9"
-       x="-17.5091"
-       y="21.5209"
-       inkscape:label="Ground05"
-       transform="scale(-1,1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-1-9"
-       x="17.489"
-       y="21.5254"
-       inkscape:label="Ground05" />
-    <image
-       y="-19.5935"
-       x="-21.4862"
-       id="image3568-0-8-9-1"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       transform="scale(-1,-1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-2-3-3"
-       x="19.5454"
-       y="21.5214"
-       inkscape:label="Ground05" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879-5-9-1-4"
-       x="-19.3071"
-       y="21.7138"
-       inkscape:label="Ground05"
-       transform="matrix(0.013432,-0.99991,0.99991,0.013432,0,0)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-1-9-0-8"
-       x="-17.5457"
-       y="17.5914"
-       inkscape:label="Grass03"
-       transform="scale(-1,1)" />
-    <image
-       y="-19.5946"
-       x="13.5322"
-       id="image3568-0-8-3-5"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       transform="scale(1,-1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4775-2-9-3-7"
-       x="13.5436"
-       y="21.5664"
-       inkscape:label="Ground04" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-2-8-3"
-       x="13.5597"
-       y="17.5946"
-       inkscape:label="Grass03" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-1-9-7-3"
-       x="-13.5805"
-       y="17.593"
-       inkscape:label="Grass03"
-       transform="scale(-1,1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-2-89"
-       x="9.58498"
-       y="17.5911"
-       inkscape:label="Grass03" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-1-9-5"
-       x="-19.5258"
-       y="17.5958"
-       inkscape:label="Grass03"
-       transform="scale(-1,1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-5-0-5"
-       x="19.4356"
-       y="17.5958"
-       inkscape:label="Grass03" />
-    <image
-       y="13.856"
-       x="-1.73277"
-       id="image3659-2-5-0-5"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       transform="scale(-1,1)" />
-    <image
-       y="13.8539"
-       x="-2.21876"
-       id="image3568-0-8-58"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-1-9-7-0"
-       x="-1.75987"
-       y="13.8558"
-       inkscape:label="Grass03"
-       transform="scale(-1,1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-2-6"
-       x="-2.20427"
-       y="13.8539"
-       inkscape:label="Grass03" />
-    <image
-       y="-15.8859"
-       x="-3.70801"
-       id="image3568-0-8-9-1-9"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       transform="scale(-1,-1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986-8-5-0-5-7"
-       x="1.65741"
-       y="13.857"
-       inkscape:label="Grass03" />
-    <image
-       y="15.6854"
-       x="0.204512"
-       id="image3659-2-5-0-5-4"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       transform="scale(-1,1)" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4775-2-3-4-7-4"
-       x="13.8551"
-       y="3.82529"
-       inkscape:label="Ground04"
-       transform="matrix(-0.010638,0.999943,0.999943,0.010638,0,0)" />
-    <image
-       y="-21.5754"
-       x="-0.25"
-       id="image3568-0-8-34"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       transform="scale(1,-1)" />
-    <image
-       y="19.5745"
-       x="-3.74003"
-       id="image3659-2-5-0-3"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       transform="scale(-1,1)" />
-    <image
-       y="19.552"
-       x="5.67268"
-       id="image3568-0-8-34-6"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
-    <image
-       y="-21.5529"
-       x="-9.66271"
-       id="image3659-2-5-0-3-0"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       transform="scale(-1,-1)" />
-    <image
-       y="19.5524"
-       x="11.5512"
-       id="image3455-3-2-1"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground01"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
-    <image
-       style="display:inline"
-       xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
-       width="2"
-       height="2"
-       id="image3190-0"
-       y="19.5625"
-       x="9.60938"
-       inkscape:label="Ground06" />
-    <image
-       style="display:inline"
-       xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
-       width="2"
-       height="2"
-       id="image3190-5"
-       y="19.6094"
-       x="3.70317"
-       inkscape:label="Ground06" />
-    <image
-       style="display:inline"
-       xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
-       width="2"
-       height="2"
-       id="image3190-3"
-       y="19.5625"
-       x="15.5"
-       inkscape:label="Ground06" />
-    <image
-       y="19.5781"
-       x="13.5156"
-       id="image3659-2-5-1-2"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png" />
-    <image
-       style="display:inline"
-       xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
-       width="2"
-       height="2"
-       id="image3190-3-9"
-       y="19.5625"
-       x="19.4845"
-       inkscape:label="Ground06" />
-    <image
-       y="-21.5781"
-       x="17.5"
-       id="image3568-0-8-3-5-1"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       transform="scale(1,-1)" />
-    <image
-       style="display:inline"
-       xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
-       width="2"
-       height="2"
-       id="image3190-3-9-8"
-       y="19.5532"
-       x="-2.20965"
-       inkscape:label="Ground06" />
-    <image
-       style="display:inline"
-       xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
-       width="2"
-       height="2"
-       id="image3190-3-9-8-1"
-       y="15.7812"
-       x="-0.25"
-       inkscape:label="Ground06" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Physics"
-     style="display:inline">
-    <path
-       style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m -2.09922,14.078 5.84922,0"
-       id="path3529"
-       inkscape:label="StaticBody"
-       sodipodi:nodetypes="cc" />
-    <path
-       style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       d="m 3.75,17.6356 17.6053,0"
-       id="path3529-0"
-       inkscape:label="StaticBody"
-       sodipodi:nodetypes="cc" />
-    <path
-       style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       d="m 3.75,14.078 0,3.5576"
-       id="path3529-9"
-       inkscape:label="StaticBody"
-       sodipodi:nodetypes="cc" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer1"
-     inkscape:label="Tools"
-     style="display:inline">
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-128x128.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-128x128.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image2970"
-       x="-10.4795"
-       y="8.56182" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-02-128x128.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-02-128x128.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image2958"
-       x="-8.21364"
-       y="8.57172" />
-    <image
-       y="15.0817"
-       x="-10.3475"
-       id="image2982"
-       height="2"
-       width="2"
-       style="display:inline"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/rock-512x512.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/rock-512x512.png"
-       inkscape:label="Rock" />
-    <image
-       y="6.22182"
-       x="-10.4955"
-       id="image3455"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground01"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
-    <image
-       y="6.22182"
-       x="-8.24164"
-       id="image3568"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground02"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
-    <image
-       y="6.22182"
-       x="-5.97664"
-       id="image3659"
-       height="2"
-       width="2"
-       style="display:inline"
-       inkscape:label="Ground03"
-       xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
-       sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-01.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-01.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3768"
-       x="-5.96863"
-       y="8.54182"
-       inkscape:label="Grass01" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3895"
-       x="-10.4675"
-       y="10.7717"
-       inkscape:label="Grass02" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image3986"
-       x="-8.24864"
-       y="10.7418"
-       inkscape:label="Grass03" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4775"
-       x="-10.4415"
-       y="13.3618"
-       inkscape:label="Ground04" />
-    <image
-       sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
-       style="display:inline"
-       width="2"
-       height="2"
-       id="image4879"
-       x="-8.09163"
-       y="13.3817"
-       inkscape:label="Ground05" />
-    <image
-       style="display:inline"
-       xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
-       width="2"
-       height="2"
-       id="image3190"
-       y="6.21875"
-       x="-3.75"
-       inkscape:label="Ground06" />
-  </g>
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:cc="http://creativecommons.org/ns#"
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns:svg="http://www.w3.org/2000/svg"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+ xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+ width="20"
+ height="20"
+ id="svg3120"
+ version="1.1"
+ inkscape:version="0.48.1 r9760"
+ sodipodi:docname="scene01.svg">
+<defs
+ id="defs3122">
+<inkscape:perspective
+ sodipodi:type="inkscape:persp3d"
+ inkscape:vp_x="0 : 526.181 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_z="744.094 : 526.181 : 1"
+ inkscape:persp3d-origin="372.047 : 350.787 : 1"
+ id="perspective3128" />
+<inkscape:perspective
+ id="perspective3138"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3171"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3193"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3237"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2826"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2848"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2832"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2832-6"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2854"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2854-8"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2854-0"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2894"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2916"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2993"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2968"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2990"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3012"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3034"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3056"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3147"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3184"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3206"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3228"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3319"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3341"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3363"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3385"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3385-9"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3385-0"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3425"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3425-6"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3525"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3547"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3569"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3591"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3591-0"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3622"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3644"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2993-4"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3715"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3737"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3759"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3781"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3803"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3825"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3825-4"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3856"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3878"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3900"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3900-8"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3945"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective4000"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective4088"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective4140"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2954"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2942"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3047"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3075"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3103"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3127"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3208"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3248"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3281"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3303"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3325"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3347"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3369"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3391"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3413"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3435"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3457"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3457-6"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3457-60"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3497"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3497-5"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3497-8"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective4311"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective4311-4"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2971"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective2993-8"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3015"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3037"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3059"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3084"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3109"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3200"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3224"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3224-8"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3224-1"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3264"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3286"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3308"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3330"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3352"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+<inkscape:perspective
+ id="perspective3005"
+ inkscape:persp3d-origin="0.5 : 0.333333 : 1"
+ inkscape:vp_z="1 : 0.5 : 1"
+ inkscape:vp_y="0 : 1000 : 0"
+ inkscape:vp_x="0 : 0.5 : 1"
+ sodipodi:type="inkscape:persp3d" />
+</defs>
+<sodipodi:namedview
+ id="base"
+ pagecolor="#ffffff"
+ bordercolor="#666666"
+ borderopacity="1.0"
+ inkscape:pageopacity="0.0"
+ inkscape:pageshadow="2"
+ inkscape:zoom="64"
+ inkscape:cx="5.93892"
+ inkscape:cy="3.72894"
+ inkscape:document-units="px"
+ inkscape:current-layer="layer3"
+ showgrid="true"
+ inkscape:window-width="1440"
+ inkscape:window-height="849"
+ inkscape:window-x="0"
+ inkscape:window-y="24"
+ inkscape:window-maximized="1"
+ showguides="true"
+ inkscape:guide-bbox="true"
+ inkscape:snap-global="true">
+<sodipodi:guide
+ orientation="1,0"
+ position="3.75,10.125"
+ id="guide2820" />
+<sodipodi:guide
+ orientation="0,1"
+ position="7.44987,-0.394591"
+ id="guide2822" />
+<sodipodi:guide
+ orientation="0,1"
+ position="3.48029,2.36439"
+ id="guide3117" />
+<sodipodi:guide
+ orientation="0,1"
+ position="4.88346,6.91639"
+ id="guide3198" />
+<sodipodi:guide
+ orientation="0,1"
+ position="-3.91118,8.6952"
+ id="guide3271" />
+<sodipodi:guide
+ orientation="0,1"
+ position="4.45256,5.92202"
+ id="guide3366" />
+<inkscape:grid
+ type="xygrid"
+ id="grid3323" />
+</sodipodi:namedview>
+<metadata
+ id="metadata3125">
+<rdf:RDF>
+<cc:Work
+ rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type
+ rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+<dc:title />
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<g
+ inkscape:groupmode="layer"
+ id="layer2"
+ inkscape:label="World"
+ style="display:inline">
+<image
+ y="29.5922"
+ x="24.2702"
+ id="image3659-2-5-0"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ transform="scale(-1,1)" />
+<image
+ y="29.5901"
+ x="-28.2107"
+ id="image3568-0-8"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
+<image
+ y="29.6356"
+ x="-20.3438"
+ id="image3455-3-2-8"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground01"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-9-1-4-7-2"
+ x="27.4289"
+ y="-22.7169"
+ inkscape:label="Ground05"
+ transform="matrix(0.013432,0.99991,0.99991,-0.013432,0,0)" />
+<image
+ y="27.7344"
+ x="-24.2706"
+ id="image3455-3-3-2"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground01"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
+<image
+ y="29.6416"
+ x="-22.3327"
+ id="image3659-2-5"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-1-2"
+ x="-26.2798"
+ y="33.5217"
+ inkscape:label="Ground05" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4775-2-9"
+ x="-28.2104"
+ y="33.5509"
+ inkscape:label="Ground04" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-1-7"
+ x="20.3301"
+ y="33.5199"
+ inkscape:label="Ground05"
+ transform="scale(-1,1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-1"
+ x="-20.3501"
+ y="33.5243"
+ inkscape:label="Ground05" />
+<image
+ y="-31.5924"
+ x="16.3531"
+ id="image3568-0-8-9"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ transform="scale(-1,-1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-2-3"
+ x="-18.2937"
+ y="33.5203"
+ inkscape:label="Ground05" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4775-2-3-4"
+ x="29.3184"
+ y="27.7612"
+ inkscape:label="Ground04"
+ transform="matrix(0.010638,0.999943,-0.999943,0.010638,0,0)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-1-9-0"
+ x="20.2934"
+ y="29.5903"
+ inkscape:label="Grass03"
+ transform="scale(-1,1)" />
+<image
+ y="-31.5936"
+ x="-24.307"
+ id="image3568-0-8-3"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ transform="scale(1,-1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4775-2-9-3"
+ x="-24.2956"
+ y="33.5654"
+ inkscape:label="Ground04" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-1-9"
+ x="18.3134"
+ y="29.5947"
+ inkscape:label="Grass03"
+ transform="scale(-1,1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-5-0"
+ x="-18.4036"
+ y="29.5947"
+ inkscape:label="Grass03" />
+<image
+ y="29.5932"
+ x="12.431"
+ id="image3659-2-5-0-9"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ transform="scale(-1,1)" />
+<image
+ y="29.5911"
+ x="-16.3827"
+ id="image3568-0-8-5"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
+<image
+ y="29.6343"
+ x="-10.4884"
+ id="image3455-3-2"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground01"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
+<image
+ y="29.5958"
+ x="-8.5014"
+ id="image3659-2-5-1"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-1-2-3"
+ x="-14.4407"
+ y="33.5228"
+ inkscape:label="Ground05" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4775-2-9-0"
+ x="-16.3714"
+ y="33.5519"
+ inkscape:label="Ground04" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-1-7-9"
+ x="8.4909"
+ y="33.5209"
+ inkscape:label="Ground05"
+ transform="scale(-1,1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-1-9"
+ x="-8.511"
+ y="33.5254"
+ inkscape:label="Ground05" />
+<image
+ y="-31.5935"
+ x="4.5138"
+ id="image3568-0-8-9-1"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ transform="scale(-1,-1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-2-3-3"
+ x="-6.4546"
+ y="33.5214"
+ inkscape:label="Ground05" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879-5-9-1-4"
+ x="-31.6556"
+ y="-4.12258"
+ inkscape:label="Ground05"
+ transform="matrix(0.013432,-0.99991,0.99991,0.013432,0,0)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-1-9-0-8"
+ x="8.4543"
+ y="29.5914"
+ inkscape:label="Grass03"
+ transform="scale(-1,1)" />
+<image
+ y="-31.5946"
+ x="-12.4678"
+ id="image3568-0-8-3-5"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ transform="scale(1,-1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4775-2-9-3-7"
+ x="-12.4564"
+ y="33.5664"
+ inkscape:label="Ground04" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-2-8-3"
+ x="-12.4403"
+ y="29.5946"
+ inkscape:label="Grass03" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-1-9-7-3"
+ x="12.4195"
+ y="29.593"
+ inkscape:label="Grass03"
+ transform="scale(-1,1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-2-89"
+ x="-16.415"
+ y="29.5911"
+ inkscape:label="Grass03" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-1-9-5"
+ x="6.4742"
+ y="29.5958"
+ inkscape:label="Grass03"
+ transform="scale(-1,1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-5-0-5"
+ x="-6.5644"
+ y="29.5958"
+ inkscape:label="Grass03" />
+<image
+ y="25.856"
+ x="24.2672"
+ id="image3659-2-5-0-5"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ transform="scale(-1,1)" />
+<image
+ y="25.8539"
+ x="-28.2188"
+ id="image3568-0-8-58"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-1-9-7-0"
+ x="24.2401"
+ y="25.8558"
+ inkscape:label="Grass03"
+ transform="scale(-1,1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-2-6"
+ x="-28.2043"
+ y="25.8539"
+ inkscape:label="Grass03" />
+<image
+ y="-27.8859"
+ x="22.292"
+ id="image3568-0-8-9-1-9"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ transform="scale(-1,-1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986-8-5-0-5-7"
+ x="-24.3426"
+ y="25.857"
+ inkscape:label="Grass03" />
+<image
+ y="27.6854"
+ x="26.2045"
+ id="image3659-2-5-0-5-4"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ transform="scale(-1,1)" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4775-2-3-4-7-4"
+ x="26.1314"
+ y="-22.0455"
+ inkscape:label="Ground04"
+ transform="matrix(-0.010638,0.999943,0.999943,0.010638,0,0)" />
+<image
+ y="-33.5754"
+ x="-26.25"
+ id="image3568-0-8-34"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ transform="scale(1,-1)" />
+<image
+ y="31.5745"
+ x="22.26"
+ id="image3659-2-5-0-3"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ transform="scale(-1,1)" />
+<image
+ y="31.552"
+ x="-20.3273"
+ id="image3568-0-8-34-6"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
+<image
+ y="-33.5529"
+ x="16.3373"
+ id="image3659-2-5-0-3-0"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ transform="scale(-1,-1)" />
+<image
+ y="31.5524"
+ x="-14.4488"
+ id="image3455-3-2-1"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground01"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
+<image
+ style="display:inline"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
+ width="2"
+ height="2"
+ id="image3190-0"
+ y="31.5625"
+ x="-16.3906"
+ inkscape:label="Ground06" />
+<image
+ style="display:inline"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
+ width="2"
+ height="2"
+ id="image3190-5"
+ y="31.6094"
+ x="-22.2968"
+ inkscape:label="Ground06" />
+<image
+ style="display:inline"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
+ width="2"
+ height="2"
+ id="image3190-3"
+ y="31.5625"
+ x="-10.5"
+ inkscape:label="Ground06" />
+<image
+ y="31.5781"
+ x="-12.4844"
+ id="image3659-2-5-1-2"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png" />
+<image
+ style="display:inline"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
+ width="2"
+ height="2"
+ id="image3190-3-9"
+ y="31.5625"
+ x="-6.5155"
+ inkscape:label="Ground06" />
+<image
+ y="-33.5781"
+ x="-8.5"
+ id="image3568-0-8-3-5-1"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ transform="scale(1,-1)" />
+<image
+ style="display:inline"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
+ width="2"
+ height="2"
+ id="image3190-3-9-8"
+ y="31.5532"
+ x="-28.2097"
+ inkscape:label="Ground06" />
+<image
+ style="display:inline"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
+ width="2"
+ height="2"
+ id="image3190-3-9-8-1"
+ y="27.7812"
+ x="-26.25"
+ inkscape:label="Ground06" />
+<image
+ style="display:inline"
+ y="14"
+ x="-2"
+ id="image3320-0-4-0-9"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile11.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile11" />
+<image
+ style="display:inline"
+ y="14"
+ x="0"
+ id="image3333-2-8-3-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="16"
+ x="-2"
+ id="image3366-0-3-7-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="12"
+ x="-2"
+ id="image3377-1-8-1-9"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile01.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile01" />
+<image
+ style="display:inline"
+ y="12"
+ x="0"
+ id="image3388-6-5-5-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="16"
+ x="0"
+ id="image3366-0-6-0-2-1-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="14"
+ x="2"
+ id="image3333-2-8-3-1-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="12"
+ x="2"
+ id="image3388-6-5-5-7-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="16"
+ x="2"
+ id="image3366-0-6-0-2-1-1-9"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="18"
+ x="3"
+ id="image3320-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile11.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile11" />
+<image
+ style="display:inline"
+ y="18"
+ x="5"
+ id="image3333-2"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="18"
+ x="7"
+ id="image3344-5"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile13.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile13" />
+<image
+ style="display:inline"
+ y="18"
+ x="9"
+ id="image3355-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile14.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile14" />
+<image
+ style="display:inline"
+ y="20"
+ x="3"
+ id="image3366-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="16"
+ x="3"
+ id="image3377-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile01.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile01" />
+<image
+ style="display:inline"
+ y="16"
+ x="5"
+ id="image3388-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="16"
+ x="7"
+ id="image3399-9"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile03.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile03" />
+<image
+ style="display:inline"
+ y="16"
+ x="9"
+ id="image3410-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile04.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile04" />
+<image
+ style="display:inline"
+ y="18"
+ x="11"
+ id="image3320-0-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile11.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile11" />
+<image
+ style="display:inline"
+ y="18"
+ x="13"
+ id="image3333-2-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="18"
+ x="15"
+ id="image3344-5-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile13.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile13" />
+<image
+ style="display:inline"
+ y="18"
+ x="17"
+ id="image3355-8-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile14.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile14" />
+<image
+ style="display:inline"
+ y="20"
+ x="11"
+ id="image3366-0-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="16"
+ x="11"
+ id="image3377-1-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile01.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile01" />
+<image
+ style="display:inline"
+ y="16"
+ x="13"
+ id="image3388-6-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="16"
+ x="15"
+ id="image3399-9-4"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile03.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile03" />
+<image
+ style="display:inline"
+ y="16"
+ x="17"
+ id="image3410-7-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile04.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile04" />
+<image
+ style="display:inline"
+ y="20"
+ x="5"
+ id="image3366-0-6-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="7"
+ id="image3366-0-6-5"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="9"
+ id="image3366-0-6-2"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="13"
+ id="image3366-0-6-59"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="15"
+ id="image3366-0-6-00"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="17"
+ id="image3366-0-6-4"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="18"
+ x="-3"
+ id="image3320-0-4"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile11.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile11" />
+<image
+ style="display:inline"
+ y="18"
+ x="-1"
+ id="image3333-2-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="18"
+ x="1"
+ id="image3344-5-2"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile13.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile13" />
+<image
+ style="display:inline"
+ y="20"
+ x="-3"
+ id="image3366-0-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="16"
+ x="-3"
+ id="image3377-1-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile01.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile01" />
+<image
+ style="display:inline"
+ y="16"
+ x="-1"
+ id="image3388-6-5"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="16"
+ x="1"
+ id="image3399-9-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile03.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile03" />
+<image
+ style="display:inline"
+ y="20"
+ x="-1"
+ id="image3366-0-6-0-2"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="1"
+ id="image3366-0-6-5-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="18"
+ x="19"
+ id="image3320-0-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile11.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile11" />
+<image
+ style="display:inline"
+ y="18"
+ x="21"
+ id="image3333-2-66"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="18"
+ x="23"
+ id="image3344-5-18"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile13.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile13" />
+<image
+ style="display:inline"
+ y="20"
+ x="19"
+ id="image3366-0-2"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="16"
+ x="19"
+ id="image3377-1-85"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile01.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile01" />
+<image
+ style="display:inline"
+ y="16"
+ x="21"
+ id="image3388-6-4"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="16"
+ x="23"
+ id="image3399-9-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile03.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile03" />
+<image
+ style="display:inline"
+ y="20"
+ x="21"
+ id="image3366-0-6-0-9"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="23"
+ id="image3366-0-6-5-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="3"
+ id="image3366-0-24"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="11"
+ id="image3366-0-6-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="5"
+ id="image3366-0-6-0-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="7"
+ id="image3366-0-6-5-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="9"
+ id="image3366-0-6-2-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="13"
+ id="image3366-0-6-59-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="15"
+ id="image3366-0-6-00-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="17"
+ id="image3366-0-6-4-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="-3"
+ id="image3366-0-3-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="-1"
+ id="image3366-0-6-0-2-9"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="1"
+ id="image3366-0-6-5-8-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="19"
+ id="image3366-0-2-4"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="21"
+ id="image3366-0-6-0-9-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="23"
+ id="image3366-0-6-5-6-4"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="18"
+ x="-7"
+ id="image3320-0-4-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile11.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile11" />
+<image
+ style="display:inline"
+ y="18"
+ x="-5"
+ id="image3333-2-8-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="20"
+ x="-7"
+ id="image3366-0-3-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="16"
+ x="-7"
+ id="image3377-1-8-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile01.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile01" />
+<image
+ style="display:inline"
+ y="16"
+ x="-5"
+ id="image3388-6-5-5"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="20"
+ x="-5"
+ id="image3366-0-6-0-2-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="-7"
+ id="image3366-0-3-8-2"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="-5"
+ id="image3366-0-6-0-2-9-2"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="18"
+ x="25"
+ id="image3333-2-66-4"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="18"
+ x="27"
+ id="image3344-5-18-5"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile13.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile13" />
+<image
+ style="display:inline"
+ y="16"
+ x="25"
+ id="image3388-6-4-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="16"
+ x="27"
+ id="image3399-9-3-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile03.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile03" />
+<image
+ style="display:inline"
+ y="20"
+ x="25"
+ id="image3366-0-6-0-9-63"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="27"
+ id="image3366-0-6-5-6-47"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="25"
+ id="image3366-0-6-0-9-6-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="27"
+ id="image3366-0-6-5-6-4-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="3"
+ id="image3366-0-24-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="11"
+ id="image3366-0-6-7-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="5"
+ id="image3366-0-6-0-7-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="7"
+ id="image3366-0-6-5-3-4"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="9"
+ id="image3366-0-6-2-3-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="13"
+ id="image3366-0-6-59-3-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="15"
+ id="image3366-0-6-00-7-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="17"
+ id="image3366-0-6-4-7-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="-3"
+ id="image3366-0-3-8-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="-1"
+ id="image3366-0-6-0-2-9-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="1"
+ id="image3366-0-6-5-8-6-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="19"
+ id="image3366-0-2-4-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="21"
+ id="image3366-0-6-0-9-6-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="23"
+ id="image3366-0-6-5-6-4-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="-7"
+ id="image3366-0-3-8-2-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="-5"
+ id="image3366-0-6-0-2-9-2-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="25"
+ id="image3366-0-6-0-9-6-1-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="27"
+ id="image3366-0-6-5-6-4-3-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="18"
+ x="29"
+ id="image3333-2-66-4-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ style="display:inline"
+ y="18"
+ x="31"
+ id="image3344-5-18-5-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile13.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile13" />
+<image
+ style="display:inline"
+ y="16"
+ x="29"
+ id="image3388-6-4-3-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ style="display:inline"
+ y="16"
+ x="31"
+ id="image3399-9-3-8-2"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile03.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile03" />
+<image
+ style="display:inline"
+ y="20"
+ x="29"
+ id="image3366-0-6-0-9-63-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="20"
+ x="31"
+ id="image3366-0-6-5-6-47-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="29"
+ id="image3366-0-6-0-9-6-1-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="22"
+ x="31"
+ id="image3366-0-6-5-6-4-3-8"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="29"
+ id="image3366-0-6-0-9-6-1-3-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ style="display:inline"
+ y="24"
+ x="31"
+ id="image3366-0-6-5-6-4-3-0-7"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+</g>
+<g
+ inkscape:groupmode="layer"
+ id="layer3"
+ inkscape:label="Physics"
+ style="display:inline">
+<path
+ style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+ d="M -2.09922,14.078 3.75,14.078"
+ id="path3529"
+ inkscape:label="StaticBody"
+ sodipodi:nodetypes="cc"
+ inkscape:connector-curvature="0" />
+<path
+ style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+ d="M 3.75,18 33,18"
+ id="path3529-0"
+ inkscape:label="StaticBody"
+ sodipodi:nodetypes="cc"
+ inkscape:connector-curvature="0" />
+<path
+ style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+ d="M 3.75,14.078 3.75,17.6356"
+ id="path3529-9"
+ inkscape:label="StaticBody"
+ sodipodi:nodetypes="cc"
+ inkscape:connector-curvature="0" />
+</g>
+<g
+ inkscape:groupmode="layer"
+ id="layer1"
+ inkscape:label="Tools"
+ style="display:none">
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-128x128.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-128x128.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image2970"
+ x="-10.4795"
+ y="8.56182" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-02-128x128.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-02-128x128.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image2958"
+ x="-8.21364"
+ y="8.57172" />
+<image
+ y="15.0817"
+ x="-10.3475"
+ id="image2982"
+ height="2"
+ width="2"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/rock-512x512.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/rock-512x512.png"
+ inkscape:label="Rock" />
+<image
+ y="6.22182"
+ x="-10.4955"
+ id="image3455"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground01"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-01.png" />
+<image
+ y="6.22182"
+ x="-8.24164"
+ id="image3568"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground02"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-02.png" />
+<image
+ y="6.22182"
+ x="-5.97664"
+ id="image3659"
+ height="2"
+ width="2"
+ style="display:inline"
+ inkscape:label="Ground03"
+ xlink:href="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png"
+ sodipodi:absref="/home/acoppes/workspace/box2d-editor/src/main/resources/data/ground-03.png" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-01.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-01.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3768"
+ x="-5.96863"
+ y="8.54182"
+ inkscape:label="Grass01" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3895"
+ x="-10.4675"
+ y="10.7717"
+ inkscape:label="Grass02" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/grass-03.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3986"
+ x="-8.24864"
+ y="10.7418"
+ inkscape:label="Grass03" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-01.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4775"
+ x="-10.4415"
+ y="13.3618"
+ inkscape:label="Ground04" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ xlink:href="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/border-02.png"
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image4879"
+ x="-8.09163"
+ y="13.3817"
+ inkscape:label="Ground05" />
+<image
+ style="display:inline"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/ground-06.png"
+ width="2"
+ height="2"
+ id="image3190"
+ y="6.21875"
+ x="-3.75"
+ inkscape:label="Ground06" />
+<image
+ y="0"
+ x="-9"
+ id="image3320"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile11.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile11" />
+<image
+ y="0"
+ x="-7"
+ id="image3333"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile12.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile12" />
+<image
+ y="0"
+ x="-5"
+ id="image3344"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile13.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile13" />
+<image
+ y="0"
+ x="-3"
+ id="image3355"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile14.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile14" />
+<image
+ y="2"
+ x="-9"
+ id="image3366"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile21.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile21" />
+<image
+ y="-2"
+ x="-9"
+ id="image3377"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile01.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile01" />
+<image
+ y="-2"
+ x="-7"
+ id="image3388"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile02.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile02" />
+<image
+ y="-2"
+ x="-5"
+ id="image3399"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile03.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile03" />
+<image
+ y="-2"
+ x="-3"
+ id="image3410"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/tile04.png"
+ height="2"
+ width="2"
+ inkscape:label="Tile04" />
+</g>
 </svg>
