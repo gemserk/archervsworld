@@ -11,6 +11,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -63,6 +64,7 @@ import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl2;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
+import com.gemserk.games.archervsworld.controllers.MultitouchCameraControllerImpl;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
@@ -184,7 +186,17 @@ public class GameScreen extends ScreenAdapter {
 		// moveLeftMonitor, moveRightMonitor, //
 		// moveUpMonitor, moveDownMonitor, //
 		// zoomInButtonMonitor, zoomOutButtonMonitor);
-		cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, new Rectangle(140, 0, viewportWidth - 140, viewportHeight));
+
+		Rectangle controllerArea = new Rectangle(140, 0, viewportWidth - 140, viewportHeight);
+
+		// cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
+
+		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
+			cameraController = new MultitouchCameraControllerImpl(camera, controllerArea);
+		else
+			cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
+
+		// on pc use another camera controller...
 
 		controllers.add(cameraController);
 
@@ -321,7 +333,7 @@ public class GameScreen extends ScreenAdapter {
 				if (sprite == null)
 					return;
 				int layer = 2;
-				if (element.hasAttribute("layer")) 
+				if (element.hasAttribute("layer"))
 					layer = Integer.parseInt(element.getAttribute("layer"));
 				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, sprite, layer, Color.WHITE, 0.5f, 0.5f);
 			};
@@ -480,13 +492,8 @@ public class GameScreen extends ScreenAdapter {
 				sprite("WallTile02", "BuildingSpritesheet", 64 * 1, 64 * 1, 64, 64);
 				sprite("WallTile03", "BuildingSpritesheet", 64 * 2, 64 * 1, 64, 64);
 
-				// texture("WallTile01", "data/images/tile_wall_01.png");
-				// texture("WallTile02", "data/images/tile_wall_02.png");
-				// texture("WallTile03", "data/images/tile_wall_03.png");
-
-				// texture("WindowTile01", "data/images/tile_small_window.png");
-
 				texture("CloudsSpritesheet", "data/images/clouds-spritesheet.png", false);
+
 				sprite("Cloud01", "CloudsSpritesheet", 0, 0, 512, 128);
 				sprite("Cloud02", "CloudsSpritesheet", 0, 128, 512, 128);
 

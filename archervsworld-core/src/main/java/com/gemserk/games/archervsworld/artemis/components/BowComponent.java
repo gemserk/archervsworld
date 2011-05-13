@@ -2,47 +2,45 @@ package com.gemserk.games.archervsworld.artemis.components;
 
 import com.artemis.Component;
 import com.artemis.Entity;
-import com.gemserk.commons.values.FloatValue;
-import com.gemserk.componentsengine.properties.Property;
 
 /**
  * Whether the entity can shoot arrows or not.
  */
 public class BowComponent extends Component {
 
-	private Property<FloatValue> power;
+	private float minPower;
 
-	private Property<Entity> arrow;
+	private float maxPower;
 
-	private Property<FloatValue> minPower;
+	private float power;
 
-	private Property<FloatValue> maxPower;
+	private Entity arrow;
 
 	public float getPower() {
-		return power.get().value;
+		return power;
 	}
 
 	public void setPower(float power) {
-		this.power.get().value = power;
-	}
-
-	public float getMinPower() {
-		return minPower.get().value;
-	}
-
-	public float getMaxPower() {
-		return maxPower.get().value;
+		this.power = power;
 	}
 
 	public Entity getArrow() {
-		return arrow.get();
+		return arrow;
 	}
-
+	
 	public void setArrow(Entity arrow) {
-		this.arrow.set(arrow);
+		this.arrow = arrow;
 	}
 
-	public BowComponent(Property<FloatValue> power, Property<Entity> arrow, Property<FloatValue> minPower, Property<FloatValue> maxPower) {
+	public float getMinPower() {
+		return minPower;
+	}
+
+	public float getMaxPower() {
+		return maxPower;
+	}
+
+	public BowComponent(float power, Entity arrow, float minPower, float maxPower) {
 		this.power = power;
 		this.arrow = arrow;
 		this.minPower = minPower;

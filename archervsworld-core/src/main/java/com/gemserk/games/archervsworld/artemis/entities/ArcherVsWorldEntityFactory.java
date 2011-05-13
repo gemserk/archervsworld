@@ -232,21 +232,12 @@ public class ArcherVsWorldEntityFactory {
 	
 	public void createArcher(float x, float y) {
 		Entity entity = world.createEntity();
-
 		float bowHeight = 1.6f;
 		float bowWidth = 1.6f;
-
-		Resource<Texture> resource = resourceManager.get("Bow");
-		Texture texture = resource.get();
-
+		Texture texture = resourceManager.getResourceValue("Bow");
 		entity.addComponent(new SpatialComponent(new SpatialImpl(x, y, bowWidth, bowHeight, 0f)));
 		entity.addComponent(new SpriteComponent(new Sprite(texture), 2, new Vector2(0.5f, 0.5f), Color.WHITE));
-		entity.addComponent(new BowComponent( //
-				new SimpleProperty<FloatValue>(new FloatValue(0f)), //
-				new SimpleProperty<Entity>(null),//
-				new SimpleProperty<FloatValue>(new FloatValue(5f)), //
-				new SimpleProperty<FloatValue>(new FloatValue(15f))));
-
+		entity.addComponent(new BowComponent(0f, null, 5f, 15f));
 		entity.refresh();
 	}
 
