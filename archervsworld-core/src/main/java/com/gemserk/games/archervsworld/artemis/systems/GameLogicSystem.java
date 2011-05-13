@@ -90,7 +90,7 @@ public class GameLogicSystem extends EntitySystem {
 
 		// processArrows();
 
-		processEnemies();
+		// processEnemies();
 
 	}
 

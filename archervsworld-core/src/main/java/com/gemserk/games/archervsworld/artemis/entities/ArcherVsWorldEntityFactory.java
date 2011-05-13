@@ -17,7 +17,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.AliveAreaComponent;
-import com.gemserk.commons.artemis.components.AliveComponent;
 import com.gemserk.commons.artemis.components.Contact;
 import com.gemserk.commons.artemis.components.HitComponent;
 import com.gemserk.commons.artemis.components.MovementComponent;
@@ -51,6 +50,21 @@ import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
 public class ArcherVsWorldEntityFactory {
+
+	private static class RemoveEntityTrigger extends AbstractTrigger {
+
+		private final World world;
+
+		public RemoveEntityTrigger(World world) {
+			this.world = world;
+		}
+
+		@Override
+		protected boolean handle(Entity e) {
+			world.deleteEntity(e);
+			return true;
+		}
+	}
 
 	private World world;
 
@@ -156,15 +170,12 @@ public class ArcherVsWorldEntityFactory {
 						// DamageComponent damageComponent = e.getComponent(DamageComponent.class);
 						// e.removeComponent(damageComponent);
 
-						e.addComponent(new AliveComponent(5000));
-
+						e.addComponent(new TimerComponent(5000, new RemoveEntityTrigger(world)));
+						// e.addComponent(new AliveComponent(5000));
 						e.refresh();
 
 						return true;
 					}
-
-					SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
-					createDyingArrow(spatialComponent.getSpatial(), 5000, Color.WHITE);
 
 					// if target is dynamic body....
 					if (Groups.Enemy.equalsIgnoreCase(group)) {
@@ -172,6 +183,10 @@ public class ArcherVsWorldEntityFactory {
 						Sound sound = resourceManager.getResourceValue("HitFleshSound");
 						sound.play();
 					} else {
+						// just for now, we only create dying arrows if we hit no enemy
+						SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
+						createDyingArrow(spatialComponent.getSpatial(), 5000, Color.WHITE);
+						
 						Sound sound = resourceManager.getResourceValue("HitGroundSound");
 						sound.play();
 					}
@@ -273,12 +288,12 @@ public class ArcherVsWorldEntityFactory {
 
 				PhysicsComponent phyiscsComponent = e.getComponent(PhysicsComponent.class);
 				Contact contact = phyiscsComponent.getContact();
-				
+
 				if (!contact.isInContact())
 					return false;
-				
+
 				Entity contactEntity = null;
-				
+
 				for (int i = 0; i < contact.getContactCount(); i++) {
 
 					if (!contact.isInContact(i))
@@ -287,7 +302,7 @@ public class ArcherVsWorldEntityFactory {
 					// hack to avoid processing the same entity twice because we have multiple contacts with it...
 					if (contactEntity == contact.getEntity(i))
 						continue;
-					
+
 					contactEntity = contact.getEntity(i);
 					// if contactEntity is arrow?
 
@@ -306,12 +321,13 @@ public class ArcherVsWorldEntityFactory {
 					health.remove(damageComponent.getDamage());
 
 					if (health.isEmpty()) {
+						// createDyingZombie(position, size);
 						world.deleteEntity(e);
 						return true;
 					}
 
 				}
-				
+
 				return false;
 			}
 		}));
@@ -342,8 +358,8 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(2)), //
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
-		entity.addComponent(new AliveComponent(aliveTime));
-
+		// entity.addComponent(new AliveComponent(aliveTime));
+		entity.addComponent(new TimerComponent(aliveTime, new RemoveEntityTrigger(world)));
 		entity.addComponent(new InformationComponent("fade out zombie"));
 
 		entity.refresh();
@@ -384,7 +400,8 @@ public class ArcherVsWorldEntityFactory {
 				new SimpleProperty<IntValue>(new IntValue(1)), //
 				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
 				PropertyBuilder.property(color))); //
-		entity.addComponent(new AliveComponent(aliveTime));
+		// entity.addComponent(new AliveComponent(aliveTime));
+		entity.addComponent(new TimerComponent(aliveTime, new RemoveEntityTrigger(world)));
 		entity.addComponent(new InformationComponent("fade out arrow"));
 
 		entity.refresh();
@@ -423,20 +440,19 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	public void createZombiesSpawner(final Vector2 position) {
-		Entity spawner = world.createEntity();
+		Entity entity = world.createEntity();
 		int time = MathUtils.random(5000, 7000);
-		spawner.addComponent(new TimerComponent(time, new AbstractTrigger() {
+		entity.addComponent(new TimerComponent(time, new AbstractTrigger() {
 			@Override
 			protected boolean handle(Entity e) {
 				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
 				timerComponent.setCurrentTime(MathUtils.random(5000, 7000));
 				Gdx.app.log("Archer Vs Zombies", "New Zombie spawned");
-				createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 5f);
+				createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 2f);
 				return false;
 			}
 		}));
-		// spawner.addComponent(new SpawnerComponent(new CountDownTimer(0, true), 7000, 9000, ));
-		spawner.refresh();
+		entity.refresh();
 	}
 
 	public void createCloud(Vector2 position, Vector2 velocity, Rectangle areaLimit, int layer, float size, Sprite sprite, Color cloudColor) {

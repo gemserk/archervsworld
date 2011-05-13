@@ -30,7 +30,6 @@ import com.gemserk.commons.artemis.components.TextComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.AliveAreaSystem;
-import com.gemserk.commons.artemis.systems.AliveSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
 import com.gemserk.commons.artemis.systems.HitDetectionSystem;
 import com.gemserk.commons.artemis.systems.MovementSystem;
@@ -72,7 +71,6 @@ import com.gemserk.games.archervsworld.GameScreen.EntitySystemController.Activab
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.DebugInformationSystem;
-import com.gemserk.games.archervsworld.artemis.systems.GameLogicSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
@@ -246,12 +244,6 @@ public class GameScreen extends ScreenAdapter {
 		updateBowSystem.setResourceManager(resourceManager);
 
 		WalkingDeadSystem walkingDeadSystem = new WalkingDeadSystem();
-		GameLogicSystem gameLogicSystem = new GameLogicSystem(controllerSwitcher);
-
-		gameLogicSystem.setArcherVsWorldEntityFactory(archerVsWorldEntityFactory);
-		gameLogicSystem.setResourceManager(resourceManager);
-
-		// HudButtonSystem hudButtonSystem = new HudButtonSystem(pointer0);
 
 		world = new World();
 
@@ -265,22 +257,13 @@ public class GameScreen extends ScreenAdapter {
 		worldWrapper.addUpdateSystem(new HitDetectionSystem());
 		worldWrapper.addUpdateSystem(new CorrectArrowDirectionSystem());
 		worldWrapper.addUpdateSystem(pointerUpdateSystem);
-
-		// worldWrapper.add(hudButtonSystem);
-
 		worldWrapper.addUpdateSystem(walkingDeadSystem);
 		worldWrapper.addUpdateSystem(new MovementSystem());
-
-
 		worldWrapper.addUpdateSystem(updateBowSystem);
 		worldWrapper.addUpdateSystem(new UpdateChargingArrowSystem());
-
-		worldWrapper.addUpdateSystem(gameLogicSystem);
 		worldWrapper.addUpdateSystem(new HierarchySystem());
-		worldWrapper.addUpdateSystem(new AliveSystem());
+		// worldWrapper.addUpdateSystem(new AliveSystem());
 		worldWrapper.addUpdateSystem(new AliveAreaSystem());
-
-		// worldWrapper.add(new SpawnerSystem());
 		worldWrapper.addUpdateSystem(new TimerSystem());
 		worldWrapper.addUpdateSystem(new DebugInformationSystem());
 
@@ -580,14 +563,14 @@ public class GameScreen extends ScreenAdapter {
 
 		new LibgdxResourceBuilder(resourceManager) {
 			{
-				texture("Background", "data/background-512x512.jpg", false );
-				
+				texture("Background", "data/background-512x512.jpg", false);
+
 				texture("Rock", "data/rock-512x512.png");
 				texture("Bow", "data/bow-512x512.png");
 				texture("Arrow", "data/arrow-512x512.png");
 				texture("Tree", "data/tree-512x512.png");
 				texture("Grass", "data/grass-128x128.png");
-				
+
 				texture("Ground01", internal("data/ground-01.png"), true);
 				texture("Ground02", internal("data/ground-02.png"), true);
 				texture("Ground03", internal("data/ground-03.png"), true);
@@ -598,7 +581,7 @@ public class GameScreen extends ScreenAdapter {
 				texture("Grass01", internal("data/grass-01.png"), true);
 				texture("Grass02", internal("data/grass-02.png"), true);
 				texture("Grass03", internal("data/grass-03.png"), true);
-				
+
 				texture("Tile01", internal("data/tile01.png"), true);
 				texture("Tile02", internal("data/tile02.png"), true);
 				texture("Tile03", internal("data/tile03.png"), true);
@@ -617,9 +600,9 @@ public class GameScreen extends ScreenAdapter {
 				sound("HitFleshSound", "data/hit-flesh.ogg");
 				sound("HitGroundSound", "data/hit-ground.ogg");
 				sound("BowSound", "data/bow.ogg");
-				
+
 				texture("CloudsSpritesheet", "data/clouds-spritesheet.png", false);
-				
+
 				sprite("Cloud01", "CloudsSpritesheet", 0, 0, 512, 128);
 				sprite("Cloud02", "CloudsSpritesheet", 0, 128, 512, 128);
 			}
