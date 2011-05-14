@@ -212,6 +212,8 @@ public class PlayGameState extends GameStateImpl {
 		bowControllers.add(bowController);
 
 		controllers.add(bowController);
+		
+		// controllers.add(bowController);
 
 		// if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
 		// controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
@@ -230,7 +232,7 @@ public class PlayGameState extends GameStateImpl {
 			}
 		};
 
-		UpdateBowSystem updateBowSystem = new UpdateBowSystem(currentController);
+		UpdateBowSystem updateBowSystem = new UpdateBowSystem();
 		updateBowSystem.setEntityFactory(archerVsWorldEntityFactory);
 		updateBowSystem.setResourceManager(resourceManager);
 
@@ -304,7 +306,7 @@ public class PlayGameState extends GameStateImpl {
 				// create stuff..
 
 				if (element.hasAttribute("start")) {
-					archerVsWorldEntityFactory.createArcher(x, y);
+					archerVsWorldEntityFactory.createArcher(x, y, realBowController);
 					return;
 				}
 
@@ -393,7 +395,7 @@ public class PlayGameState extends GameStateImpl {
 
 		// BowData bowData = bowController.getBowData();
 		ImmediateModeRendererUtils.drawSolidCircle(70f, 70f, 60f, realBowController.getAngle(), Color.WHITE);
-		
+
 		if (realBowController.isCharging())
 			ImmediateModeRendererUtils.drawSolidCircle(Gdx.graphics.getWidth() - 70f, 70f, realBowController.getPower() * 2f, Color.WHITE);
 
@@ -496,4 +498,3 @@ public class PlayGameState extends GameStateImpl {
 	}
 
 }
-

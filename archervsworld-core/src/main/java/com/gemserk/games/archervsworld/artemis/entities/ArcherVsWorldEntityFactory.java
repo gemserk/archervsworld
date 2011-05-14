@@ -46,6 +46,7 @@ import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.InformationComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
+import com.gemserk.games.archervsworld.controllers.BowData;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
@@ -230,14 +231,14 @@ public class ArcherVsWorldEntityFactory {
 		return entity;
 	}
 	
-	public void createArcher(float x, float y) {
+	public void createArcher(float x, float y, BowData bowData) {
 		Entity entity = world.createEntity();
 		float bowHeight = 1.6f;
 		float bowWidth = 1.6f;
 		Texture texture = resourceManager.getResourceValue("Bow");
 		entity.addComponent(new SpatialComponent(new SpatialImpl(x, y, bowWidth, bowHeight, 0f)));
 		entity.addComponent(new SpriteComponent(new Sprite(texture), 2, new Vector2(0.5f, 0.5f), Color.WHITE));
-		entity.addComponent(new BowComponent(0f, null, 5f, 15f));
+		entity.addComponent(new BowComponent(0f, null, 5f, 15f, bowData));
 		entity.refresh();
 	}
 

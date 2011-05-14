@@ -10,11 +10,9 @@ import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
 import com.gemserk.commons.gdx.math.MathUtils2;
-import com.gemserk.componentsengine.properties.Property;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
-import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowData;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
@@ -29,26 +27,26 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 
 	private ActivableSystemImpl activableSystem = new ActivableSystemImpl();
 
-	private Property<BowController> currentBowController;
-
 	public void setResourceManager(ResourceManager<String> resourceManager) {
 		this.resourceManager = resourceManager;
 	}
-	
+
 	public void setEntityFactory(ArcherVsWorldEntityFactory entityFactory) {
 		this.entityFactory = entityFactory;
 	}
 
-	public UpdateBowSystem(Property<BowController> currentBowController) {
+	public UpdateBowSystem() {
 		super(BowComponent.class);
-		this.currentBowController = currentBowController;
 	}
 
 	@Override
-	protected void process(Entity bow) {
+	protected void process(Entity e) {
 
-		BowController bowController = currentBowController.get();
-		BowData bowData = bowController.getBowData();
+		BowComponent bowComponent = e.getComponent(BowComponent.class);
+		BowData bowData = bowComponent.getBowData();
+
+		// BowController bowController = currentBowController.get();
+		// BowData bowData = bowController.getBowData();
 
 		float angle = bowData.getAngle();
 		float power = bowData.getPower();
@@ -56,7 +54,7 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 		float minFireAngle = -70f;
 		float maxFireAngle = 80f;
 
-		SpatialComponent spatialComponent = bow.getComponent(SpatialComponent.class);
+		SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
 		Spatial spatial = spatialComponent.getSpatial();
 
 		if (AngleUtils.between(angle, minFireAngle, maxFireAngle))
@@ -65,8 +63,6 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 		if (bowData.isCharging()) {
 
 			// updates bow direction based on the controller
-
-			BowComponent bowComponent = bow.getComponent(BowComponent.class);
 
 			bowComponent.setPower(MathUtils2.truncate(power, bowComponent.getMinPower(), bowComponent.getMaxPower()));
 
@@ -83,8 +79,6 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 
 		if (bowData.isFiring()) {
 
-			BowComponent bowComponent = bow.getComponent(BowComponent.class);
-
 			Entity arrow = bowComponent.getArrow();
 
 			if (arrow == null)
@@ -93,12 +87,12 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 			SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
 
 			if (arrowSpatialComponent == null) {
-				EntityDebugger.debug("arrow spatial component missing in arrow entity", bow);
+				EntityDebugger.debug("arrow spatial component missing in arrow entity", e);
 				throw new RuntimeException("spatial component missing on arrow entity " + arrow.getUniqueId());
 			}
 
 			Spatial arrowSpatial = arrowSpatialComponent.getSpatial();
-			
+
 			direction.set(1f, 0f);
 			direction.rotate(arrowSpatial.getAngle());
 
