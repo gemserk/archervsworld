@@ -27,14 +27,11 @@ public class BowDirectionControllerHudImpl implements BowController {
 		Vector2 p0 = position;
 		Vector2 p1 = pointer.getPosition();
 
-		// if (p0.x > p1.x) {
-		// Vector2 tmp = p0;
-		// p0 = p1;
-		// p1 = tmp;
-		// }
-		
-		if (p0.x > p1.x)
-			return;
+		if (p0.x > p1.x) {
+			Vector2 tmp = p0;
+			p0 = p1;
+			p1 = tmp;
+		}
 
 		Vector2 direction = p1.cpy().sub(p0);
 

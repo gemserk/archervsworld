@@ -58,6 +58,7 @@ import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSyst
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
+import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowData;
 import com.gemserk.games.archervsworld.controllers.BowDirectionControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowPowerControllerButonMonitorImpl;
@@ -102,6 +103,10 @@ public class PlayGameState extends GameStateImpl {
 	private ArrayList<Controller> controllers = new ArrayList<Controller>();
 
 	private BowData realBowController;
+
+	private BowController bowDirectionController;
+
+	private BowController bowPowerController;
 
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
@@ -200,25 +205,30 @@ public class PlayGameState extends GameStateImpl {
 
 		realBowController = new BowData();
 
-		controllers.add(new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(70f, 70f)));
-		controllers.add(new BowPowerControllerButonMonitorImpl(realBowController, new ButtonMonitor() {
-			@Override
-			protected boolean isDown() {
-				for (int i = 0; i < 5; i++) {
-					if (Gdx.input.isTouched(i))
-						return true;
+		bowDirectionController = null;
+		bowPowerController = null;
+
+		if (Gdx.app.getType() != ApplicationType.Android) {
+			bowDirectionController = new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(70f, 70f));
+			bowPowerController = new BowPowerControllerButonMonitorImpl(realBowController, new ButtonMonitor() {
+				@Override
+				protected boolean isDown() {
+					return Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 				}
-				return false;
-			}
-		}));
-
-		// controllers.add(bowController);
-
-		// if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
-		// controllers.add(new BowControllerMutitouchImpl(pointer0, pointer1));
-		//
-		// if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
-		// controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
+			});
+		} else {
+			bowDirectionController = new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(70f, 70f));
+			bowPowerController = new BowPowerControllerButonMonitorImpl(realBowController, new ButtonMonitor() {
+				@Override
+				protected boolean isDown() {
+					for (int i = 0; i < 5; i++) {
+						if (Gdx.input.isTouched(i))
+							return true;
+					}
+					return false;
+				}
+			});
+		}
 
 		UpdateBowSystem updateBowSystem = new UpdateBowSystem();
 		updateBowSystem.setEntityFactory(archerVsWorldEntityFactory);
@@ -411,6 +421,11 @@ public class PlayGameState extends GameStateImpl {
 		Synchronizers.synchronize(delta);
 		monitorUpdater.update();
 
+		// check controllers in order, to avoid handle both camera and bow controllerS?
+		
+		bowDirectionController.update(delta);
+		bowPowerController.update(delta);
+		
 		for (int i = 0; i < controllers.size(); i++)
 			controllers.get(i).update(delta);
 
