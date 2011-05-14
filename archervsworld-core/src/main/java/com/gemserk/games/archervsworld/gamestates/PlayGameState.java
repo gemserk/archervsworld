@@ -52,19 +52,17 @@ import com.gemserk.commons.svg.inkscape.SvgInkscapePath;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
-import com.gemserk.componentsengine.properties.AbstractProperty;
 import com.gemserk.games.archervsworld.LayerProcessor;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
-import com.gemserk.games.archervsworld.controllers.BowController;
-import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl2;
 import com.gemserk.games.archervsworld.controllers.BowData;
+import com.gemserk.games.archervsworld.controllers.BowDirectionControllerHudImpl;
+import com.gemserk.games.archervsworld.controllers.BowPowerControllerButonMonitorImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerButtonMonitorImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
-import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
 import com.gemserk.games.archervsworld.controllers.MultitouchCameraControllerImpl;
 import com.gemserk.games.archervsworld.gamestates.PlayGameState.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.resources.Resource;
@@ -98,8 +96,6 @@ public class PlayGameState extends GameStateImpl {
 	EntitySystemController entitySystemController = new EntitySystemController();
 
 	private WorldWrapper worldWrapper;
-
-	private BowController bowController;
 
 	private CameraController cameraController;
 
@@ -163,7 +159,6 @@ public class PlayGameState extends GameStateImpl {
 
 		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
 		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
-
 		LibgdxPointer pointer2 = new LibgdxPointer(0);
 
 		ArrayList<LibgdxPointer> pointers = new ArrayList<LibgdxPointer>();
@@ -196,8 +191,6 @@ public class PlayGameState extends GameStateImpl {
 
 		controllers.add(cameraController);
 
-		ArrayList<BowController> bowControllers = new ArrayList<BowController>();
-
 		// controllers.add(new BowControllerImpl2(pointer0, new Vector2(0f, 3f)));
 		// controllers.add(new BowControllerImpl(pointer0));
 		// controllers.add(new BowControllerImpl3(pointer0));
@@ -207,12 +200,18 @@ public class PlayGameState extends GameStateImpl {
 
 		realBowController = new BowData();
 
-		bowController = new BowControllerHudImpl2(pointer2, new Vector2(70f, 70f), 60f, realBowController);
+		controllers.add(new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(70f, 70f)));
+		controllers.add(new BowPowerControllerButonMonitorImpl(realBowController, new ButtonMonitor() {
+			@Override
+			protected boolean isDown() {
+				for (int i = 0; i < 5; i++) {
+					if (Gdx.input.isTouched(i))
+						return true;
+				}
+				return false;
+			}
+		}));
 
-		bowControllers.add(bowController);
-
-		controllers.add(bowController);
-		
 		// controllers.add(bowController);
 
 		// if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
@@ -220,17 +219,6 @@ public class PlayGameState extends GameStateImpl {
 		//
 		// if (Gdx.input.isPeripheralAvailable(Peripheral.HardwareKeyboard))
 		// controllers.add(new BowControllerKeyboardImpl(Input.Keys.KEYCODE_DPAD_UP, Input.Keys.KEYCODE_DPAD_DOWN, Input.Keys.KEYCODE_SPACE));
-
-		final ControllerSwitcher controllerSwitcher = new ControllerSwitcher(bowControllers);
-
-		controllers.add(controllerSwitcher);
-
-		AbstractProperty<BowController> currentController = new AbstractProperty<BowController>() {
-			@Override
-			public BowController get() {
-				return controllerSwitcher.getController();
-			}
-		};
 
 		UpdateBowSystem updateBowSystem = new UpdateBowSystem();
 		updateBowSystem.setEntityFactory(archerVsWorldEntityFactory);
