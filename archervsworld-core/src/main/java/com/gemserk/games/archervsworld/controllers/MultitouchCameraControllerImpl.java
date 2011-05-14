@@ -36,20 +36,22 @@ public class MultitouchCameraControllerImpl implements CameraController {
 		return camera;
 	}
 
-	public MultitouchCameraControllerImpl(Camera camera, Rectangle area) {
+	public MultitouchCameraControllerImpl(Camera camera, LibgdxPointer libgdxPointer0, LibgdxPointer libgdxPointer1, Rectangle area) {
 		this.camera = camera;
 		this.area = area;
 		this.maxZoom = camera.getZoom() * 1.5f;
 		this.minZoom = camera.getZoom() * 0.5f;
-		this.libgdxPointer0 = new LibgdxPointer(0);
-		this.libgdxPointer1 = new LibgdxPointer(1);
+		this.libgdxPointer0 = libgdxPointer0;
+		this.libgdxPointer1 = libgdxPointer1;
 	}
 
 	@Override
 	public void update(int delta) {
 
-		libgdxPointer0.update();
-		libgdxPointer1.update();
+		// libgdxPointer0.update();
+		// libgdxPointer1.update();
+
+		zooming = false;
 
 		if (libgdxPointer0.touched && libgdxPointer1.touched) {
 			zooming = true;
@@ -64,37 +66,36 @@ public class MultitouchCameraControllerImpl implements CameraController {
 			camera.setZoom(camera.getZoom() + difference * 0.1f);
 			lastDistance = currentDistance;
 			camera.setZoom(MathUtils2.truncate(camera.getZoom(), minZoom, maxZoom));
-		} else if (!zooming) {
-			// moving
-			LibgdxPointer libgdxPointer = libgdxPointer0;
-
-			if (!libgdxPointer.touched)
-				libgdxPointer = libgdxPointer1;
-
-			if (!libgdxPointer.touched)
-				return;
-
-			if (libgdxPointer.wasPressed) {
-				previousPosition.set(libgdxPointer.getPressedPosition());
-				inside = MathUtils2.inside(area, previousPosition);
-			}
-
-			if (!inside)
-				return;
-
-			Vector2 pointerPosition = libgdxPointer.getPosition();
-
-			tmp.set(previousPosition);
-			tmp.sub(pointerPosition);
-			tmp.mul(1f / camera.getZoom());
-
-			camera.setPosition(camera.getX() + tmp.x, camera.getY() + tmp.y);
-			previousPosition.set(pointerPosition);
-
 		}
 
-		if (!libgdxPointer0.touched && !libgdxPointer1.touched)
-			zooming = false;
+		if (zooming)
+			return;
+
+		// moving
+		LibgdxPointer libgdxPointer = libgdxPointer0;
+
+		if (!libgdxPointer.touched)
+			libgdxPointer = libgdxPointer1;
+
+		if (!libgdxPointer.touched)
+			return;
+
+		if (libgdxPointer.wasPressed) {
+			previousPosition.set(libgdxPointer.getPressedPosition());
+			// inside = MathUtils2.inside(area, previousPosition);
+		}
+
+		// if (!inside)
+		// return;
+
+		Vector2 pointerPosition = libgdxPointer.getPosition();
+
+		tmp.set(previousPosition);
+		tmp.sub(pointerPosition);
+		tmp.mul(1f / camera.getZoom());
+
+		camera.setPosition(camera.getX() + tmp.x, camera.getY() + tmp.y);
+		previousPosition.set(pointerPosition);
 
 	}
 

@@ -11,5 +11,5 @@ public class MainAndroidApplication extends AndroidApplication  {
 		super.onCreate(savedInstanceState);
 		initialize(new LibgdxGame(), false);
 	}
-
+	
 }

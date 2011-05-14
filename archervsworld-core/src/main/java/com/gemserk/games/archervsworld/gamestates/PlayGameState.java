@@ -43,7 +43,6 @@ import com.gemserk.commons.gdx.camera.CameraRestrictedImpl;
 import com.gemserk.commons.gdx.camera.Libgdx2dCamera;
 import com.gemserk.commons.gdx.camera.Libgdx2dCameraTransformImpl;
 import com.gemserk.commons.gdx.controllers.CameraController;
-import com.gemserk.commons.gdx.controllers.Controller;
 import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
@@ -103,8 +102,6 @@ public class PlayGameState extends GameStateImpl {
 	private WorldWrapper worldWrapper;
 
 	private CameraController cameraController;
-
-	private ArrayList<Controller> controllers = new ArrayList<Controller>();
 
 	private BowData realBowController;
 
@@ -173,12 +170,14 @@ public class PlayGameState extends GameStateImpl {
 		LibgdxPointer pointer0 = new LibgdxPointer(0, myCamera);
 		LibgdxPointer pointer1 = new LibgdxPointer(1, myCamera);
 		LibgdxPointer pointer2 = new LibgdxPointer(0);
+		LibgdxPointer pointer3 = new LibgdxPointer(1);
 
 		ArrayList<LibgdxPointer> pointers = new ArrayList<LibgdxPointer>();
 
 		pointers.add(pointer0);
 		pointers.add(pointer1);
 		pointers.add(pointer2);
+		pointers.add(pointer3);
 
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
@@ -191,7 +190,7 @@ public class PlayGameState extends GameStateImpl {
 		// cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
 
 		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen)) {
-			cameraController = new MultitouchCameraControllerImpl(camera, controllerArea);
+			cameraController = new MultitouchCameraControllerImpl(camera, pointer2, pointer3, controllerArea);
 		} else if (Gdx.app.getType() == ApplicationType.Android) {
 			cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
 		} else {
@@ -436,9 +435,6 @@ public class PlayGameState extends GameStateImpl {
 
 		if (!bowDirectionController.wasHandled() && !bowPowerController.wasHandled())
 			cameraController.update(delta);
-
-		for (int i = 0; i < controllers.size(); i++)
-			controllers.get(i).update(delta);
 
 		entitySystemController.update();
 
