@@ -11,6 +11,7 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.graphics.Color;
@@ -49,6 +50,7 @@ import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.svg.inkscape.DocumentParser;
 import com.gemserk.commons.svg.inkscape.SvgInkscapeImage;
 import com.gemserk.commons.svg.inkscape.SvgInkscapePath;
+import com.gemserk.componentsengine.input.AnalogInputMonitor;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.MonitorUpdater;
@@ -62,8 +64,8 @@ import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowData;
 import com.gemserk.games.archervsworld.controllers.BowDirectionControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowPowerControllerButonMonitorImpl;
-import com.gemserk.games.archervsworld.controllers.CameraControllerButtonMonitorImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
+import com.gemserk.games.archervsworld.controllers.CameraMovementControllerImpl;
 import com.gemserk.games.archervsworld.controllers.MultitouchCameraControllerImpl;
 import com.gemserk.games.archervsworld.gamestates.PlayGameState.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.resources.Resource;
@@ -186,22 +188,30 @@ public class PlayGameState extends GameStateImpl {
 			cameraController = new MultitouchCameraControllerImpl(camera, controllerArea);
 		else if (Gdx.app.getType() == ApplicationType.Android)
 			cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
-		else
-			cameraController = new CameraControllerButtonMonitorImpl(camera, //
-					Keys.DPAD_LEFT, Keys.DPAD_RIGHT, //
-					Keys.DPAD_UP, Keys.DPAD_DOWN, //
-					Keys.W, Keys.S);
+		else {
+			// cameraController = new CameraControllerButtonMonitorImpl(camera, //
+			// Keys.DPAD_LEFT, Keys.DPAD_RIGHT, //
+			// Keys.DPAD_UP, Keys.DPAD_DOWN, //
+			// Keys.W, Keys.S);
+			cameraController = new CameraMovementControllerImpl(camera, new AnalogInputMonitor() {
+				@Override
+				protected float newValue() {
+					return Gdx.input.getX();
+				}
+			}, new AnalogInputMonitor() {
+				@Override
+				protected float newValue() {
+					return Gdx.input.getY();
+				}
+			}, new ButtonMonitor() {
+				@Override
+				protected boolean isDown() {
+					return Gdx.input.isButtonPressed(Buttons.RIGHT);
+				}
+			});
+		}
 
-		// on pc use another camera controller...
-
-		controllers.add(cameraController);
-
-		// controllers.add(new BowControllerImpl2(pointer0, new Vector2(0f, 3f)));
-		// controllers.add(new BowControllerImpl(pointer0));
-		// controllers.add(new BowControllerImpl3(pointer0));
-		// controllers.add(new BowControllerImpl4(pointer0, new Vector2(0f, 3f)));
-
-		// controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
+		// controllers.add(cameraController);
 
 		realBowController = new BowData();
 
@@ -422,14 +432,14 @@ public class PlayGameState extends GameStateImpl {
 		monitorUpdater.update();
 
 		// check controllers in order, to avoid handle both camera and bow controllerS?
-		
+
 		bowDirectionController.update(delta);
 		bowPowerController.update(delta);
-		
+		cameraController.update(delta);
+
 		for (int i = 0; i < controllers.size(); i++)
 			controllers.get(i).update(delta);
 
-		cameraController.update(delta);
 		entitySystemController.update();
 
 		worldWrapper.update(delta);
