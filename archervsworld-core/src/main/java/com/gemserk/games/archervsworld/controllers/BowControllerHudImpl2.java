@@ -25,6 +25,11 @@ public class BowControllerHudImpl2 implements BowController {
 	public Vector2 getPosition() {
 		return position;
 	}
+	
+	@Override
+	public boolean wasHandled() {
+		return false;
+	}
 
 	public BowControllerHudImpl2(LibgdxPointer pointer, Vector2 position, float radius, BowData bowData) {
 		this.pointer = pointer;

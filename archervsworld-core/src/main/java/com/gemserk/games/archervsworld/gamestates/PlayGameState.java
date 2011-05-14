@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
@@ -61,8 +62,10 @@ import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
 import com.gemserk.games.archervsworld.controllers.BowData;
+import com.gemserk.games.archervsworld.controllers.BowDirectionAreaControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowDirectionControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowPowerControllerButonMonitorImpl;
+import com.gemserk.games.archervsworld.controllers.BowPowerHudControllerImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.CameraMovementControllerImpl;
 import com.gemserk.games.archervsworld.controllers.MultitouchCameraControllerImpl;
@@ -108,6 +111,10 @@ public class PlayGameState extends GameStateImpl {
 	private BowController bowDirectionController;
 
 	private BowController bowPowerController;
+
+	private Rectangle powerButtonArea;
+
+	private Circle directionButtonArea;
 
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
@@ -183,11 +190,11 @@ public class PlayGameState extends GameStateImpl {
 
 		// cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
 
-		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen))
+		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen)) {
 			cameraController = new MultitouchCameraControllerImpl(camera, controllerArea);
-		else if (Gdx.app.getType() == ApplicationType.Android)
+		} else if (Gdx.app.getType() == ApplicationType.Android) {
 			cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
-		else {
+		} else {
 			cameraController = new CameraMovementControllerImpl(camera, //
 					LibgdxInputMappingBuilder.pointerXCoordinateMonitor(Gdx.input, 0), //
 					LibgdxInputMappingBuilder.pointerYCoordinateMonitor(Gdx.input, 0), //
@@ -201,26 +208,26 @@ public class PlayGameState extends GameStateImpl {
 		bowDirectionController = null;
 		bowPowerController = null;
 
+		directionButtonArea = new Circle(70f, 70f, 60f);
+		powerButtonArea = new Rectangle(Gdx.graphics.getWidth() - 100, 20, 80, 80);
+
 		if (Gdx.app.getType() != ApplicationType.Android) {
-			bowDirectionController = new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(70f, 70f));
-			bowPowerController = new BowPowerControllerButonMonitorImpl(realBowController, new ButtonMonitor() {
-				@Override
-				protected boolean isDown() {
-					return Gdx.input.isButtonPressed(Input.Buttons.LEFT);
-				}
-			});
+			// bowDirectionController = new BowDirectionAreaControllerHudImpl(realBowController, pointer2, new Vector2(directionButtonArea.x, directionButtonArea.y), 60f);
+			bowDirectionController = new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(directionButtonArea.x, directionButtonArea.y));
+			bowPowerController = new BowPowerControllerButonMonitorImpl(realBowController, LibgdxInputMappingBuilder.leftMouseButtonMonitor(Gdx.input));
+			// bowPowerController = new BowPowerHudControllerImpl(realBowController, //
+			// LibgdxInputMappingBuilder.anyPointerButtonMonitor(Gdx.input), //
+			// LibgdxInputMappingBuilder.pointerXCoordinateMonitor(Gdx.input, 0), //
+			// LibgdxInputMappingBuilder.pointerYCoordinateMonitor(Gdx.input, 0), //
+			// powerButtonArea);
 		} else {
-			bowDirectionController = new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(70f, 70f));
-			bowPowerController = new BowPowerControllerButonMonitorImpl(realBowController, new ButtonMonitor() {
-				@Override
-				protected boolean isDown() {
-					for (int i = 0; i < 5; i++) {
-						if (Gdx.input.isTouched(i))
-							return true;
-					}
-					return false;
-				}
-			});
+			bowDirectionController = new BowDirectionAreaControllerHudImpl(realBowController, pointer2, //
+					new Vector2(directionButtonArea.x, directionButtonArea.y), directionButtonArea.radius);
+			bowPowerController = new BowPowerHudControllerImpl(realBowController, //
+					LibgdxInputMappingBuilder.pointerDownButtonMonitor(Gdx.input, 1), //
+					LibgdxInputMappingBuilder.pointerXCoordinateMonitor(Gdx.input, 1), //
+					LibgdxInputMappingBuilder.pointerYCoordinateMonitor(Gdx.input, 1), //
+					powerButtonArea);
 		}
 
 		UpdateBowSystem updateBowSystem = new UpdateBowSystem();
@@ -385,10 +392,18 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.render();
 
 		// BowData bowData = bowController.getBowData();
-		ImmediateModeRendererUtils.drawSolidCircle(70f, 70f, 60f, realBowController.getAngle(), Color.WHITE);
+		// ImmediateModeRendererUtils.drawSolidCircle(70f, 70f, 60f, realBowController.getAngle(), Color.WHITE);
+
+		ImmediateModeRendererUtils.drawSolidCircle(directionButtonArea, realBowController.getAngle(), Color.WHITE);
 
 		if (realBowController.isCharging())
 			ImmediateModeRendererUtils.drawSolidCircle(Gdx.graphics.getWidth() - 70f, 70f, realBowController.getPower() * 2f, Color.WHITE);
+
+		// if (Gdx.app.getType() == ApplicationType.Android) {
+		// ImmediateModeRendererUtils.drawRectangle(Gdx.graphics.getWidth() - 100, 20, Gdx.graphics.getWidth() - 20, 100, Color.GREEN);
+		ImmediateModeRendererUtils.drawRectangle(powerButtonArea, Color.GREEN);
+
+		// }
 
 		// if (bowController instanceof BowControllerHudImpl) {
 		// }
@@ -418,7 +433,9 @@ public class PlayGameState extends GameStateImpl {
 
 		bowDirectionController.update(delta);
 		bowPowerController.update(delta);
-		cameraController.update(delta);
+
+		if (!bowDirectionController.wasHandled() && !bowPowerController.wasHandled())
+			cameraController.update(delta);
 
 		for (int i = 0; i < controllers.size(); i++)
 			controllers.get(i).update(delta);

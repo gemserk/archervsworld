@@ -6,4 +6,6 @@ public interface BowController extends Controller {
 
 	BowData getBowData();
 	
+	boolean wasHandled();
+	
 }

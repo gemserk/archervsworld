@@ -26,6 +26,11 @@ public class BowControllerKeyboardImpl implements BowController {
 	}
 	
 	@Override
+	public boolean wasHandled() {
+		return false;
+	}
+	
+	@Override
 	public void update(int delta) {
 		
 		increaseAngleMonitor.update();

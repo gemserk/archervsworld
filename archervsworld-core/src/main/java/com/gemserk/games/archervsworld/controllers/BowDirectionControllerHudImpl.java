@@ -5,9 +5,9 @@ import com.gemserk.commons.gdx.input.LibgdxPointer;
 
 public class BowDirectionControllerHudImpl implements BowController {
 
-	private final LibgdxPointer pointer;
+	protected final LibgdxPointer pointer;
 
-	private final Vector2 position;
+	protected final Vector2 position;
 
 	private final BowData bowData;
 
@@ -21,12 +21,17 @@ public class BowDirectionControllerHudImpl implements BowController {
 		this.pointer = pointer;
 		this.position = position;
 	}
+	
+	@Override
+	public boolean wasHandled() {
+		return false;
+	}
 
 	@Override
 	public void update(int delta) {
 		Vector2 p0 = position;
 		Vector2 p1 = pointer.getPosition();
-
+		
 		if (p0.x > p1.x) {
 			Vector2 tmp = p0;
 			p0 = p1;
@@ -34,7 +39,7 @@ public class BowDirectionControllerHudImpl implements BowController {
 		}
 
 		Vector2 direction = p1.cpy().sub(p0);
-
+		
 		bowData.setAngle(direction.angle());
 	}
 

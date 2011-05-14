@@ -15,6 +15,11 @@ public class BowControllerImpl implements BowController {
 	
 	private LibgdxPointer pointer;
 	
+	@Override
+	public boolean wasHandled() {
+		return false;
+	}
+	
 	public BowControllerImpl(LibgdxPointer pointer) {
 		this.pointer = pointer;
 	}

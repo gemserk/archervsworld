@@ -23,6 +23,11 @@ public class BowControllerImpl4 implements BowController {
 	}
 	
 	@Override
+	public boolean wasHandled() {
+		return false;
+	}
+	
+	@Override
 	public void update(int delta) {
 		
 		firing = false;

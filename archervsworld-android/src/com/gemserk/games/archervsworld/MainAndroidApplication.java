@@ -3,7 +3,6 @@ package com.gemserk.games.archervsworld;
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
-import com.gemserk.games.archervsworld.LibgdxGame;
 
 public class MainAndroidApplication extends AndroidApplication  {
 

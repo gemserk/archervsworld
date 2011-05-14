@@ -21,6 +21,11 @@ public class BowControllerMutitouchImpl implements BowController {
 		this.pointer0 = pointer0;
 		this.pointer1 = pointer1;
 	}
+	
+	@Override
+	public boolean wasHandled() {
+		return false;
+	}
 
 	@Override
 	public void update(int delta) {
