@@ -11,7 +11,6 @@ import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.graphics.Color;
@@ -50,9 +49,9 @@ import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.svg.inkscape.DocumentParser;
 import com.gemserk.commons.svg.inkscape.SvgInkscapeImage;
 import com.gemserk.commons.svg.inkscape.SvgInkscapePath;
-import com.gemserk.componentsengine.input.AnalogInputMonitor;
 import com.gemserk.componentsengine.input.ButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
+import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.games.archervsworld.LayerProcessor;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
@@ -189,26 +188,10 @@ public class PlayGameState extends GameStateImpl {
 		else if (Gdx.app.getType() == ApplicationType.Android)
 			cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
 		else {
-			// cameraController = new CameraControllerButtonMonitorImpl(camera, //
-			// Keys.DPAD_LEFT, Keys.DPAD_RIGHT, //
-			// Keys.DPAD_UP, Keys.DPAD_DOWN, //
-			// Keys.W, Keys.S);
-			cameraController = new CameraMovementControllerImpl(camera, new AnalogInputMonitor() {
-				@Override
-				protected float newValue() {
-					return Gdx.input.getX();
-				}
-			}, new AnalogInputMonitor() {
-				@Override
-				protected float newValue() {
-					return Gdx.input.getY();
-				}
-			}, new ButtonMonitor() {
-				@Override
-				protected boolean isDown() {
-					return Gdx.input.isButtonPressed(Buttons.RIGHT);
-				}
-			});
+			cameraController = new CameraMovementControllerImpl(camera, //
+					LibgdxInputMappingBuilder.pointerXCoordinateMonitor(Gdx.input, 0), //
+					LibgdxInputMappingBuilder.pointerYCoordinateMonitor(Gdx.input, 0), //
+					LibgdxInputMappingBuilder.rightMouseButtonMonitor(Gdx.input));
 		}
 
 		// controllers.add(cameraController);
