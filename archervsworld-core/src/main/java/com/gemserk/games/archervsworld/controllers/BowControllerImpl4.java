@@ -13,26 +13,6 @@ public class BowControllerImpl4 implements BowController {
 	
 	private boolean firing;
 	
-	@Override
-	public float getAngle() {
-		return angle;
-	}
-	
-	@Override
-	public float getPower() {
-		return power;
-	}
-	
-	@Override
-	public boolean isCharging() {
-		return charging;
-	}
-	
-	@Override
-	public boolean shouldFire() {
-		return firing;
-	}
-	
 	private LibgdxPointer pointer;
 
 	private Vector2 source;

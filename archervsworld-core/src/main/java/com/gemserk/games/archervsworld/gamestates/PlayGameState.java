@@ -60,8 +60,8 @@ import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.WalkingDeadSystem;
 import com.gemserk.games.archervsworld.controllers.BowController;
-import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl;
 import com.gemserk.games.archervsworld.controllers.BowControllerHudImpl2;
+import com.gemserk.games.archervsworld.controllers.BowData;
 import com.gemserk.games.archervsworld.controllers.CameraControllerButtonMonitorImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.ControllerSwitcher;
@@ -105,6 +105,8 @@ public class PlayGameState extends GameStateImpl {
 
 	private ArrayList<Controller> controllers = new ArrayList<Controller>();
 
+	private BowData realBowController;
+
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
 		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
@@ -135,9 +137,9 @@ public class PlayGameState extends GameStateImpl {
 	}
 
 	protected void restart() {
-		
+
 		resourceManager = new ResourceManagerImpl<String>();
-		
+
 		loadResources();
 
 		myCamera = new Libgdx2dCameraTransformImpl();
@@ -203,8 +205,9 @@ public class PlayGameState extends GameStateImpl {
 
 		// controllers.add(new BowControllerImpl5(pointer0, new Vector2(2f, 1.7f + 2f + 3 + 2)));
 
-		// bowController = new BowControllerHudImpl(pointer2, new Vector2(90f, 90f), 80f);
-		bowController = new BowControllerHudImpl2(pointer2, new Vector2(70f, 70f), 60f);
+		realBowController = new BowData();
+
+		bowController = new BowControllerHudImpl2(pointer2, new Vector2(70f, 70f), 60f, realBowController);
 
 		bowControllers.add(bowController);
 
@@ -321,7 +324,7 @@ public class PlayGameState extends GameStateImpl {
 				archerVsWorldEntityFactory.createStaticBody(new Vector2(), vertices);
 			}
 		}.processWorld(document);
-		
+
 		world.loopStart();
 	}
 
@@ -388,15 +391,20 @@ public class PlayGameState extends GameStateImpl {
 
 		worldWrapper.render();
 
-		if (bowController instanceof BowControllerHudImpl) {
-			BowControllerHudImpl controller = (BowControllerHudImpl) bowController;
-			ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), bowController.getAngle(), Color.WHITE);
-		}
+		// BowData bowData = bowController.getBowData();
+		ImmediateModeRendererUtils.drawSolidCircle(70f, 70f, 60f, realBowController.getAngle(), Color.WHITE);
+		
+		if (realBowController.isCharging())
+			ImmediateModeRendererUtils.drawSolidCircle(Gdx.graphics.getWidth() - 70f, 70f, realBowController.getPower() * 2f, Color.WHITE);
 
-		if (bowController instanceof BowControllerHudImpl2) {
-			BowControllerHudImpl2 controller = (BowControllerHudImpl2) bowController;
-			ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), bowController.getAngle(), Color.WHITE);
-		}
+		// if (bowController instanceof BowControllerHudImpl) {
+		// }
+		//
+		// if (bowController instanceof BowControllerHudImpl2) {
+		// BowControllerHudImpl2 controller = (BowControllerHudImpl2) bowController;
+		// BowData bowData = bowController.getBowData();
+		// ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), bowData.getAngle(), Color.WHITE);
+		// }
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 			box2dDebugRenderer.render();
@@ -488,3 +496,4 @@ public class PlayGameState extends GameStateImpl {
 	}
 
 }
+

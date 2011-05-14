@@ -18,27 +18,7 @@ public class BowControllerHudImpl implements BowController {
 	private boolean charging;
 	
 	private boolean firing;
-	
-	@Override
-	public float getAngle() {
-		return angle;
-	}
-	
-	@Override
-	public float getPower() {
-		return power;
-	}
-	
-	@Override
-	public boolean isCharging() {
-		return charging;
-	}
-	
-	@Override
-	public boolean shouldFire() {
-		return firing;
-	}
-	
+
 	public float getRadius() {
 		return radius;
 	}

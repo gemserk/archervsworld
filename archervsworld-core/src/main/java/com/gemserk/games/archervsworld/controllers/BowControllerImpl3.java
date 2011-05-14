@@ -11,27 +11,7 @@ public class BowControllerImpl3 implements BowController {
 	private boolean charging;
 	
 	private boolean firing;
-	
-	@Override
-	public float getAngle() {
-		return angle;
-	}
-	
-	@Override
-	public float getPower() {
-		return power;
-	}
-	
-	@Override
-	public boolean isCharging() {
-		return charging;
-	}
-	
-	@Override
-	public boolean shouldFire() {
-		return firing;
-	}
-	
+
 	private LibgdxPointer pointer;
 	
 	public BowControllerImpl3(LibgdxPointer pointer) {
@@ -59,12 +39,10 @@ public class BowControllerImpl3 implements BowController {
 		
 	}
 	
-
 	@Override
 	public BowData getBowData() {
 		// TODO Auto-generated function stub
 		return null;
-		
 	}
 	
 }

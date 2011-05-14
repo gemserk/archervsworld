@@ -15,6 +15,7 @@ import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.controllers.BowController;
+import com.gemserk.games.archervsworld.controllers.BowData;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
@@ -47,9 +48,10 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 	protected void process(Entity bow) {
 
 		BowController bowController = currentBowController.get();
+		BowData bowData = bowController.getBowData();
 
-		float angle = bowController.getAngle();
-		float power = bowController.getPower();
+		float angle = bowData.getAngle();
+		float power = bowData.getPower();
 
 		float minFireAngle = -70f;
 		float maxFireAngle = 80f;
@@ -60,7 +62,7 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 		if (AngleUtils.between(angle, minFireAngle, maxFireAngle))
 			spatial.setAngle(angle);
 
-		if (bowController.isCharging()) {
+		if (bowData.isCharging()) {
 
 			// updates bow direction based on the controller
 
@@ -79,7 +81,7 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 
 		}
 
-		if (bowController.shouldFire()) {
+		if (bowData.isFiring()) {
 
 			BowComponent bowComponent = bow.getComponent(BowComponent.class);
 

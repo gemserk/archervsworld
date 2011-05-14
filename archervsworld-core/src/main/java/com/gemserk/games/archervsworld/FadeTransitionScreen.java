@@ -60,6 +60,7 @@ public class FadeTransitionScreen extends ScreenAdapter {
 		};
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public void show() {
 		overlay = resourceManager.getResourceValue("OverlaySprite");

@@ -4,94 +4,65 @@ import com.badlogic.gdx.math.Vector2;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 
 public class BowControllerHudImpl2 implements BowController {
-	
+
 	private final LibgdxPointer pointer;
 
 	private final Vector2 position;
 
 	private final float radius;
-	
-	private float angle;
-	
-	private float power = 0f;
-	
-	private boolean charging;
-	
-	private boolean firing;
-	
+
+	private final BowData bowData;
+
 	@Override
-	public float getAngle() {
-		return angle;
+	public BowData getBowData() {
+		return bowData;
 	}
-	
-	@Override
-	public float getPower() {
-		return power;
-	}
-	
-	@Override
-	public boolean isCharging() {
-		return charging;
-	}
-	
-	@Override
-	public boolean shouldFire() {
-		return firing;
-	}
-	
+
 	public float getRadius() {
 		return radius;
 	}
-	
+
 	public Vector2 getPosition() {
 		return position;
 	}
-	
-	public BowControllerHudImpl2(LibgdxPointer pointer, Vector2 position, float radius) {
+
+	public BowControllerHudImpl2(LibgdxPointer pointer, Vector2 position, float radius, BowData bowData) {
 		this.pointer = pointer;
 		this.position = position;
 		this.radius = radius;
+		this.bowData = bowData;
 	}
-	
+
 	@Override
 	public void update(int delta) {
-		
-		firing = false;
+		bowData.setFiring(false);
 
 		Vector2 p0 = position;
 		Vector2 p1 = pointer.getPosition();
-		
-		if (p0.x> p1.x) {
+
+		if (p0.x > p1.x) {
 			Vector2 tmp = p0;
 			p0 = p1;
 			p1 = tmp;
 		}
-		
+
 		Vector2 direction = p1.cpy().sub(p0);
-		
-		angle = direction.angle();
-		
+
+		bowData.setAngle(direction.angle());
+
 		if (pointer.touched) {
 			if (direction.len() > radius)
 				return;
-			power += 0.03f * delta;
-			charging = true;
-		} 
-		
-		if (pointer.wasReleased) {
-			charging = false;
-			firing = true;
-			
-			power = 0f;
+			bowData.setPower(bowData.getPower() + 0.03f * delta);
+			bowData.setCharging(true);
 		}
-		
+
+		if (pointer.wasReleased) {
+			bowData.setCharging(false);
+			bowData.setFiring(true);
+			bowData.setPower(0f);
+		}
+
 	}
 
-	@Override
-	public BowData getBowData() {
-		// TODO Auto-generated function stub
-		return null;
-		
-	}
-	
 }
