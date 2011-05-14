@@ -72,4 +72,12 @@ public class BowControllerImpl5 implements BowController {
 		
 	}
 	
+
+	@Override
+	public BowData getBowData() {
+		// TODO Auto-generated function stub
+		return null;
+		
+	}
+	
 }

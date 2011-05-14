@@ -12,4 +12,5 @@ public interface BowController extends Controller {
 
 	boolean shouldFire();
 
+	BowData getBowData();
 }

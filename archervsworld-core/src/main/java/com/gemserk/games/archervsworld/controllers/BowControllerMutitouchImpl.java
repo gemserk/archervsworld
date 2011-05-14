@@ -76,5 +76,12 @@ public class BowControllerMutitouchImpl implements BowController {
 		}
 
 	}
+	
+	@Override
+	public BowData getBowData() {
+		// TODO Auto-generated function stub
+		return null;
+		
+	}
 
 }

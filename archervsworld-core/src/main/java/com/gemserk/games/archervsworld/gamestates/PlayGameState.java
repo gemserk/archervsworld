@@ -47,7 +47,6 @@ import com.gemserk.commons.gdx.graphics.ImmediateModeRendererUtils;
 import com.gemserk.commons.gdx.input.LibgdxPointer;
 import com.gemserk.commons.gdx.resources.LibgdxResourceBuilder;
 import com.gemserk.commons.svg.inkscape.DocumentParser;
-import com.gemserk.commons.svg.inkscape.SvgDocument;
 import com.gemserk.commons.svg.inkscape.SvgInkscapeImage;
 import com.gemserk.commons.svg.inkscape.SvgInkscapePath;
 import com.gemserk.componentsengine.input.ButtonMonitor;
@@ -106,8 +105,6 @@ public class PlayGameState extends GameStateImpl {
 
 	private ArrayList<Controller> controllers = new ArrayList<Controller>();
 
-	private SvgDocument svgDocument;
-
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
 		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
@@ -127,10 +124,8 @@ public class PlayGameState extends GameStateImpl {
 	}
 
 	public PlayGameState(Game game) {
-		// loadResources();
 		entityFactory = new EntityFactory();
 		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
-		// restart();
 	}
 
 	@Override

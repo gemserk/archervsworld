@@ -93,4 +93,11 @@ public class BowControllerHudImpl implements BowController {
 		
 	}
 	
+
+	@Override
+	public BowData getBowData() {
+		// TODO Auto-generated function stub
+		return null;
+		
+	}
 }
