@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.WorldWrapper;
 import com.gemserk.commons.artemis.components.SpatialImpl;
@@ -306,14 +307,16 @@ public class PlayGameState extends GameStateImpl {
 
 		archerVsWorldEntityFactory.createBackground(viewportWidth, viewportHeight);
 
+		archerVsWorldEntityFactory.createWalkingDead(15f, 1.25f + 2f, 0.5f, 2f, -3.4f, 0f, 10f);
+
 		int time = MathUtils.random(5000, 7000);
-		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + 2f), 5, time, new AbstractTrigger() {
+		archerVsWorldEntityFactory.createZombiesSpawner(time, new AbstractTrigger() {
 			@Override
 			protected boolean handle(Entity e) {
 				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
 				timerComponent.setCurrentTime(MathUtils.random(5000, 7000));
 
-				archerVsWorldEntityFactory.createWalkingDead(28, 1.25f + 2f, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 2f);
+				archerVsWorldEntityFactory.createWalkingDead(28, 1.25f + 2f, 0.5f, 2f, -1.4f, 0f, 2f);
 				Gdx.app.log("Archer Vs Zombies", "New Zombie spawned");
 
 				// gameData.zombiesKilled++;
@@ -347,7 +350,20 @@ public class PlayGameState extends GameStateImpl {
 				// create stuff..
 
 				if (element.hasAttribute("start")) {
-					archerVsWorldEntityFactory.createArcher(x, y, realBowController);
+					String item = element.getAttribute("start");
+
+					if ("archer".equalsIgnoreCase(item))
+						archerVsWorldEntityFactory.createArcher(x, y, realBowController);
+					else if ("base".equalsIgnoreCase(item))
+						archerVsWorldEntityFactory.createEnemiesSensor(x, y, width, height, new AbstractTrigger() {
+							@Override
+							protected boolean handle(Entity e) {
+								gameData.gameOver = true;
+								world.deleteEntity(e);
+								return true;
+							}
+						});
+
 					return;
 				}
 
@@ -367,7 +383,13 @@ public class PlayGameState extends GameStateImpl {
 		new LayerProcessor("Physics") {
 			@Override
 			protected void handlePathObject(SvgInkscapePath svgPath, Element element, Vector2[] vertices) {
-				archerVsWorldEntityFactory.createStaticBody(new Vector2(), vertices);
+				String label = svgPath.getLabel();
+
+				if ("StaticBody".equals(label))
+					archerVsWorldEntityFactory.createBody(new Vector2(), vertices, BodyType.StaticBody);
+
+				if ("DynamicBody".equals(label))
+					archerVsWorldEntityFactory.createBody(new Vector2(), vertices, BodyType.DynamicBody);
 			}
 		}.processWorld(document);
 
@@ -425,16 +447,15 @@ public class PlayGameState extends GameStateImpl {
 		worldWrapper.update(delta);
 
 		// check world status to decide to finish the game or not?
-
+		
 		if (gameData.zombiesSpawned == gameData.zombiesCount) {
-
 			ImmutableBag<Entity> zombies = world.getGroupManager().getEntities(Groups.Enemy);
-			if (zombies.size() == 0) {
+			if (zombies.size() == 0) 
 				gameData.gameOver = true;
-				game.transition(game.scoreScreen, true);
-			}
-
 		}
+
+		if (gameData.gameOver) 
+			game.transition(game.scoreScreen, true);
 
 		if (restartButtonMonitor.isReleased() || Gdx.input.isKeyPressed(Keys.BACK)) {
 			// restart();
@@ -486,10 +507,6 @@ public class PlayGameState extends GameStateImpl {
 				texture("BuildingSpritesheet", "data/images/building-spritesheet.png");
 
 				sprite("WindowTile01", "BuildingSpritesheet", 0, 0, 64, 64);
-
-				// sprite("WallTile01", "BuildingSpritesheet", 64 * 0, 64 * 1, 64, 64);
-				// sprite("WallTile02", "BuildingSpritesheet", 64 * 1, 64 * 1, 64, 64);
-				// sprite("WallTile03", "BuildingSpritesheet", 64 * 2, 64 * 1, 64, 64);
 
 				texture("CloudsSpritesheet", "data/images/clouds-spritesheet.png", false);
 

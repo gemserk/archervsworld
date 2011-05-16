@@ -52,7 +52,7 @@ import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
 public class ArcherVsWorldEntityFactory {
-
+	
 	private static class RemoveEntityTrigger extends AbstractTrigger {
 
 		private final World world;
@@ -68,6 +68,8 @@ public class ArcherVsWorldEntityFactory {
 		}
 	}
 
+	private static final Vector2 tmpImpulse = new Vector2();
+	
 	private World world;
 
 	private BodyBuilder bodyBuilder;
@@ -101,8 +103,6 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 	}
 
-	private final Vector2 impulse = new Vector2();
-
 	public void createPhysicsArrow(Vector2 position, float angle, float power) {
 		Entity entity = world.createEntity();
 
@@ -123,12 +123,12 @@ public class ArcherVsWorldEntityFactory {
 
 		body.setTransform(position, angle * MathUtils.degreesToRadians);
 
-		impulse.set(1, 0);
-		impulse.rotate(angle);
-		impulse.mul(body.getMass());
-		impulse.mul(power);
+		tmpImpulse.set(1, 0);
+		tmpImpulse.rotate(angle);
+		tmpImpulse.mul(body.getMass());
+		tmpImpulse.mul(power);
 
-		body.applyLinearImpulse(impulse, body.getTransform().getPosition());
+		body.applyLinearImpulse(tmpImpulse, body.getTransform().getPosition());
 
 		Resource<Texture> resource = resourceManager.get("Arrow");
 		Texture texture = resource.get();
@@ -281,7 +281,26 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 	}
 
-	public void createWalkingDead(float x, float y, Vector2 size, Vector2 velocity, float health) {
+	public void createEnemiesSensor(float x, float y, float width, float height, Trigger trigger) {
+		Entity entity = world.createEntity();
+		short categoryBits = CollisionDefinitions.BaseGroup;
+		short maskBits = CollisionDefinitions.EnemiesGroup;
+		Body body = bodyBuilder.type(BodyType.StaticBody) //
+				.boxShape(width * 0.5f, height * 0.5f - 0.1f) //
+				.density(1f)//
+				.mass(200) //
+				.sensor() //
+				.friction(1f) //
+				.categoryBits(categoryBits) //
+				.maskBits(maskBits) //
+				.position(x, y) //
+				.userData(entity).build();
+		entity.addComponent(new PhysicsComponent(body));
+		entity.addComponent(new HitComponent(trigger));
+		entity.refresh();
+	}
+
+	public void createWalkingDead(float x, float y, float width, float height, float vx, float vy, float health) {
 		Entity entity = world.createEntity();
 
 		short categoryBits = CollisionDefinitions.EnemiesGroup;
@@ -289,7 +308,7 @@ public class ArcherVsWorldEntityFactory {
 
 		Body body = bodyBuilder.type(BodyType.DynamicBody) //
 				.fixedRotation() //
-				.boxShape(size.x * 0.5f, size.y * 0.5f - 0.1f) //
+				.boxShape(width * 0.5f, height * 0.5f - 0.1f) //
 				.density(1f)//
 				.friction(0.1f) //
 				.categoryBits(categoryBits) //
@@ -303,10 +322,10 @@ public class ArcherVsWorldEntityFactory {
 		entity.setGroup(Groups.Enemy);
 
 		entity.addComponent(new PhysicsComponent(body));
-		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, size.x, size.y)));
+		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, width, height)));
 		entity.addComponent(new SpriteComponent(new Sprite(texture), 2));
 		entity.addComponent(new WalkingDeadComponent( //
-				PropertyBuilder.vector2(velocity), //
+				PropertyBuilder.vector2(vx, vy), //
 				new SimpleProperty<IntValue>(new IntValue(0)), //
 				new SimpleProperty<IntValue>(new IntValue(1000)), //
 				new SimpleProperty<IntValue>(new IntValue(2000))));
@@ -437,30 +456,27 @@ public class ArcherVsWorldEntityFactory {
 				new Vector2(size.x * 0.5f, size.y * 0.5f), //
 				new Vector2(-size.x * 0.5f, size.y * 0.5f), //
 		};
-		return createStaticBody(position, vertices);
+		return createBody(position, vertices, BodyType.StaticBody);
 	}
 
-	public Entity createStaticBody(Vector2 position, final Vector2[] vertices) {
+	public Entity createBody(Vector2 position, final Vector2[] vertices, BodyType bodyType) {
 		Entity entity = world.createEntity();
-
-		Body body = bodyBuilder.type(BodyType.StaticBody) //
+		Body body = bodyBuilder.type(bodyType) //
 				.position(position.x, position.y)//
 				.polygonShape(vertices)//
 				.density(1f)//
 				.friction(0.5f) //
 				.userData(entity) //
 				.build();
-
 		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, 0f, 0f)));
 		entity.addComponent(new HealthComponent(new Container(0, 0), 1f));
 		entity.addComponent(new ParentComponent());
 		entity.refresh();
-
 		return entity;
 	}
 
-	public void createZombiesSpawner(final Vector2 position, int count, int time, Trigger trigger) {
+	public void createZombiesSpawner(int time, Trigger trigger) {
 		Entity entity = world.createEntity();
 		entity.addComponent(new TimerComponent(time, trigger));
 		entity.refresh();

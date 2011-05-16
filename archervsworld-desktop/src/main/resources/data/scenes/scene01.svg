@@ -699,8 +699,8 @@
  inkscape:pageopacity="0.0"
  inkscape:pageshadow="2"
  inkscape:zoom="72.1606"
- inkscape:cx="2.04159"
- inkscape:cy="1.9779"
+ inkscape:cx="8.00261"
+ inkscape:cy="3.39431"
  inkscape:document-units="px"
  inkscape:current-layer="layer2"
  showgrid="false"
@@ -1722,12 +1722,22 @@
  height="2"
  width="2"
  inkscape:label="WindowTile01" />
+<image
+ sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/bow-512x512.png"
+ xlink:href="../images/bow-512x512.png"
+ start="base"
+ width="1"
+ height="1"
+ id="image3286-4-5"
+ x="6.01214"
+ y="16.9651"
+ style="display:inline" />
 </g>
 <g
  inkscape:groupmode="layer"
  id="layer3"
  inkscape:label="Physics"
- style="display:none">
+ style="display:inline">
 <path
  style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
  d="M -7,18 33,18"
@@ -1740,7 +1750,8 @@
  d="M 6,18 6,14.8498 0.166296,14.8775 0.13858,17.9861"
  id="path3309"
  inkscape:connector-curvature="0"
- sodipodi:nodetypes="cccc" />
+ sodipodi:nodetypes="cccc"
+ inkscape:label="StaticBody" />
 </g>
 <g
  inkscape:groupmode="layer"
