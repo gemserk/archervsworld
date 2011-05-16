@@ -469,15 +469,27 @@ public class PlayGameState extends GameStateImpl {
 				spriteAtlas("Tile06", "MapTiles");
 				spriteAtlas("Tile07", "MapTiles");
 				spriteAtlas("Tile08", "MapTiles");
+				spriteAtlas("Tile09", "MapTiles");
+
+				spriteAtlas("TileWall01", "MapTiles");
+				spriteAtlas("TileWall02", "MapTiles");
+				spriteAtlas("TileWall03", "MapTiles");
+				spriteAtlas("TileWall04", "MapTiles");
+				spriteAtlas("TileWall05", "MapTiles");
+				spriteAtlas("TileWall06", "MapTiles");
+				spriteAtlas("TileWall07", "MapTiles");
+				spriteAtlas("TileWall08", "MapTiles");
+				spriteAtlas("TileWall09", "MapTiles");
 
 				// WallTile01
 
 				texture("BuildingSpritesheet", "data/images/building-spritesheet.png");
 
 				sprite("WindowTile01", "BuildingSpritesheet", 0, 0, 64, 64);
-				sprite("WallTile01", "BuildingSpritesheet", 64 * 0, 64 * 1, 64, 64);
-				sprite("WallTile02", "BuildingSpritesheet", 64 * 1, 64 * 1, 64, 64);
-				sprite("WallTile03", "BuildingSpritesheet", 64 * 2, 64 * 1, 64, 64);
+
+				// sprite("WallTile01", "BuildingSpritesheet", 64 * 0, 64 * 1, 64, 64);
+				// sprite("WallTile02", "BuildingSpritesheet", 64 * 1, 64 * 1, 64, 64);
+				// sprite("WallTile03", "BuildingSpritesheet", 64 * 2, 64 * 1, 64, 64);
 
 				texture("CloudsSpritesheet", "data/images/clouds-spritesheet.png", false);
 
