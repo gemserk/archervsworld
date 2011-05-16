@@ -281,13 +281,13 @@ public class PlayGameState extends GameStateImpl {
 
 		Vector2 direction = new Vector2(-1, 0);
 
-		Rectangle spawnArea = new Rectangle(10, 12, 25, 5);
+		Rectangle spawnArea = new Rectangle(10, 8, 25, 7);
 		Rectangle limitArea = new Rectangle(-15, 0, 45, 20);
 
 		float minSpeed = 0.1f;
 		float maxSpeed = 0.7f;
 
-		archerVsWorldEntityFactory.createCloudsSpawner(spawnArea, limitArea, direction, minSpeed, maxSpeed, 2000, 9000);
+		archerVsWorldEntityFactory.createCloudsSpawner(spawnArea, limitArea, direction, minSpeed, maxSpeed, 5000, 15000);
 
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);

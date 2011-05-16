@@ -97,7 +97,7 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent(sprite, layer, new Vector2(centerx, centery), color));
 		entity.refresh();
 	}
-	
+
 	private final Vector2 impulse = new Vector2();
 
 	public void createPhysicsArrow(Vector2 position, float angle, float power) {
@@ -119,8 +119,8 @@ public class ArcherVsWorldEntityFactory {
 				.userData(entity).build();
 
 		body.setTransform(position, angle * MathUtils.degreesToRadians);
-		
-		impulse.set(1,0);
+
+		impulse.set(1, 0);
 		impulse.rotate(angle);
 		impulse.mul(body.getMass());
 		impulse.mul(power);
@@ -189,7 +189,7 @@ public class ArcherVsWorldEntityFactory {
 						// just for now, we only create dying arrows if we hit no enemy
 						SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
 						createDyingArrow(spatialComponent.getSpatial(), 5000, Color.WHITE);
-						
+
 						Sound sound = resourceManager.getResourceValue("HitGroundSound");
 						sound.play();
 					}
@@ -232,7 +232,7 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 		return entity;
 	}
-	
+
 	public void createArcher(float x, float y, BowData bowData) {
 		Entity entity = world.createEntity();
 		float bowHeight = 1.6f;
@@ -243,7 +243,7 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new BowComponent(0f, null, 5f, 15f, bowData, new AbstractTrigger() {
 			@Override
 			protected boolean handle(Entity e) {
-				
+
 				BowComponent bowComponent = e.getComponent(BowComponent.class);
 				Entity arrow = bowComponent.getArrow();
 
@@ -260,7 +260,7 @@ public class ArcherVsWorldEntityFactory {
 
 				Resource<Sound> sound = resourceManager.get("BowSound");
 				sound.get().play(1f);
-				
+
 				return false;
 			}
 		}));
@@ -290,7 +290,7 @@ public class ArcherVsWorldEntityFactory {
 
 		entity.addComponent(new PhysicsComponent(body));
 		entity.addComponent(new SpatialComponent(new SpatialPhysicsImpl(body, size.x, size.y)));
-		entity.addComponent(new SpriteComponent(new SimpleProperty<Sprite>(new Sprite(texture)), new SimpleProperty<IntValue>(new IntValue(2))));
+		entity.addComponent(new SpriteComponent(new Sprite(texture), 2));
 		entity.addComponent(new WalkingDeadComponent( //
 				PropertyBuilder.vector2(velocity), //
 				new SimpleProperty<IntValue>(new IntValue(0)), //
@@ -370,12 +370,7 @@ public class ArcherVsWorldEntityFactory {
 				.time(aliveTime));
 
 		entity.addComponent(new SpatialComponent(new SpatialImpl(position.x, position.y, size.x, size.y, 0f)));
-		entity.addComponent(new SpriteComponent( //
-				new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(2)), //
-				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
-				PropertyBuilder.property(color))); //
-		// entity.addComponent(new AliveComponent(aliveTime));
+		entity.addComponent(new SpriteComponent(new Sprite(texture), 2, color));
 		entity.addComponent(new TimerComponent(aliveTime, new RemoveEntityTrigger(world)));
 		entity.addComponent(new InformationComponent("fade out zombie"));
 
@@ -412,12 +407,7 @@ public class ArcherVsWorldEntityFactory {
 		float angleValue = angle.get().value;
 
 		entity.addComponent(new SpatialComponent(new SpatialImpl(positionValue.x, positionValue.y, 1f, 1f, angleValue)));
-		entity.addComponent(new SpriteComponent( //
-				new SimpleProperty<Sprite>(new Sprite(texture)), //
-				new SimpleProperty<IntValue>(new IntValue(1)), //
-				PropertyBuilder.property(new Vector2(0.5f, 0.5f)), //
-				PropertyBuilder.property(color))); //
-		// entity.addComponent(new AliveComponent(aliveTime));
+		entity.addComponent(new SpriteComponent(new Sprite(texture), 1, color));
 		entity.addComponent(new TimerComponent(aliveTime, new RemoveEntityTrigger(world)));
 		entity.addComponent(new InformationComponent("fade out arrow"));
 
