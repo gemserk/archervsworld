@@ -44,6 +44,7 @@ import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionC
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.InformationComponent;
+import com.gemserk.games.archervsworld.artemis.components.SpawnerComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.games.archervsworld.controllers.BowData;
@@ -457,16 +458,21 @@ public class ArcherVsWorldEntityFactory {
 		return entity;
 	}
 
-	public void createZombiesSpawner(final Vector2 position) {
+	public void createZombiesSpawner(final Vector2 position, int count, final int minTime, final int maxTime) {
 		Entity entity = world.createEntity();
-		int time = MathUtils.random(5000, 7000);
+		int time = MathUtils.random(minTime, maxTime);
+		entity.addComponent(new SpawnerComponent(count));
 		entity.addComponent(new TimerComponent(time, new AbstractTrigger() {
 			@Override
 			protected boolean handle(Entity e) {
 				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
-				timerComponent.setCurrentTime(MathUtils.random(5000, 7000));
+				timerComponent.setCurrentTime(MathUtils.random(minTime, maxTime));
 				Gdx.app.log("Archer Vs Zombies", "New Zombie spawned");
 				createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 2f);
+				SpawnerComponent spawnerComponent = e.getComponent(SpawnerComponent.class);
+				spawnerComponent.setCount(spawnerComponent.getCount() - 1);
+				if (spawnerComponent.getCount() == 0)
+					world.deleteEntity(e);
 				return false;
 			}
 		}));

@@ -282,7 +282,7 @@ public class PlayGameState extends GameStateImpl {
 		// I HAVE NOW AN EDITOR FOR ALL THIS STUFF!!!
 
 		archerVsWorldEntityFactory.createBackground(viewportWidth, viewportHeight);
-		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + 2f));
+		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + 2f), 5, 5000, 7000);
 
 		Vector2 direction = new Vector2(-1, 0);
 
