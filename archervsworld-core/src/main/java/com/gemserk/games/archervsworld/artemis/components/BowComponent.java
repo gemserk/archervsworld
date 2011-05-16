@@ -13,7 +13,7 @@ public class BowComponent extends Component {
 	private final BowData bowData;
 
 	/**
-	 * Called whenever the bow is charging.
+	 * Called whenever the bow starts charging.
 	 */
 	private final Trigger chargeTrigger;
 

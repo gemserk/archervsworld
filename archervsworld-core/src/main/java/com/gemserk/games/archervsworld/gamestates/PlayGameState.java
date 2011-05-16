@@ -67,6 +67,7 @@ import com.gemserk.games.archervsworld.controllers.BowPowerControllerButonMonito
 import com.gemserk.games.archervsworld.controllers.BowPowerHudControllerImpl;
 import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointerImpl;
 import com.gemserk.games.archervsworld.controllers.CameraMovementControllerImpl;
+import com.gemserk.games.archervsworld.controllers.CameraZoomControllerImpl;
 import com.gemserk.games.archervsworld.controllers.MultitouchCameraControllerImpl;
 import com.gemserk.games.archervsworld.gamestates.PlayGameState.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.resources.Resource;
@@ -101,7 +102,7 @@ public class PlayGameState extends GameStateImpl {
 
 	private WorldWrapper worldWrapper;
 
-	private CameraController cameraController;
+	private CameraController moveCameraController;
 
 	private BowData realBowController;
 
@@ -112,6 +113,8 @@ public class PlayGameState extends GameStateImpl {
 	private Rectangle powerButtonArea;
 
 	private Circle directionButtonArea;
+
+	private CameraController cameraZoomController;
 
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
@@ -181,23 +184,27 @@ public class PlayGameState extends GameStateImpl {
 
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
-		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
+//		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		// Camera camera = new CameraImpl(cameraPosition.x, cameraPosition.y, 40f, 0f);
-		Camera camera = new CameraRestrictedImpl(cameraPosition.x, cameraPosition.y, 40f, 0f, viewportWidth, viewportHeight, new Rectangle(-5f, -2f, 35f, 20f));
+		Camera camera = new CameraRestrictedImpl(0, 0, 20f, 0f, viewportWidth, viewportHeight, new Rectangle(-5f, -2f, 35f, 20f));
+		camera.setPosition(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 
 		Rectangle controllerArea = new Rectangle(140, 0, viewportWidth - 140, viewportHeight);
 
 		// cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
 
 		if (Gdx.input.isPeripheralAvailable(Peripheral.MultitouchScreen)) {
-			cameraController = new MultitouchCameraControllerImpl(camera, pointer2, pointer3, controllerArea);
+			moveCameraController = new MultitouchCameraControllerImpl(camera, pointer2, pointer3, controllerArea);
 		} else if (Gdx.app.getType() == ApplicationType.Android) {
-			cameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
+			moveCameraController = new CameraControllerLibgdxPointerImpl(camera, pointer2, controllerArea);
 		} else {
-			cameraController = new CameraMovementControllerImpl(camera, //
+			moveCameraController = new CameraMovementControllerImpl(camera, //
 					LibgdxInputMappingBuilder.pointerXCoordinateMonitor(Gdx.input, 0), //
 					LibgdxInputMappingBuilder.pointerYCoordinateMonitor(Gdx.input, 0), //
 					LibgdxInputMappingBuilder.rightMouseButtonMonitor(Gdx.input));
+			cameraZoomController = new CameraZoomControllerImpl(camera, 
+					LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.DPAD_UP), 
+					LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.DPAD_DOWN));
 		}
 
 		// controllers.add(cameraController);
@@ -382,7 +389,7 @@ public class PlayGameState extends GameStateImpl {
 	public void render(int delta) {
 		Gdx.graphics.getGL10().glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		Camera camera = cameraController.getCamera();
+		Camera camera = moveCameraController.getCamera();
 		Vector2 cameraPosition = new Vector2(camera.getX(), camera.getY());
 
 		myCamera.zoom(camera.getZoom());
@@ -420,8 +427,11 @@ public class PlayGameState extends GameStateImpl {
 		bowDirectionController.update(delta);
 		bowPowerController.update(delta);
 
-		if (!bowDirectionController.wasHandled() && !bowPowerController.wasHandled())
-			cameraController.update(delta);
+		if (!bowDirectionController.wasHandled() && !bowPowerController.wasHandled()) {
+			moveCameraController.update(delta);
+			if (cameraZoomController != null)
+				cameraZoomController.update(delta);
+		}
 
 		entitySystemController.update();
 
