@@ -230,8 +230,6 @@ public class PlayGameState extends GameStateImpl {
 		}
 
 		UpdateBowSystem updateBowSystem = new UpdateBowSystem();
-		updateBowSystem.setEntityFactory(archerVsWorldEntityFactory);
-		updateBowSystem.setResourceManager(resourceManager);
 
 		WalkingDeadSystem walkingDeadSystem = new WalkingDeadSystem();
 

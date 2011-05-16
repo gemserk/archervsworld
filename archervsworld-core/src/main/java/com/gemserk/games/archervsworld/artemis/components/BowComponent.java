@@ -12,23 +12,18 @@ public class BowComponent extends Component {
 
 	private final BowData bowData;
 
+	/**
+	 * Called whenever the bow is charging.
+	 */
+	private final Trigger chargeTrigger;
+
 	private final Trigger fireTrigger;
 
 	private float minPower;
 
 	private float maxPower;
 
-	private float power;
-
 	private Entity arrow;
-
-	public float getPower() {
-		return power;
-	}
-
-	public void setPower(float power) {
-		this.power = power;
-	}
 
 	public Entity getArrow() {
 		return arrow;
@@ -50,17 +45,21 @@ public class BowComponent extends Component {
 		return bowData;
 	}
 
+	public Trigger getChargeTrigger() {
+		return chargeTrigger;
+	}
+
 	public Trigger getFireTrigger() {
 		return fireTrigger;
 	}
 
-	public BowComponent(float power, Entity arrow, float minPower, float maxPower, BowData bowData, Trigger fireTrigger) {
-		this.power = power;
+	public BowComponent(Entity arrow, float minPower, float maxPower, BowData bowData, Trigger fireTrigger, Trigger chargeTrigger) {
 		this.arrow = arrow;
 		this.minPower = minPower;
 		this.maxPower = maxPower;
 		this.bowData = bowData;
 		this.fireTrigger = fireTrigger;
+		this.chargeTrigger = chargeTrigger;
 	}
 
 }

@@ -8,6 +8,7 @@ import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
+import com.gemserk.games.archervsworld.controllers.BowData;
 
 public class UpdateChargingArrowSystem extends EntityProcessingSystem implements ActivableSystem {
 
@@ -38,6 +39,7 @@ public class UpdateChargingArrowSystem extends EntityProcessingSystem implements
 	protected void process(Entity bow) {
 
 		BowComponent bowComponent = bow.getComponent(BowComponent.class);
+		BowData bowData = bowComponent.getBowData();
 
 		Entity arrow = bowComponent.getArrow();
 
@@ -52,7 +54,7 @@ public class UpdateChargingArrowSystem extends EntityProcessingSystem implements
 
 		diff.set(1f, 0f);
 		diff.rotate(spatial.getAngle());
-		diff.mul(bowComponent.getPower() * 0.012f);
+		diff.mul(bowData.getPower() * 0.012f);
 
 		position.sub(diff);
 

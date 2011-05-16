@@ -240,11 +240,12 @@ public class ArcherVsWorldEntityFactory {
 		Texture texture = resourceManager.getResourceValue("Bow");
 		entity.addComponent(new SpatialComponent(new SpatialImpl(x, y, bowWidth, bowHeight, 0f)));
 		entity.addComponent(new SpriteComponent(new Sprite(texture), 2, new Vector2(0.5f, 0.5f), Color.WHITE));
-		entity.addComponent(new BowComponent(0f, null, 5f, 15f, bowData, new AbstractTrigger() {
+		entity.addComponent(new BowComponent(null, 5f, 15f, bowData, new AbstractTrigger() {
 			@Override
 			protected boolean handle(Entity e) {
-
 				BowComponent bowComponent = e.getComponent(BowComponent.class);
+				BowData bowData = bowComponent.getBowData();
+				
 				Entity arrow = bowComponent.getArrow();
 
 				if (arrow == null)
@@ -253,7 +254,7 @@ public class ArcherVsWorldEntityFactory {
 				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
 				Spatial arrowSpatial = arrowSpatialComponent.getSpatial();
 
-				createPhysicsArrow(arrowSpatial.getPosition(), arrowSpatial.getAngle(), bowComponent.getPower());
+				createPhysicsArrow(arrowSpatial.getPosition(), bowData.getAngle(), bowData.getPower());
 
 				world.deleteEntity(arrow);
 				bowComponent.setArrow(null);
@@ -261,6 +262,16 @@ public class ArcherVsWorldEntityFactory {
 				Resource<Sound> sound = resourceManager.get("BowSound");
 				sound.get().play(1f);
 
+				return false;
+			}
+		}, new AbstractTrigger() {
+			@Override
+			protected boolean handle(Entity e) {
+				BowComponent bowComponent = e.getComponent(BowComponent.class);
+				if (bowComponent.getArrow() == null) {
+					Entity arrow = createArrow(new Vector2(), 0f);
+					bowComponent.setArrow(arrow);
+				}
 				return false;
 			}
 		}));
