@@ -698,9 +698,9 @@
  borderopacity="1.0"
  inkscape:pageopacity="0.0"
  inkscape:pageshadow="2"
- inkscape:zoom="58.455"
- inkscape:cx="4.0874"
- inkscape:cy="4.67522"
+ inkscape:zoom="82.6679"
+ inkscape:cx="5.72833"
+ inkscape:cy="3.68628"
  inkscape:document-units="px"
  inkscape:current-layer="layer2"
  showgrid="true"
@@ -756,7 +756,7 @@
  inkscape:groupmode="layer"
  id="layer4"
  inkscape:label="Background"
- style="display:none">
+ style="display:inline">
 <image
  y="0"
  x="-7"
@@ -778,85 +778,32 @@
  inkscape:label="World"
  style="display:inline">
 <image
- width="2"
- height="2"
- id="image5311-9"
- x="2"
- y="16"
- inkscape:label="Tile02"
  style="display:inline"
- xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
- sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
-<image
- width="2"
- height="2"
- id="image3617-0"
+ y="16"
  x="4"
- y="16"
- inkscape:label="Tile06"
- style="display:inline"
- xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png"
- sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png" />
-<image
- width="2"
+ id="image3341-9"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/tile_wall_03.png"
  height="2"
- id="image3617-0-0"
- x="0"
- y="16"
- inkscape:label="Tile06"
- style="display:inline"
- xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png"
- sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png"
- transform="scale(-1,1)" />
-<image
  width="2"
- height="2"
- id="image5311-1"
- x="0"
- y="16"
- inkscape:label="Tile02"
- style="display:inline"
- xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
- sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+ inkscape:label="WallTile03" />
 <image
  style="display:inline"
- y="13.9306"
- x="2.69364"
+ y="15"
+ x="3"
+ id="image3352-5-6"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/tile_small_window.png"
+ height="4"
+ width="4"
+ inkscape:label="WindowTile01" />
+<image
+ style="display:inline"
+ y="14"
+ x="4"
  id="image3286-4"
  xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/bow-512x512.png"
  height="2"
  width="2"
  start="archer" />
-<image
- width="2"
- height="2"
- id="image5220-7"
- x="0"
- y="14"
- inkscape:label="Tile01"
- style="display:inline"
- xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
- sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
-<image
- width="2"
- height="2"
- id="image5220-49"
- x="2"
- y="14"
- inkscape:label="Tile01"
- style="display:inline"
- xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
- sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
-<image
- style="display:inline"
- width="2"
- height="2"
- id="image3473-2"
- x="4"
- y="14"
- inkscape:label="Tile05"
- xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png"
- sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png" />
 <image
  width="2"
  height="2"
@@ -877,6 +824,42 @@
  style="display:inline"
  xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
  sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ style="display:inline"
+ y="16"
+ x="2"
+ id="image3330-1"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/tile_wall_02.png"
+ height="2"
+ width="2"
+ inkscape:label="WallTile02" />
+<image
+ style="display:inline"
+ y="15"
+ x="1"
+ id="image3352-5-0"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/tile_small_window.png"
+ height="4"
+ width="4"
+ inkscape:label="WindowTile01" />
+<image
+ style="display:inline"
+ y="16"
+ x="0"
+ id="image3319-3"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/tile_wall_01.png"
+ height="2"
+ width="2"
+ inkscape:label="WallTile01" />
+<image
+ style="display:inline"
+ y="15"
+ x="-1"
+ id="image3352-5"
+ xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/tile_small_window.png"
+ height="4"
+ width="4"
+ inkscape:label="WindowTile01" />
 <image
  width="2"
  height="2"
@@ -1662,23 +1645,12 @@
  style="display:inline"
  xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
  sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
-<image
- style="display:inline"
- width="2"
- height="2"
- id="image3473-2-1"
- x="0"
- y="14"
- inkscape:label="Tile05"
- xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png"
- sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png"
- transform="scale(-1,1)" />
 </g>
 <g
  inkscape:groupmode="layer"
  id="layer3"
  inkscape:label="Physics"
- style="display:none">
+ style="display:inline">
 <path
  style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
  d="M -7,18 33,18"
@@ -1688,7 +1660,7 @@
  inkscape:connector-curvature="0" />
 <path
  style="color:#000000;fill:none;stroke:#ff0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
- d="M 4.32948,17.9942 4.32948,16.0058 -0.300578,16.0347 -0.265896,17.9827"
+ d="M 6,18 6,16 0,16 0,18"
  id="path3309"
  inkscape:connector-curvature="0"
  sodipodi:nodetypes="cccc" />

@@ -29,6 +29,7 @@ import com.gemserk.commons.artemis.components.SpatialPhysicsImpl;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TimerComponent;
 import com.gemserk.commons.artemis.triggers.AbstractTrigger;
+import com.gemserk.commons.artemis.triggers.Trigger;
 import com.gemserk.commons.gdx.box2d.BodyBuilder;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.commons.values.FloatValue;
@@ -44,7 +45,6 @@ import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionC
 import com.gemserk.games.archervsworld.artemis.components.DamageComponent;
 import com.gemserk.games.archervsworld.artemis.components.HealthComponent;
 import com.gemserk.games.archervsworld.artemis.components.InformationComponent;
-import com.gemserk.games.archervsworld.artemis.components.SpawnerComponent;
 import com.gemserk.games.archervsworld.artemis.components.WalkingDeadComponent;
 import com.gemserk.games.archervsworld.box2d.CollisionDefinitions;
 import com.gemserk.games.archervsworld.controllers.BowData;
@@ -89,7 +89,7 @@ public class ArcherVsWorldEntityFactory {
 	public void createBackground(float w, float h) {
 		Sprite sprite = resourceManager.getResourceValue("Background");
 		createStaticSprite(0f, 0f, sprite.getWidth(), sprite.getHeight(), 0f, sprite, -100, Color.WHITE, 0f, 0f);
-		
+
 		sprite = resourceManager.getResourceValue("Background");
 		createStaticSprite(sprite.getWidth(), 0f, sprite.getWidth(), sprite.getHeight(), 0f, sprite, -100, Color.WHITE, 0f, 0f);
 	}
@@ -248,7 +248,7 @@ public class ArcherVsWorldEntityFactory {
 			protected boolean handle(Entity e) {
 				BowComponent bowComponent = e.getComponent(BowComponent.class);
 				BowData bowData = bowComponent.getBowData();
-				
+
 				Entity arrow = bowComponent.getArrow();
 
 				if (arrow == null)
@@ -281,7 +281,7 @@ public class ArcherVsWorldEntityFactory {
 		entity.refresh();
 	}
 
-	public void createWalkingDead(Vector2 position, Vector2 size, Vector2 velocity, float health) {
+	public void createWalkingDead(float x, float y, Vector2 size, Vector2 velocity, float health) {
 		Entity entity = world.createEntity();
 
 		short categoryBits = CollisionDefinitions.EnemiesGroup;
@@ -294,7 +294,7 @@ public class ArcherVsWorldEntityFactory {
 				.friction(0.1f) //
 				.categoryBits(categoryBits) //
 				.maskBits(maskBits) //
-				.position(position.x, position.y) //
+				.position(x, y) //
 				.userData(entity).build();
 
 		Resource<Texture> resource = resourceManager.get("Rock");
@@ -460,24 +460,9 @@ public class ArcherVsWorldEntityFactory {
 		return entity;
 	}
 
-	public void createZombiesSpawner(final Vector2 position, int count, final int minTime, final int maxTime) {
+	public void createZombiesSpawner(final Vector2 position, int count, int time, Trigger trigger) {
 		Entity entity = world.createEntity();
-		int time = MathUtils.random(minTime, maxTime);
-		entity.addComponent(new SpawnerComponent(count));
-		entity.addComponent(new TimerComponent(time, new AbstractTrigger() {
-			@Override
-			protected boolean handle(Entity e) {
-				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
-				timerComponent.setCurrentTime(MathUtils.random(minTime, maxTime));
-				Gdx.app.log("Archer Vs Zombies", "New Zombie spawned");
-				createWalkingDead(position, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 2f);
-				SpawnerComponent spawnerComponent = e.getComponent(SpawnerComponent.class);
-				spawnerComponent.setCount(spawnerComponent.getCount() - 1);
-				if (spawnerComponent.getCount() == 0)
-					world.deleteEntity(e);
-				return false;
-			}
-		}));
+		entity.addComponent(new TimerComponent(time, trigger));
 		entity.refresh();
 	}
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.artemis.Entity;
 import com.artemis.World;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Game;
@@ -18,11 +19,13 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.WorldWrapper;
 import com.gemserk.commons.artemis.components.SpatialImpl;
+import com.gemserk.commons.artemis.components.TimerComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.AliveAreaSystem;
@@ -36,6 +39,7 @@ import com.gemserk.commons.artemis.systems.SpriteRendererSystem;
 import com.gemserk.commons.artemis.systems.SpriteUpdateSystem;
 import com.gemserk.commons.artemis.systems.TextRendererSystem;
 import com.gemserk.commons.artemis.systems.TimerSystem;
+import com.gemserk.commons.artemis.triggers.AbstractTrigger;
 import com.gemserk.commons.gdx.GameStateImpl;
 import com.gemserk.commons.gdx.box2d.Box2DCustomDebugRenderer;
 import com.gemserk.commons.gdx.camera.Camera;
@@ -75,6 +79,16 @@ import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
 
 public class PlayGameState extends GameStateImpl {
+
+	public static class GameData {
+
+		public int zombiesKilled;
+
+		public int zombiesCount;
+
+		public int zombiesSpawned;
+
+	}
 
 	private World world;
 
@@ -116,6 +130,8 @@ public class PlayGameState extends GameStateImpl {
 
 	private CameraController cameraZoomController;
 
+	private GameData gameData = new GameData();
+
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
 		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
@@ -146,6 +162,9 @@ public class PlayGameState extends GameStateImpl {
 	}
 
 	protected void restart() {
+
+		gameData.zombiesCount = 2;
+		gameData.zombiesKilled = 0;
 
 		resourceManager = new ResourceManagerImpl<String>();
 
@@ -184,7 +203,7 @@ public class PlayGameState extends GameStateImpl {
 
 		PointerUpdateSystem pointerUpdateSystem = new PointerUpdateSystem(pointers);
 
-//		Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
+		// Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		// Camera camera = new CameraImpl(cameraPosition.x, cameraPosition.y, 40f, 0f);
 		Camera camera = new CameraRestrictedImpl(0, 0, 20f, 0f, viewportWidth, viewportHeight, new Rectangle(-5f, -2f, 35f, 20f));
 		camera.setPosition(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
@@ -202,9 +221,7 @@ public class PlayGameState extends GameStateImpl {
 					LibgdxInputMappingBuilder.pointerXCoordinateMonitor(Gdx.input, 0), //
 					LibgdxInputMappingBuilder.pointerYCoordinateMonitor(Gdx.input, 0), //
 					LibgdxInputMappingBuilder.rightMouseButtonMonitor(Gdx.input));
-			cameraZoomController = new CameraZoomControllerImpl(camera, 
-					LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.DPAD_UP), 
-					LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.DPAD_DOWN));
+			cameraZoomController = new CameraZoomControllerImpl(camera, LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.DPAD_UP), LibgdxInputMappingBuilder.keyButtonMonitor(Gdx.input, Keys.DPAD_DOWN));
 		}
 
 		// controllers.add(cameraController);
@@ -282,7 +299,26 @@ public class PlayGameState extends GameStateImpl {
 		// I HAVE NOW AN EDITOR FOR ALL THIS STUFF!!!
 
 		archerVsWorldEntityFactory.createBackground(viewportWidth, viewportHeight);
-		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + 2f), 5, 5000, 7000);
+		
+		int time = MathUtils.random(5000, 7000);
+		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + 2f), 5, time, new AbstractTrigger() {
+			@Override
+			protected boolean handle(Entity e) {
+				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
+				timerComponent.setCurrentTime(MathUtils.random(5000, 7000));
+
+				archerVsWorldEntityFactory.createWalkingDead(28, 1.25f + 2f, new Vector2(0.5f, 2f), new Vector2(-1.4f, 0f), 2f);
+				Gdx.app.log("Archer Vs Zombies", "New Zombie spawned");
+
+				// gameData.zombiesKilled++;
+				gameData.zombiesSpawned++;
+
+				if (gameData.zombiesSpawned == gameData.zombiesCount)
+					world.deleteEntity(e);
+
+				return false;
+			}
+		});
 
 		Vector2 direction = new Vector2(-1, 0);
 
