@@ -85,9 +85,8 @@ public class LayerProcessor {
 				float sx = 1f;
 				float sy = 1f;
 
-				if (isFlipped(transform)) {
+				if (isFlipped(transform)) 
 					sy = -1f;
-				}
 
 				// this stuff should be processed automatically using SVG specification with transformation of the document, etc.
 				float x = position.x;

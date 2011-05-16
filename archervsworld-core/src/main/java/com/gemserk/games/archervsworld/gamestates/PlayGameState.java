@@ -313,6 +313,9 @@ public class PlayGameState extends GameStateImpl {
 				int layer = 2;
 				if (element.hasAttribute("layer"))
 					layer = Integer.parseInt(element.getAttribute("layer"));
+				
+				sprite.setScale(sx, sy);
+				
 				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, sprite, layer, Color.WHITE, 0.5f, 0.5f);
 			};
 		}.processWorld(document);
@@ -460,21 +463,19 @@ public class PlayGameState extends GameStateImpl {
 				texture("Tile02Texture", "data/images/tile02.png");
 				texture("Tile03Texture", "data/images/tile03.png");
 				texture("Tile04Texture", "data/images/tile04.png");
-				texture("Tile11Texture", "data/images/tile11.png");
-				texture("Tile12Texture", "data/images/tile12.png");
-				texture("Tile13Texture", "data/images/tile13.png");
-				texture("Tile14Texture", "data/images/tile14.png");
-				texture("Tile21Texture", "data/images/tile21.png");
+				texture("Tile05Texture", "data/images/tile05.png");
+				texture("Tile06Texture", "data/images/tile06.png");
+				texture("Tile07Texture", "data/images/tile07.png");
+				texture("Tile08Texture", "data/images/tile08.png");
 
 				sprite("Tile01", "Tile01Texture");
 				sprite("Tile02", "Tile02Texture");
 				sprite("Tile03", "Tile03Texture");
 				sprite("Tile04", "Tile04Texture");
-				sprite("Tile11", "Tile11Texture");
-				sprite("Tile12", "Tile12Texture");
-				sprite("Tile13", "Tile13Texture");
-				sprite("Tile14", "Tile14Texture");
-				sprite("Tile21", "Tile21Texture");
+				sprite("Tile05", "Tile05Texture");
+				sprite("Tile06", "Tile06Texture");
+				sprite("Tile07", "Tile07Texture");
+				sprite("Tile08", "Tile08Texture");
 
 				// WallTile01
 

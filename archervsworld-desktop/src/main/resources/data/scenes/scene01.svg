@@ -698,9 +698,9 @@
  borderopacity="1.0"
  inkscape:pageopacity="0.0"
  inkscape:pageshadow="2"
- inkscape:zoom="32"
- inkscape:cx="10.127"
- inkscape:cy="10.8334"
+ inkscape:zoom="58.455"
+ inkscape:cx="4.0874"
+ inkscape:cy="4.67522"
  inkscape:document-units="px"
  inkscape:current-layer="layer2"
  showgrid="true"
@@ -778,1098 +778,49 @@
  inkscape:label="World"
  style="display:inline">
 <image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile11.png"
- xlink:href="../images/tile11.png"
- style="display:inline"
- y="14"
- x="-2"
- id="image3320-0-4-0-9"
- height="2"
  width="2"
- inkscape:label="Tile11" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="14"
- x="0"
- id="image3333-2-8-3-1"
  height="2"
- width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="16"
- x="-2"
- id="image3366-0-3-7-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile01.png"
- xlink:href="../images/tile01.png"
- style="display:inline"
- y="12"
- x="-2"
- id="image3377-1-8-1-9"
- height="2"
- width="2"
- inkscape:label="Tile01" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
- style="display:inline"
- y="12"
- x="0"
- id="image3388-6-5-5-7"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="16"
- x="0"
- id="image3366-0-6-0-2-1-1"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="14"
+ id="image5311-9"
  x="2"
- id="image3333-2-8-3-1-8"
- height="2"
- width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
- style="display:inline"
- y="12"
- x="2"
- id="image3388-6-5-5-7-0"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
  y="16"
- x="2"
- id="image3366-0-6-0-2-1-1-9"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile11.png"
- xlink:href="../images/tile11.png"
+ inkscape:label="Tile02"
  style="display:inline"
- y="18"
- x="3"
- id="image3320-0"
- height="2"
- width="2"
- inkscape:label="Tile11" />
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
 <image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="18"
- x="5"
- id="image3333-2"
- height="2"
  width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile13.png"
- xlink:href="../images/tile13.png"
- style="display:inline"
- y="18"
- x="7"
- id="image3344-5"
  height="2"
- width="2"
- inkscape:label="Tile13" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile14.png"
- xlink:href="../images/tile14.png"
- style="display:inline"
- y="18"
- x="9"
- id="image3355-8"
- height="2"
- width="2"
- inkscape:label="Tile14" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="3"
- id="image3366-0"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile01.png"
- xlink:href="../images/tile01.png"
- style="display:inline"
+ id="image3617-0"
+ x="4"
  y="16"
- x="3"
- id="image3377-1"
- height="2"
- width="2"
- inkscape:label="Tile01" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
+ inkscape:label="Tile06"
  style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png" />
+<image
+ width="2"
+ height="2"
+ id="image3617-0-0"
+ x="0"
  y="16"
- x="5"
- id="image3388-6"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile03.png"
- xlink:href="../images/tile03.png"
+ inkscape:label="Tile06"
  style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png"
+ transform="scale(-1,1)" />
+<image
+ width="2"
+ height="2"
+ id="image5311-1"
+ x="0"
  y="16"
- x="7"
- id="image3399-9"
- height="2"
- width="2"
- inkscape:label="Tile03" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile04.png"
- xlink:href="../images/tile04.png"
- style="display:inline"
- y="16"
- x="9"
- id="image3410-7"
- height="2"
- width="2"
- inkscape:label="Tile04" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile11.png"
- xlink:href="../images/tile11.png"
- style="display:inline"
- y="18"
- x="11"
- id="image3320-0-8"
- height="2"
- width="2"
- inkscape:label="Tile11" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="18"
- x="13"
- id="image3333-2-6"
- height="2"
- width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile13.png"
- xlink:href="../images/tile13.png"
- style="display:inline"
- y="18"
- x="15"
- id="image3344-5-1"
- height="2"
- width="2"
- inkscape:label="Tile13" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile14.png"
- xlink:href="../images/tile14.png"
- style="display:inline"
- y="18"
- x="17"
- id="image3355-8-6"
- height="2"
- width="2"
- inkscape:label="Tile14" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="11"
- id="image3366-0-6"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile01.png"
- xlink:href="../images/tile01.png"
- style="display:inline"
- y="16"
- x="11"
- id="image3377-1-1"
- height="2"
- width="2"
- inkscape:label="Tile01" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
- style="display:inline"
- y="16"
- x="13"
- id="image3388-6-3"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile03.png"
- xlink:href="../images/tile03.png"
- style="display:inline"
- y="16"
- x="15"
- id="image3399-9-4"
- height="2"
- width="2"
- inkscape:label="Tile03" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile04.png"
- xlink:href="../images/tile04.png"
- style="display:inline"
- y="16"
- x="17"
- id="image3410-7-0"
- height="2"
- width="2"
- inkscape:label="Tile04" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="5"
- id="image3366-0-6-0"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="7"
- id="image3366-0-6-5"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="9"
- id="image3366-0-6-2"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="13"
- id="image3366-0-6-59"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="15"
- id="image3366-0-6-00"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="17"
- id="image3366-0-6-4"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile11.png"
- xlink:href="../images/tile11.png"
- style="display:inline"
- y="18"
- x="-3"
- id="image3320-0-4"
- height="2"
- width="2"
- inkscape:label="Tile11" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="18"
- x="-1"
- id="image3333-2-8"
- height="2"
- width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile13.png"
- xlink:href="../images/tile13.png"
- style="display:inline"
- y="18"
- x="1"
- id="image3344-5-2"
- height="2"
- width="2"
- inkscape:label="Tile13" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="-3"
- id="image3366-0-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile01.png"
- xlink:href="../images/tile01.png"
- style="display:inline"
- y="16"
- x="-3"
- id="image3377-1-8"
- height="2"
- width="2"
- inkscape:label="Tile01" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
- style="display:inline"
- y="16"
- x="-1"
- id="image3388-6-5"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile03.png"
- xlink:href="../images/tile03.png"
- style="display:inline"
- y="16"
- x="1"
- id="image3399-9-7"
- height="2"
- width="2"
- inkscape:label="Tile03" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="-1"
- id="image3366-0-6-0-2"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="1"
- id="image3366-0-6-5-8"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile11.png"
- xlink:href="../images/tile11.png"
- style="display:inline"
- y="18"
- x="19"
- id="image3320-0-0"
- height="2"
- width="2"
- inkscape:label="Tile11" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="18"
- x="21"
- id="image3333-2-66"
- height="2"
- width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile13.png"
- xlink:href="../images/tile13.png"
- style="display:inline"
- y="18"
- x="23"
- id="image3344-5-18"
- height="2"
- width="2"
- inkscape:label="Tile13" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="19"
- id="image3366-0-2"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile01.png"
- xlink:href="../images/tile01.png"
- style="display:inline"
- y="16"
- x="19"
- id="image3377-1-85"
- height="2"
- width="2"
- inkscape:label="Tile01" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
- style="display:inline"
- y="16"
- x="21"
- id="image3388-6-4"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile03.png"
- xlink:href="../images/tile03.png"
- style="display:inline"
- y="16"
- x="23"
- id="image3399-9-3"
- height="2"
- width="2"
- inkscape:label="Tile03" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="21"
- id="image3366-0-6-0-9"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="23"
- id="image3366-0-6-5-6"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="3"
- id="image3366-0-24"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="11"
- id="image3366-0-6-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="5"
- id="image3366-0-6-0-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="7"
- id="image3366-0-6-5-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="9"
- id="image3366-0-6-2-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="13"
- id="image3366-0-6-59-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="15"
- id="image3366-0-6-00-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="17"
- id="image3366-0-6-4-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="-3"
- id="image3366-0-3-8"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="-1"
- id="image3366-0-6-0-2-9"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="1"
- id="image3366-0-6-5-8-6"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="19"
- id="image3366-0-2-4"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="21"
- id="image3366-0-6-0-9-6"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="23"
- id="image3366-0-6-5-6-4"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile11.png"
- xlink:href="../images/tile11.png"
- style="display:inline"
- y="18"
- x="-7"
- id="image3320-0-4-0"
- height="2"
- width="2"
- inkscape:label="Tile11" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="18"
- x="-5"
- id="image3333-2-8-3"
- height="2"
- width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="-7"
- id="image3366-0-3-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile01.png"
- xlink:href="../images/tile01.png"
- style="display:inline"
- y="16"
- x="-7"
- id="image3377-1-8-1"
- height="2"
- width="2"
- inkscape:label="Tile01" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
- style="display:inline"
- y="16"
- x="-5"
- id="image3388-6-5-5"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="-5"
- id="image3366-0-6-0-2-1"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="-7"
- id="image3366-0-3-8-2"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="-5"
- id="image3366-0-6-0-2-9-2"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="18"
- x="25"
- id="image3333-2-66-4"
- height="2"
- width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile13.png"
- xlink:href="../images/tile13.png"
- style="display:inline"
- y="18"
- x="27"
- id="image3344-5-18-5"
- height="2"
- width="2"
- inkscape:label="Tile13" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
- style="display:inline"
- y="16"
- x="25"
- id="image3388-6-4-3"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile03.png"
- xlink:href="../images/tile03.png"
- style="display:inline"
- y="16"
- x="27"
- id="image3399-9-3-8"
- height="2"
- width="2"
- inkscape:label="Tile03" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="25"
- id="image3366-0-6-0-9-63"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="27"
- id="image3366-0-6-5-6-47"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="25"
- id="image3366-0-6-0-9-6-1"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="27"
- id="image3366-0-6-5-6-4-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="3"
- id="image3366-0-24-8"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="11"
- id="image3366-0-6-7-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="5"
- id="image3366-0-6-0-7-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="7"
- id="image3366-0-6-5-3-4"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="9"
- id="image3366-0-6-2-3-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="13"
- id="image3366-0-6-59-3-1"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="15"
- id="image3366-0-6-00-7-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="17"
- id="image3366-0-6-4-7-0"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="-3"
- id="image3366-0-3-8-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="-1"
- id="image3366-0-6-0-2-9-1"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="1"
- id="image3366-0-6-5-8-6-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="19"
- id="image3366-0-2-4-8"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="21"
- id="image3366-0-6-0-9-6-6"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="23"
- id="image3366-0-6-5-6-4-1"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="-7"
- id="image3366-0-3-8-2-0"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="-5"
- id="image3366-0-6-0-2-9-2-8"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="25"
- id="image3366-0-6-0-9-6-1-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="27"
- id="image3366-0-6-5-6-4-3-0"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile12.png"
- xlink:href="../images/tile12.png"
- style="display:inline"
- y="18"
- x="29"
- id="image3333-2-66-4-1"
- height="2"
- width="2"
- inkscape:label="Tile12" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile13.png"
- xlink:href="../images/tile13.png"
- style="display:inline"
- y="18"
- x="31"
- id="image3344-5-18-5-1"
- height="2"
- width="2"
- inkscape:label="Tile13" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile02.png"
- xlink:href="../images/tile02.png"
- style="display:inline"
- y="16"
- x="29"
- id="image3388-6-4-3-6"
- height="2"
- width="2"
- inkscape:label="Tile02" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile03.png"
- xlink:href="../images/tile03.png"
- style="display:inline"
- y="16"
- x="31"
- id="image3399-9-3-8-2"
- height="2"
- width="2"
- inkscape:label="Tile03" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="29"
- id="image3366-0-6-0-9-63-6"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="20"
- x="31"
- id="image3366-0-6-5-6-47-6"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="29"
- id="image3366-0-6-0-9-6-1-6"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="22"
- x="31"
- id="image3366-0-6-5-6-4-3-8"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
- style="display:inline"
- y="24"
- x="29"
- id="image3366-0-6-0-9-6-1-3-3"
- height="2"
- width="2"
- inkscape:label="Tile21" />
-<image
- sodipodi:absref="/home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/scenes/../images/tile21.png"
- xlink:href="../images/tile21.png"
+ inkscape:label="Tile02"
  style="display:inline"
- y="24"
- x="31"
- id="image3366-0-6-5-6-4-3-0-7"
- height="2"
- width="2"
- inkscape:label="Tile21" />
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
 <image
  style="display:inline"
- y="11.9306"
+ y="13.9306"
  x="2.69364"
  id="image3286-4"
  xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/bow-512x512.png"
@@ -1877,20 +828,857 @@
  width="2"
  start="archer" />
 <image
- style="display:inline"
- y="16"
- x="5"
- id="image3286-42"
- xlink:href="file:///home/acoppes/workspace/archervsworld/archervsworld-desktop/src/main/resources/data/images/bow-512x512.png"
- height="2"
  width="2"
- start="archer" />
+ height="2"
+ id="image5220-7"
+ x="0"
+ y="14"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-49"
+ x="2"
+ y="14"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3473-2"
+ x="4"
+ y="14"
+ inkscape:label="Tile05"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0"
+ x="-7"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1"
+ x="-5"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-5"
+ x="-1"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-7"
+ x="1"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-0"
+ x="3"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-1"
+ x="5"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-6"
+ x="7"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-19"
+ x="-3"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-5-9"
+ x="11"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-7-8"
+ x="13"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-0-3"
+ x="15"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-1-7"
+ x="17"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-6-0"
+ x="19"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-19-7"
+ x="9"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-5-8"
+ x="23"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-7-4"
+ x="25"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-0-4"
+ x="27"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-1-2"
+ x="29"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-0-6-9"
+ x="31"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5220-7-1-19-6"
+ x="21"
+ y="16"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97"
+ x="-7"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-9"
+ x="-5"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-93"
+ x="-3"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-7"
+ x="-1"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-5"
+ x="1"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-9-2"
+ x="3"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-93-8"
+ x="5"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-7-4"
+ x="7"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-4"
+ x="9"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-9-20"
+ x="11"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-93-5"
+ x="13"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-7-9"
+ x="15"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-1"
+ x="17"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-9-6"
+ x="19"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-93-55"
+ x="21"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-7-46"
+ x="23"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-50"
+ x="25"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-9-5"
+ x="27"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-93-4"
+ x="29"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311-97-7-3"
+ x="31"
+ y="18"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2"
+ x="-7"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4"
+ x="-5"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-9"
+ x="-3"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-2"
+ x="-1"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ transform="scale(-1,1)" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-5"
+ x="1"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-1"
+ x="3"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-9-0"
+ x="-7"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ transform="scale(-1,1)" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-2-7"
+ x="7"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-1"
+ x="9"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-4"
+ x="-13"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ transform="scale(-1,1)" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-9-6"
+ x="13"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-2-0"
+ x="15"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-5-7"
+ x="-19"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ transform="scale(-1,1)" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-1-3"
+ x="19"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-9-0-6"
+ x="21"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-2-7-5"
+ x="23"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-5-7-0"
+ x="-27"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ transform="scale(-1,1)" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-1-3-0"
+ x="27"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-9-0-6-6"
+ x="29"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402-2-4-2-7-5-2"
+ x="31"
+ y="20"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-1"
+ x="-7"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-9"
+ x="-5"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-3"
+ x="-3"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-7"
+ x="-1"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-1-6"
+ x="1"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-9-8"
+ x="3"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-3-2"
+ x="5"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-7-4"
+ x="7"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-1-4"
+ x="9"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-9-5"
+ x="11"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-3-4"
+ x="13"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-7-2"
+ x="15"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-1-7"
+ x="17"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-9-3"
+ x="19"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-3-5"
+ x="21"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-7-0"
+ x="23"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-1-3"
+ x="25"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-9-1"
+ x="27"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-3-57"
+ x="29"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537-7-7"
+ x="31"
+ y="22"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3473-2-1"
+ x="0"
+ y="14"
+ inkscape:label="Tile05"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png"
+ transform="scale(-1,1)" />
 </g>
 <g
  inkscape:groupmode="layer"
  id="layer3"
  inkscape:label="Physics"
- style="display:inline">
+ style="display:none">
 <path
  style="fill:none;stroke:#fc0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
  d="M -7,18 33,18"
@@ -1900,9 +1688,10 @@
  inkscape:connector-curvature="0" />
 <path
  style="color:#000000;fill:none;stroke:#ff0000;stroke-width:0.1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
- d="M 4,18 4,14 -2,14 -2,18"
+ d="M 4.32948,17.9942 4.32948,16.0058 -0.300578,16.0347 -0.265896,17.9827"
  id="path3309"
- inkscape:connector-curvature="0" />
+ inkscape:connector-curvature="0"
+ sodipodi:nodetypes="cccc" />
 </g>
 <g
  inkscape:groupmode="layer"
@@ -2153,5 +1942,126 @@
  height="4"
  width="4"
  inkscape:label="WindowTile01" />
+<image
+ width="2"
+ height="2"
+ id="image5220"
+ x="-19"
+ y="5"
+ inkscape:label="Tile01"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile01.png" />
+<image
+ width="2"
+ height="2"
+ id="image5311"
+ x="-19"
+ y="7"
+ inkscape:label="Tile02"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile02.png" />
+<image
+ width="2"
+ height="2"
+ id="image5402"
+ x="-19"
+ y="9"
+ inkscape:label="Tile03"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile03.png" />
+<image
+ width="2"
+ height="2"
+ id="image5537"
+ x="-19"
+ y="11"
+ inkscape:label="Tile04"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3473"
+ x="-17"
+ y="5"
+ inkscape:label="Tile05"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile05.png" />
+<image
+ width="2"
+ height="2"
+ id="image3617"
+ x="-17"
+ y="7"
+ inkscape:label="Tile06"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile06.png" />
+<image
+ width="2"
+ height="2"
+ id="image3708"
+ x="-17"
+ y="9"
+ inkscape:label="Tile07"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile07.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile07.png" />
+<image
+ width="2"
+ height="2"
+ id="image3799"
+ x="-17"
+ y="11"
+ inkscape:label="Tile08"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile08.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile08.png" />
+<image
+ width="2"
+ height="2"
+ id="image3827"
+ x="-13"
+ y="5"
+ inkscape:label="Tile09"
+ style="display:inline"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile09.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile09.png" />
+<image
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image5537-2"
+ x="-15"
+ y="7"
+ inkscape:label="Tile04"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile04.png" />
+<image
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3799-2"
+ x="-13"
+ y="7"
+ inkscape:label="Tile08"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile08.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile08.png" />
+<image
+ style="display:inline"
+ width="2"
+ height="2"
+ id="image3799-6"
+ x="-7"
+ y="-15"
+ inkscape:label="Tile08"
+ transform="matrix(0,-1,1,0,0,0)"
+ xlink:href="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile08.png"
+ sodipodi:absref="/home/acoppes/workspace/taken/taken-desktop/src/main/resources/data/scenes/../images/tile08.png" />
 </g>
 </svg>
