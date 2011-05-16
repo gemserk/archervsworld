@@ -45,8 +45,7 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 			bowComponent.setRechargeTime(bowComponent.getRechargeTime() - world.getDelta());
 			if (bowComponent.getRechargeTime() > 0)
 				return;
-			bowData.setRecharging(false);
-			System.out.println("READY");
+			bowData.setReady();
 		}
 
 		if (bowData.isCharging()) {
@@ -64,8 +63,7 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 			
 			System.out.println("FIRING!!");
 
-			bowData.setFiring(false);
-			bowData.setRecharging(true);
+			bowData.reload();
 			bowComponent.setRechargeTime(bowComponent.getRechargeRate());
 		}
 

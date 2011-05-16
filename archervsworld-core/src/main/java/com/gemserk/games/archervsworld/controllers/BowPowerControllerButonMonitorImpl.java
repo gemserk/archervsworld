@@ -33,16 +33,14 @@ public class BowPowerControllerButonMonitorImpl implements BowController {
 
 		if (buttonMonitor.isHolded()) {
 			if (!bowData.isCharging()) {
-				bowData.setCharging(true);
+				bowData.charge();
 				bowData.setPower(0f);
 			}
 			bowData.setPower(bowData.getPower() + 0.03f * delta);
 		}
 
-		if (buttonMonitor.isReleased()) {
-			bowData.setFiring(true);
-			bowData.setCharging(false);
-		}
+		if (buttonMonitor.isReleased()) 
+			bowData.fire();
 	}
 
 }

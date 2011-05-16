@@ -40,8 +40,6 @@ public class BowControllerHudImpl2 implements BowController {
 
 	@Override
 	public void update(int delta) {
-		bowData.setFiring(false);
-
 		Vector2 p0 = position;
 		Vector2 p1 = pointer.getPosition();
 
@@ -59,15 +57,13 @@ public class BowControllerHudImpl2 implements BowController {
 			if (direction.len() > radius)
 				return;
 			bowData.setPower(bowData.getPower() + 0.03f * delta);
-			bowData.setCharging(true);
+			bowData.charge();
 		}
 
 		if (pointer.wasReleased) {
-			bowData.setCharging(false);
-			bowData.setFiring(true);
+			bowData.fire();
 			bowData.setPower(0f);
 		}
-
 	}
 
 }

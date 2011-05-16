@@ -1,24 +1,17 @@
 package com.gemserk.games.archervsworld.controllers;
 
 public class BowData {
-	
-	public enum State { 
-		Ready,
-		Charging, 
-		Firing, 
-		Recharging
+
+	public enum State {
+		READY, CHARGING, FIRING, RELOADING
 	}
 
 	private float angle;
 
 	private float power;
-	
-	private boolean recharging;
 
-	private boolean charging;
-	
-	private boolean firing;
-	
+	private State state = State.READY;
+
 	public float getAngle() {
 		return angle;
 	}
@@ -34,29 +27,33 @@ public class BowData {
 	public void setPower(float power) {
 		this.power = power;
 	}
-	
+
 	public boolean isRecharging() {
-		return recharging;
-	}
-	
-	public void setRecharging(boolean recharging) {
-		this.recharging = recharging;
-	}
-	
-	public boolean isCharging() {
-		return charging;
+		return state == State.RELOADING;
 	}
 
-	public void setCharging(boolean charging) {
-		this.charging = charging;
+	public void reload() {
+		state = State.RELOADING;
+	}
+
+	public void setReady() {
+		state = State.READY;
+	}
+
+	public boolean isCharging() {
+		return state == State.CHARGING;
+	}
+
+	public void charge() {
+		state = State.CHARGING;
 	}
 
 	public boolean isFiring() {
-		return firing;
+		return state == State.FIRING;
 	}
 
-	public void setFiring(boolean firing) {
-		this.firing = firing;
+	public void fire() {
+		state = State.FIRING;
 	}
 
 }
