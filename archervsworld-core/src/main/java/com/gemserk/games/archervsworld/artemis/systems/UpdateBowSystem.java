@@ -22,7 +22,6 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 
 	@Override
 	protected void process(Entity e) {
-
 		BowComponent bowComponent = e.getComponent(BowComponent.class);
 		BowData bowData = bowComponent.getBowData();
 
@@ -34,13 +33,21 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 
 		SpatialComponent spatialComponent = e.getComponent(SpatialComponent.class);
 		Spatial spatial = spatialComponent.getSpatial();
-		
+
 		power = MathUtils2.truncate(power, bowComponent.getMinPower(), bowComponent.getMaxPower());
-		
+
 		bowData.setPower(power);
 
 		if (AngleUtils.between(angle, minFireAngle, maxFireAngle))
 			spatial.setAngle(angle);
+
+		if (bowData.isRecharging()) {
+			bowComponent.setRechargeTime(bowComponent.getRechargeTime() - world.getDelta());
+			if (bowComponent.getRechargeTime() > 0)
+				return;
+			bowData.setRecharging(false);
+			System.out.println("READY");
+		}
 
 		if (bowData.isCharging()) {
 			Trigger trigger = bowComponent.getChargeTrigger();
@@ -54,6 +61,12 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 			if (fireTrigger.isAlreadyTriggered())
 				return;
 			fireTrigger.trigger(e);
+			
+			System.out.println("FIRING!!");
+
+			bowData.setFiring(false);
+			bowData.setRecharging(true);
+			bowComponent.setRechargeTime(bowComponent.getRechargeRate());
 		}
 
 	}

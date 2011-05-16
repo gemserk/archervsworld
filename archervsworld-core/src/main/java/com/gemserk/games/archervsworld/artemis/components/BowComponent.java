@@ -11,7 +11,7 @@ import com.gemserk.games.archervsworld.controllers.BowData;
 public class BowComponent extends Component {
 
 	private final BowData bowData;
-
+	
 	/**
 	 * Called whenever the bow starts charging.
 	 */
@@ -19,12 +19,17 @@ public class BowComponent extends Component {
 
 	private final Trigger fireTrigger;
 
+	private int rechargeRate;
+	
+	private int rechargeTime;
+
 	private float minPower;
 
 	private float maxPower;
 
 	private Entity arrow;
 
+	
 	public Entity getArrow() {
 		return arrow;
 	}
@@ -52,14 +57,28 @@ public class BowComponent extends Component {
 	public Trigger getFireTrigger() {
 		return fireTrigger;
 	}
-
-	public BowComponent(Entity arrow, float minPower, float maxPower, BowData bowData, Trigger fireTrigger, Trigger chargeTrigger) {
+	
+	public int getRechargeRate() {
+		return rechargeRate;
+	}
+	
+	public int getRechargeTime() {
+		return rechargeTime;
+	}
+	
+	public void setRechargeTime(int rechargeTime) {
+		this.rechargeTime = rechargeTime;
+	}
+	
+	public BowComponent(Entity arrow, float minPower, float maxPower, BowData bowData, int rechargeRate, Trigger fireTrigger, Trigger chargeTrigger) {
 		this.arrow = arrow;
 		this.minPower = minPower;
 		this.maxPower = maxPower;
 		this.bowData = bowData;
+		this.rechargeRate = rechargeRate;
 		this.fireTrigger = fireTrigger;
 		this.chargeTrigger = chargeTrigger;
+		this.rechargeTime = rechargeRate;
 	}
 
 }

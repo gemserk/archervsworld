@@ -164,7 +164,7 @@ public class PlayGameState extends GameStateImpl {
 
 		System.out.println("restarting game!!");
 
-		gameData.zombiesCount = 2;
+		gameData.zombiesCount = 10;
 		gameData.zombiesKilled = 0;
 		gameData.zombiesSpawned = 0;
 
@@ -307,16 +307,16 @@ public class PlayGameState extends GameStateImpl {
 
 		archerVsWorldEntityFactory.createBackground(viewportWidth, viewportHeight);
 
-		archerVsWorldEntityFactory.createWalkingDead(15f, 1.25f + 2f, 0.5f, 2f, -3.4f, 0f, 10f);
+		// archerVsWorldEntityFactory.createWalkingDead(15f, 1.25f + 2f, 0.5f, 2f, -3.4f, 0f, 10f);
 
-		int time = MathUtils.random(5000, 7000);
+		int time = MathUtils.random(4000, 6000);
 		archerVsWorldEntityFactory.createZombiesSpawner(time, new AbstractTrigger() {
 			@Override
 			protected boolean handle(Entity e) {
 				TimerComponent timerComponent = e.getComponent(TimerComponent.class);
-				timerComponent.setCurrentTime(MathUtils.random(5000, 7000));
+				timerComponent.setCurrentTime(MathUtils.random(3000, 5000));
 
-				archerVsWorldEntityFactory.createWalkingDead(28, 1.25f + 2f, 0.5f, 2f, -1.4f, 0f, 2f);
+				archerVsWorldEntityFactory.createWalkingDead(28, 1f + 2f, 0.5f, 2f, -2.4f, 0f, 2f);
 				Gdx.app.log("Archer Vs Zombies", "New Zombie spawned");
 
 				// gameData.zombiesKilled++;

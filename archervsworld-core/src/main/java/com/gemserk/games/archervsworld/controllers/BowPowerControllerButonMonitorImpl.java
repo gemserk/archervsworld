@@ -25,15 +25,17 @@ public class BowPowerControllerButonMonitorImpl implements BowController {
 
 	@Override
 	public void update(int delta) {
+		
 		buttonMonitor.update();
-
-		if (buttonMonitor.isPressed()) {
-			bowData.setCharging(true);
-			bowData.setFiring(false);
-			bowData.setPower(0f);
-		}
+		
+		if (bowData.isRecharging())
+			return;
 
 		if (buttonMonitor.isHolded()) {
+			if (!bowData.isCharging()) {
+				bowData.setCharging(true);
+				bowData.setPower(0f);
+			}
 			bowData.setPower(bowData.getPower() + 0.03f * delta);
 		}
 
