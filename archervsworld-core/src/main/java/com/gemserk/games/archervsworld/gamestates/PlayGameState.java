@@ -153,7 +153,7 @@ public class PlayGameState extends GameStateImpl {
 			restart();
 		Gdx.input.setCatchBackKey(true);
 	}
-	
+
 	@Override
 	public void pause() {
 		Gdx.input.setCatchBackKey(false);
@@ -170,7 +170,7 @@ public class PlayGameState extends GameStateImpl {
 		gameData.gameOver = false;
 
 		resourceManager = new ResourceManagerImpl<String>();
-		
+
 		viewportWidth = Gdx.graphics.getWidth();
 		viewportHeight = Gdx.graphics.getHeight();
 
@@ -445,6 +445,9 @@ public class PlayGameState extends GameStateImpl {
 
 	protected void loadResources() {
 
+		// TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("MapTilesPack"));
+		// textureAtlas.
+
 		new LibgdxResourceBuilder(resourceManager) {
 			{
 				setCacheWhenLoad(true);
@@ -456,23 +459,16 @@ public class PlayGameState extends GameStateImpl {
 				texture("Bow", "data/images/bow-512x512.png");
 				texture("Arrow", "data/images/arrow-512x512.png");
 
-				texture("Tile01Texture", "data/images/tile01.png");
-				texture("Tile02Texture", "data/images/tile02.png");
-				texture("Tile03Texture", "data/images/tile03.png");
-				texture("Tile04Texture", "data/images/tile04.png");
-				texture("Tile05Texture", "data/images/tile05.png");
-				texture("Tile06Texture", "data/images/tile06.png");
-				texture("Tile07Texture", "data/images/tile07.png");
-				texture("Tile08Texture", "data/images/tile08.png");
+				textureAtlas("MapTiles", "data/images/MapTilesPack");
 
-				sprite("Tile01", "Tile01Texture");
-				sprite("Tile02", "Tile02Texture");
-				sprite("Tile03", "Tile03Texture");
-				sprite("Tile04", "Tile04Texture");
-				sprite("Tile05", "Tile05Texture");
-				sprite("Tile06", "Tile06Texture");
-				sprite("Tile07", "Tile07Texture");
-				sprite("Tile08", "Tile08Texture");
+				spriteAtlas("Tile01", "MapTiles");
+				spriteAtlas("Tile02", "MapTiles");
+				spriteAtlas("Tile03", "MapTiles");
+				spriteAtlas("Tile04", "MapTiles");
+				spriteAtlas("Tile05", "MapTiles");
+				spriteAtlas("Tile06", "MapTiles");
+				spriteAtlas("Tile07", "MapTiles");
+				spriteAtlas("Tile08", "MapTiles");
 
 				// WallTile01
 
@@ -494,6 +490,7 @@ public class PlayGameState extends GameStateImpl {
 
 				font("Font", "data/fonts/font.png", "data/fonts/font.fnt");
 			}
+
 		};
 
 	}
