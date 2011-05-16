@@ -313,9 +313,9 @@ public class PlayGameState extends GameStateImpl {
 				int layer = 2;
 				if (element.hasAttribute("layer"))
 					layer = Integer.parseInt(element.getAttribute("layer"));
-				
+
 				sprite.setScale(sx, sy);
-				
+
 				archerVsWorldEntityFactory.createStaticSprite(x, y, width, height, angle, sprite, layer, Color.WHITE, 0.5f, 0.5f);
 			};
 		}.processWorld(document);
@@ -393,28 +393,14 @@ public class PlayGameState extends GameStateImpl {
 
 		worldWrapper.render();
 
-		// BowData bowData = bowController.getBowData();
-		// ImmediateModeRendererUtils.drawSolidCircle(70f, 70f, 60f, realBowController.getAngle(), Color.WHITE);
-
 		ImmediateModeRendererUtils.drawSolidCircle(directionButtonArea, realBowController.getAngle(), Color.WHITE);
 
 		if (realBowController.isCharging())
 			ImmediateModeRendererUtils.drawSolidCircle(Gdx.graphics.getWidth() - 70f, 70f, realBowController.getPower() * 2f, Color.WHITE);
 
-		// if (Gdx.app.getType() == ApplicationType.Android) {
-		// ImmediateModeRendererUtils.drawRectangle(Gdx.graphics.getWidth() - 100, 20, Gdx.graphics.getWidth() - 20, 100, Color.GREEN);
-		ImmediateModeRendererUtils.drawRectangle(powerButtonArea, Color.GREEN);
-
-		// }
-
-		// if (bowController instanceof BowControllerHudImpl) {
-		// }
-		//
-		// if (bowController instanceof BowControllerHudImpl2) {
-		// BowControllerHudImpl2 controller = (BowControllerHudImpl2) bowController;
-		// BowData bowData = bowController.getBowData();
-		// ImmediateModeRendererUtils.drawSolidCircle(controller.getPosition(), controller.getRadius(), bowData.getAngle(), Color.WHITE);
-		// }
+		if (Gdx.app.getType() == ApplicationType.Android) {
+			ImmediateModeRendererUtils.drawRectangle(powerButtonArea, Color.GREEN);
+		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 			box2dDebugRenderer.render();

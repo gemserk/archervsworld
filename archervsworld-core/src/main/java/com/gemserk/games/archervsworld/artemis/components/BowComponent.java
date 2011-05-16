@@ -2,6 +2,7 @@ package com.gemserk.games.archervsworld.artemis.components;
 
 import com.artemis.Component;
 import com.artemis.Entity;
+import com.gemserk.commons.artemis.triggers.Trigger;
 import com.gemserk.games.archervsworld.controllers.BowData;
 
 /**
@@ -10,6 +11,8 @@ import com.gemserk.games.archervsworld.controllers.BowData;
 public class BowComponent extends Component {
 
 	private final BowData bowData;
+
+	private final Trigger fireTrigger;
 
 	private float minPower;
 
@@ -47,12 +50,17 @@ public class BowComponent extends Component {
 		return bowData;
 	}
 
-	public BowComponent(float power, Entity arrow, float minPower, float maxPower, BowData bowData) {
+	public Trigger getFireTrigger() {
+		return fireTrigger;
+	}
+
+	public BowComponent(float power, Entity arrow, float minPower, float maxPower, BowData bowData, Trigger fireTrigger) {
 		this.power = power;
 		this.arrow = arrow;
 		this.minPower = minPower;
 		this.maxPower = maxPower;
 		this.bowData = bowData;
+		this.fireTrigger = fireTrigger;
 	}
 
 }

@@ -97,8 +97,10 @@ public class ArcherVsWorldEntityFactory {
 		entity.addComponent(new SpriteComponent(sprite, layer, new Vector2(centerx, centery), color));
 		entity.refresh();
 	}
+	
+	private final Vector2 impulse = new Vector2();
 
-	public void createPhysicsArrow(Vector2 position, Vector2 direction, float power) {
+	public void createPhysicsArrow(Vector2 position, float angle, float power) {
 		Entity entity = world.createEntity();
 
 		entity.setGroup(Groups.Arrow);
@@ -116,14 +118,14 @@ public class ArcherVsWorldEntityFactory {
 				.maskBits(maskBits) //
 				.userData(entity).build();
 
-		body.setTransform(position, (float) (direction.angle() / 180f * Math.PI));
-
-		Vector2 impulse = new Vector2(direction);
+		body.setTransform(position, angle * MathUtils.degreesToRadians);
+		
+		impulse.set(1,0);
+		impulse.rotate(angle);
 		impulse.mul(body.getMass());
 		impulse.mul(power);
 
-		Vector2 lp = body.getWorldPoint(new Vector2(0f, 0f));
-		body.applyLinearImpulse(impulse, lp);
+		body.applyLinearImpulse(impulse, body.getTransform().getPosition());
 
 		Resource<Texture> resource = resourceManager.get("Arrow");
 		Texture texture = resource.get();
@@ -238,7 +240,30 @@ public class ArcherVsWorldEntityFactory {
 		Texture texture = resourceManager.getResourceValue("Bow");
 		entity.addComponent(new SpatialComponent(new SpatialImpl(x, y, bowWidth, bowHeight, 0f)));
 		entity.addComponent(new SpriteComponent(new Sprite(texture), 2, new Vector2(0.5f, 0.5f), Color.WHITE));
-		entity.addComponent(new BowComponent(0f, null, 5f, 15f, bowData));
+		entity.addComponent(new BowComponent(0f, null, 5f, 15f, bowData, new AbstractTrigger() {
+			@Override
+			protected boolean handle(Entity e) {
+				
+				BowComponent bowComponent = e.getComponent(BowComponent.class);
+				Entity arrow = bowComponent.getArrow();
+
+				if (arrow == null)
+					return false;
+
+				SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
+				Spatial arrowSpatial = arrowSpatialComponent.getSpatial();
+
+				createPhysicsArrow(arrowSpatial.getPosition(), arrowSpatial.getAngle(), bowComponent.getPower());
+
+				world.deleteEntity(arrow);
+				bowComponent.setArrow(null);
+
+				Resource<Sound> sound = resourceManager.get("BowSound");
+				sound.get().play(1f);
+				
+				return false;
+			}
+		}));
 		entity.refresh();
 	}
 

@@ -2,19 +2,17 @@ package com.gemserk.games.archervsworld.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
-import com.gemserk.commons.artemis.EntityDebugger;
 import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
+import com.gemserk.commons.artemis.triggers.Trigger;
 import com.gemserk.commons.gdx.math.MathUtils2;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
 import com.gemserk.games.archervsworld.controllers.BowData;
-import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
 public class UpdateBowSystem extends EntityProcessingSystem implements ActivableSystem {
@@ -78,32 +76,11 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 		}
 
 		if (bowData.isFiring()) {
+			Trigger fireTrigger = bowComponent.getFireTrigger();
 
-			Entity arrow = bowComponent.getArrow();
-
-			if (arrow == null)
+			if (fireTrigger.isAlreadyTriggered())
 				return;
-
-			SpatialComponent arrowSpatialComponent = arrow.getComponent(SpatialComponent.class);
-
-			if (arrowSpatialComponent == null) {
-				EntityDebugger.debug("arrow spatial component missing in arrow entity", e);
-				throw new RuntimeException("spatial component missing on arrow entity " + arrow.getUniqueId());
-			}
-
-			Spatial arrowSpatial = arrowSpatialComponent.getSpatial();
-
-			direction.set(1f, 0f);
-			direction.rotate(arrowSpatial.getAngle());
-
-			entityFactory.createPhysicsArrow(arrowSpatial.getPosition(), direction, bowComponent.getPower());
-
-			world.deleteEntity(arrow);
-			bowComponent.setArrow(null);
-
-			Resource<Sound> sound = resourceManager.get("BowSound");
-			sound.get().play(1f);
-
+			fireTrigger.trigger(e);
 		}
 
 	}
