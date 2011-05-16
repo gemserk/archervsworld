@@ -8,8 +8,8 @@ import org.w3c.dom.Element;
 
 import com.artemis.Entity;
 import com.artemis.World;
+import com.artemis.utils.ImmutableBag;
 import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -27,7 +27,6 @@ import com.gemserk.commons.artemis.WorldWrapper;
 import com.gemserk.commons.artemis.components.SpatialImpl;
 import com.gemserk.commons.artemis.components.TimerComponent;
 import com.gemserk.commons.artemis.entities.EntityFactory;
-import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.AliveAreaSystem;
 import com.gemserk.commons.artemis.systems.HierarchySystem;
 import com.gemserk.commons.artemis.systems.HitDetectionSystem;
@@ -58,7 +57,9 @@ import com.gemserk.componentsengine.input.LibgdxButtonMonitor;
 import com.gemserk.componentsengine.input.LibgdxInputMappingBuilder;
 import com.gemserk.componentsengine.input.MonitorUpdater;
 import com.gemserk.games.archervsworld.LayerProcessor;
+import com.gemserk.games.archervsworld.LibgdxGame;
 import com.gemserk.games.archervsworld.artemis.entities.ArcherVsWorldEntityFactory;
+import com.gemserk.games.archervsworld.artemis.entities.Groups;
 import com.gemserk.games.archervsworld.artemis.systems.CorrectArrowDirectionSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateBowSystem;
 import com.gemserk.games.archervsworld.artemis.systems.UpdateChargingArrowSystem;
@@ -73,36 +74,25 @@ import com.gemserk.games.archervsworld.controllers.CameraControllerLibgdxPointer
 import com.gemserk.games.archervsworld.controllers.CameraMovementControllerImpl;
 import com.gemserk.games.archervsworld.controllers.CameraZoomControllerImpl;
 import com.gemserk.games.archervsworld.controllers.MultitouchCameraControllerImpl;
-import com.gemserk.games.archervsworld.gamestates.PlayGameState.EntitySystemController.ActivableSystemRegistration;
 import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 import com.gemserk.resources.ResourceManagerImpl;
 
 public class PlayGameState extends GameStateImpl {
 
-	public static class GameData {
-
-		public int zombiesKilled;
-
-		public int zombiesCount;
-
-		public int zombiesSpawned;
-
-	}
-
 	private World world;
 
 	private com.badlogic.gdx.physics.box2d.World physicsWorld;
 
-	int viewportWidth = 800;
+	private int viewportWidth;
 
-	int viewportHeight = 480;
+	private int viewportHeight;
 
-	Box2DCustomDebugRenderer box2dDebugRenderer;
+	private Box2DCustomDebugRenderer box2dDebugRenderer;
 
-	ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
+	private ArcherVsWorldEntityFactory archerVsWorldEntityFactory;
 
-	ResourceManager<String> resourceManager;
+	private ResourceManager<String> resourceManager;
 
 	private EntityFactory entityFactory;
 
@@ -111,8 +101,6 @@ public class PlayGameState extends GameStateImpl {
 	private MonitorUpdaterImpl monitorUpdater;
 
 	private Libgdx2dCamera myCamera;
-
-	EntitySystemController entitySystemController = new EntitySystemController();
 
 	private WorldWrapper worldWrapper;
 
@@ -132,6 +120,8 @@ public class PlayGameState extends GameStateImpl {
 
 	private GameData gameData = new GameData();
 
+	private final LibgdxGame game;
+
 	static class MonitorUpdaterImpl implements MonitorUpdater {
 
 		ArrayList<ButtonMonitor> buttonMonitors = new ArrayList<ButtonMonitor>();
@@ -150,23 +140,39 @@ public class PlayGameState extends GameStateImpl {
 
 	}
 
-	public PlayGameState(Game game) {
+	public PlayGameState(LibgdxGame game, GameData gameData) {
+		this.game = game;
+		this.gameData = gameData;
 		entityFactory = new EntityFactory();
 		archerVsWorldEntityFactory = new ArcherVsWorldEntityFactory();
 	}
 
 	@Override
 	public void init() {
-		// if gameOver
-		restart();
+		if (gameData.gameOver)
+			restart();
+		Gdx.input.setCatchBackKey(true);
+	}
+	
+	@Override
+	public void pause() {
+		Gdx.input.setCatchBackKey(false);
 	}
 
 	protected void restart() {
 
+		System.out.println("restarting game!!");
+
 		gameData.zombiesCount = 2;
 		gameData.zombiesKilled = 0;
+		gameData.zombiesSpawned = 0;
+
+		gameData.gameOver = false;
 
 		resourceManager = new ResourceManagerImpl<String>();
+		
+		viewportWidth = Gdx.graphics.getWidth();
+		viewportHeight = Gdx.graphics.getHeight();
 
 		loadResources();
 
@@ -299,7 +305,7 @@ public class PlayGameState extends GameStateImpl {
 		// I HAVE NOW AN EDITOR FOR ALL THIS STUFF!!!
 
 		archerVsWorldEntityFactory.createBackground(viewportWidth, viewportHeight);
-		
+
 		int time = MathUtils.random(5000, 7000);
 		archerVsWorldEntityFactory.createZombiesSpawner(new Vector2(28, 1.25f + 2f), 5, time, new AbstractTrigger() {
 			@Override
@@ -332,9 +338,6 @@ public class PlayGameState extends GameStateImpl {
 
 		monitorUpdater = new MonitorUpdaterImpl();
 		monitorUpdater.add(restartButtonMonitor);
-
-		entitySystemController.register(new ActivableSystemRegistration(updateBowSystem, Keys.NUM_1, "Bow system"));
-		entitySystemController.register(new ActivableSystemRegistration(walkingDeadSystem, Keys.NUM_2, "Walking dead system"));
 
 		InputStream svg = Gdx.files.internal("data/scenes/scene01.svg").read();
 		Document document = new DocumentParser().parse(svg);
@@ -369,56 +372,6 @@ public class PlayGameState extends GameStateImpl {
 		}.processWorld(document);
 
 		world.loopStart();
-	}
-
-	static class EntitySystemController {
-
-		static class ActivableSystemRegistration {
-
-			ActivableSystem activableSystem;
-
-			ButtonMonitor buttonMonitor;
-
-			String name;
-
-			public ActivableSystemRegistration(ActivableSystem activableSystem, ButtonMonitor buttonMonitor, String name) {
-				this.activableSystem = activableSystem;
-				this.buttonMonitor = buttonMonitor;
-				this.name = name;
-			}
-
-			public ActivableSystemRegistration(ActivableSystem activableSystem, int key, String name) {
-				this.activableSystem = activableSystem;
-				this.buttonMonitor = new LibgdxButtonMonitor(key);
-				this.name = name;
-			}
-		}
-
-		ArrayList<ActivableSystemRegistration> registrations = new ArrayList<ActivableSystemRegistration>();
-
-		public void register(ActivableSystemRegistration registration) {
-			registrations.add(registration);
-		}
-
-		public void update() {
-			for (int i = 0; i < registrations.size(); i++) {
-
-				ActivableSystemRegistration registration = registrations.get(i);
-
-				registration.buttonMonitor.update();
-
-				if (registration.buttonMonitor.isPressed()) {
-					registration.activableSystem.toggle();
-					if (registration.activableSystem.isEnabled()) {
-						Gdx.app.log("Archer Vs Zombies", registration.name + " enabled");
-					} else {
-						Gdx.app.log("Archer Vs Zombies", registration.name + " disabled");
-					}
-				}
-
-			}
-		}
-
 	}
 
 	@Override
@@ -469,12 +422,25 @@ public class PlayGameState extends GameStateImpl {
 				cameraZoomController.update(delta);
 		}
 
-		entitySystemController.update();
-
 		worldWrapper.update(delta);
 
-		if (restartButtonMonitor.isReleased())
-			restart();
+		// check world status to decide to finish the game or not?
+
+		if (gameData.zombiesSpawned == gameData.zombiesCount) {
+
+			ImmutableBag<Entity> zombies = world.getGroupManager().getEntities(Groups.Enemy);
+			if (zombies.size() == 0) {
+				gameData.gameOver = true;
+				game.transition(game.scoreScreen, true);
+			}
+
+		}
+
+		if (restartButtonMonitor.isReleased() || Gdx.input.isKeyPressed(Keys.BACK)) {
+			// restart();
+			gameData.gameOver = true;
+			game.transition(game.scoreScreen, true);
+		}
 	}
 
 	protected void loadResources() {

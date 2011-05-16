@@ -9,13 +9,17 @@ import com.gemserk.animation4j.gdx.converters.LibgdxConverters;
 import com.gemserk.commons.gdx.InternalScreen;
 import com.gemserk.commons.gdx.ScreenAdapter;
 import com.gemserk.commons.values.FloatValue;
+import com.gemserk.games.archervsworld.gamestates.GameData;
 import com.gemserk.games.archervsworld.gamestates.PlayGameState;
+import com.gemserk.games.archervsworld.gamestates.ScoreGameState;
 import com.gemserk.games.archervsworld.gamestates.SplashGameState;
 
 public class LibgdxGame extends Game {
 	
 	public InternalScreen gameScreen;
 	
+	public InternalScreen scoreScreen;
+
 	private FadeTransitionScreen fadeTransitionScreen;
 
 	@Override
@@ -24,7 +28,11 @@ public class LibgdxGame extends Game {
 		Converters.register(Color.class, LibgdxConverters.color());
 		Converters.register(FloatValue.class, CommonConverters.floatValue());
 		
-		gameScreen = new InternalScreen(new PlayGameState(this));
+		GameData gameData = new GameData();
+		gameData.gameOver = true;
+		
+		gameScreen = new InternalScreen(new PlayGameState(this, gameData));
+		scoreScreen = new InternalScreen(new ScoreGameState(this, gameData));
 		
 		fadeTransitionScreen = new FadeTransitionScreen(this);
 		
