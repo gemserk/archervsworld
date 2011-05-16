@@ -87,9 +87,11 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	public void createBackground(float w, float h) {
-		Texture texture = resourceManager.getResourceValue("Background");
-		createStaticSprite(0f, 0f, texture.getWidth(), texture.getHeight(), 0f, new Sprite(texture), -100, Color.WHITE, 0f, 0f);
-		createStaticSprite(texture.getWidth(), 0f, texture.getWidth(), texture.getHeight(), 0f, new Sprite(texture), -100, Color.WHITE, 0f, 0f);
+		Sprite sprite = resourceManager.getResourceValue("Background");
+		createStaticSprite(0f, 0f, sprite.getWidth(), sprite.getHeight(), 0f, sprite, -100, Color.WHITE, 0f, 0f);
+		
+		sprite = resourceManager.getResourceValue("Background");
+		createStaticSprite(sprite.getWidth(), 0f, sprite.getWidth(), sprite.getHeight(), 0f, sprite, -100, Color.WHITE, 0f, 0f);
 	}
 
 	public void createStaticSprite(float x, float y, float w, float h, float angle, Sprite sprite, int layer, Color color, float centerx, float centery) {

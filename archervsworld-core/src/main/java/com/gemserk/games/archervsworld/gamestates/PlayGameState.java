@@ -447,7 +447,8 @@ public class PlayGameState extends GameStateImpl {
 			{
 				setCacheWhenLoad(true);
 
-				texture("Background", "data/images/background-512x512.jpg", false);
+				texture("BackgroundTexture", "data/images/background-512x512.jpg", false);
+				sprite("Background", "BackgroundTexture");
 
 				texture("Rock", "data/images/rock-512x512.png");
 				texture("Bow", "data/images/bow-512x512.png");
