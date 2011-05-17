@@ -60,9 +60,6 @@ public class UpdateBowSystem extends EntityProcessingSystem implements Activable
 			if (fireTrigger.isAlreadyTriggered())
 				return;
 			fireTrigger.trigger(e);
-			
-			System.out.println("FIRING!!");
-
 			bowData.reload();
 			bowComponent.setRechargeTime(bowComponent.getRechargeRate());
 		}
