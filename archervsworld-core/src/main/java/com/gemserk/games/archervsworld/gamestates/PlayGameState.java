@@ -243,14 +243,9 @@ public class PlayGameState extends GameStateImpl {
 		powerButtonArea = new Rectangle(Gdx.graphics.getWidth() - 100, 20, 80, 80);
 
 		if (Gdx.app.getType() != ApplicationType.Android) {
-			// bowDirectionController = new BowDirectionAreaControllerHudImpl(realBowController, pointer2, new Vector2(directionButtonArea.x, directionButtonArea.y), 60f);
-			bowDirectionController = new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(directionButtonArea.x, directionButtonArea.y));
+			// bowDirectionController = new BowDirectionControllerHudImpl(realBowController, pointer2, new Vector2(directionButtonArea.x, directionButtonArea.y));
+			bowDirectionController = new BowDirectionControllerHudImpl(realBowController, pointer0, new Vector2(5, 5));
 			bowPowerController = new BowPowerControllerButonMonitorImpl(realBowController, LibgdxInputMappingBuilder.leftMouseButtonMonitor(Gdx.input));
-			// bowPowerController = new BowPowerHudControllerImpl(realBowController, //
-			// LibgdxInputMappingBuilder.anyPointerButtonMonitor(Gdx.input), //
-			// LibgdxInputMappingBuilder.pointerXCoordinateMonitor(Gdx.input, 0), //
-			// LibgdxInputMappingBuilder.pointerYCoordinateMonitor(Gdx.input, 0), //
-			// powerButtonArea);
 		} else {
 			bowDirectionController = new BowDirectionAreaControllerHudImpl(realBowController, pointer2, //
 					new Vector2(directionButtonArea.x, directionButtonArea.y), directionButtonArea.radius);
@@ -534,3 +529,4 @@ public class PlayGameState extends GameStateImpl {
 	}
 
 }
+
