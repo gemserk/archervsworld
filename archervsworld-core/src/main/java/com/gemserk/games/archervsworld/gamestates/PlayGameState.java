@@ -1,6 +1,7 @@
 package com.gemserk.games.archervsworld.gamestates;
 
 import java.io.InputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 import org.w3c.dom.Document;
@@ -212,7 +213,7 @@ public class PlayGameState extends GameStateImpl {
 
 		// Vector2 cameraPosition = new Vector2(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 		// Camera camera = new CameraImpl(cameraPosition.x, cameraPosition.y, 40f, 0f);
-		Camera camera = new CameraRestrictedImpl(0, 0, 20f, 0f, viewportWidth, viewportHeight, new Rectangle(-5f, -2f, 35f, 20f));
+		Camera camera = new CameraRestrictedImpl(0, 0, 32f, 0f, viewportWidth, viewportHeight, new Rectangle(2f, 0f, 25f, 15f));
 		camera.setPosition(viewportWidth * 0.5f * 0.025f, viewportHeight * 0.5f * 0.025f);
 
 		Rectangle controllerArea = new Rectangle(140, 0, viewportWidth - 140, viewportHeight);
@@ -462,12 +463,14 @@ public class PlayGameState extends GameStateImpl {
 			gameData.gameOver = true;
 			game.transition(game.scoreScreen, true);
 		}
+		
+		if (Gdx.input.isKeyPressed(Keys.T)) {
+			Camera camera = moveCameraController.getCamera();
+			System.out.println(MessageFormat.format("x,y=({0}, {1}) zoom={2}", camera.getX(), camera.getY(), camera.getZoom()));
+		}
 	}
 
 	protected void loadResources() {
-
-		// TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("MapTilesPack"));
-		// textureAtlas.
 
 		new LibgdxResourceBuilder(resourceManager) {
 			{
