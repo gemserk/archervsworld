@@ -1,9 +1,5 @@
 package com.gemserk.games.archervsworld;
 
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Vector2f;
-import javax.vecmath.Vector3f;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -17,6 +13,9 @@ import com.gemserk.commons.svg.inkscape.SvgInkscapeImageHandler;
 import com.gemserk.commons.svg.inkscape.SvgInkscapePath;
 import com.gemserk.commons.svg.inkscape.SvgInkscapePathHandler;
 import com.gemserk.commons.svg.inkscape.SvgParser;
+import com.gemserk.vecmath.Matrix3f;
+import com.gemserk.vecmath.Vector2f;
+import com.gemserk.vecmath.Vector3f;
 
 public class LayerProcessor {
 
