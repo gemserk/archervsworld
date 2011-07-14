@@ -4,7 +4,7 @@
     <title>$webstartName</title>
     <vendor>$project.Organization.Name</vendor>
     <homepage href="$project.Url"/>
-    <description>$project.Description</description>
+    <description>$webstartDescription</description>
 #if($offlineAllowed)
     <offline-allowed/>
 #end
@@ -18,20 +18,20 @@
 	    <j2se version="$j2seVersion"/>
 	     #foreach( $dependency in $fulldependencies )
 			#if ( !$dependency.classifier)
-				<jar href="${dependency.artifactId}-${dependency.version}.jar" />
+				<jar href="${dependency.artifactId}-${dependency.baseVersion}.jar" />
 			#end
 		#end
 	    #foreach( $dependency in $fulldependencies )
 			#if ( $dependency.classifier && !$dependency.classifier.startsWith('natives-'))
-				<jar href="${dependency.artifactId}-${dependency.version}-${dependency.classifier}.jar" />
+				<jar href="${dependency.artifactId}-${dependency.baseVersion}-${dependency.classifier}.jar" />
 			#end
 		#end
 	</resources>
 
 	<resources os="Windows">
 		#foreach( $dependency in $fulldependencies )
-			#if ( $dependency.classifier == 'natives-win' )
-				<nativelib href="${dependency.artifactId}-${dependency.version}-${dependency.classifier}.jar" />
+			#if ( $dependency.classifier == 'natives-win' || $dependency.classifier == 'natives-windows')
+				<nativelib href="${dependency.artifactId}-${dependency.baseVersion}-${dependency.classifier}.jar" />
 			#end
 		#end
 	</resources>
@@ -39,20 +39,20 @@
 	<resources os="Linux">
 		#foreach( $dependency in $fulldependencies )
 			#if ( $dependency.classifier == 'natives-linux' )
-				<nativelib href="${dependency.artifactId}-${dependency.version}-${dependency.classifier}.jar" />
+				<nativelib href="${dependency.artifactId}-${dependency.baseVersion}-${dependency.classifier}.jar" />
 			#end
 		#end
 	</resources>
 
 	<resources os="Mac OS">
 		#foreach( $dependency in $fulldependencies )
-			#if ( $dependency.classifier == 'natives-mac' )
-				<nativelib href="${dependency.artifactId}-${dependency.version}-${dependency.classifier}.jar" />
+			#if ( $dependency.classifier == 'natives-mac' || $dependency.classifier == 'natives-osx' )
+				<nativelib href="${dependency.artifactId}-${dependency.baseVersion}-${dependency.classifier}.jar" />
 			#end
 		#end
 	</resources>
   
-    <applet-desc name="$project.Description" main-class="$mainClass" width="800" height="600"> <!-- JNLPAPPLET -->
+    <applet-desc name="$webstartName" main-class="$appletMain" width="800" height="600"> <!-- JNLPAPPLET -->
     	<param name="game" value="$project.Properties.appletGameParameter"/> <!-- JNLPAPPLET -->
   	</applet-desc> <!-- JNLPAPPLET -->
   	
