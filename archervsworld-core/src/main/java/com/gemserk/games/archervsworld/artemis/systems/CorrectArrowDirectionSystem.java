@@ -2,6 +2,7 @@ package com.gemserk.games.archervsworld.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
@@ -16,6 +17,7 @@ public class CorrectArrowDirectionSystem extends EntityProcessingSystem {
 
 	@Override
 	protected void process(Entity entity) {
+		
 		CorrectArrowDirectionComponent correctArrowDirectionComponent = entity.getComponent(CorrectArrowDirectionComponent.class);
 
 		if (correctArrowDirectionComponent.isDisabled())
@@ -32,7 +34,7 @@ public class CorrectArrowDirectionSystem extends EntityProcessingSystem {
 
 		Vector2 linearVelocity = body.getLinearVelocity();
 		float angle = linearVelocity.angle();
-		body.setTransform(body.getPosition(), (float) (angle / 180f * Math.PI));
+		body.setTransform(body.getPosition(), (float) (angle * MathUtils.degreesToRadians));
 	}
 
 }
