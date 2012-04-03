@@ -17,20 +17,20 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.gemserk.animation4j.transitions.Transitions;
 import com.gemserk.animation4j.transitions.sync.Synchronizers;
 import com.gemserk.commons.artemis.components.AliveAreaComponent;
-import com.gemserk.commons.artemis.components.Contact;
 import com.gemserk.commons.artemis.components.HitComponent;
 import com.gemserk.commons.artemis.components.MovementComponent;
 import com.gemserk.commons.artemis.components.ParentComponent;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
-import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
-import com.gemserk.commons.artemis.components.SpatialImpl;
-import com.gemserk.commons.artemis.components.SpatialPhysicsImpl;
 import com.gemserk.commons.artemis.components.SpriteComponent;
 import com.gemserk.commons.artemis.components.TimerComponent;
 import com.gemserk.commons.artemis.triggers.AbstractTrigger;
 import com.gemserk.commons.artemis.triggers.Trigger;
 import com.gemserk.commons.gdx.box2d.BodyBuilder;
+import com.gemserk.commons.gdx.box2d.Contact;
+import com.gemserk.commons.gdx.games.Spatial;
+import com.gemserk.commons.gdx.games.SpatialImpl;
+import com.gemserk.commons.gdx.games.SpatialPhysicsImpl;
 import com.gemserk.commons.gdx.graphics.SpriteUtils;
 import com.gemserk.commons.values.FloatValue;
 import com.gemserk.commons.values.IntValue;
@@ -52,7 +52,7 @@ import com.gemserk.resources.Resource;
 import com.gemserk.resources.ResourceManager;
 
 public class ArcherVsWorldEntityFactory {
-	
+
 	private static class RemoveEntityTrigger extends AbstractTrigger {
 
 		private final World world;
@@ -69,7 +69,7 @@ public class ArcherVsWorldEntityFactory {
 	}
 
 	private static final Vector2 tmpImpulse = new Vector2();
-	
+
 	private World world;
 
 	private BodyBuilder bodyBuilder;
@@ -113,12 +113,14 @@ public class ArcherVsWorldEntityFactory {
 
 		Body body = bodyBuilder.type(BodyType.DynamicBody) //
 				.bullet() //
-				.boxShape(0.72f / 2f, 0.05f / 2f) //
-				.density(1f)//
-				.friction(3f) //
+				.fixture(bodyBuilder.fixtureDefBuilder() //
+						.boxShape(0.72f / 2f, 0.05f / 2f) //
+						.density(1f)//
+						.friction(3f) //
+						.categoryBits(categoryBits) //
+						.maskBits(maskBits) //
+				) //
 				.mass(0.8f) //
-				.categoryBits(categoryBits) //
-				.maskBits(maskBits) //
 				.userData(entity).build();
 
 		body.setTransform(position, angle * MathUtils.degreesToRadians);
@@ -150,7 +152,7 @@ public class ArcherVsWorldEntityFactory {
 					if (!contact.isInContact(i))
 						continue;
 
-					Entity targetEntity = contact.getEntity(i);
+					Entity targetEntity = (Entity) contact.getUserData(i);
 					String group = world.getGroupManager().getGroupOf(targetEntity);
 
 					Vector2 normal = contact.getNormal();
@@ -286,13 +288,15 @@ public class ArcherVsWorldEntityFactory {
 		short categoryBits = CollisionDefinitions.BaseGroup;
 		short maskBits = CollisionDefinitions.EnemiesGroup;
 		Body body = bodyBuilder.type(BodyType.StaticBody) //
-				.boxShape(width * 0.5f, height * 0.5f - 0.1f) //
-				.density(1f)//
+				.fixture(bodyBuilder.fixtureDefBuilder() //
+						.boxShape(width * 0.5f, height * 0.5f - 0.1f) //
+						.density(1f)//
+						.sensor() //
+						.friction(1f) //
+						.categoryBits(categoryBits) //
+						.maskBits(maskBits) //
+				) //
 				.mass(200) //
-				.sensor() //
-				.friction(1f) //
-				.categoryBits(categoryBits) //
-				.maskBits(maskBits) //
 				.position(x, y) //
 				.userData(entity).build();
 		entity.addComponent(new PhysicsComponent(body));
@@ -308,11 +312,13 @@ public class ArcherVsWorldEntityFactory {
 
 		Body body = bodyBuilder.type(BodyType.DynamicBody) //
 				.fixedRotation() //
-				.boxShape(width * 0.5f, height * 0.5f - 0.1f) //
-				.density(1f)//
-				.friction(0.1f) //
-				.categoryBits(categoryBits) //
-				.maskBits(maskBits) //
+				.fixture(bodyBuilder.fixtureDefBuilder() //
+						.boxShape(width * 0.5f, height * 0.5f - 0.1f) //
+						.density(1f) //
+						.friction(0.1f) //
+						.categoryBits(categoryBits) //
+						.maskBits(maskBits) //
+				) //
 				.position(x, y) //
 				.userData(entity).build();
 
@@ -350,10 +356,10 @@ public class ArcherVsWorldEntityFactory {
 						continue;
 
 					// hack to avoid processing the same entity twice because we have multiple contacts with it...
-					if (contactEntity == contact.getEntity(i))
+					if (contactEntity == contact.getUserData(i))
 						continue;
 
-					contactEntity = contact.getEntity(i);
+					contactEntity = (Entity) contact.getUserData(i);
 					// if contactEntity is arrow?
 
 					String contactEntityGroup = world.getGroupManager().getGroupOf(contactEntity);
@@ -463,9 +469,7 @@ public class ArcherVsWorldEntityFactory {
 		Entity entity = world.createEntity();
 		Body body = bodyBuilder.type(bodyType) //
 				.position(position.x, position.y)//
-				.polygonShape(vertices)//
-				.density(1f)//
-				.friction(0.5f) //
+				.fixture(bodyBuilder.fixtureDefBuilder().polygonShape(vertices).density(1f).friction(0.5f)) //
 				.userData(entity) //
 				.build();
 		entity.addComponent(new PhysicsComponent(body));

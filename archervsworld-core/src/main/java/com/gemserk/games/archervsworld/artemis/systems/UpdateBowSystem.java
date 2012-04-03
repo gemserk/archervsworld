@@ -2,11 +2,11 @@ package com.gemserk.games.archervsworld.artemis.systems;
 
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
-import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
 import com.gemserk.commons.artemis.triggers.Trigger;
+import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.commons.gdx.math.MathUtils2;
 import com.gemserk.componentsengine.utils.AngleUtils;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;

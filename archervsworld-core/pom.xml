@@ -15,7 +15,7 @@
 	<description>Archer - Core Module</description>
 
 	<properties>
-		<commons.gdx.version>0.0.2-SNAPSHOT</commons.gdx.version>
+		<commons.gdx.version>0.0.3-SNAPSHOT</commons.gdx.version>
 	</properties>
 
 	<dependencies>
@@ -30,6 +30,12 @@
 			<groupId>com.gemserk.commons.gdx</groupId>
 			<artifactId>commons-gdx-core</artifactId>
 			<version>${commons.gdx.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>vecmath</artifactId>
+					<groupId>java3d</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -43,6 +49,18 @@
 			<artifactId>junit</artifactId>
 			<version>4.8.2</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.gemserk.animation4j</groupId>
+			<artifactId>animation4j-core</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.gemserk.vecmath</groupId>
+			<artifactId>vecmath</artifactId>
+			<version>1.5.3-GEMSERK</version>
 		</dependency>
 		
 	</dependencies>

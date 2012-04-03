@@ -3,10 +3,10 @@ package com.gemserk.games.archervsworld.artemis.systems;
 import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector2;
-import com.gemserk.commons.artemis.components.Spatial;
 import com.gemserk.commons.artemis.components.SpatialComponent;
 import com.gemserk.commons.artemis.systems.ActivableSystem;
 import com.gemserk.commons.artemis.systems.ActivableSystemImpl;
+import com.gemserk.commons.gdx.games.Spatial;
 import com.gemserk.games.archervsworld.artemis.components.BowComponent;
 import com.gemserk.games.archervsworld.controllers.BowData;
 

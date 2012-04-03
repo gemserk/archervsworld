@@ -10,6 +10,8 @@ archervsworld-android/.settings
 archervsworld-android/libs/
 archervsworld-android/.externalToolBuilders/
 archervsworld-android/gen/
+archervsworld-android/bin
+archervsworld-android/project.properties
 
 archervsworld-core/target
 archervsworld-core/.classpath

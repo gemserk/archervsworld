@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:cc="http://creativecommons.org/ns#"
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+ xmlns:svg="http://www.w3.org/2000/svg"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+ xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+ width="854"
+ height="480"
+ id="svg2"
+ version="1.1"
+ inkscape:version="0.48.1 r9760"
+ sodipodi:docname="ideas.svg">
+<defs
+ id="defs4">
+<linearGradient
+ inkscape:collect="always"
+ id="linearGradient3755">
+<stop
+ style="stop-color:#00001d;stop-opacity:1"
+ offset="0"
+ id="stop3757" />
+<stop
+ style="stop-color:#000081;stop-opacity:1"
+ offset="1"
+ id="stop3759" />
+</linearGradient>
+<linearGradient
+ inkscape:collect="always"
+ xlink:href="#linearGradient3755"
+ id="linearGradient3761"
+ x1="400.595"
+ y1="569.257"
+ x2="401.614"
+ y2="1054.41"
+ gradientUnits="userSpaceOnUse" />
+</defs>
+<sodipodi:namedview
+ id="base"
+ pagecolor="#ffffff"
+ bordercolor="#666666"
+ borderopacity="1.0"
+ inkscape:pageopacity="0.0"
+ inkscape:pageshadow="2"
+ inkscape:zoom="1"
+ inkscape:cx="178.076"
+ inkscape:cy="209.713"
+ inkscape:document-units="px"
+ inkscape:current-layer="layer1"
+ showgrid="false"
+ inkscape:window-width="1440"
+ inkscape:window-height="849"
+ inkscape:window-x="0"
+ inkscape:window-y="24"
+ inkscape:window-maximized="1" />
+<metadata
+ id="metadata7">
+<rdf:RDF>
+<cc:Work
+ rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type
+ rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+<dc:title></dc:title>
+</cc:Work>
+</rdf:RDF>
+</metadata>
+<g
+ inkscape:label="Layer 1"
+ inkscape:groupmode="layer"
+ id="layer1"
+ transform="translate(0,-572.362)">
+<rect
+ style="fill:url(#linearGradient3761);fill-opacity:1;fill-rule:nonzero;stroke:none"
+ id="rect2985"
+ width="854"
+ height="480"
+ x="0"
+ y="572.362"
+ ry="0" />
+<path
+ style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M 115.037,832.122 117.157,893.408 139.416,887.429 137.296,830.627 z"
+ id="path3763"
+ inkscape:connector-curvature="0" />
+<path
+ style="fill:#165016;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M -26,399 279,410 882,404 868,485 -27,498 z"
+ id="path3775"
+ inkscape:connector-curvature="0"
+ transform="translate(0,572.362)" />
+<path
+ inkscape:connector-curvature="0"
+ id="path3765"
+ d="M 737.995,930.81 735.701,992.096 711.615,986.117 713.909,929.315 z"
+ style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+<path
+ style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M 798.219,925.305 796.1,986.591 773.839,980.612 775.958,923.81 z"
+ id="path3767"
+ inkscape:connector-curvature="0" />
+<path
+ inkscape:connector-curvature="0"
+ id="path3771"
+ d="M 273.063,720.118 247.011,747.895 253.604,749.093 277.723,723.321 z"
+ style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:none" />
+<path
+ style="fill:#008080;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M 496.46,693.164 522.833,720.637 524.375,714.116 499.903,688.679 z"
+ id="path3773"
+ inkscape:connector-curvature="0" />
+<path
+ style="fill:#666666;fill-opacity:1;fill-rule:nonzero;stroke:none"
+ d="M -14,320 160,312 174,340 172,414 -34,412 -16,315"
+ id="path3777"
+ inkscape:connector-curvature="0"
+ transform="translate(0,572.362)" />
+<flowRoot
+ xml:space="preserve"
+ id="flowRoot3779"
+ style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+ transform="translate(-5,513.362)"><flowRegion
+ id="flowRegion3781"><rect
+ id="rect3783"
+ width="189"
+ height="271"
+ x="-258"
+ y="41"
+ style="font-size:16px" /></flowRegion><flowPara
+ id="flowPara3785">Cosas a variar</flowPara><flowPara
+ id="flowPara3787">-Altura</flowPara><flowPara
+ id="flowPara3789">-cantidad flechas</flowPara><flowPara
+ id="flowPara3791">-tipo de flecha</flowPara><flowPara
+ id="flowPara3793">-resistencia base</flowPara><flowPara
+ id="flowPara3795">-velocidad disparo</flowPara><flowPara
+ id="flowPara3797">-daño disparo</flowPara><flowPara
+ id="flowPara3871">-tipo disparo (granadas, etc) </flowPara><flowPara
+ id="flowPara3873">-tipo de personaje (arquero, ninja, tirador de hachas)</flowPara><flowPara
+ id="flowPara3799" /></flowRoot><flowRoot
+ transform="translate(-8,854.362)"
+ style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Arial;-inkscape-font-specification:Arial"
+ id="flowRoot3801"
+ xml:space="preserve"><flowRegion
+ id="flowRegion3803"><rect
+ style="font-size:16px"
+ y="41"
+ x="-258"
+ height="212"
+ width="170"
+ id="rect3805" /></flowRegion><flowPara
+ id="flowPara3819">- items aparecen en el aire y si les pegas obtenes powerups</flowPara><flowPara
+ id="flowPara3850">- enemigos vienen con items internamente por un tiempo, si los matas obtenes ese item</flowPara><flowPara
+ id="flowPara3821" /></flowRoot></g>
+</svg>

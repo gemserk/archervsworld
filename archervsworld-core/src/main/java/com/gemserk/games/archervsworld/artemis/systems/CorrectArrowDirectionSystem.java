@@ -4,8 +4,8 @@ import com.artemis.Entity;
 import com.artemis.EntityProcessingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.gemserk.commons.artemis.components.Contact;
 import com.gemserk.commons.artemis.components.PhysicsComponent;
+import com.gemserk.commons.gdx.box2d.Contact;
 import com.gemserk.games.archervsworld.artemis.components.CorrectArrowDirectionComponent;
 
 public class CorrectArrowDirectionSystem extends EntityProcessingSystem {
